@@ -1,8 +1,8 @@
 {
-    "name": "netgen/media-site",
+    "name": "se7enxweb/sevenx-netgen-media-site",
     "type": "project",
-    "license": ["(GPL-2.0-only or proprietary)"],
-    "description": "Netgen Media Site (Powered by Netgen Layouts & Ibexa DXP)",
+    "license": ["(GPL-2.0-or-later or proprietary)"],
+    "description": "7x Netgen Media Site (Powered by Netgen Layouts & Ibexa DXP)",
     "homepage": "https://netgen.io",
     "authors": [
         {

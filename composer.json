@@ -144,7 +144,7 @@
             "allow-contrib": true,
             "require": "7.4.*",
             "endpoint": [
-                "https://api.github.com/repos/se7enxweb/sevenx-recipes/contents/index.json?ref=flex/main",
+                "https://api.github.com/repos/se7enxweb/sevenx-recipes/contents/index.json?ref=master",
                 "https://api.github.com/repos/netgen/recipes/contents/index.json?ref=flex",
                 "https://api.github.com/repos/netgen-layouts/recipes/contents/index.json?ref=flex",
                 "flex://defaults"

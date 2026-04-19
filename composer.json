@@ -45,7 +45,7 @@
         "mrk-te/ibexa-migration-bundle2": "^3.0",
 
         "netgen/media-site-data": "^4.0",
-        "se7enxweb/site-bundle": "dev-master",
+        "se7enxweb/site-bundle": "5.0.x-dev",
         "netgen/site-installer-bundle": "^4.0",
         "netgen/ibexa-site-api": "^7.0",
         "netgen/ibexa-search-extra": "^4.0",
@@ -134,6 +134,8 @@
         ],
         "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi src tests"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "conflict": {
         "symfony/symfony": "*"
     },

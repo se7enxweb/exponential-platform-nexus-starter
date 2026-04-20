@@ -11049,16 +11049,16 @@
         },
         {
             "name": "se7enxweb/exponential-platform-dxp-core",
-            "version": "v5.0.6",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/se7enxweb/core.git",
-                "reference": "fa681acdaae0ad5825eaebbc86f6aef4954a7c31"
+                "reference": "fe5874343d6651405cc6d4848f042406a27cf6ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/se7enxweb/core/zipball/fa681acdaae0ad5825eaebbc86f6aef4954a7c31",
-                "reference": "fa681acdaae0ad5825eaebbc86f6aef4954a7c31",
+                "url": "https://api.github.com/repos/se7enxweb/core/zipball/fe5874343d6651405cc6d4848f042406a27cf6ad",
+                "reference": "fe5874343d6651405cc6d4848f042406a27cf6ad",
                 "shasum": ""
             },
             "require": {
@@ -11176,7 +11176,7 @@
             "description": "7x Exponential Platform DXP (Stable; Open Source) core. Provides the Content Repository, its APIs, and the application's Symfony framework integration.",
             "homepage": "https://se7enx.com",
             "support": {
-                "source": "https://github.com/se7enxweb/core/tree/v5.0.6"
+                "source": "https://github.com/se7enxweb/core/tree/v5.0.7"
             },
             "funding": [
                 {
@@ -11204,7 +11204,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-04-15T05:24:19+00:00"
+            "time": "2026-04-20T01:45:55+00:00"
         },
         {
             "name": "se7enxweb/fieldtype-richtext",

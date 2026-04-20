@@ -34,11 +34,11 @@ return [
     Ibexa\Bundle\ContentForms\IbexaContentFormsBundle::class => ['all' => true],
     Ibexa\Bundle\DesignEngine\IbexaDesignEngineBundle::class => ['all' => true],
     Ibexa\Bundle\StandardDesign\IbexaStandardDesignBundle::class => ['all' => true],
-    Ibexa\Bundle\FieldTypeRichText\IbexaFieldTypeRichTextBundle::class => ['all' => true],
     Ibexa\Bundle\AdminUi\IbexaAdminUiBundle::class => ['all' => true],
     Ibexa\Bundle\User\IbexaUserBundle::class => ['all' => true],
     Ibexa\Bundle\AdminUiAssets\IbexaAdminUiAssetsBundle::class => ['all' => true],
     Ibexa\Bundle\FieldTypeMatrix\IbexaFieldTypeMatrixBundle::class => ['all' => true],
+    Ibexa\Bundle\FieldTypeRichText\IbexaFieldTypeRichTextBundle::class => ['all' => true],
     Ibexa\Bundle\GraphQL\IbexaGraphQLBundle::class => ['all' => true],
     Ibexa\Bundle\FieldTypeQuery\IbexaFieldTypeQueryBundle::class => ['all' => true],
     Ibexa\Bundle\Search\IbexaSearchBundle::class => ['all' => true],
@@ -83,4 +83,5 @@ return [
     Netgen\Bundle\IbexaAdminUIExtraBundle\NetgenIbexaAdminUIExtraBundle::class => ['all' => true],
     Netgen\Bundle\ToolbarBundle\NetgenToolbarBundle::class => ['all' => true],
     Netgen\Bundle\IbexaScheduledVisibilityBundle\NetgenIbexaScheduledVisibilityBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
 ];

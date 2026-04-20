@@ -1,8 +1,6 @@
 {
-    "name": "se7enxweb/exponential-platform-nexus",
     "type": "project",
-    "license": ["(GPL-2.0-or-later or proprietary)"],
-    "description": "7x Netgen Media Site (Powered by Netgen Layouts & Exponential Platform DXP)",
+    "license": "proprietary",
     "homepage": "https://platform.exponential.earth",
     "authors": [
         {
@@ -150,9 +148,6 @@
                 "flex://defaults"
             ],
             "docker": false
-        },
-        "branch-alias": {
-            "dev-master": "1.3.0.x-dev"
         }
     }
 }

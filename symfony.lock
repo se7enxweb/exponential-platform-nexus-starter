@@ -462,18 +462,6 @@
             "config/routes/netgen_information_collection.yaml"
         ]
     },
-    "netgen/layouts-core": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "2.0",
-            "ref": "bc96d39a58f03c067c5d92a0c122f319763b73b0"
-        },
-        "files": [
-            "config/routes/netgen_layouts.yaml"
-        ]
-    },
     "netgen/layouts-ibexa": {
         "version": "2.0",
         "recipe": {
@@ -720,6 +708,9 @@
     },
     "se7enxweb/fieldtype-richtext": {
         "version": "dev-main"
+    },
+    "se7enxweb/layouts-core": {
+        "version": "dev-master"
     },
     "se7enxweb/site-bundle": {
         "version": "5.0",

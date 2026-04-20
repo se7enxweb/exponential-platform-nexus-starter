@@ -23,7 +23,6 @@
 5. [Technology Stack](#technology-stack)
 6. [Requirements](#requirements)
 7. [Quick Start](#quick-start)
-8. [7x Forks & Upstream Incompatibility Fixes](#7x-forks--upstream-incompatibility-fixes)
 9. [Main Features](#main-features)
 10. [Installation](#installation)
 11. [Key CLI Commands Reference](#key-cli-commands-reference)

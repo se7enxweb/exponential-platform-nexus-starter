@@ -1,4 +1,4 @@
-# Exponential Platform Nexus v5 — Netgen Media Site Variant
+# Exponential Platform Nexus Starter Distribution - Platform v5; Stable; SQLite
 
 [![PHP](https://img.shields.io/badge/PHP-8.4%2B-8892BF?logo=php&logoColor=white)](https://php.net)
 [![Symfony](https://img.shields.io/badge/Symfony-7.4%20LTS-000000?logo=symfony&logoColor=white)](https://symfony.com)

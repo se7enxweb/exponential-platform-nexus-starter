@@ -1,0 +1,33 @@
+parameters:
+
+services:
+    ez_core_extra.view_template_listener:
+        class: Lolautruche\EzCoreExtraBundle\EventListener\ViewTemplateListener
+        arguments:
+            - "@ibexa.config.resolver"
+            - "@Ibexa\\Bundle\\Core\\DependencyInjection\\Configuration\\SiteAccessAware\\DynamicSettingParser"
+            - "@ibexa.api.repository"
+            - "@ez_core_extra.view.expression_language"
+
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ez_core_extra.twig.globals_extension:
+        public: false
+        class: Lolautruche\EzCoreExtraBundle\Templating\Twig\TwigGlobalsExtension
+        arguments:
+            - '@ibexa.config.resolver'
+        tags:
+            - { name: twig.extension }
+
+    ez_core_extra.security.simplified_core_voter:
+        public: false
+        class: Lolautruche\EzCoreExtraBundle\Security\Voter\SimplifiedCoreVoter
+        arguments:
+            - "@Ibexa\\Core\\MVC\\Symfony\\Security\\Authorization\\Voter\\CoreVoter"
+            - "@Ibexa\\Core\\MVC\\Symfony\\Security\\Authorization\\Voter\\ValueObjectVoter"
+        tags:
+            - { name: "security.voter" }
+
+    ez_core_extra.view.expression_language:
+        class: Lolautruche\EzCoreExtraBundle\View\ExpressionLanguage

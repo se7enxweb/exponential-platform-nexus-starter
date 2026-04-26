@@ -1,0 +1,11 @@
+.idea
+phpunit.xml
+.phpunit.result.cache
+composer.lock
+vendor
+tests/App/cache
+tests/App/logs
+tests/App/var
+cache
+var/cache
+var/log

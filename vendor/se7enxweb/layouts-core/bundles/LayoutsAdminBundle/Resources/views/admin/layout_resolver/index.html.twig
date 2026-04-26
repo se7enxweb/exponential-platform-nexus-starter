@@ -1,0 +1,94 @@
+{% extends nglayouts_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% set can_reorder = is_granted('nglayouts:mapping:reorder') %}
+
+{% block title %}
+    {{ 'layout_resolver.title'|trans }} - {{ 'pagelayout.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div id="rules" class="nl-element">
+        <div class="layouts-header">
+            <h2 class="layouts-title">{{ 'menu.main_menu.layout_resolver'|trans }}</h2>
+
+            <div class="layouts-controls">
+                {% if can_reorder %}
+                    <button class="nl-btn nl-btn sorting-show js-sort-cancel">{{ 'layout_resolver.cancel'|trans }}</button>
+                    <button class="nl-btn nl-btn-primary sorting-show js-sort-save">{{ 'layout_resolver.save_order'|trans }}</button>
+                {% endif %}
+            </div>
+
+            <div class="nl-dropdown" data-position="right">
+                <button class="nl-more-btn nl-dropdown-toggle">
+                    <span class="more">
+                        <i class="material-icons">more_horiz</i>
+                    </span>
+                </button>
+
+                <ul class="nl-dropdown-menu main-dropdown">
+                    {% block main_controls %}
+                        {% if can_reorder %}
+                            <li><a class="sorting-hide js-sort-start"> {{ 'layout_resolver.reorder_rules'|trans }}</a></li>
+                        {% endif %}
+
+                        {% if is_granted('nglayouts:mapping:edit') %}
+                            <li><a id="add-new-button" class="js-add-rule">{{ 'layout_resolver.add_new_rule'|trans }}</a></li>
+                        {% endif %}
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="nl-rules-head">
+            <div class="nl-rules-head-wrapper">
+                <div class="nl-rule-cell">
+                    <div class="nl-export-checkbox">
+                        <input type="checkbox" id="toggleSelectAll">
+                        <label for="toggleSelectAll"></label>
+                    </div>
+                </div>
+
+                <div class="nl-rule-cell rule-priority"></div>
+                <div class="nl-rule-cell rule-layout">{{ 'layout_resolver.mapped_layout'|trans }}</div>
+                <div class="nl-rule-cell rule-targets">{{ 'layout_resolver.targets'|trans }}</div>
+                <div class="nl-rule-cell rule-conditions">{{ 'layout_resolver.conditions'|trans }}</div>
+            </div>
+        </div>
+
+        <div class="floating-controls">
+            {% block floating_controls %}
+                <a href="#" class="nl-btn js-export">{{ 'layout_resolver.export'|trans }}</a>
+
+                {% if is_granted('nglayouts:mapping:delete') %}
+                    <a id="delete-button" class="nl-btn js-multiple-delete">{{ 'layout_resolver.delete'|trans }}</a>
+                {% endif %}
+
+                <p class="selected-items-text">{{ 'layout_resolver.items_selected'|trans }}</p><p class="selected-items"></p>
+
+                <a class="nl-btn js-clear-selection"><i class="material-icons">clear</i></a>
+
+                <div class="align-right" style="margin-right: auto">
+                    <div class="nl-export-checkbox js-check-all">
+                        <input type="checkbox" id="check-all">
+                        <label for="check-all"></label>
+                    </div>
+
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block elements %}
+            <div class="nl-rules">
+                {% for rule in rules %}
+                    <div class="nl-rule nl-element" tabindex="0">
+                        {{ nglayouts_render_rule(rule, [], 'admin') }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endblock %}
+
+        <p class="nl-no-items">{{ 'layout_resolver.no_rules'|trans }}</p>
+    </div>
+{% endblock %}

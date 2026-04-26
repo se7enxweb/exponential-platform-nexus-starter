@@ -1,0 +1,226 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/drag-and-drop' as *;
+
+html {
+    min-height: 100vh;
+    width: 100%;
+    font-size: $base-font-size;
+    line-height: 1.5;
+    letter-spacing: calculateRem(0.12px);
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+a {
+    transition: color $ibexa-admin-transition-duration $ibexa-admin-transition;
+
+    &[disabled] {
+        color: $ibexa-color-dark-300;
+    }
+
+    &:active,
+    &:focus,
+    &:hover {
+        color: $ibexa-color-primary;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+button {
+    background: none;
+}
+
+img {
+    display: inline-block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+.ibexa-scroll-disabled {
+    overflow: hidden;
+}
+
+.ibexa-main-row {
+    min-height: calc(100vh - #{calculateRem(58px)});
+
+    &--edit {
+        background: $ibexa-color-white;
+    }
+}
+
+.btn {
+    white-space: normal;
+    cursor: pointer;
+    transition:
+        opacity 0.3s $ibexa-admin-transition,
+        background 0.3s $ibexa-admin-transition;
+}
+
+.ibexa_richtext-field {
+    display: inline-block;
+    width: 100%;
+
+    .align-left {
+        float: left;
+    }
+
+    .align-center {
+        text-align: center;
+    }
+
+    .align-right {
+        float: right;
+    }
+
+    blockquote {
+        margin: calculateRem(16px) calculateRem(40px);
+    }
+
+    table {
+        td {
+            border-width: calculateRem(1px);
+        }
+    }
+}
+
+.ibexa-login-view {
+    .ibexa-main-container {
+        height: 100vh;
+        display: block;
+    }
+}
+
+.ibexa-visually-hidden,
+.ibexa-visually-hidden[readonly] {
+    height: calculateRem(1px);
+    opacity: 0;
+    position: relative;
+    z-index: 0;
+}
+
+.ibexa-spin {
+    animation: spin 1.75s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.ibexa-content-preview {
+    .ibexa-main-container__content-column {
+        @include drag-module-backdrop-background;
+    }
+
+    .ibexa-main-container {
+        height: 100vh;
+        background-color: $ibexa-color-dark-500;
+    }
+}
+
+[disabled] {
+    cursor: not-allowed;
+}
+
+select {
+    &.form-control:disabled,
+    &.form-control[disabled] {
+        opacity: 0.3;
+    }
+}
+
+.ibexa-info-view,
+.ibexa-content-view,
+.ibexa-content-type-view,
+.ibexa-content-type-group-list-view,
+.ibexa-language-view,
+.ibexa-language-list-view,
+.ibexa-link-manager-view,
+.ibexa-role-view,
+.ibexa-role-list-view,
+.ibexa-search-view,
+.ibexa-section-view,
+.ibexa-section-list-view,
+.ibexa-trash-list-view,
+.ibexa-bookmark-list-view,
+.ibexa-object-state-group-list-view,
+.ibexa-workflow-list-view,
+.ibexa-segment-group-list-view {
+    background-color: $ibexa-color-white;
+
+    .ibexa-main-container {
+        background-color: $ibexa-color-white;
+    }
+}
+
+.ibexa-sticky-container {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calculateRem(16px);
+
+    > .btn {
+        .ibexa-icon {
+            margin-bottom: calculateRem(3px);
+        }
+    }
+}
+
+.ibexa-dashboard-row {
+    flex-direction: column;
+}
+
+.ibexa-scrollable-wrapper {
+    overflow: auto;
+    margin-bottom: calculateRem(12px);
+}
+
+.ibexa-prevent-click,
+.ibexa-prevent-click * {
+    pointer-events: none !important;
+}
+
+.ibexa-is-tree-resizing {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ibexa-container {
+    padding: calculateRem(24px);
+    background: $ibexa-color-white;
+    border: calculateRem(1px) solid $ibexa-color-light;
+    border-radius: $ibexa-border-radius;
+    box-shadow: $ibexa-edit-header-box-shadow;
+    margin-bottom: calculateRem(32px);
+
+    @media (min-width: 1921px) {
+        max-width: calculateRem(2000px);
+    }
+}
+
+.ibexa-error-site {
+    .ibexa-main-container {
+        padding: 0;
+    }
+}
+
+.ibexa-safari-tooltip {
+    &::before {
+        content: '';
+        display: block;
+    }
+}

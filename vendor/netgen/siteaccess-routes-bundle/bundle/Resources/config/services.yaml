@@ -1,0 +1,31 @@
+services:
+    netgen_siteaccess_routes.event_listener.request:
+        class: Netgen\Bundle\SiteAccessRoutesBundle\EventListener\RequestListener
+        arguments:
+            - "@netgen_siteaccess_routes.matcher"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_siteaccess_routes.matcher:
+        class: Netgen\Bundle\SiteAccessRoutesBundle\Matcher\Matcher
+        arguments:
+            - []
+
+    netgen_siteaccess_routes.voter.default_siteaccess:
+        class: Netgen\Bundle\SiteAccessRoutesBundle\Matcher\Voter\DefaultSiteAccessVoter
+        arguments:
+            - "%ibexa.site_access.default%"
+        tags:
+            - { name: netgen_siteaccess_routes.voter }
+
+    netgen_siteaccess_routes.voter.siteaccess:
+        class: Netgen\Bundle\SiteAccessRoutesBundle\Matcher\Voter\SiteAccessVoter
+        tags:
+            - { name: netgen_siteaccess_routes.voter }
+
+    netgen_siteaccess_routes.voter.siteaccess_group:
+        class: Netgen\Bundle\SiteAccessRoutesBundle\Matcher\Voter\SiteAccessGroupVoter
+        arguments:
+            - "%ibexa.site_access.groups_by_site_access%"
+        tags:
+            - { name: netgen_siteaccess_routes.voter }

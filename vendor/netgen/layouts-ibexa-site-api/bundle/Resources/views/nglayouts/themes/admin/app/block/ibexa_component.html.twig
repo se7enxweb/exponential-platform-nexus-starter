@@ -1,0 +1,27 @@
+{% extends '@nglayouts_admin/app/block/block.html.twig' %}
+
+{% import '@NetgenLayoutsAdmin/app/parts/macros.html.twig' as macros %}
+
+{% trans_default_domain 'nglayouts_app' %}
+
+{% block content %}
+    {% set content = block.parameter('content').valueObject %}
+
+    {% if content is not null %}
+        <div class="list-row">
+            <div class="list-item">
+                {{ ng_view_content(
+                    content,
+                    'nglayouts_app_preview', {
+                        'layout': false,
+                        'params': {
+                            'block': block,
+                        }
+                    }
+                ) }}
+            </div>
+        </div>
+    {% else %}
+        {{ macros.notice('block.notice.empty_ibexa_component'|trans) }}
+    {% endif %}
+{% endblock %}

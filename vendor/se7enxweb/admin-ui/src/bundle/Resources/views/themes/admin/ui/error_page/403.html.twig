@@ -1,0 +1,20 @@
+{% extends '@ibexadesign/ui/layout_error.html.twig' %}
+
+{% block content %}
+    <div class="ibexa-error-page">
+        <div class="ibexa-error-page__messages-container">
+            <div class="ibexa-error-page__icon-wrapper">
+                <img class="ibexa-error-page__icon" src="{{ asset('bundles/ibexaadminui/img/error_403.svg') }}" />
+            </div>
+            <h2 class="ibexa-error-page__title">
+                {{ 'error.page.403.title'|trans|desc('Access denied') }}
+            </h2>
+            <h3 class="ibexa-error-page__subtitle">
+                {{ 'error.page.403.sub_title'|trans|desc('Sorry but you don\'t have permission to access this page.') }}
+            </h3>
+        </div>
+        <p class="ibexa-error-page__message">
+            {{ 'error.page.403.actions'|trans({ '%dashboard%': path('ibexa.dashboard'), '%search%': path('ibexa.search') })|raw|desc('Contact your administrator to request access.<br/>Go back to the <a href="%dashboard%">dashboard</a> or <a href="%search%">search</a> for another item.') }}
+        </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,5 @@
+parameters:
+    netgen_ibexa_admin_ui_extra.show_siteaccess_urls_outside_configured_content_tree_root: false
+
+    netgen_ibexa_admin_ui_extra.queues.enabled: true
+    netgen_ibexa_admin_ui_extra.queues.transports: []

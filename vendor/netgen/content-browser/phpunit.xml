@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    requireCoverageMetadata="true"
+    beStrictAboutOutputDuringTests="true"
+    displayDetailsOnPhpunitDeprecations="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    colors="true"
+>
+    <testsuites>
+        <testsuite name="Netgen\ContentBrowser">
+            <directory>tests/lib</directory>
+        </testsuite>
+        <testsuite name="Netgen\Bundle\ContentBrowserBundle">
+            <directory>tests/bundle</directory>
+            <exclude>tests/bundle/Controller</exclude>
+        </testsuite>
+    </testsuites>
+
+    <source ignoreSuppressionOfDeprecations="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory>lib</directory>
+            <directory>bundle</directory>
+        </include>
+        <exclude>
+            <directory>bundle/Controller</directory>
+            <directory>bundle/Resources</directory>
+            <file>bundle/NetgenContentBrowserBundle.php</file>
+            <file>bundle/DependencyInjection/NetgenContentBrowserExtension.php</file>
+        </exclude>
+    </source>
+</phpunit>

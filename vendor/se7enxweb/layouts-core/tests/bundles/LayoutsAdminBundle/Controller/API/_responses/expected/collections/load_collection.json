@@ -1,0 +1,11 @@
+{
+    "id": "da050624-8ae0-5fb9-ae85-092bf8242b89",
+    "type": "dynamic",
+    "is_translatable": true,
+    "main_locale": "en",
+    "always_available": true,
+    "available_locales": [
+        "en",
+        "hr"
+    ]
+}

@@ -1,0 +1,5 @@
+tab.urls.siteaccess.headline.siteaccess_urls: 'Siteaccess URLs'
+tab.urls.siteaccess.headline.siteaccess_urls.outside_configured_content_tree_root: 'Siteaccess URLs outside the configured Content tree root'
+tab.urls.siteaccess: 'Siteaccess'
+tab.urls.no_siteaccess_urls: 'This item has no Siteacess URLs.'
+tab.urls.url: 'URL'

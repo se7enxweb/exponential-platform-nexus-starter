@@ -1,0 +1,200 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\IbexaFormsBundle\Tests\Form\FieldTypeHandler;
+
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\LocationList;
+use Ibexa\Core\FieldType\Relation\Value as RelationValue;
+use Ibexa\Core\Repository\ContentService;
+use Ibexa\Core\Repository\LocationService;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Core\Repository\Values\Content\Location;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
+use InvalidArgumentException;
+use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler;
+use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Relation;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormBuilder;
+
+final class RelationTest extends TestCase
+{
+    protected MockObject $repository;
+
+    protected MockObject $formBuilder;
+
+    protected MockObject $content;
+
+    protected MockObject $locationService;
+
+    protected MockObject $contentService;
+
+    protected array $fieldDefinitionParameters;
+
+    protected function setUp(): void
+    {
+        $this->contentService = $this->getMockBuilder(ContentService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->locationService = $this->getMockBuilder(LocationService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->repository = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->repository->method('getLocationService')
+            ->willReturn($this->locationService);
+
+        $this->repository->method('getContentService')
+            ->willReturn($this->contentService);
+
+        $this->formBuilder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['add'])
+            ->getMock();
+    }
+
+    public function testAssertInstanceOfFieldTypeHandler(): void
+    {
+        $relation = new Relation($this->repository);
+
+        self::assertInstanceOf(FieldTypeHandler::class, $relation);
+    }
+
+    public function testConvertFieldValueToForm(): void
+    {
+        $relation = new Relation($this->repository);
+        $relationValue = new RelationValue(2);
+
+        $returnedValue = $relation->convertFieldValueToForm($relationValue);
+
+        self::assertSame(2, $returnedValue);
+    }
+
+    public function testConvertFieldValueToFormNullDestinationContentId(): void
+    {
+        $relation = new Relation($this->repository);
+        $relationValue = new RelationValue(null);
+
+        $returnedValue = $relation->convertFieldValueToForm($relationValue);
+
+        self::assertNull($returnedValue);
+    }
+
+    public function testConvertFieldValueFromForm(): void
+    {
+        $relation = new Relation($this->repository);
+
+        $returnedValue = $relation->convertFieldValueFromForm(23);
+
+        self::assertSame(23, $returnedValue);
+    }
+
+    public function testConvertFieldValueFromFormWhenDataIsNull(): void
+    {
+        $relation = new Relation($this->repository);
+
+        $returnedValue = $relation->convertFieldValueFromForm(null);
+
+        self::assertNull($returnedValue);
+    }
+
+    public function testBuildFieldCreateForm(): void
+    {
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['add'])
+            ->getMock();
+
+        $formBuilder->expects(self::once())
+            ->method('add');
+
+        $fieldDefinition = new FieldDefinition(
+            [
+                'id' => 123,
+                'identifier' => 'identifier',
+                'isRequired' => true,
+                'descriptions' => ['fre-FR' => 'fre-FR'],
+                'names' => ['fre-FR' => 'fre-FR'],
+                'fieldSettings' => [
+                    'selectionRoot' => 2,
+                    'selectionMethod' => 0,
+                ],
+            ]
+        );
+
+        $location = new Location();
+        $this->locationService->expects(self::atLeastOnce())
+            ->method('loadLocation')
+            ->willReturn($location);
+
+        $this->locationService->expects(self::once())
+            ->method('loadLocationChildren')
+            ->with($location)
+            ->willReturn(new LocationList([
+                'locations' => [
+                    new Location(
+                        [
+                            'content' => new Content(
+                                [
+                                    'versionInfo' => new VersionInfo(['initialLanguageCode' => 'eng-GB', 'names' => ['eng-GB' => 'test1']]),
+                                ]
+                            ),
+                            'contentInfo' => new ContentInfo(['id' => 123]),
+                        ]
+                    ),
+                    new Location(
+                        [
+                            'content' => new Content(
+                                [
+                                    'versionInfo' => new VersionInfo(['initialLanguageCode' => 'eng-GB', 'names' => ['eng-GB' => 'test2']]),
+                                ]
+                            ),
+                            'contentInfo' => new ContentInfo(['id' => 246]),
+                        ]
+                    ),
+                ],
+            ]));
+
+        $selection = new Relation($this->repository);
+        $selection->buildFieldCreateForm($formBuilder, $fieldDefinition, 'eng-GB');
+    }
+
+    public function testBuildFieldCreateFormNullSelectionRoot(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('SelectionRoot must be defined');
+
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['add'])
+            ->getMock();
+
+        $formBuilder->expects(self::never())
+            ->method('add');
+
+        $fieldDefinition = new FieldDefinition(
+            [
+                'id' => 123,
+                'identifier' => 'identifier',
+                'isRequired' => true,
+                'descriptions' => ['fre-FR' => 'fre-FR'],
+                'names' => ['fre-FR' => 'fre-FR'],
+                'fieldSettings' => [
+                    'selectionRoot' => null,
+                    'selectionMethod' => 0,
+                ],
+            ]
+        );
+
+        $selection = new Relation($this->repository);
+        $selection->buildFieldCreateForm($formBuilder, $fieldDefinition, 'eng-GB');
+    }
+}

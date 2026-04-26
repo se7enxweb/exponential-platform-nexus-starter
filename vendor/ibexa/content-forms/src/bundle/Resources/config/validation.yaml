@@ -1,0 +1,35 @@
+Ibexa\ContentForms\Data\Content\ContentCreateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+Ibexa\ContentForms\Data\Content\ContentUpdateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+Ibexa\ContentForms\Data\User\UserCreateData:
+    properties:
+        login:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+        password:
+            - NotBlank: ~
+        fieldsData:
+            - Valid: ~
+
+Ibexa\ContentForms\Data\User\UserUpdateData:
+    properties:
+        fieldsData:
+            - Valid: ~
+
+Ibexa\ContentForms\Data\User\UserAccountFieldData:
+    properties:
+        username:
+            - Valid: ~
+            - NotBlank: ~
+
+Ibexa\Contracts\ContentForms\Data\Content\FieldData:
+    constraints:
+        - Ibexa\ContentForms\Validator\Constraints\FieldValue: ~

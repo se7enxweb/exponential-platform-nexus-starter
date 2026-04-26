@@ -1,0 +1,6 @@
+services:
+    netgen_tags.api.persistence_handler.tags.storage:
+        synthetic: true
+
+    netgen_tags.api.persistence_handler.tags:
+        alias: netgen_tags.api.persistence_handler.tags.cache

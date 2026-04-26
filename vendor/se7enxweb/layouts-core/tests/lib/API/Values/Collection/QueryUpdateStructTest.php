@@ -1,0 +1,158 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\API\Values\Collection;
+
+use Netgen\Layouts\API\Values\Collection\Query;
+use Netgen\Layouts\API\Values\Collection\QueryUpdateStruct;
+use Netgen\Layouts\Collection\QueryType\QueryType;
+use Netgen\Layouts\Collection\QueryType\QueryTypeInterface;
+use Netgen\Layouts\Parameters\Parameter;
+use Netgen\Layouts\Parameters\ParameterDefinition;
+use Netgen\Layouts\Parameters\ParameterList;
+use Netgen\Layouts\Parameters\ParameterType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+#[CoversClass(QueryUpdateStruct::class)]
+final class QueryUpdateStructTest extends TestCase
+{
+    private QueryUpdateStruct $struct;
+
+    protected function setUp(): void
+    {
+        $this->struct = new QueryUpdateStruct();
+    }
+
+    public function testFillParametersFromQuery(): void
+    {
+        $queryType = $this->buildQueryType();
+
+        $compoundDefinition = $queryType->getParameterDefinition('compound');
+
+        $query = Query::fromArray(
+            [
+                'queryType' => $queryType,
+                'parameters' => new ParameterList(
+                    [
+                        'css_class' => Parameter::fromArray(
+                            [
+                                'value' => 'css',
+                                'parameterDefinition' => $queryType->getParameterDefinition('css_class'),
+                            ],
+                        ),
+                        'inner' => Parameter::fromArray(
+                            [
+                                'value' => 'inner',
+                                'parameterDefinition' => $compoundDefinition->getParameterDefinition('inner'),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $this->struct->fillParametersFromQuery($query);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => null,
+                'compound' => null,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillParametersFromHash(): void
+    {
+        $queryType = $this->buildQueryType();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'css_id' => 'id',
+            'compound' => false,
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($queryType, $initialValues);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id',
+                'compound' => false,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillParametersFromHashWithMissingValues(): void
+    {
+        $queryType = $this->buildQueryType();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($queryType, $initialValues);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id_default',
+                'compound' => true,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    private function buildQueryType(): QueryTypeInterface
+    {
+        $compoundDefinition = ParameterDefinition::fromArray(
+            [
+                'name' => 'compound',
+                'type' => new ParameterType\Compound\BooleanType(),
+                'isRequired' => false,
+                'defaultValue' => true,
+                'parameterDefinitions' => [
+                    'inner' => ParameterDefinition::fromArray(
+                        [
+                            'name' => 'inner',
+                            'type' => new ParameterType\TextLineType(),
+                            'isRequired' => false,
+                            'defaultValue' => 'inner_default',
+                        ],
+                    ),
+                ],
+            ],
+        );
+
+        $parameterDefinitions = [
+            'css_class' => ParameterDefinition::fromArray(
+                [
+                    'name' => 'css_class',
+                    'type' => new ParameterType\TextLineType(),
+                    'isRequired' => false,
+                    'defaultValue' => 'css_default',
+                ],
+            ),
+            'css_id' => ParameterDefinition::fromArray(
+                [
+                    'name' => 'css_id',
+                    'type' => new ParameterType\TextLineType(),
+                    'isRequired' => false,
+                    'defaultValue' => 'id_default',
+                ],
+            ),
+            'compound' => $compoundDefinition,
+        ];
+
+        return QueryType::fromArray(['parameterDefinitions' => $parameterDefinitions]);
+    }
+}

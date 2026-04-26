@@ -1,0 +1,91 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Tests\Menu;
+
+use Knp\Menu\Integration\Symfony\RoutingExtension;
+use Knp\Menu\ItemInterface;
+use Knp\Menu\MenuFactory;
+use Netgen\Bundle\LayoutsAdminBundle\Menu\MainMenuBuilder;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+
+#[CoversClass(MainMenuBuilder::class)]
+final class MainMenuBuilderTest extends TestCase
+{
+    private Stub&AuthorizationCheckerInterface $authorizationCheckerStub;
+
+    private MainMenuBuilder $builder;
+
+    protected function setUp(): void
+    {
+        $urlGeneratorStub = self::createStub(UrlGeneratorInterface::class);
+        $urlGeneratorStub
+            ->method('generate')
+            ->willReturnCallback(
+                static fn (string $route): string => $route,
+            );
+
+        $menuFactory = new MenuFactory();
+        $menuFactory->addExtension(new RoutingExtension($urlGeneratorStub));
+
+        $this->authorizationCheckerStub = self::createStub(AuthorizationCheckerInterface::class);
+
+        $this->builder = new MainMenuBuilder(
+            $menuFactory,
+            $this->authorizationCheckerStub,
+            self::createStub(EventDispatcherInterface::class),
+        );
+    }
+
+    public function testCreateMenu(): void
+    {
+        $this->authorizationCheckerStub
+            ->method('isGranted')
+            ->willReturn(true);
+
+        $menu = $this->builder->createMenu();
+
+        self::assertCount(4, $menu);
+
+        self::assertInstanceOf(ItemInterface::class, $menu->getChild('layout_resolver'));
+        self::assertSame(
+            'nglayouts_admin_layout_resolver_index',
+            $menu->getChild('layout_resolver')->getUri(),
+        );
+
+        self::assertInstanceOf(ItemInterface::class, $menu->getChild('layouts'));
+        self::assertSame(
+            'nglayouts_admin_layouts_index',
+            $menu->getChild('layouts')->getUri(),
+        );
+
+        self::assertInstanceOf(ItemInterface::class, $menu->getChild('shared_layouts'));
+        self::assertSame(
+            'nglayouts_admin_shared_layouts_index',
+            $menu->getChild('shared_layouts')->getUri(),
+        );
+
+        self::assertInstanceOf(ItemInterface::class, $menu->getChild('transfer'));
+        self::assertSame(
+            'nglayouts_admin_transfer_index',
+            $menu->getChild('transfer')->getUri(),
+        );
+    }
+
+    public function testCreateMenuWithNoAccess(): void
+    {
+        $this->authorizationCheckerStub
+            ->method('isGranted')
+            ->willReturn(false);
+
+        $menu = $this->builder->createMenu();
+
+        self::assertCount(0, $menu);
+    }
+}

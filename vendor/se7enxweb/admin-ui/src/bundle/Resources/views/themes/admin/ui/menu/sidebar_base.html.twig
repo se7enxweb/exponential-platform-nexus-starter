@@ -1,0 +1,52 @@
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% block root %}
+    {% for item in item.children %}
+        {{ block('item') }}
+    {% endfor %}
+{% endblock %}
+
+{% block item -%}
+    {%- if item.displayed -%}
+        {%- set attributes = item.attributes|merge({'class': (item.attributes.class|default('') ~ ' ' ~ default_classes|default('btn ibexa-btn ibexa-btn--secondary btn-block'))|trim}) -%}
+        {%- set attributes = attributes|merge({'id': item.name ~ '-tab'}) -%}
+
+        {%- if item.uri is not empty %}
+            {% set attributes = attributes|merge({'href': item.uri}) %}
+            {% set element = 'a' %}
+            {{ block('element') }}
+        {%- else %}
+            {% set element = 'button' %}
+            {{ block('element') }}
+        {%- endif %}
+        {%- if item.extras.template is defined -%}
+            {% include item.extras.template with item.extras.template_parameters|default({}) %}
+        {%- endif -%}
+    {%- endif -%}
+{%- endblock %}
+
+{% block element %}
+    {% import 'knp_menu.html.twig' as macros %}
+    {% set element = element|default('a') %}
+    <{{ element }}{{ macros.attributes(attributes) }}>
+    {{ block('label') }}
+    </{{ element }}>
+{% endblock %}
+
+{% block label %}
+    {% set icon_path = null %}
+    {% set icon_class = (item_class|default('ibexa-icon ') ~ item.extras.icon_class|default(''))|trim %}
+    {% if item.extras.icon_path|default %}
+        {% set icon_path = item.extras.icon_path %}
+    {% elseif item.extras.icon is defined and item.extras.icon is not empty %}
+        {% set icon_path = ibexa_icon_path(item.extras.icon) %}
+        {% set icon_class = (icon_class ~ ' ibexa-icon--' ~ item.extras.icon)|trim %}
+    {% endif %}
+
+    {% if icon_path is not empty %}
+        <svg class="{{ icon_class }}">
+            <use xlink:href="{{ icon_path }}"></use>
+        </svg>
+    {% endif %}
+    <span class="ibexa-btn__label">{{ parent() }}</span>
+{% endblock %}

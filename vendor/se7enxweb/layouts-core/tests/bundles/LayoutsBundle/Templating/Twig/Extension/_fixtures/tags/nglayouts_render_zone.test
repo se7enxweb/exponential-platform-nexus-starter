@@ -1,0 +1,20 @@
+--TEST--
+"nglayouts_render_zone" tag
+--TEMPLATE--
+{% nglayouts_render_zone zone %}
+{% nglayouts_render_zone 'zone' %}
+--DATA--
+return [
+    'nglayouts' => new \Netgen\Bundle\LayoutsBundle\Tests\Templating\Twig\Extension\Stubs\GlobalVariable(
+        \Netgen\Layouts\API\Values\Layout\Layout::fromArray([
+            'zones' => \Netgen\Layouts\API\Values\Layout\ZoneList::fromArray([
+                'zone' => \Netgen\Layouts\API\Values\Layout\Zone::fromArray(['identifier' => 'zone']),
+            ])
+        ])
+    ),
+    'zone' => \Netgen\Layouts\API\Values\Layout\Zone::fromArray(['identifier' => 'zone']),
+]
+--CONFIG--
+return []
+--EXPECT--
+block1 block2block1 block2

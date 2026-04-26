@@ -1,0 +1,59 @@
+#{$namespace} {
+  .bm-select {
+    @extend .bm-select;
+  }
+}
+
+.ui-sortable-helper,
+.ui-draggable-dragging {
+  opacity: .8;
+}
+
+.zone_type_inherited {
+  cursor: pointer;
+}
+
+.shared-icon {
+  transform: rotate(210deg);
+  position: relative;
+  top: .1875rem;
+  left: .5em;
+}
+
+[data-inline] {
+  position: relative;
+}
+
+[data-inline-child] {
+  position: relative;
+  z-index: 10;
+  padding-right: 1px;
+  width: 100%;
+  display: block;
+  + span {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    color: #ccc;
+  }
+  &:empty + span {
+    display: block;
+  }
+}
+
+.forbidden {
+  > div[data-container] {
+    background: #900;
+  }
+}
+
+@keyframes checkedFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

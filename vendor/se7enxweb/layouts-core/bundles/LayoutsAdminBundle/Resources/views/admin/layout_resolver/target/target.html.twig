@@ -1,0 +1,19 @@
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% set can_edit = is_granted('nglayouts:mapping:edit', nglayouts_rule_group(target.ruleId.toString)) %}
+
+<span
+    {% if can_edit %}
+        class="settings-value editable-value js-setting-edit" data-setting-id="{{ target.id.toString }}" data-setting-type="target"
+    {% else %}
+        class="settings-value"
+    {% endif %}
+>
+    {{ nglayouts_render_rule_target(target, {}, 'value') }}
+</span>
+
+{% if can_edit %}
+    <a href="#" class="remove-setting js-setting-delete" data-setting-id="{{ target.id.toString }}" data-setting-type="target">
+        {{ 'layout_resolver.target.delete'|trans }}
+    </a>
+{% endif %}

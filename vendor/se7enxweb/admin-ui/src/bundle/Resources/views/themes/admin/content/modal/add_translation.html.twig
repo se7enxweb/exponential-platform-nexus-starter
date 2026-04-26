@@ -1,0 +1,58 @@
+{% trans_default_domain 'ibexa_locationview' %}
+
+{% embed '@ibexadesign/ui/component/modal/modal.html.twig' with {
+    title: 'tab.translations.add.title'|trans|desc('Create a new translation'),
+    class: 'ibexa-translation',
+    id: modal_id|default('add-translation-modal'),
+} %}
+    {% trans_default_domain 'ibexa_locationview' %}
+    {% form_theme form '@ibexadesign/content/translation_add_form_fields.html.twig' %}
+    {% set location = form.vars.data.location ?? null %}
+    {% set content_id = location is not null ? location.contentId : null %}
+    {% set custom_footer = ibexa_twig_component_group('admin-ui-content-translation-modal-footer', {
+            form: form,
+            content_id: content_id,
+            location: location,
+            allow_placeholder: allow_placeholder|default(false)
+        })
+    %}
+
+    {% block content_before %}
+        {% set action = action is defined ? action : path('ibexa.translation.add') %}
+        {{ form_start(form, {'action': action}) }}
+    {% endblock %}
+    {% block body_content %}
+        {{ form_row(form.base_language, {
+            'attr': {
+                'class': 'ibexa-translation__language-wrapper ibexa-translation__language-wrapper--base-language'
+            },
+        }) }}
+        <div class="ibexa-translation__arrow">
+            <svg class="ibexa-icon ibexa-icon--medium">
+                <use xlink:href="{{ ibexa_icon_path('back') }}"></use>
+            </svg>
+        </div>
+        {{ form_row(form.language, {
+            'attr': {
+                'class': 'ibexa-translation__language-wrapper ibexa-translation__language-wrapper--language'
+            },
+        }) }}
+
+        {{ ibexa_twig_component_group('admin-ui-form-content-add-translation-body', { form }) }}
+    {% endblock %}
+    {% block footer_content %}
+        {% if custom_footer is not empty %}
+            {{ custom_footer|raw }}
+        {% else %}
+            {% if form.add is defined %}
+                {{ form_widget(form.add, {'attr': {'class': 'btn ibexa-btn ibexa-btn--primary ibexa-btn--create-translation'}}) }}
+            {% endif %}
+            <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-bs-dismiss="modal">
+                {{ 'tab.translations.add.cancel'|trans|desc('Cancel') }}
+            </button>
+        {% endif %}
+    {% endblock %}
+    {% block content_after %}
+        {{ form_end(form) }}
+    {% endblock %}
+{% endembed %}

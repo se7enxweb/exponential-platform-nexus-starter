@@ -1,0 +1,87 @@
+{% trans_default_domain 'ibexa_content_url' %}
+{% import _self as tab %}
+
+{{  include('@ibexadesign/content/tab/url/custom_urls_table.html.twig', {
+        'custom_urls_pager': custom_urls_pager,
+        'form_custom_url_remove': form_custom_url_remove,
+        'can_edit_custom_url': can_edit_custom_url,
+        actions: tab.table_header_tools(form_custom_url_remove, can_edit_custom_url),
+}) }}
+
+{% if custom_urls_pager.haveToPaginate %}
+    {% include '@ibexadesign/ui/pagination.html.twig' with {
+        'pager': custom_urls_pager,
+        'paginaton_params': {
+            'routeName': custom_urls_pagination_params.route_name,
+            'routeParams': custom_urls_pagination_params.route_params|merge({
+                '_fragment': constant('Ibexa\\AdminUi\\Tab\\LocationView\\UrlsTab::URI_FRAGMENT'),
+                'page[system_url]': system_urls_pagination_params.page
+            }),
+            'pageParameter': '[page][custom_url]'
+        }
+    } %}
+{% endif %}
+
+{{  include('@ibexadesign/content/tab/url/system_urls_table.html.twig', {
+        'system_urls_pager': system_urls_pager,
+}) }}
+
+{% if system_urls_pager.haveToPaginate %}
+    {% include '@ibexadesign/ui/pagination.html.twig' with {
+        'pager': system_urls_pager,
+        'paginaton_params': {
+            'routeName': system_urls_pagination_params.route_name,
+            'routeParams': system_urls_pagination_params.route_params|merge({
+                '_fragment': constant('Ibexa\\AdminUi\\Tab\\LocationView\\UrlsTab::URI_FRAGMENT'),
+                'page[custom_url]': custom_urls_pagination_params.page
+            }),
+            'pageParameter': '[page][system_url]'
+        }
+    } %}
+{% endif %}
+
+{% if can_edit_custom_url %}
+    {% include '@ibexadesign/content/tab/url/modal_add_custom_url.html.twig' with {
+        'form': form_custom_url_add,
+        'parent_name': parent_name
+    } only %}
+{% endif %}
+
+{% macro table_header_tools(form_custom_url_remove, can_edit_custom_url) %}
+    {% if can_edit_custom_url %}
+        <button
+            class="btn ibexa-btn ibexa-btn--tertiary ibexa-btn--small ibexa-btn--prevented"
+            data-bs-toggle="modal"
+            data-bs-target="#ibexa-modal--custom-url-alias"
+        >
+            <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--create">
+                <use xlink:href="{{ ibexa_icon_path('create') }}"></use>
+            </svg>
+            <span class="ibexa-btn__label">
+                {{ 'tab.urls.action.add'|trans|desc('Add') }}
+            </span>
+        </button>
+
+        {% set modal_data_target = 'delete-custom-url-modal' %}
+        <button
+            id="delete-custom-urls"
+            type="button"
+            class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--small"
+            disabled
+            data-bs-toggle="modal"
+            data-bs-target="#{{ modal_data_target }}"
+        >
+            <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--trash">
+                <use xlink:href="{{ ibexa_icon_path('trash') }}"></use>
+            </svg>
+            <span class="ibexa-btn__label">
+                {{ 'tab.urls.action.delete'|trans|desc('Delete') }}
+            </span>
+        </button>
+        {% include '@ibexadesign/ui/modal/bulk_delete_confirmation.html.twig' with {
+            'id': modal_data_target,
+            'message': 'tab.urls.modal.message'|trans|desc('Delete the selected custom URL aliases permanently?'),
+            'data_click': '#' ~ form_custom_url_remove.remove.vars.id,
+        }%}
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,25 @@
+{% if form_content_type_edit is defined %}
+    {% form_theme form_content_type_edit '@ibexadesign/ui/form_fields.html.twig' %}
+{% endif %}
+
+<div class="align-items-stretch ibexa-main-row">
+    <div class="ibexa-content-container">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                {% set tabs_to_show = tabs|map((tab, index) => {
+                    id: group ~ '-' ~ tab.identifier,
+                    label: tab.name,
+                    content: tab.view,
+                    active: index == 0,
+                }) %}
+                {% include '@ibexadesign/ui/component/tab/tabs.html.twig' with {
+                    tabs: tabs_to_show,
+                } %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-tabs-js', null, 'ibexa') }}
+{% endblock %}

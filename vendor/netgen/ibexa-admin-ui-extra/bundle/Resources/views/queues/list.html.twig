@@ -1,0 +1,46 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{% trans_default_domain 'netgen_ibexa_admin_ui_extra' %}
+
+{% block title %}{{ 'queues.title'|trans|desc('Queues') }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: [
+        { value: 'breadcrumb.admin'|trans(domain='messages')|desc('Admin') },
+        { value: 'queues.title'|trans|desc('Queues') },
+    ]} %}
+{% endblock %}
+
+{% block header %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: 'queues.title'|trans|desc('Queues'),
+    } %}
+{% endblock %}
+
+{% block content %}
+    <section class="container ibexa-container">
+        {% set body_rows = [] %}
+        {% for queue in queue_data %}
+            {% set body_rows = body_rows|merge([{ cols: [
+                { has_checkbox: false, content: loop.index, raw: true },
+                { content: queue.name, raw: true },
+                { content: queue.count, raw: true },
+                { has_action_btns: false, content: '', raw: true },
+            ] }]) %}
+        {% endfor %}
+
+        {% set headline_text = 'queues.list.title'|trans({'%count%': queue_data|length})|desc('List') %}
+
+        {% embed '@ibexadesign/ui/component/table/table.html.twig' with {
+            headline: headline_text,
+            head_cols: [
+                { has_checkbox: false },
+                { content: 'queues.column.name'|trans|desc('Queue name') },
+                { content: 'queues.column.count'|trans|desc('Message count') },
+                {},
+            ],
+            body_rows,
+        } %}
+        {% endembed %}
+    </section>
+{% endblock %}

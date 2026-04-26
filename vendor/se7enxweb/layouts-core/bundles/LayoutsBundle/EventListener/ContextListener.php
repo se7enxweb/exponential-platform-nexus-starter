@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsBundle\EventListener;
+
+use Netgen\Layouts\Context\Context;
+use Netgen\Layouts\Context\ContextBuilderInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\UriSigner;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+use function count;
+use function http_build_query;
+use function sprintf;
+use function urlencode;
+
+final class ContextListener implements EventSubscriberInterface
+{
+    public function __construct(
+        private Context $context,
+        private ContextBuilderInterface $contextBuilder,
+        private UriSigner $uriSigner,
+    ) {}
+
+    public static function getSubscribedEvents(): array
+    {
+        return [RequestEvent::class => 'onKernelRequest'];
+    }
+
+    /**
+     * Builds the context object.
+     *
+     * If the context is available in query parameters and the URI signature is valid,
+     * it will be used, otherwise, provided builder will be used.
+     */
+    public function onKernelRequest(RequestEvent $event): void
+    {
+        if (!$event->isMainRequest()) {
+            return;
+        }
+
+        $request = $event->getRequest();
+        if ($request->attributes->has('nglContext')) {
+            $context = $request->attributes->all('nglContext');
+            $this->context->add($context);
+
+            return;
+        }
+
+        if ($request->query->has('nglContext')) {
+            $this->context->add($this->getUriContext($request));
+
+            return;
+        }
+
+        $this->contextBuilder->buildContext($this->context);
+    }
+
+    /**
+     * Validates and returns the array with context information filled from the URI.
+     *
+     * @return array<string, mixed>
+     */
+    private function getUriContext(Request $request): array
+    {
+        $context = $request->query->all('nglContext');
+
+        $signedContext = sprintf(
+            '?%s' . (count($context) > 0 ? '&' : '') . '_hash=%s',
+            http_build_query(['nglContext' => $context]),
+            urlencode($request->query->getString('_hash')),
+        );
+
+        if (!$this->uriSigner->check($signedContext)) {
+            return [];
+        }
+
+        return $context;
+    }
+}

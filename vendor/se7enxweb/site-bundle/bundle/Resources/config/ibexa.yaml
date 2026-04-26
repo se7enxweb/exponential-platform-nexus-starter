@@ -1,0 +1,120 @@
+system:
+    default:
+        ng_site_api:
+            named_objects:
+                locations:
+                    homepage: '@=config("content.tree_root.location_id")'
+                    site_info: '@=config("locations.site_info.id", "ngsite")'
+                    showcase: '@=config("locations.showcase.id", "ngsite")'
+                content:
+                    current_user: '@=currentUserId'
+    admin_group:
+        fieldtypes:
+            ibexa_richtext:
+                classes:
+                    table:
+                        choices:
+                            - regular
+                            - table-bordered
+                            - table-striped
+                            - table-hover
+                            - table-condensed
+                            - table-no-skin
+                        default_value: regular
+                        required: false
+                        multiple: false
+                    heading1:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    heading2:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    heading3:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    heading4:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    heading5:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    heading6:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+                    paragraph:
+                        choices:
+                            - clear
+                            - half-left
+                            - half-right
+                        default_value: clear
+                        required: false
+                        multiple: false
+#                    ibexaLink:
+#                        choices:
+#                            - none
+#                            - btn-default
+#                            - btn-primary
+#                        default_value: none
+#                        required: false
+#                        multiple: false
+                attributes:
+                    table:
+                        caption:
+                            type: string
+                            required: false
+                        responsive:
+                            type: boolean
+                            default_value: false
+#                    ibexaLink:
+#                        link-suffix:
+#                            type: string
+#                            required: false
+#                        direct-download:
+#                            type: boolean
+#                            default_value: false
+#                        open-inline:
+#                            type: boolean
+#                            default_value: false
+                custom_tags:
+                    - video
+                    - factbox
+                    - quote
+                toolbar:
+                    custom_tags_group:
+                        buttons:
+                            video:
+                                priority: 60
+                            factbox:
+                                priority: 50
+                            quote:
+                                priority: 40

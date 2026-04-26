@@ -1,0 +1,23 @@
+{% block ibexa_matrix_field %}
+    {% set columnsSettings = fieldSettings['columns'] %}
+    {% set fieldData = field.value.rows %}
+
+    <table {% if attr.class is defined %} class="{{attr.class}}"{% endif %}>
+        <thead>
+            <tr>
+                {% for column in columnsSettings %}
+                    <th>{{ column['name'] }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in fieldData %}
+        <tr>
+            {% for column in columnsSettings %}
+                <td>{{ data.cells[column['identifier']]|default }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,22 @@
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+  bootstrap="vendor/autoload.php"
+  beStrictAboutTestsThatDoNotTestAnything="false"
+  colors="true"
+  >
+  <testsuites>
+    <testsuite name="Ibexa REST Bundle">
+      <directory>tests/bundle/</directory>
+      <exclude>tests/bundle/Functional</exclude>
+    </testsuite>
+    <testsuite name="Ibexa REST">
+      <directory>tests/lib/</directory>
+      <directory>tests/contracts/</directory>
+      <exclude>tests/lib/Server</exclude>
+    </testsuite>
+    <testsuite name="Ibexa REST Server Tests">
+      <directory>tests/lib/Server</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

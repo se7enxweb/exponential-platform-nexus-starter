@@ -1,0 +1,74 @@
+imports:
+    - { resource: api_platform/badges.yaml }
+
+services:
+    ibexa.api_platform.action.entrypoint:
+        parent: api_platform.action.entrypoint
+        arguments:
+            index_0: '@Ibexa\Bundle\Rest\ApiPlatform\ClassNameResourceNameCollectionFactory'
+            index_1: '@ibexa.api_platform.state_provider.content_negotiation'
+
+    ibexa.api_platform.state_provider.content_negotiation:
+        parent: api_platform.state_provider.content_negotiation
+        arguments:
+            index_0: '@ibexa.api_platform.swagger_ui.provider'
+
+    ibexa.api_platform.swagger_ui.provider:
+        parent: api_platform.swagger_ui.provider
+        arguments:
+            index_1: '@ibexa.api_platform.ibexa_openapi.factory'
+
+    ibexa.api_platform.ibexa_openapi.factory:
+        class: Ibexa\Bundle\Rest\ApiPlatform\OpenApiFactory
+        decorates: ibexa.api_platform.openapi.factory
+        arguments:
+            $decorated: '@.inner'
+            $schemaCollectionFactory: '@Ibexa\Bundle\Rest\ApiPlatform\SchemasCollectionFactory'
+            $kernel: '@Symfony\Component\HttpKernel\KernelInterface'
+            $prefix: '%ibexa.rest.path_prefix%'
+            $editionBadgeFactory: '@Ibexa\Bundle\Rest\ApiPlatform\EditionBadge\EditionBadgeFactoryInterface'
+
+    ibexa.api_platform.openapi.factory:
+        parent: api_platform.openapi.factory
+        arguments:
+            index_0: '@Ibexa\Bundle\Rest\ApiPlatform\ClassNameResourceNameCollectionFactory'
+
+    Ibexa\Bundle\Rest\ApiPlatform\ClassNameResourceNameCollectionFactory: ~
+
+    # Collecting schemas
+    Ibexa\Bundle\Rest\ApiPlatform\SchemasCollectionFactory: ~
+
+    ibexa.api_platform.schemas_provider.rest:
+        class: Ibexa\Rest\ApiPlatform\SchemasProvider
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $files:
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/base_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/bookmarks_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_locations_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_objects_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_sections_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_trash_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_type_groups_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_types_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_url_aliases_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/content_url_wildcards_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/language_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/object_state_groups_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/services_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/views_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/user/roles_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/user/sessions_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/user/token_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/user/user_groups_schemas.yml'
+                - '@@IbexaRestBundle/Resources/api_platform/schemas/user/users_schemas.yml'
+
+    # OpenAPI Command
+
+    ibexa.api_platform.openapi.command:
+        parent: api_platform.openapi.command
+        arguments:
+            index_0: '@ibexa.api_platform.ibexa_openapi.factory'
+        tags:
+            - { name: 'console.command', command: 'ibexa:openapi' }

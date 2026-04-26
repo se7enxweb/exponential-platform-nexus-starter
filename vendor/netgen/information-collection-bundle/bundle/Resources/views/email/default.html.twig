@@ -1,0 +1,34 @@
+{# event \Netgen\Bundle\InformationCollectionBundle\Event\InformationCollected #}
+{# content \Ibexa\Contracts\Core\Repository\Values\Content\Content #}
+
+{% block email %}
+
+{% set content_type = event.contentType %}
+
+{% for field_name, field_value in collected_fields %}
+    {% if content.fields[field_name] is defined and content.fields[field_name] is not empty %}
+        <div class="data-group attr-{{ field_name }}">
+            <div class="label">
+                {{ ibexa_field_name(content, field_name) }}:
+            </div>
+            <div class="value">
+                {% if content_type.fieldDefinitionsByIdentifier[field_name].fieldTypeIdentifier == 'ezselection' %}
+                    {% set selectionArray=field_value|split('-') %}
+                    {% if selectionArray|length > 1 %}<ul>{% endif %}
+                    {% for selected_key, selected_value in selectionArray %}
+                        {% if loop.length == 1 %}
+                            {{ content_type.fieldDefinitionsByIdentifier[field_name].fieldSettings.options[selected_value] }}<br>
+                        {% else %}
+                            <li>{{ content_type.fieldDefinitionsByIdentifier[field_name].fieldSettings.options[selected_value] }}</li><br>
+                        {% endif %}
+                    {% endfor %}
+                    {% if selectionArray|length > 1 %}</ul>{% endif %}
+                {% else %}
+                    {{ field_value }}
+                {% endif %}
+            </div><br>
+        </div>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

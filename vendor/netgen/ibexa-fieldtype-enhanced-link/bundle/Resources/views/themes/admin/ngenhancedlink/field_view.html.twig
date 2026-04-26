@@ -1,0 +1,58 @@
+{% extends '@IbexaCore/content_fields.html.twig' %}
+
+{% trans_default_domain 'field_view' %}
+
+{% block ngenhancedlink_field %}
+{% apply spaceless %}
+    {% if not ibexa_field_is_empty( content, field ) %}
+        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' ibexa-field-preview ibexa-field-preview--ngenhancedlink')|trim}) %}
+        <div {{ block( 'field_attributes' ) }}>
+            {% if field.value.isTypeInternal%}
+                {% embed '@ibexadesign/ui/component/table/table.html.twig' with {
+                    head_cols: [
+                        { content: 'ngenhancedlink.name'|trans|desc('Name') },
+                        { content: 'ngenhancedlink.content_type'|trans|desc('Content Type') },
+                        { content: 'ngenhancedlink.created'|trans|desc('Created') },
+                    ],
+                } %}
+                    {% block tbody %}
+                        {% embed '@ibexadesign/ui/component/table/table_body_row.html.twig' with { field: field } %}
+                            {% block body_row_cells %}
+                                {{ render(controller('Ibexa\\Bundle\\AdminUi\\Controller\\ContentController::relationViewAction', {
+                                    'contentId': field.value.reference,
+                                } )) }}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endblock %}
+                {% endembed %}
+                <p>Type: internal</p>
+                <p>Label: {{ field.value.label }}</p>
+                <p>Target: {{ field.value.target }}</p>
+                <p>Suffix: {{ field.value.suffix }}</p>
+            {% endif %}
+            {% if field.value.isTypeExternal %}
+                <h3>
+                    {% if not ibexa_field_is_empty( content, field ) %}
+                        <a href="{{ field.value.reference }}" {{ block( 'field_attributes' ) }}>
+                            {{ field.value.label ? field.value.label : field.value.reference }}
+                        </a>
+                    {% endif %}
+                </h3>
+                <p>Type: external</p>
+                <p>URL: {{ field.value.reference }}</p>
+                <p>Label: {{ field.value.label }}</p>
+                <p>Target: {{ field.value.target }}</p>
+            {% endif %}
+            <p>Rel attribute: {{ field.value.relAttribute }}</p>
+        </div>
+    {% endif %}
+{% endapply %}
+{% endblock %}
+
+{# Block for field attributes rendering. Useful to add a custom class, id or whatever HTML attribute to the field markup #}
+{% block field_attributes %}
+{% apply spaceless %}
+    {% set attr = attr|default( {} ) %}
+    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+{% endapply %}
+{% endblock %}

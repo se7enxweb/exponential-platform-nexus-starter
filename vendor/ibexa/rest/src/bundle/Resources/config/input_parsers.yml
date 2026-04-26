@@ -1,0 +1,871 @@
+parameters:
+
+    # REST server
+
+services:
+    Ibexa\Rest\Server\Common\Parser:
+        abstract: true
+        calls:
+            - [ setUriParser, [ '@Ibexa\Contracts\Rest\UriParser\UriParserInterface' ] ]
+
+    Ibexa\Rest\Input\Parser\ContentObjectStates:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Input\Parser\ContentObjectStates
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentObjectStates }
+
+    # Rest server
+
+    Ibexa\Rest\Server\Input\Parser\ContentCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentCreate
+        arguments:
+            - '@ibexa.api.service.content'
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+            - '@Ibexa\Rest\Server\Input\Parser\LocationCreate'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentCreate }
+
+    Ibexa\Rest\Server\Input\Parser\ContentUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentUpdate
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\ContentTypeCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentTypeCreate
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Server\Input\Parser\FieldDefinitionCreate'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentTypeCreate }
+
+    Ibexa\Rest\Server\Input\Parser\ContentTypeGroupInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentTypeGroupInput
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentTypeGroupInput }
+
+    Ibexa\Rest\Server\Input\Parser\ContentTypeUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentTypeUpdate
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentTypeUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\ContentType\RestViewInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ContentTypeViewInput }
+
+    Ibexa\Rest\Server\Input\Parser\ContentType\Query\ContentTypeQuery:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $criterionProcessor: '@Ibexa\Rest\Server\Input\Parser\ContentType\Criterion\CriterionProcessor'
+            $sortClauseProcessor: '@Ibexa\Rest\Server\Input\Parser\ContentType\SortClause\SortClauseProcessor'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.ContentTypeQuery }
+
+    Ibexa\Rest\Server\Input\Parser\FieldDefinitionCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\FieldDefinitionCreate
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.FieldDefinitionCreate }
+
+    Ibexa\Rest\Server\Input\Parser\FieldDefinitionUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\FieldDefinitionUpdate
+        arguments:
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.FieldDefinitionUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\LocationCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\LocationCreate
+        arguments:
+            - '@ibexa.api.service.location'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.LocationCreate }
+
+    Ibexa\Rest\Server\Input\Parser\LocationUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\LocationUpdate
+        arguments:
+            - '@ibexa.api.service.location'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.LocationUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\ObjectStateGroupCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ObjectStateGroupCreate
+        arguments:
+            - '@ibexa.api.service.object_state'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ObjectStateGroupCreate }
+
+    Ibexa\Rest\Server\Input\Parser\ObjectStateGroupUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ObjectStateGroupUpdate
+        arguments:
+            - '@ibexa.api.service.object_state'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ObjectStateGroupUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\ObjectStateCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ObjectStateCreate
+        arguments:
+            - '@ibexa.api.service.object_state'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ObjectStateCreate }
+
+    Ibexa\Rest\Server\Input\Parser\ObjectStateUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ObjectStateUpdate
+        arguments:
+            - '@ibexa.api.service.object_state'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ObjectStateUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\PolicyCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\PolicyCreate
+        arguments:
+            - '@ibexa.api.service.role'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.PolicyCreate }
+
+    Ibexa\Rest\Server\Input\Parser\PolicyUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\PolicyUpdate
+        arguments:
+            - '@ibexa.api.service.role'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.PolicyUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\RelationCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\RelationCreate
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.RelationCreate }
+
+    Ibexa\Rest\Server\Input\Parser\RoleAssignInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\RoleAssignInput
+        arguments:
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.RoleAssignInput }
+
+    Ibexa\Rest\Server\Input\Parser\RoleInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\RoleInput
+        arguments:
+            - '@ibexa.api.service.role'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.RoleInput }
+
+    Ibexa\Rest\Server\Input\Parser\SectionInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SectionInput
+        arguments:
+            - '@ibexa.api.service.section'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.SectionInput }
+
+    Ibexa\Rest\Server\Input\Parser\SessionInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SessionInput
+        arguments:
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.SessionInput }
+
+    Ibexa\Rest\Server\Input\Parser\UserGroupUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\UserGroupUpdate
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@ibexa.api.service.content'
+            - '@ibexa.api.service.location'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UserGroupUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\URLAliasCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\URLAliasCreate
+        arguments:
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UrlAliasCreate }
+
+    Ibexa\Rest\Server\Input\Parser\URLWildcardCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\URLWildcardCreate
+        arguments:
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UrlWildcardCreate }
+
+    Ibexa\Rest\Server\Input\Parser\UserCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\UserCreate
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UserCreate }
+
+    Ibexa\Rest\Server\Input\Parser\UserGroupCreate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\UserGroupCreate
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@ibexa.api.service.content_type'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UserGroupCreate }
+
+    Ibexa\Rest\Server\Input\Parser\UserUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\UserUpdate
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@ibexa.api.service.content'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+            - '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.UserUpdate }
+
+    Ibexa\Rest\Server\Input\Parser\ViewInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ViewInput
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.ViewInput }
+
+    Ibexa\Rest\Server\Input\Parser\ViewInputOneDotOne:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ViewInputOneDotOne
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: "application/vnd.ibexa.api.ViewInput; version=1.1" }
+
+    Ibexa\Rest\Server\Input\Parser\VersionUpdate:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\VersionUpdate
+        arguments:
+            - '@ibexa.api.service.content'
+            - '@Ibexa\Rest\Input\FieldTypeParser'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.VersionUpdate }
+
+    # internal Media-Types
+    Ibexa\Rest\Server\Input\Parser\ContentQuery:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\ContentQuery
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.ContentQuery }
+
+    Ibexa\Rest\Server\Input\Parser\LocationQuery:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\LocationQuery
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.LocationQuery }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Ancestor:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\Ancestor
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Ancestor }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ContentId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentRemoteId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ContentRemoteId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentRemoteId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeGroupId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeGroupId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentTypeGroupId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentTypeId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeIdentifier:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ContentTypeIdentifier
+        arguments:
+            - '@ibexa.api.service.content_type'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentTypeIdentifier }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\DateMetadata:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\DateMetadata
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.DateMetadata }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Field:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\Field
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Field }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\FullText:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\FullText
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.FullText }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LanguageCode:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LanguageCode
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LanguageCode }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LocationId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LocationId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LocationId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LocationRemoteId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LocationRemoteId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LocationRemoteId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LogicalAnd:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LogicalAnd
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LogicalAnd }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LogicalNot:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LogicalNot
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LogicalNot }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\LogicalOr:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\LogicalOr
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.LogicalOr }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\MoreLikeThis:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\MoreLikeThis
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.MoreLikeThis }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Operator:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\Operator
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Operator }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ParentLocationId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ParentLocationId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ParentLocationId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ParentLocationRemoteId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ParentLocationRemoteId
+        arguments:
+            - '@ibexa.api.service.location'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ParentLocationRemoteId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\SectionIdentifier:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\SectionIdentifier
+        arguments:
+            - '@ibexa.api.service.section'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.SectionIdentifier }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\SectionId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\SectionId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.SectionId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Subtree:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\Subtree
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Subtree }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\UserMetadata:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\UserMetadata
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.UserMetadata }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\IsContainer:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $parserTools: '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.IsContainer }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\IsUserBased:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $parserTools: '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.IsUserBased }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\IsUserEnabled:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $parserTools: '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.IsUserEnabled }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\UserId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.UserId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\UserLogin:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.UserLogin }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\UserEmail:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.UserEmail }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ObjectStateId:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\ObjectStateId
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ObjectStateId }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ObjectStateIdentifier:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ObjectStateIdentifier }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Visibility:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Criterion\Visibility
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Visibility }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Sibling:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Sibling }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ContentName:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ContentName }
+
+    ibexa.rest.input.parser.internal.sortclause.content_id:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'ContentId'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\ContentId'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.ContentId }
+
+    ibexa.rest.input.parser.internal.sortclause.content_name:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'ContentName'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\ContentName'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.ContentName }
+
+    ibexa.rest.input.parser.internal.sortclause.date_modified:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'DateModified'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\DateModified'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.DateModified }
+
+    ibexa.rest.input.parser.internal.sortclause.date_published:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'DatePublished'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\DatePublished'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.DatePublished }
+
+    ibexa.rest.input.parser.internal.sortclause.location_depth:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'LocationDepth'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\Location\Depth'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.LocationDepth }
+
+    ibexa.rest.input.parser.internal.sortclause.location_path:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'LocationPath'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\Location\Path'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.LocationPath }
+
+    ibexa.rest.input.parser.internal.sortclause.location_priority:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'LocationPriority'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\Location\Priority'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.LocationPriority }
+
+    ibexa.rest.input.parser.internal.sortclause.location_id:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'LocationId'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\Location\Id'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.LocationId }
+
+    ibexa.rest.input.parser.internal.sortclause.section_identifier:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'SectionIdentifier'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\SectionIdentifier'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.SectionIdentifier }
+
+    ibexa.rest.input.parser.internal.sortclause.SectionName:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass
+        arguments:
+            - 'SectionName'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\SectionName'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.SectionName }
+
+    ibexa.rest.input.parser.internal.sortclause.score:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: 'Ibexa\Rest\Server\Input\Parser\SortClause\DataKeyValueObjectClass'
+        arguments:
+            - 'Score'
+            - 'Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\Score'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.Score }
+
+    Ibexa\Rest\Server\Input\Parser\SortClause\Field:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\SortClause\Field
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.sortclause.Field }
+
+    # aggregation parsers
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Range\DateTimeRangeParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.range.DateTimeRange }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Range\FloatRangeParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.range.FloatRange }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Range\IntRangeParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.range.IntRange }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\ContentTypeGroupTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.ContentTypeGroupTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\ContentTypeTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.ContentTypeTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\DateMetadataRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.DateMetadataRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\AuthorTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.AuthorTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\CheckboxTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.CheckboxTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\CountryTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.CountryTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\DateRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.DateRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\DateTimeRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.DateTimeRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\FloatRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.FloatRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\FloatStatsAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.FloatStatsAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\IntegerRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.IntegerRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\IntegerStatsAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.IntegerStatsAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\KeywordTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.KeywordTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\SelectionTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.SelectionTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Field\TimeRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.TimeRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\LanguageTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.LanguageTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\ObjectStateTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.ObjectStateTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\RawRangeAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.RawRangeAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\RawStatsAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.RawStatsAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\RawTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.RawTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\SectionTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.SectionTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Location\SubtreeTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.SubtreeTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\Location\LocationChildrenTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.LocationChildrenTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\UserMetadataTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.UserMetadataTermAggregation }
+
+    Ibexa\Rest\Server\Input\Parser\Aggregation\VisibilityTermAggregationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.aggregation.VisibilityTermAggregation }
+
+    # role limitation parsers
+
+    Ibexa\Rest\Server\Input\Parser\Limitation\PathStringRouteBasedLimitationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Limitation\PathStringRouteBasedLimitationParser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.limitation.Subtree }
+        arguments:
+            - 'locationPath'
+            - 'Ibexa\Contracts\Core\Repository\Values\User\Limitation\SubtreeLimitation'
+
+    Ibexa\Rest\Server\Input\Parser\Limitation\RouteBasedLimitationParser:
+        parent: Ibexa\Rest\Server\Common\Parser
+        class: Ibexa\Rest\Server\Input\Parser\Limitation\RouteBasedLimitationParser
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.limitation.Section }
+        arguments:
+            - 'sectionId'
+            - 'Ibexa\Contracts\Core\Repository\Values\User\Limitation\SectionLimitation'
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ImageMimeType:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ImageMimeType }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ImageFileSize:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ImageFileSize }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ImageOrientation:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ImageOrientation }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\ImageDimensions:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.ImageDimensions }
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\Image:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.Image }
+
+
+    Ibexa\Rest\Server\Input\Parser\Criterion\IsBookmarked:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $parserTools: '@Ibexa\Rest\Input\ParserTools'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.internal.criterion.IsBookmarked }
+
+    Ibexa\Rest\Server\Input\Parser\MoveLocation:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.MoveLocationInput }
+
+    Ibexa\Rest\Server\Input\Parser\SwapLocationInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.SwapLocationInput }
+
+    Ibexa\Rest\Server\Input\Parser\RestoreTrashItemInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.RestoreTrashItemInput }
+
+    Ibexa\Rest\Server\Input\Parser\MoveUserGroupInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.MoveUserGroupInput }
+
+    Ibexa\Rest\Server\Input\Parser\CopyLocationInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.CopyLocationInput }
+
+    Ibexa\Rest\Server\Input\Parser\CopyContentInput:
+        parent: Ibexa\Rest\Server\Common\Parser
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $validator: '@validator'
+        tags:
+            - { name: ibexa.rest.input.parser, mediaType: application/vnd.ibexa.api.CopyContentInput }

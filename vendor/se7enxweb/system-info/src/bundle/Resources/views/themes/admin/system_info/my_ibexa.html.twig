@@ -1,0 +1,54 @@
+{% trans_default_domain "ibexa_systeminfo" %}
+
+<!-- Tab name: {{ 'tab.name.ibexa'|trans|desc('Product') }} -->
+
+{% set my_ibexa_items = [
+    {
+        label: 'ibexa.name'|trans|desc('Edition'),
+        content: info.name,
+    },
+    {
+        label: 'ibexa.version'|trans|desc('Version'),
+        content: info.release,
+    },
+    {
+        label: 'ibexa.is_trial'|trans|desc('Is trial'),
+        content: info.isTrial ? 'ibexa.is_trial.yes'|trans|desc('Yes') : 'ibexa.is_trial.no'|trans|desc('No'),
+    },
+    {
+        label: 'ibexa.stability'|trans|desc('Stability'),
+        content: info.lowestStability,
+    },
+] %}
+
+{% if info.isEnterprise %}
+    {% set my_ibexa_items = my_ibexa_items|merge([
+        {
+            label: 'ibexa.eom'|trans|desc('End of maintenance'),
+            content: info.endOfMaintenanceDate is empty ? '-' : info.endOfMaintenanceDate|date('F Y', false),
+        },
+        {
+            label: 'ibexa.eol'|trans|desc('End of life'),
+            content: info.endOfLifeDate is empty ? '-' : info.endOfLifeDate|date('F Y', false),
+        },
+    ]) %}
+{% endif %}
+
+{% include '@ibexadesign/ui/component/details/details.html.twig' with {
+    headline: 'ibexa.product'|trans|desc('Product'),
+    items: my_ibexa_items,
+} only %}
+
+{% if info.isEnterprise %}
+    <div class="ibexa-system-info-helper-text">
+        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--edit">
+            <use xlink:href="{{ ibexa_icon_path('system-information') }}"></use>
+        </svg>
+        {{ 'ibexa.read_more'|trans|desc('For more information about Service Life for Ibexa DXP with a business license, see') }}
+        <a target="_blank" href="https://support.ibexa.co/Public/Service-Life" class="ibexa-system-info-helper-text__link">
+            {{- "https://support.ibexa.co/Public/Service-Life" -}}
+        </a>.
+    </div>
+{% endif %}
+
+{{ encore_entry_link_tags('ibexa-system-information-css', null, 'ibexa') }}

@@ -1,0 +1,93 @@
+{% trans_default_domain 'ibexa_content_forms_content' %}
+
+{% block binary_base_row %}
+    {% if not file_is_empty is defined %}
+        {% set file_is_empty =
+            form.parent.vars.value.value.fileName is null
+            or form.parent.vars.value.value.fileSize is null
+            or form.parent.vars.value.value.uri is null
+        %}
+    {% endif %}
+    {% set fieldtype = form.parent %}
+    {% set translation_mode = fieldtype.vars.mainLanguageCode != fieldtype.vars.languageCode %}
+    {% set fieldtype_is_not_translatable = translation_mode and not fieldtype.vars.value.fieldDefinition.isTranslatable %}
+    {% set attr = attr|merge({'data-max-file-size': max_file_size}) %}
+    {% set wrapper_attr = wrapper_attr|default({})|merge({'class': (wrapper_attr.class|default('') ~ ' ibexa-field-edit--with-preview')|trim}) %}
+    {% set preview_attr = preview_attr|default({})|merge({'class': (preview_attr.class|default('') ~ ' ibexa-field-edit__preview')|trim}) %}
+    {% set widget_wrapper_attr = widget_wrapper_attr|default({})|merge({'class': (widget_wrapper_attr.class|default('') ~ ' ibexa-field-edit__data')|trim}) %}
+
+    {% if fieldtype_is_not_translatable or fieldtype.vars.disabled %}
+        {% set attr = attr|merge({'readonly': 'readonly'}) %}
+    {% endif %}
+
+    {% set has_error = false %}
+    {% for error in form.parent.parent.parent.vars.errors %}
+        {% if error.origin == form.vars.errors.form %}
+            {% set has_error = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if file_is_empty or has_error %}
+        {% set preview_attr = preview_attr|default({})|merge({'hidden': 'hidden'}) %}
+    {% else %}
+        {% set widget_wrapper_attr = widget_wrapper_attr|merge({'hidden': 'hidden'}) %}
+    {% endif %}
+
+    {% if not widget_container_block_name is defined %}
+        {% set widget_container_block_name = 'binary_base_widget_container' %}
+    {% endif %}
+    {% set widget_container_block = block(widget_container_block_name) %}
+
+    {{ block('form_row_fieldtype') }}
+{% endblock %}
+
+{% block binary_base_widget %}
+    <div class="ibexa-data-source__message--main">{{ 'fieldtype.binary_base.drag_drop'|trans|desc('Drag and drop file') }}</div>
+    <div class="ibexa-data-source__message--separator">{{ 'fieldtype.binary_base.drag_drop.or'|trans|desc('or') }}</div>
+    <div class="ibexa-data-source__actions">
+        <button
+            type="button"
+            class="ibexa-data-source__btn-add btn ibexa-btn ibexa-btn--secondary"
+            {{ attr.readonly|default(false) ? 'disabled' }}
+        >
+            <span class="ibexa-data-source__btn-label">{{ 'fieldtype.binary_base.upload_file'|trans|desc('Upload file') }}</span>
+        </button>
+    </div>
+    {% if max_file_size is defined and max_file_size > 0 %}
+        <div class="ibexa-data-source__message--filesize">{{ 'fieldtype.binary_base.max_file_size'|trans({'%size%': max_file_size|default(0)|ibexa_file_size(2)})|desc('Max file size: %size%') }}</div>
+    {% endif %}
+
+    {% if image_extensions is defined and image_extensions is not empty %}
+        {% set extensions = [] %}
+
+        {% for mime_type in mime_types %}
+            {% set extensions = extensions|merge(image_extensions[mime_type]) %}
+        {% endfor %}
+
+        <div class="ibexa-data-source__message--image-extensions">
+            {{ 'fieldtype.binary_base.image_extensions'|trans({'%extensions%': extensions|join(', ')})|desc('Allowed extensions: %extensions%') }}
+        </div>
+    {% endif %}
+
+    {% set attr = attr|merge({ hidden: 'hidden' }) %}
+
+    {{- form_widget(form.file, {'attr': attr}) -}}
+    {{- form_widget(form.remove, {'attr': {
+        'hidden': 'hidden',
+        'class': 'ibexa-field-edit__option--remove-media'
+    }, 'label_attr': {'hidden': 'hidden', 'class': 'checkbox-inline'}}) -}}
+{% endblock %}
+
+{% block binary_base_widget_container %}
+    {% set fieldtype = form.parent %}
+    {% set field_type_descriptions = fieldtype.vars.value.fieldDefinition.descriptions %}
+
+    <div{% with { attr: preview_attr } %}{{ block('attributes') }}{% endwith %}>
+        {{ block(preview_block_name) }}
+    </div>
+    <div{% with { attr: widget_wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+        <div class="ibexa-data-source">
+            {{ block('binary_base_widget') }}
+        </div>
+    </div>
+{% endblock %}

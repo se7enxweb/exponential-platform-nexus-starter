@@ -1,0 +1,74 @@
+{
+    "name": "ibexa/content-forms",
+    "description": "Use Symfony Forms with Ibexa Content & User objects",
+    "license": "(GPL-2.0-only or proprietary)",
+    "type": "ibexa-bundle",
+    "replace": {
+        "ezsystems/ezplatform-content-forms": "*"
+    },
+    "require": {
+        "php": " >=8.3",
+        "ext-json": "*",
+        "ibexa/core": "~5.0.x-dev",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/filesystem": "^7.4",
+        "symfony/form": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/options-resolver": "^7.4",
+        "symfony/routing": "^7.4",
+        "symfony/translation": "^7.4",
+        "symfony/validator": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "behat/behat": "^3.5",
+        "ibexa/behat": "~5.0.x-dev",
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/http-cache": "~5.0.x-dev",
+        "ibexa/notifications": "~5.0.x-dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "ibexa/rest": "~5.0.x-dev",
+        "ibexa/test-core": "~5.0.x-dev",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.0",
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\ContentForms\\": "src/lib/",
+            "Ibexa\\Bundle\\ContentForms\\": "src/bundle/",
+            "Ibexa\\Contracts\\ContentForms\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\Bundle\\ContentForms\\": "tests/bundle/",
+            "Ibexa\\Tests\\Integration\\ContentForms\\": "tests/integration/",
+            "Ibexa\\Tests\\ContentForms\\": "tests/lib/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "*/*": false
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "phpstan": "phpstan analyse",
+        "test": "phpunit -c phpunit.xml.dist",
+        "test-integration": "phpunit -c phpunit.integration.xml.dist"
+    }
+}

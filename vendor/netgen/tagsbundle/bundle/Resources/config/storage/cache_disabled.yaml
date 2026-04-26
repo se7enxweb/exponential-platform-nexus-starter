@@ -1,0 +1,3 @@
+services:
+    netgen_tags.api.persistence_handler.tags.cache:
+        alias: netgen_tags.api.persistence_handler.tags.storage

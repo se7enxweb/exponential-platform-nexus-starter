@@ -1,0 +1,4 @@
+suites:
+    http_cache:
+        namespace: Ibexa\HttpCache
+        psr4_prefix: Ibexa\HttpCache

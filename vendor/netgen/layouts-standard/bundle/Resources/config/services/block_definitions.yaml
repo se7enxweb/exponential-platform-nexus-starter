@@ -1,0 +1,143 @@
+parameters:
+    netgen_layouts.standard.block.block_definition_handler.title.tags:
+        h1: block.title.tag.h1
+        h2: block.title.tag.h2
+        h3: block.title.tag.h3
+
+    netgen_layouts.standard.block.block_definition_handler.title.value_types: []
+
+    netgen_layouts.standard.block.block_definition_handler.button.styles:
+        'default_button': block.button.style.default_button
+        'highlighted_button': block.button.style.highlighted_button
+        'link': block.button.style.link
+
+    netgen_layouts.standard.block.block_definition_handler.button.value_types: []
+
+    netgen_layouts.standard.block.block_definition_handler.external_video.services:
+        youtube: block.external_video.service.youtube
+        vimeo: block.external_video.service.vimeo
+        dailymotion: block.external_video.service.dailymotion
+
+    netgen_layouts.standard.block.block_definition_handler.full_view.twig_block_names: ['content', 'body']
+
+    netgen_layouts.standard.block.block_definition_handler.map.min_zoom: 0
+    netgen_layouts.standard.block.block_definition_handler.map.max_zoom: 20
+    netgen_layouts.standard.block.block_definition_handler.map.map_types:
+        ROADMAP: block.map.map_type.roadmap
+        SATELLITE: block.map.map_type.satellite
+        HYBRID: block.map.map_type.hybrid
+        TERRAIN: block.map.map_type.terrain
+
+    netgen_layouts.standard.block.block_definition_handler.list.columns:
+        2: block.list.number_of_columns.2_columns
+        3: block.list.number_of_columns.3_columns
+        4: block.list.number_of_columns.4_columns
+        6: block.list.number_of_columns.6_columns
+
+    netgen_layouts.standard.block.block_definition_handler.gallery.min_autoplay_time: 1
+    netgen_layouts.standard.block.block_definition_handler.gallery.max_autoplay_time: 12
+
+    netgen_layouts.standard.block.block_definition_handler.gallery.transitions:
+        slide: block.gallery.transition.slide
+        fade: block.gallery.transition.fade
+
+services:
+    netgen_layouts.standard.block.block_definition_handler.title:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\TitleHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.title.tags%"
+            - "%netgen_layouts.standard.block.block_definition_handler.title.value_types%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: title }
+
+    netgen_layouts.standard.block.block_definition_handler.text:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\TextHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: text }
+
+    netgen_layouts.standard.block.block_definition_handler.button:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\ButtonHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.button.styles%"
+            - "%netgen_layouts.standard.block.block_definition_handler.button.value_types%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: button }
+
+    netgen_layouts.standard.block.block_definition_handler.markdown:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\MarkdownHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: markdown }
+
+    netgen_layouts.standard.block.block_definition_handler.rich_text:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\RichTextHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: rich_text }
+
+    netgen_layouts.standard.block.block_definition_handler.external_video:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\ExternalVideoHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.external_video.services%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: external_video }
+
+    netgen_layouts.standard.block.block_definition_handler.html_snippet:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\HtmlSnippetHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: html_snippet }
+
+    netgen_layouts.standard.block.block_definition_handler.full_view:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Twig\FullViewHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.full_view.twig_block_names%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: full_view }
+
+    netgen_layouts.standard.block.block_definition_handler.twig_block:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Twig\TwigBlockHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: twig_block }
+
+    netgen_layouts.standard.block.block_definition_handler.map:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\MapHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.map.min_zoom%"
+            - "%netgen_layouts.standard.block.block_definition_handler.map.max_zoom%"
+            - "%netgen_layouts.standard.block.block_definition_handler.map.map_types%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: map }
+
+    netgen_layouts.standard.block.block_definition_handler.list:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\ListHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.list.columns%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: list }
+
+    netgen_layouts.standard.block.block_definition_handler.gallery:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\GalleryHandler
+        arguments:
+            - "%netgen_layouts.standard.block.block_definition_handler.gallery.min_autoplay_time%"
+            - "%netgen_layouts.standard.block.block_definition_handler.gallery.max_autoplay_time%"
+            - "%netgen_layouts.standard.block.block_definition_handler.gallery.transitions%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: gallery }
+
+    netgen_layouts.standard.block.block_definition_handler.column:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Container\ColumnHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: column }
+
+    netgen_layouts.standard.block.block_definition_handler.two_columns:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Container\TwoColumnsHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: two_columns }
+
+    netgen_layouts.standard.block.block_definition_handler.three_columns:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Container\ThreeColumnsHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: three_columns }
+
+    netgen_layouts.standard.block.block_definition_handler.four_columns:
+        class: Netgen\Layouts\Standard\Block\BlockDefinition\Handler\Container\FourColumnsHandler
+        tags:
+            - { name: netgen_layouts.block_definition_handler, identifier: four_columns }

@@ -1,0 +1,10 @@
+.idea/
+.phpunit.cache/
+coverage/
+vendor/
+.php-cs-fixer.cache
+.phpunit.result.cache
+composer.lock
+composer.phar
+phpunit.phar
+studio.json

@@ -1,0 +1,13 @@
+{% extends '@nglayouts_admin/app/block/block.html.twig' %}
+
+{% import '@NetgenLayoutsAdmin/app/parts/macros.html.twig' as macros %}
+
+{% block content %}
+    {% set number_of_columns = block.parameter('number_of_columns').value|default(3) %}
+
+    {{ include('@NetgenLayoutsAdmin/app/parts/collection.html.twig', {
+        block: block,
+        collection: collections.default is defined ? collections.default : null,
+        number_of_columns: block.parameter('number_of_columns').value|default(3),
+    }) }}
+{% endblock %}

@@ -1,0 +1,38 @@
+parameters:
+    ibexa.field_type.matrix.identifier: 'ibexa_matrix'
+    ibexa.field_type.matrix.legacy_identifier: 'ezmatrix'
+
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Ibexa\FieldTypeMatrix\FieldType\Type:
+        autoconfigure: false
+        autowire: true
+        public: true
+        parent: Ibexa\Core\FieldType\FieldType
+        arguments:
+            $fieldTypeIdentifier: '%ibexa.field_type.matrix.identifier%'
+        tags:
+            - { name: ibexa.field_type, alias: '%ibexa.field_type.matrix.identifier%', legacy_alias: '%ibexa.field_type.matrix.legacy_identifier%' }
+
+    Ibexa\FieldTypeMatrix\FieldType\Converter\MatrixConverter:
+        tags:
+            - { name: ibexa.field_type.storage.legacy.converter, alias: '%ibexa.field_type.matrix.identifier%' }
+
+    Ibexa\FieldTypeMatrix\FieldType\Mapper\MatrixFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: '%ibexa.field_type.matrix.identifier%' }
+            - { name: ibexa.admin_ui.field_type.form.mapper.value, fieldType: '%ibexa.field_type.matrix.identifier%' }
+
+    Ibexa\FieldTypeMatrix\FieldType\Indexable:
+        tags:
+            - { name: ibexa.field_type.indexable, alias: '%ibexa.field_type.matrix.identifier%' }
+
+    Ibexa\FieldTypeMatrix\FieldType\Mapper\FieldTypeToContentTypeStrategy:
+        arguments:
+            $contentTypeService: '@ibexa.api.service.content_type'
+        tags:
+            - { name: ibexa.graphql.field_type.matrix_mapper.content_type.strategy, priority: -20 }

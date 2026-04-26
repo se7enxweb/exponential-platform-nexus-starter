@@ -1,0 +1,91 @@
+ibexa.rest.netgen_tags_redirectTag:
+    path: /tags
+    controller: netgen_tags.rest.controller.tags::redirectTag
+    methods: [GET]
+
+ibexa.rest.netgen_tags_loadTag:
+    path: /tags/{tagPath}
+    controller: netgen_tags.rest.controller.tags::loadTag
+    methods: [GET]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_loadTagsByKeyword:
+    path: /tags/keyword/{keyword}/{language}
+    controller: netgen_tags.rest.controller.tags::loadTagsByKeyword
+    methods: [GET]
+
+ibexa.rest.netgen_tags_loadTagChildren:
+    path: /tags/{tagPath}/children
+    controller: netgen_tags.rest.controller.tags::loadTagChildren
+    methods: [GET]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_loadTagSynonyms:
+    path: /tags/{tagPath}/synonyms
+    controller: netgen_tags.rest.controller.tags::loadTagSynonyms
+    methods: [GET]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_getRelatedContent:
+    path: /tags/{tagPath}/content
+    controller: netgen_tags.rest.controller.tags::getRelatedContent
+    methods: [GET]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_createTag:
+    path: /tags
+    controller: netgen_tags.rest.controller.tags::createTag
+    methods: [POST]
+
+ibexa.rest.netgen_tags_createSynonym:
+    path: /tags/{tagPath}/synonyms
+    controller: netgen_tags.rest.controller.tags::createSynonym
+    methods: [POST]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_updateTag:
+    path: /tags/{tagPath}
+    controller: netgen_tags.rest.controller.tags::updateTag
+    methods: [PATCH]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_copySubtree:
+    path: /tags/{tagPath}
+    controller: netgen_tags.rest.controller.tags::copySubtree
+    methods: [COPY]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_moveSubtree:
+    path: /tags/{tagPath}
+    controller: netgen_tags.rest.controller.tags::moveSubtree
+    methods: [MOVE]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_convertToSynonym:
+    path: /tags/{tagPath}/convert
+    controller: netgen_tags.rest.controller.tags::convertToSynonym
+    methods: [POST]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_mergeTags:
+    path: /tags/{tagPath}/merge
+    controller: netgen_tags.rest.controller.tags::mergeTags
+    methods: [POST]
+    requirements:
+        tagPath: "[0-9/]+"
+
+ibexa.rest.netgen_tags_deleteTag:
+    path: /tags/{tagPath}
+    controller: netgen_tags.rest.controller.tags::deleteTag
+    methods: [DELETE]
+    requirements:
+        tagPath: "[0-9/]+"

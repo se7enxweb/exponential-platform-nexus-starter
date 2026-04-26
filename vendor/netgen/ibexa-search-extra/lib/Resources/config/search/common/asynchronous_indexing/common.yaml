@@ -1,0 +1,18 @@
+services:
+    Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\SubtreeIndexer:
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Location\Handler'
+            - '@ibexa.spi.search'
+            - '@?logger'
+        tags:
+            - { name: monolog.logger, channel: ngsearchextra }
+
+    Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\UserContentWithLocationIndexer:
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Location\Handler'
+            - '@ibexa.spi.search'
+            - '@?logger'
+        tags:
+            - { name: monolog.logger, channel: ngsearchextra }

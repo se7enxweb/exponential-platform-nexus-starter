@@ -1,0 +1,115 @@
+.disabler {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba($contentbg, .85);
+  z-index: 999;
+}
+
+.ace-editor {
+  min-height: 18.75rem;
+  body & {
+    font-size: 1rem;
+  }
+}
+
+.new_layout_page {
+  background: url('../images/layouts-bg.jpg') no-repeat 0 0;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.new_layout .modal-backdrop {
+  background-color: #0098c7;
+}
+
+.modal.block {
+  .modal-dialog {
+    width: 100%;
+    padding: .9375rem;
+  }
+  .modal-content {
+    height: 100%;
+    padding: 0;
+  }
+  .modal-body,
+   [data-block],
+  .modal-content .in {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 100%;
+  }
+  .modal-body {
+    padding: 0;
+    .ace-editor {
+      height: 100%;
+      font-size: 1rem;
+    }
+  }
+  .modal-header {
+    display: none;
+  }
+  .block-header {
+    padding: .625rem;
+    .handle,
+    .dropdown {
+      display: none;
+    }
+  }
+  [data-block] {
+    border: 0;
+  }
+  .rich-text-editor {
+    overflow: auto;
+    margin: 0 1.25rem;
+  }
+}
+
+.ae-ui {
+  position: relative;
+  z-index: 9999;
+}
+
+.error_message {
+  .debug pre {
+    max-height: 25rem;
+    max-width: 37.5rem;
+    overflow: auto;
+    margin-bottom: 2.5rem;
+  }
+  .error {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* disable-state */
+%disable-state {
+  cursor: pointer !important;
+  pointer-events: none !important;
+}
+
+input,
+select {
+  &[disabled],
+  &[disabled] + label {
+    @extend %disable-state;
+  }
+}
+
+[data-input][data-disabled='true'] {
+  @extend %disable-state;
+}
+
+
+.ngldev {
+  [data-block] .block-header .name .ai {
+    display: inline-block;
+    margin-left: .625rem;
+    font-size: 1.1em;
+  }
+}

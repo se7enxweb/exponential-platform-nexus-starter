@@ -1,0 +1,10 @@
+{% macro layout_path(layout_uuid) %}
+    {{- path('nglayouts_' ~ (nglayouts.debug ? 'dev_' : '') ~ 'app', { '_fragment': layout_uuid ? 'layout/' ~ layout_uuid : '' }) -}}
+{% endmacro %}
+
+{% macro country_flags(locales) %}
+{% for locale in locales %}
+    {% set country_code = locale|length > 2 ? locale|split('_')[1] : locale %}
+    <span title="{{ locale|locale_name }}">{{ (':' ~ country_code|lower ~ ':')|emojify }}</span>
+{% endfor %}
+{% endmacro %}

@@ -1,0 +1,69 @@
+{
+    "name": "netgen/tagsbundle",
+    "description": "Netgen Tags Bundle is an Ibexa DXP bundle for taxonomy management and easier classification of content, providing more functionality for tagging content than ibexa_keyword field type included in Ibexa core.",
+    "license": "GPL-2.0-only",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "ibexa",
+        "netgen",
+        "taxonomy",
+        "tagsbundle",
+        "tags"
+    ],
+    "homepage": "https://github.com/netgen/TagsBundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ibexa/core": "^5.0",
+        "ibexa/admin-ui": "^5.0",
+        "ibexa/rest": "^5.0",
+        "ibexa/content-forms": "^5.0",
+        "ibexa/solr": "^5.0",
+        "ibexa/http-cache": "^5.0",
+        "lolautruche/ez-core-extra-bundle": "^5.0",
+        "symfony/polyfill-php84": "^1.33",
+        "symfony/translation-contracts": "^3.6",
+        "pagerfanta/pagerfanta": "^3.8 || ^4.8",
+        "doctrine/collections": "^2.4 || ^3.0"
+    },
+    "require-dev": {
+        "netgen/coding-standard": "^1.0",
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always",
+        "test-integration": "@php vendor/bin/phpunit -c phpunit-integration-legacy.xml --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi bundle",
+        "phpstan-tests": "@php vendor/bin/phpstan analyse -c phpstan.tests.neon --level=8 --ansi tests"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\TagsBundle\\": "bundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\TagsBundle\\Tests\\": "tests/",
+            "Ibexa\\Tests\\Solr\\": "vendor/ibexa/solr/tests/lib"
+        }
+    },
+    "config": {
+        "allow-plugins": false
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "6.0.x-dev"
+        }
+    }
+}

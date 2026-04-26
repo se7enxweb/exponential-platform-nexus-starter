@@ -1,0 +1,24 @@
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% macro format_datetime(datetime) %}
+    {% if datetime !== null %}
+        {{ datetime.datetime|format_datetime('medium', 'short') ~ ' (' ~ datetime.timezone ~ ')' }}
+    {% endif %}
+{% endmacro %}
+
+{% set from = condition.value.from ?? null %}
+{% set to = condition.value.to ?? null %}
+
+{% if from is not empty or to is not empty %}
+    {% if from is not empty %}
+        {{ 'layout_resolver.condition_type.time.from'|trans }} {{ _self.format_datetime(from) }}
+    {% endif %}
+
+    {% if from is not empty and to is not empty %}, {% endif %}
+
+    {% if to is not empty %}
+        {{ 'layout_resolver.condition_type.time.to'|trans }} {{ _self.format_datetime(to) }}
+    {% endif %}
+{% else %}
+    Always visible
+{% endif %}

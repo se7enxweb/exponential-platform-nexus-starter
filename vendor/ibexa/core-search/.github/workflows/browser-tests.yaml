@@ -1,0 +1,17 @@
+name: Browser tests
+
+on:
+    push:
+        branches:
+            - main
+            - '[0-9]+.[0-9]+'
+    pull_request: ~
+
+jobs:
+    browser-tests:
+        name: "Browser tests"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'oss'
+            test-suite:  '--profile=browser --suite=core-search --config=vendor/ibexa/core-search/behat_suites.yaml'
+        secrets: inherit

@@ -1,0 +1,51 @@
+netgen_information_collection.route.admin.overview:
+    path: /netgen/informationcollection/overview
+    controller: netgen_information_collection.controller.admin::overviewAction
+    methods: [GET]
+
+netgen_information_collection.route.admin.collection_list:
+    path: /netgen/informationcollection/collection-list/{contentId}/{languageCode?}
+    controller: netgen_information_collection.controller.admin::collectionListAction
+    methods: [GET]
+
+netgen_information_collection.route.admin.collection_list_search:
+    path: /netgen/informationcollection/collection-list-search/{contentId}/{languageCode?}
+    controller: netgen_information_collection.controller.admin::searchAction
+    methods: [GET]
+
+netgen_information_collection.route.admin.view:
+    path: /netgen/informationcollection/view/{collectionId}
+    controller: netgen_information_collection.controller.admin::viewAction
+    methods: [GET]
+
+netgen_information_collection.route.admin.handle_contents:
+    path: /netgen/informationcollection/handle/contents
+    controller: netgen_information_collection.controller.admin::handleContentsAction
+    methods: [POST]
+
+netgen_information_collection.route.admin.handle_collection_list:
+    path: /netgen/informationcollection/handle/collection-list
+    controller: netgen_information_collection.controller.admin::handleCollectionListAction
+    methods: [POST]
+
+netgen_information_collection.route.admin.handle_collection:
+    path: /netgen/informationcollection/handle/collection
+    controller: netgen_information_collection.controller.admin::handleCollectionAction
+    methods: [POST]
+
+netgen_information_collection.route.admin.tree_get_children:
+    path: /netgen/informationcollection/tree/{contentId}/{isRoot}
+    controller: netgen_information_collection.controller.tree::getChildrenAction
+    methods: [GET]
+    defaults:
+        isRoot: false
+
+netgen_information_collection.route.admin.export:
+    path: /netgen/informationcollection/export/menu/{contentId}
+    controller: netgen_information_collection.controller.export.export
+    methods: [GET, POST]
+
+netgen_ic_test:
+    path: /netgen/ic/test
+    controller: netgen_information_collection.controller.test::test
+    methods: [GET, POST]

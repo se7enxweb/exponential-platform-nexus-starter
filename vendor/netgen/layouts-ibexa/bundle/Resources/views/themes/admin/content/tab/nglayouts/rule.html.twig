@@ -1,0 +1,119 @@
+{% import '@NetgenLayoutsAdmin/admin/macros.html.twig' as macros %}
+
+{% trans_default_domain 'nglayouts_ibexa_admin' %}
+
+{% set can_edit = is_granted('ROLE_NGLAYOUTS_EDITOR') or is_granted('nglayouts:layout:edit', rule.layout) %}
+{% set can_clear_cache = is_granted('ROLE_NGLAYOUTS_ADMIN') or is_granted('nglayouts:layout:clear_cache', rule.layout) %}
+{% set can_delete = is_granted('ROLE_NGLAYOUTS_ADMIN') or is_granted('nglayouts:mapping:delete', { rule_group: rule.ruleGroupId.toString }) %}
+{% set parent_groups = nglayouts_parent_rule_groups(rule)|slice(1) %}
+
+<li class="layout-list-item" data-layout-id="{{ rule.layout.id.toString }}" data-rule-id="{{ rule.id.toString }}">
+    <div class="layout-item">
+        <div class="layout-name">
+            <p class="groups">{{ parent_groups|map(group => group.name)|join(' / ') }}</p>
+            <p class="name">{{ rule.layout.name }}</p>
+        </div>
+
+        <div class="layout-target">
+            {% set target_type = rule.targets[0].targetType.type %}
+
+            <p>{{ ('layout_resolver.target.' ~ target_type)|trans({}, 'nglayouts') }}:</p>
+
+            <ul>
+                {% for target in rule.targets %}
+                    <li {% if rule_count == 1 and rule.targets|length == 1 and (target_type == 'ibexa_location' or target_type == 'ibexa_content') %}class="unique"{% endif %}>
+                        {{ nglayouts_render_rule_target(target, {}, 'value') }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% set parent_group_conditions = [] %}
+        {% for group in parent_groups %}
+            {% set parent_group_conditions = parent_group_conditions|merge(group.conditions.toArray) %}
+        {% endfor %}
+
+        <div class="layout-conditions">
+            <ul>
+                {% for condition in parent_group_conditions %}
+                    <li>{{ ('layout_resolver.condition.' ~ condition.conditionType.type)|trans({}, 'nglayouts') }}: {{ nglayouts_render_rule_condition(condition, {}, 'value') }}</li>
+                {% endfor %}
+
+                {% for condition in rule.conditions %}
+                    <li><strong>{{ ('layout_resolver.condition.' ~ condition.conditionType.type)|trans({}, 'nglayouts') }}: {{ nglayouts_render_rule_condition(condition, {}, 'value') }}</strong></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if can_edit %}
+            <div class="layout-actions">
+                <a href="{{ macros.layout_path(rule.layout.id.toString) }}" class="btn ibexa-btn ibexa-btn--primary ibexa-btn--small js-open-ngl" data-value-id="{{ location.id }}" data-value-type="ibexa_location">{{ 'layouts.edit_layout'|trans }}</a>
+            </div>
+        {% endif %}
+
+        {% if can_clear_cache %}
+            <div class="layout-dropdown dropdown">
+                <button id="layout-{{ rule.layout.id.toString }}-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">…</button>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="layout-{{ rule.layout.id.toString }}-dropdown">
+                    <li><button {% if not http_cache_enabled %}disabled="disabled"{% endif %} class="js-clear-layout-cache">{{ 'layouts.layout.clear_cache'|trans }}</button></li>
+
+                    {% if is_enterprise %}
+                        <li><button {% if not http_cache_enabled %}disabled="disabled"{% endif %} class="js-clear-block-caches">{{ 'layouts.layout.clear_block_caches'|trans }} <span class="note">{{ 'layouts.layout.clear_block_caches.note'|trans }}</span></button></li>
+                    {% endif %}
+
+                    {% if can_delete %}
+                        <li><button class="js-rule-delete">{{ 'layouts.rule.delete_rule'|trans }}</button></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if can_clear_cache %}
+        <div class="modal fade ngmodal layout-cache-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ 'layouts.cache.layout.title'|trans({}, 'nglayouts_admin') }}: <strong>{{ rule.layout.name }}</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg class="ibexa-icon ibexa-icon--medium" aria-hidden="true">
+                                <use xlink:href="{{ ibexa_icon_path('discard') }}"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ 'layouts.cache_clear.question'|trans }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-dismiss="modal">{{ 'layouts.cache_clear.cancel'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--primary js-modal-confirm">{{ 'layouts.cache_clear.submit'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if can_delete %}
+        <div class="modal fade ngmodal layout-delete-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">{{ 'layouts.rule.delete_rule.title'|trans }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <svg class="ibexa-icon ibexa-icon--medium" aria-hidden="true">
+                                <use xlink:href="{{ ibexa_icon_path('discard') }}"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ 'layouts.rule.delete_rule.question'|trans }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-dismiss="modal">{{ 'layouts.rule.delete_rule.cancel'|trans }}</button>
+                        <button type="button" class="btn ibexa-btn ibexa-btn--primary js-modal-confirm">{{ 'layouts.rule.delete_rule.submit'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</li>

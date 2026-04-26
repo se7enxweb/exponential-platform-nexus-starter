@@ -1,0 +1,7 @@
+services:
+    netgen_tags.value_resolver.tag:
+        class: Netgen\TagsBundle\ValueResolver\TagValueResolver
+        arguments:
+            - "@netgen_tags.api.service.tags"
+        tags:
+            - { name: controller.argument_value_resolver }

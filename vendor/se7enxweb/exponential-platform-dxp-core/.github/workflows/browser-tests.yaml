@@ -1,0 +1,18 @@
+name: Browser tests
+
+on:
+    push:
+        branches:
+            - main
+            - '[0-9]+.[0-9]+'
+    pull_request: ~
+
+jobs:
+    core-behat:
+        name: "Kernel Behat Core tests"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'oss'
+            test-setup-phase-1: '--mode=standard --profile=core --suite=setup'
+            test-suite: "--mode=standard --profile=core --tags='~@broken&&~@setup'"
+        secrets: inherit

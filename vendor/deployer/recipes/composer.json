@@ -1,0 +1,43 @@
+{
+    "name": "deployer/recipes",
+    "description": "3rd party deployer recipes",
+    "type": "library",
+    "keywords": [
+        "deployer",
+        "recipes",
+        "deploy",
+        "deployment",
+        "cachetool",
+        "cloudflare",
+        "newrelic",
+        "slack",
+        "hipchat",
+        "rabbit",
+        "sentry",
+        "yarn"
+    ],
+    "homepage": "https://github.com/deployphp/recipes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Medvedev",
+            "email": "anton@medv.io"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/deployphp/recipes/issues",
+        "source": "https://github.com/deployphp/recipes"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
+    },
+    "replace": {
+        "deployer/recipes": "self.version"
+    },
+    "require-dev": {
+        "deployer/deployer": "^6.3"
+    }
+}

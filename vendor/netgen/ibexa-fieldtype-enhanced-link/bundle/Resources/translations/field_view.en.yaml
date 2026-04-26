@@ -1,0 +1,10 @@
+ngenhancedlink.single_relation: "Enhanced link"
+ngenhancedlink.name: "Name"
+ngenhancedlink.content_type: "Content type"
+ngenhancedlink.created: "Created"
+
+ngenhancedlink.rel_attribute: "Rel attribute"
+ngenhancedlink.rel_attribute.none: ""
+ngenhancedlink.rel_attribute.noopener: "noopener"
+ngenhancedlink.rel_attribute.noreferrer: "noreferrer"
+ngenhancedlink.rel_attribute.noopener_noreferrer: "noopener noreferrer"

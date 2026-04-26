@@ -1,0 +1,11 @@
+{% extends netgen_tags_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% block content %}
+    <h2 class="tag-title">{{ 'dashboard.title'|trans }}</h2>
+
+    {% include '@NetgenTags/admin/flash_messages.html.twig' %}
+
+    {% include '@NetgenTags/admin/tag/children.html.twig' with {'childrenTags': childrenTags} %}
+{% endblock %}

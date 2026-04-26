@@ -1,0 +1,11 @@
+{
+  "src/assets/js/toolbar.ts": {
+    "file": "toolbar.js",
+    "name": "toolbar",
+    "src": "src/assets/js/toolbar.ts",
+    "isEntry": true,
+    "css": [
+      "toolbar.css"
+    ]
+  }
+}

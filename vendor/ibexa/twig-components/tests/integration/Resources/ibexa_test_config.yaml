@@ -1,0 +1,15 @@
+ibexa:
+    siteaccess:
+        default_siteaccess: admin
+        list: [admin]
+        groups:
+            admin_group: [admin]
+        match:
+            URIElement: 1
+    system:
+        admin_group:
+            design: admin
+
+ibexa_design_engine:
+    design_list:
+        admin: [admin, standard]

@@ -1,0 +1,5 @@
+services:
+    netgen_tags.api.persistence_handler.tags.cache:
+        parent: Ibexa\Core\Persistence\Cache\AbstractInMemoryHandler
+        class: Netgen\TagsBundle\Core\Persistence\Cache\TagsHandler
+        arguments: ["@netgen_tags.api.persistence_handler.tags.storage"]

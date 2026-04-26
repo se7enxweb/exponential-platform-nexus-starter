@@ -1,0 +1,104 @@
+services:
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_image:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Image
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_image }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_string:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\TextLine
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_string }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_text:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\TextBlock
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_text }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_user:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\User
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_user }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_email:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Email
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_email }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_selection:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Selection
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_selection }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_boolean:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Checkbox
+        arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_boolean }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_date:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Date
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_date }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_datetime:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\DateAndTime
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_datetime }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_integer:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\IntegerHandler
+        arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
+        tags:
+            - {name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_integer}
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_float:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\FloatHandler
+        arguments: [ "@Ibexa\\Core\\Helper\\FieldHelper" ]
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_float }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_url:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Url
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_url }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_country:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Country
+        arguments:
+            - "%ibexa.field_type.country.data%"
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_country }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_time:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Time
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_time }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_isbn:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Isbn
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_isbn }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_binaryfile:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\BinaryFile
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_binaryfile }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_gmap_location:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\MapLocation
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_gmap_location }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_object_relation:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\Relation
+        arguments:
+          - "@ibexa.api.repository"
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_object_relation }
+
+    netgen.ibexa_forms.form.fieldtype_handler.ibexa_object_relation_list:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\RelationList
+        arguments:
+          - "@ibexa.api.repository"
+        tags:
+            - { name: netgen.ibexa_forms.form.fieldtype_handler, alias: ibexa_object_relation_list }

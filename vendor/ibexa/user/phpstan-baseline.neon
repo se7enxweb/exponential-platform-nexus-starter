@@ -1,0 +1,547 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot call method getAPIUser\(\) on Symfony\\Component\\Security\\Core\\User\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/PasswordChangeController.php
+
+		-
+			message: '#^Cannot call method getUser\(\) on Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/PasswordChangeController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/bundle/Controller/UserRegisterController.php
+
+		-
+			message: '#^Cannot call method getAPIUser\(\) on Symfony\\Component\\Security\\Core\\User\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/UserSettingsController.php
+
+		-
+			message: '#^Cannot call method getIdentifier\(\) on Ibexa\\User\\UserSetting\\UserSettingGroup\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/bundle/Controller/UserSettingsController.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Ibexa\\User\\UserSetting\\UserSettingGroup\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/UserSettingsController.php
+
+		-
+			message: '#^Cannot call method getSettings\(\) on Ibexa\\User\\UserSetting\\UserSettingGroup\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/UserSettingsController.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\User\\Invitation\\Persistence\\Gateway\:\:getInvitationByEmail\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/contracts/Invitation/Persistence/Gateway.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\User\\Notification\\UserPasswordReset\:\:asEmailMessage\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/contracts/Notification/UserPasswordReset.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\User\\UserSetting\\FormMapperInterface\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/contracts/UserSetting/FormMapperInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\User\\UserSetting\\FormMapperInterface\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/contracts/UserSetting/FormMapperInterface.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\BaseSubmitHandler\:\:handle\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/BaseSubmitHandler.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Data\\UserInvitationData\:\:getLimitationValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Data/UserInvitationData.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Data\\UserInvitationData\:\:getSections\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Data/UserInvitationData.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Data\\UserInvitationData\:\:getSiteaccess\(\) should return Ibexa\\Core\\MVC\\Symfony\\SiteAccess but returns Ibexa\\Core\\MVC\\Symfony\\SiteAccess\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Form/Data/UserInvitationData.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Data\\UserInvitationData\:\:setLimitationValue\(\) has parameter \$limitationValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Data/UserInvitationData.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Data\\UserInvitationData\:\:setSections\(\) has parameter \$sections with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Data/UserInvitationData.php
+
+		-
+			message: '#^Method Ibexa\\User\\ConfigResolver\\RegistrationContentTypeLoader\:\:loadContentType\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/lib/Form/DataMapper/UserRegisterMapper.php
+
+		-
+			message: '#^Cannot call method getDateFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/DataTransformer/DateTimeFormatTransformer.php
+
+		-
+			message: '#^Cannot call method getTimeFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/DataTransformer/DateTimeFormatTransformer.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\DataTransformer\\DateTimeFormatTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/DateTimeFormatTransformer.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\DataTransformer\\InvitationTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/InvitationTransformer.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, array\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/LimitationValueTransformer.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Factory\\FormFactory\:\:changeUserPassword\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Factory\\FormFactory\:\:forgotUserPassword\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Factory\\FormFactory\:\:forgotUserPasswordWithLogin\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Factory\\FormFactory\:\:resetUserPassword\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\Factory\\FormFactory\:\:updateUserSetting\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Symfony\\Component\\Form\\FormFactoryInterface\:\:createNamed\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Variable \$data in PHPDoc tag @var does not exist\.$#'
+			identifier: varTag.variableNotFound
+			count: 1
+			path: src/lib/Form/Processor/UserRegisterFormProcessor.php
+
+		-
+			message: '#^Method Ibexa\\User\\Form\\SubmitHandler\:\:handle\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/SubmitHandler.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\InvitationType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/InvitationType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\RoleChoiceType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/RoleChoiceType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\SectionsChoiceType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/SectionsChoiceType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\SiteAccessChoiceType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/SiteAccessChoiceType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\UserGroupChoiceType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/UserGroupChoiceType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\Invitation\\UserInvitationType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Invitation/UserInvitationType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserPasswordChangeType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserPasswordChangeType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserPasswordForgotType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserPasswordForgotType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserPasswordForgotWithLoginType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserPasswordForgotWithLoginType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserPasswordResetType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserPasswordResetType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserRegisterType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserRegisterType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserSettingUpdateType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserSettingUpdateType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserSettings\\DateTimeFormatType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserSettings/DateTimeFormatType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserSettings\\FullDateTimeFormatType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserSettings/FullDateTimeFormatType.php
+
+		-
+			message: '#^Class Ibexa\\User\\Form\\Type\\UserSettings\\ShortDateTimeFormatType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UserSettings/ShortDateTimeFormatType.php
+
+		-
+			message: '#^Method Ibexa\\User\\Invitation\\DomainMapper\:\:mapRoleLimitation\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Invitation/DomainMapper.php
+
+		-
+			message: '#^Parameter \#1 \$length of function random_bytes expects int\<1, max\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Invitation/InvitationHashGenerator.php
+
+		-
+			message: '#^Call to an undefined method DateTimeInterface\:\:add\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Invitation/InvitationService.php
+
+		-
+			message: '#^Cannot access property \$name on Ibexa\\Core\\MVC\\Symfony\\SiteAccess\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/lib/Invitation/InvitationService.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: src/lib/Invitation/InvitationService.php
+
+		-
+			message: '#^Parameter \#1 \$select of method Doctrine\\DBAL\\Query\\QueryBuilder\:\:select\(\) expects array\<string\>\|string\|null, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Invitation/Persistence/DoctrineGateway.php
+
+		-
+			message: '#^Method Ibexa\\User\\Pagination\\Pagerfanta\\UserSettingsAdapter\:\:getNbResults\(\) should return int\<0, max\> but returns int\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Pagination/Pagerfanta/UserSettingsAdapter.php
+
+		-
+			message: '#^Method Ibexa\\User\\Pagination\\Pagerfanta\\UserSettingsAdapter\:\:getSlice\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Pagination/Pagerfanta/UserSettingsAdapter.php
+
+		-
+			message: '#^Cannot call method getDateFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/DateTimeFormat/FullDateFormatterFactory.php
+
+		-
+			message: '#^Cannot call method getTimeFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/DateTimeFormat/FullTimeFormatterFactory.php
+
+		-
+			message: '#^Cannot call method getDateFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/DateTimeFormat/ShortDateFormatterFactory.php
+
+		-
+			message: '#^Cannot call method getTimeFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/DateTimeFormat/ShortTimeFormatterFactory.php
+
+		-
+			message: '#^Cannot call method getDateFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/Setting/AbstractDateTimeFormat.php
+
+		-
+			message: '#^Cannot call method getTimeFormat\(\) on Ibexa\\User\\UserSetting\\Setting\\Value\\DateTimeFormat\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/UserSetting/Setting/AbstractDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\CharacterCounter\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/CharacterCounter.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\CharacterCounter\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/CharacterCounter.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\DateTimeFormatSerializer\:\:serialize\(\) should return string\|null but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UserSetting/Setting/DateTimeFormatSerializer.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\FullDateTimeFormat\:\:getDefaultValue\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UserSetting/Setting/FullDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\FullDateTimeFormat\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/FullDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\FullDateTimeFormat\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/FullDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\Language\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/Language.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\Language\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/Language.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\ShortDateTimeFormat\:\:getDefaultValue\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UserSetting/Setting/ShortDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\ShortDateTimeFormat\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/ShortDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\ShortDateTimeFormat\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/ShortDateTimeFormat.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\SubitemsLimit\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/SubitemsLimit.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\SubitemsLimit\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/SubitemsLimit.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\Timezone\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/Timezone.php
+
+		-
+			message: '#^Method Ibexa\\User\\UserSetting\\Setting\\Timezone\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Setting/Timezone.php
+
+		-
+			message: '#^Class Ibexa\\User\\UserSetting\\UserSettingArrayAccessor implements generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/UserSettingArrayAccessor.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and Ibexa\\User\\UserSetting\\UserSetting will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/lib/UserSetting/UserSettingArrayAccessor.php
+
+		-
+			message: '#^Class Ibexa\\User\\UserSetting\\ValueDefinitionGroupRegistryEntry implements generic interface IteratorAggregate but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/ValueDefinitionGroupRegistryEntry.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/Constraints/EmailInvitationValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Validator/Constraints/UserPasswordValidator.php
+
+		-
+			message: '#^Cannot call method getAPIUser\(\) on Symfony\\Component\\Security\\Core\\User\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Validator/Constraints/UserPasswordValidator.php
+
+		-
+			message: '#^Cannot call method getUser\(\) on Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Validator/Constraints/UserPasswordValidator.php
+
+		-
+			message: '#^Method Ibexa\\User\\View\\UserSettings\\UpdateView\:\:getInternalParameters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/View/UserSettings/UpdateView.php
+
+		-
+			message: '#^Method Ibexa\\User\\View\\UserSettings\\UpdateViewBuilder\:\:buildView\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/View/UserSettings/UpdateViewBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$kernel of class Symfony\\Bundle\\FrameworkBundle\\Console\\Application constructor expects Symfony\\Component\\HttpKernel\\KernelInterface, Symfony\\Component\\HttpKernel\\KernelInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/bundle/Command/UpdateUserCommandTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\Bundle\\User\\DependencyInjection\\Configuration\\Parser\\ChangePasswordTest\:\:getMinimalConfiguration\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/bundle/DependencyInjection/Configuration/Parser/ChangePasswordTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\Bundle\\User\\DependencyInjection\\Configuration\\Parser\\ForgotPasswordTest\:\:getMinimalConfiguration\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/bundle/DependencyInjection/Configuration/Parser/ForgotPasswordTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\Bundle\\User\\DependencyInjection\\Configuration\\Parser\\ResetPasswordTest\:\:getMinimalConfiguration\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/bundle/DependencyInjection/Configuration/Parser/ResetPasswordTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertNotNull\(\) with string will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/integration/Invitation/InvitationServiceTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Ibexa\\\\Contracts\\\\Core\\\\Repository\\\\Values\\\\User\\\\PasswordValidationContext'' and Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PasswordValidationContext will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/lib/Validator/Constraint/PasswordValidatorTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Ibexa\\\\Contracts\\\\Core\\\\Repository\\\\Values\\\\User\\\\PasswordValidationContext'' and Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PasswordValidationContext will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/lib/Validator/Constraint/PasswordValidatorTest.php

@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Controller\Admin\LayoutResolver;
+
+use Netgen\Bundle\LayoutsBundle\Controller\AbstractController;
+use Netgen\Layouts\API\Service\LayoutResolverService;
+use Netgen\Layouts\API\Values\LayoutResolver\RuleCondition;
+use Netgen\Layouts\View\ViewInterface;
+
+final class DeleteRuleCondition extends AbstractController
+{
+    public function __construct(
+        private LayoutResolverService $layoutResolverService,
+    ) {}
+
+    /**
+     * Deletes a rule condition.
+     */
+    public function __invoke(RuleCondition $condition): ViewInterface
+    {
+        $rule = $this->layoutResolverService->loadRule($condition->ruleId);
+
+        $this->denyAccessUnlessGranted(
+            'nglayouts:mapping:edit',
+            [
+                'rule_group' => $rule->ruleGroupId->toString(),
+            ],
+        );
+
+        $this->layoutResolverService->deleteCondition($condition);
+
+        return $this->buildView(
+            $this->layoutResolverService->loadRuleDraft(
+                $condition->ruleId,
+            ),
+            ViewInterface::CONTEXT_ADMIN,
+        );
+    }
+}

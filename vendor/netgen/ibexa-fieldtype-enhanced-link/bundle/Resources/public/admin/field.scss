@@ -1,0 +1,105 @@
+$base-font-size: 16px;
+
+@function div($number1, $number2) {
+    @return $number1 / $number2;
+}
+
+@function calculateRem($size) {
+    $remSize: div($size, $base-font-size);
+
+    @return $remSize + 0rem; // + 0rem converts value to proper `rem`
+}
+
+$ibexa-color-danger: #db0032;
+$ibexa-color-danger-100: #fbe5ea;
+$ibexa-color-dark-200: #cfd1d3;
+$ibexa-border-radius: calculateRem(10px);
+$ibexa-text-font-size-medium: calculateRem(14px);
+$ibexa-text-font-size-small: calculateRem(12px);
+$ibexa-color-dark-400: #71767c;
+
+@mixin area-invalid {
+    color: $ibexa-color-danger;
+    border-color: $ibexa-color-danger;
+    background-color: $ibexa-color-danger-100;
+
+    .ibexa-btn {
+        background-color: $ibexa-color-danger-100;
+    }
+}
+
+.ibexa-field-edit--ngenhancedlink {
+    .hidden {
+        display: none;
+    }
+
+    &.is-invalid {
+        .ibexa-data-source {
+            @include area-invalid();
+
+            .ibexa-table-header__headline {
+                color: $ibexa-color-danger;
+            }
+        }
+    }
+
+    .ibexa-data-source {
+        //border: calculateRem(1px) solid $ibexa-color-dark-200;
+        //border-radius: $ibexa-border-radius;
+        //padding: calculateRem(24px);
+    }
+
+    .link-type-options .ibexa-data-source__input {
+        display: table;
+        width: 100%;
+    }
+
+    .ibexa-relations {
+        &__cta {
+            width: 100%;
+        }
+
+        &__info-text {
+            margin-bottom: 0;
+            font-weight: normal;
+            font-size: $ibexa-text-font-size-medium;
+        }
+
+        &__info-sub-text {
+            margin-bottom: 0;
+            font-weight: normal;
+            font-size: $ibexa-text-font-size-small;
+            color: $ibexa-color-dark-400;
+        }
+
+        &__helper-text {
+            margin: 0;
+            width: 100%;
+            font-size: calculateRem(14px);
+        }
+
+        &__cta-btn {
+            margin-bottom: calculateRem(16px);
+        }
+
+        &__order-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        &__order-input {
+            width: 7ch;
+            margin-bottom: 0;
+        }
+
+        &__table-action--remove-item {
+            padding: calculateRem(4px);
+        }
+    }
+
+    .btn {
+        .ibexa-icon {
+            margin-right: calculateRem(4px);
+        }
+    }
+}

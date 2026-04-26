@@ -1,0 +1,25 @@
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% set rule_group_id = rule_group_id|default(
+    nglayouts_rule_group(condition.ruleId.toString).id.toString
+) %}
+
+{% set can_edit = is_granted('nglayouts:mapping:edit', { rule_group: rule_group_id }) %}
+
+<span
+    {% if can_edit %}
+        class="settings-value editable-value js-setting-edit" data-setting-id="{{ condition.id.toString }}" data-setting-type="condition"
+    {% else %}
+        class="settings-value"
+    {% endif %}
+>
+    {{ ('layout_resolver.condition.' ~ condition.conditionType.type)|trans({}, 'nglayouts') }}:
+
+    {{ nglayouts_render_rule_condition(condition, {}, 'value') }}
+</span>
+
+{% if can_edit %}
+    <a href="#" class="remove-setting js-setting-delete" data-setting-id="{{ condition.id.toString }}" data-setting-type="condition">
+        {{ 'layout_resolver.rule_condition.delete'|trans }}
+    </a>
+{% endif %}

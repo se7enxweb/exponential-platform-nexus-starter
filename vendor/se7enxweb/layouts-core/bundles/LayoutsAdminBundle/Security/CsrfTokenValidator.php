@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Security;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
+final class CsrfTokenValidator implements CsrfTokenValidatorInterface
+{
+    public function __construct(
+        private CsrfTokenManagerInterface $csrfTokenManager,
+    ) {}
+
+    public function validateCsrfToken(Request $request, string $csrfTokenId): bool
+    {
+        // Skip CSRF validation if no session is available
+        if (!$request->hasSession() || !$request->getSession()->isStarted()) {
+            return true;
+        }
+
+        if ($request->isMethodSafe()) {
+            return true;
+        }
+
+        if ($request->attributes->getBoolean(self::DISABLE_CSRF_ATTRIBUTE_NAME)) {
+            return true;
+        }
+
+        if (!$request->headers->has(self::CSRF_TOKEN_HEADER)) {
+            return false;
+        }
+
+        $token = $request->headers->get(self::CSRF_TOKEN_HEADER, '');
+
+        return $this->csrfTokenManager->isTokenValid(new CsrfToken($csrfTokenId, $token));
+    }
+}

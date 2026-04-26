@@ -1,0 +1,112 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-filters {
+    border: calculateRem(1px) solid $ibexa-color-light;
+    border-radius: $ibexa-border-radius;
+    padding-bottom: calculateRem(24px);
+
+    .accordion-button {
+        &::after {
+            width: calculateRem(12px);
+            height: calculateRem(12px);
+            background-size: unset;
+        }
+    }
+
+    &__btns {
+        text-align: center;
+    }
+
+    &__item {
+        padding: calculateRem(4px) calculateRem(24px);
+
+        &--language-selector {
+            padding-bottom: calculateRem(16px);
+            border-bottom: calculateRem(1px) solid $ibexa-color-light;
+        }
+
+        &--content-type {
+            padding: 0;
+        }
+
+        &--creator {
+            position: relative;
+        }
+
+        &--created,
+        &--modified {
+            .ibexa-date-time-picker {
+                width: 100%;
+
+                &__input {
+                    font-size: calculateRem(13px);
+                }
+            }
+        }
+
+        &--subtree {
+            .ibexa-tag-view-select {
+                &__selected-list {
+                    margin: 0;
+                }
+
+                &__selected-item-tag {
+                    margin-bottom: calculateRem(8px);
+                }
+            }
+        }
+
+        .ibexa-dropdown__selection-info {
+            margin-bottom: 0;
+        }
+
+        .ibexa-label {
+            font-size: $ibexa-text-font-size-medium;
+            color: $ibexa-color-dark;
+            margin-top: calculateRem(16px);
+            margin-bottom: calculateRem(4px);
+            width: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: calculateRem(1px) solid $ibexa-color-light;
+        padding: calculateRem(16px) calculateRem(24px);
+    }
+
+    &__user-list {
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        right: 0;
+        min-width: 100%;
+        border-radius: $ibexa-border-radius-small;
+        margin-bottom: 0;
+        background-color: $ibexa-color-light-200;
+        max-height: calculateRem(300px);
+        overflow: auto;
+        transform: scaleY(1);
+        transform-origin: top center;
+        transition: transform $ibexa-admin-transition-duration $ibexa-admin-transition;
+        z-index: 2;
+
+        &--hidden {
+            transform: scaleY(0);
+        }
+    }
+
+    &__user-item {
+        padding: calculateRem(8px) calculateRem(16px);
+        cursor: pointer;
+    }
+
+    &__title {
+        margin-bottom: 0;
+    }
+}

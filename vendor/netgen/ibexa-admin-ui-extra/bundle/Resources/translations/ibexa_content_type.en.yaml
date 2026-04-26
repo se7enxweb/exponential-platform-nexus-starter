@@ -1,0 +1,8 @@
+content_type.field_definition.collects_information: "Collects information"
+content_type.field_definition.name: "Name"
+content_type.field_definition.identifier: "Identifier"
+content_type.field_definition.type: "Type"
+content_type.field_definition.required: "Required"
+content_type.field_definition.translatable: "Translatable"
+content_type.field_definition.searchable: "Searchable"
+content_type.object_count: "Content count"

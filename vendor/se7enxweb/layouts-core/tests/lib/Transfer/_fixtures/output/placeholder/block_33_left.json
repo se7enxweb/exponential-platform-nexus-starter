@@ -1,0 +1,6 @@
+{
+    "identifier": "left",
+    "blocks": [
+        {"visited_key": "visited_value"}
+    ]
+}

@@ -1,0 +1,98 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\FieldType\FieldTypeDefinitionFormMapperDispatcherInterface: '@Ibexa\AdminUi\FieldType\FieldTypeDefinitionFormMapperDispatcher'
+
+    Ibexa\AdminUi\FieldType\FieldTypeDefinitionFormMapperDispatcher:
+        arguments:
+            $fieldTypeAliasResolver: '@Ibexa\Core\FieldType\FieldTypeAliasResolverInterface'
+
+    Ibexa\AdminUi\FieldType\Mapper\AbstractRelationFormMapper:
+        abstract: true
+        arguments:
+            $contentTypeService: '@ibexa.api.service.content_type'
+
+    Ibexa\AdminUi\FieldType\Mapper\AuthorFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_author }
+
+    Ibexa\AdminUi\FieldType\Mapper\BinaryFileFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_binaryfile }
+
+    Ibexa\AdminUi\FieldType\Mapper\CheckboxFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_boolean }
+
+    Ibexa\AdminUi\FieldType\Mapper\SelectionFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_selection }
+
+    Ibexa\AdminUi\FieldType\Mapper\CountryFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_country }
+
+    Ibexa\AdminUi\FieldType\Mapper\DateFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_date }
+
+    Ibexa\AdminUi\FieldType\Mapper\DateTimeFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_datetime }
+
+    Ibexa\AdminUi\FieldType\Mapper\FloatFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_float }
+
+    Ibexa\AdminUi\FieldType\Mapper\ImageFormMapper:
+        arguments:
+            $allowedMimeTypes: '%ibexa.field_type.ibexa_image.mime_types%'
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_image }
+
+    Ibexa\AdminUi\FieldType\Mapper\IntegerFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_integer }
+
+    Ibexa\AdminUi\FieldType\Mapper\ISBNFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_isbn }
+
+    Ibexa\AdminUi\FieldType\Mapper\MediaFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_media }
+
+    Ibexa\AdminUi\FieldType\Mapper\RelationFormMapper:
+        parent: Ibexa\AdminUi\FieldType\Mapper\AbstractRelationFormMapper
+        autowire: true
+        autoconfigure: false
+        public: false
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_object_relation }
+
+    Ibexa\AdminUi\FieldType\Mapper\RelationListFormMapper:
+        parent: Ibexa\AdminUi\FieldType\Mapper\AbstractRelationFormMapper
+        autowire: true
+        autoconfigure: false
+        public: false
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_object_relation_list }
+
+    Ibexa\AdminUi\FieldType\Mapper\TextLineFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_string }
+
+    Ibexa\AdminUi\FieldType\Mapper\TextBlockFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_text }
+
+    Ibexa\AdminUi\FieldType\Mapper\TimeFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_time }
+
+    Ibexa\AdminUi\FieldType\Mapper\UserAccountFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: ibexa_user }

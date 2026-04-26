@@ -1,0 +1,17 @@
+.c-draggable-dialog {
+    position: fixed;
+    z-index: 10000;
+
+    &--hidden {
+        visibility: hidden;
+    }
+
+    &__draggable {
+        cursor: grab;
+        user-select: none;
+    }
+}
+
+.ibexa-tooltip--draggable-dialog {
+    z-index: 10050;
+}

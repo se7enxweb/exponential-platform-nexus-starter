@@ -1,0 +1,215 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Collection\Result;
+
+use Netgen\Layouts\API\Values\Collection\Collection;
+use Netgen\Layouts\API\Values\Collection\Item;
+use Netgen\Layouts\API\Values\Collection\ItemList;
+use Netgen\Layouts\API\Values\Collection\Query;
+use Netgen\Layouts\API\Values\Collection\SlotList;
+use Netgen\Layouts\Collection\Item\ItemDefinition;
+use Netgen\Layouts\Collection\Item\VisibilityResolver;
+use Netgen\Layouts\Collection\Result\CollectionRunnerFactory;
+use Netgen\Layouts\Collection\Result\ManualItem;
+use Netgen\Layouts\Collection\Result\Result;
+use Netgen\Layouts\Collection\Result\ResultBuilder;
+use Netgen\Layouts\Collection\Result\ResultBuilderInterface;
+use Netgen\Layouts\Item\CmsItem;
+use Netgen\Layouts\Item\CmsItemBuilder;
+use Netgen\Layouts\Tests\Collection\Stubs\QueryType;
+use Netgen\Layouts\Tests\Item\Stubs\Value;
+use Netgen\Layouts\Tests\Item\Stubs\ValueConverter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+use function array_map;
+
+use const PHP_INT_MAX;
+
+#[CoversClass(ResultBuilder::class)]
+final class ResultBuilderTest extends TestCase
+{
+    private CmsItemBuilder $cmsItemBuilder;
+
+    private ResultBuilderInterface $resultBuilder;
+
+    protected function setUp(): void
+    {
+        /** @var iterable<\Netgen\Layouts\Item\ValueConverterInterface<object>> $valueConverters */
+        $valueConverters = [new ValueConverter()];
+        $this->cmsItemBuilder = new CmsItemBuilder($valueConverters);
+
+        $this->resultBuilder = $this->buildResultBuilder(200);
+    }
+
+    public function testBuildForManualCollection(): void
+    {
+        $collection = $this->buildCollection(
+            [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
+        );
+
+        $resultSet = $this->resultBuilder->build($collection, 0, 5);
+
+        self::assertSame($collection, $resultSet->collection);
+        self::assertSame(0, $resultSet->offset);
+        self::assertSame(5, $resultSet->limit);
+        self::assertContainsOnlyInstancesOf(Result::class, $resultSet->results);
+
+        foreach ($resultSet as $index => $result) {
+            self::assertInstanceOf(ManualItem::class, $result->item);
+            self::assertSame($index, $result->position);
+        }
+    }
+
+    public function testBuildWithLimitLargerThanMaxLimit(): void
+    {
+        $resultBuilder = $this->buildResultBuilder(3);
+
+        $collection = $this->buildCollection(
+            [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
+        );
+
+        $resultSet = $resultBuilder->build($collection, 0, 5);
+
+        self::assertSame($collection, $resultSet->collection);
+        self::assertSame(0, $resultSet->offset);
+        self::assertSame(3, $resultSet->limit);
+        self::assertContainsOnlyInstancesOf(Result::class, $resultSet->results);
+
+        foreach ($resultSet as $index => $result) {
+            self::assertInstanceOf(ManualItem::class, $result->item);
+            self::assertSame($index, $result->position);
+        }
+    }
+
+    public function testBuildForDynamicCollection(): void
+    {
+        $collection = $this->buildCollection(
+            [2 => 10, 7 => 14, 8 => 16, 11 => 20],
+            [42, 43, 44, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            13,
+        );
+
+        $result = $this->resultBuilder->build($collection, 0, 5);
+
+        self::assertSame($collection, $result->collection);
+        self::assertSame(0, $result->offset);
+        self::assertSame(5, $result->limit);
+        self::assertContainsOnlyInstancesOf(Result::class, $result->results);
+
+        foreach ($result->results as $index => $resultItem) {
+            self::assertSame($index, $resultItem->position);
+        }
+    }
+
+    public function testBuildForDynamicAndContextualCollection(): void
+    {
+        $collection = $this->buildCollection(
+            [2 => 10, 7 => 14, 8 => 16, 11 => 20],
+            [42, 43, 44, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            13,
+            true,
+        );
+
+        $result = $this->resultBuilder->build($collection, 0, 20, PHP_INT_MAX);
+
+        self::assertSame($collection, $result->collection);
+        self::assertSame(0, $result->offset);
+        self::assertSame(12, $result->limit);
+        self::assertContainsOnlyInstancesOf(Result::class, $result->results);
+
+        foreach ($result->results as $index => $resultItem) {
+            self::assertSame($index, $resultItem->position);
+        }
+    }
+
+    public function testBuildForDynamicAndContextualCollectionAndLimitLowerThanContextualLimit(): void
+    {
+        $collection = $this->buildCollection(
+            [2 => 10, 7 => 14, 8 => 16, 11 => 20],
+            [42, 43, 44, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            13,
+            true,
+        );
+
+        $result = $this->resultBuilder->build($collection, 0, 5, PHP_INT_MAX);
+
+        self::assertSame($collection, $result->collection);
+        self::assertSame(0, $result->offset);
+        self::assertSame(5, $result->limit);
+        self::assertContainsOnlyInstancesOf(Result::class, $result->results);
+
+        foreach ($result->results as $index => $resultItem) {
+            self::assertSame($index, $resultItem->position);
+        }
+    }
+
+    private function buildResultBuilder(int $maxLimit): ResultBuilderInterface
+    {
+        return new ResultBuilder(
+            new CollectionRunnerFactory($this->cmsItemBuilder, new VisibilityResolver([])),
+            12,
+            $maxLimit,
+        );
+    }
+
+    /**
+     * @param mixed[] $itemIds
+     * @param mixed[] $queryValues
+     *
+     * Builds the dynamic collection for provided type and list of values
+     */
+    private function buildCollection(
+        array $itemIds,
+        array $queryValues = [],
+        int $queryCount = 0,
+        bool $contextual = false,
+    ): Collection {
+        $items = [];
+
+        foreach ($itemIds as $position => $id) {
+            $items[] = Item::fromArray(
+                [
+                    'position' => $position,
+                    'value' => $id,
+                    'definition' => ItemDefinition::fromArray(['valueType' => 'value']),
+                    'cmsItem' => CmsItem::fromArray(['value' => $id, 'valueType' => 'value', 'isVisible' => true]),
+                ],
+            );
+        }
+
+        return Collection::fromArray(
+            [
+                'items' => ItemList::fromArray($items),
+                'slots' => SlotList::fromArray([]),
+                'query' => Query::fromArray(
+                    [
+                        'queryType' => new QueryType(
+                            'test_query_type',
+                            $this->buildQueryValues($queryValues),
+                            $queryCount,
+                            $contextual,
+                        ),
+                    ],
+                ),
+            ],
+        );
+    }
+
+    /**
+     * Builds the list of values as returned by queries from provided IDs.
+     *
+     * @param int[] $ids
+     *
+     * @return \Netgen\Layouts\Tests\Item\Stubs\Value[]
+     */
+    private function buildQueryValues(array $ids = []): array
+    {
+        return array_map(
+            static fn (int $id): Value => new Value($id, ''),
+            $ids,
+        );
+    }
+}

@@ -1,0 +1,43 @@
+{{#if show_header}}
+  <div class="zone-header">
+    <span class="zone-name">{{model.name}}</span>
+    <div class="zone-controls">
+      {{#eq mode "chooser"}}
+        {{#if model.is_linked}}
+          <span class="zone-btn linked-zone-btn ngl-tooltip" data-placement="left" title="<span class='tt-note'>This zone is already linked with<br/> Layout:</span> <strong>{{model.linked_layout.name}}</strong><br/> <span class='tt-note'>Zone:</span> <strong>{{model.linked_zone_name}}</strong>"><span class="link-zone-icon"></span></span>
+          <div class="dropdown">
+              <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="material-icons">more_horiz</i></button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a title="Update link" class="js-choose">Update link<span class="note">Choose different zone</span></a></li>
+                  <li><a title="Unlink" class="js-unlink">Unlink</a></li>
+              </ul>
+          </div>
+        {{else}}
+          <a href="#" class="zone-btn link-zone-btn js-choose"><span>Link zone</span> <span class="link-zone-icon"></span></a>
+        {{/if}}
+      {{/eq}}
+      {{#eq mode "linker"}}
+        <a href="#" class="zone-btn link-zone-btn js-link"><span class="link-zone-icon"></span> <span>Select zone</span></a>
+      {{/eq}}
+    </div>
+  </div>
+{{/if}}
+
+<div class="zone-body" data-receiver>
+  {{! --------------- blocks -------------------- }}
+  {{#if model.is_linked}}
+    <div class="linked-zone-overlay"></div>
+  {{/if}}
+
+
+  {{#if show_zone_map_overlay}}
+    <div class="zone-map-overlay">
+      <div class="zone-map-name">
+        <div class="handle" title="Move block"><i class="material-icons">drag_handle</i></div>
+        <p>{{ model.name }}</p>
+      </div>
+      <a href="#" class="btn btn-outline zone-unmap js-unmap"><i class="material-icons">close</i></a>
+    </div>
+  {{/if}}
+
+</div>

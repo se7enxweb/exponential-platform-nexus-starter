@@ -1,0 +1,56 @@
+name: Behat
+
+on:
+  push:
+    branches:
+      - 'master'
+      - '[0-9].[0-9]+'
+  pull_request: ~
+
+env:
+  COMPOSER_ROOT_VERSION: dev-master
+
+jobs:
+  behat:
+    name: Behat
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+
+      # Install Flex as a global dependency to enable usage of extra.symfony.require
+      # while keeping Flex recipes from applying
+      - run: composer global config --no-plugins allow-plugins.symfony/flex true
+      - run: composer global require --no-scripts symfony/flex
+
+      - run: composer config extra.symfony.require ~7.4.0
+
+      - uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: highest
+          composer-options: '--prefer-dist'
+          ignore-cache: 'yes'
+
+      - uses: nanasess/setup-chromedriver@v2
+
+      - run: chromedriver --port=9515 --verbose > chromedriver.log 2>&1 &
+
+      - run: php -S 127.0.0.1:4242 -t tests/application/public > php-server.log 2>&1 &
+
+      - run: composer behat-headless
+
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: chromedriver-logs
+          path: chromedriver.log
+
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: php-server-logs
+          path: php-server.log

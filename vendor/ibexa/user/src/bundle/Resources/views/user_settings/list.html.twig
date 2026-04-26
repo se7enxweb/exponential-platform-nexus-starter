@@ -1,0 +1,47 @@
+{% extends view_base_layout is defined ? view_base_layout : page_layout %}
+
+{% trans_default_domain 'ibexa_user_settings' %}
+
+{%- block content -%}
+    {% for settings_group in grouped_settings %}
+        <h2>{{ settings_group.name }}</h2>
+        {% if settings_group.description is not empty %}
+            <p>{{ settings_group.description }}</p>
+        {% endif %}
+        {% if settings_group.settings is not empty %}
+            <a
+                title="{{ 'list.action.edit'|trans|desc('Edit') }}"
+                href="{{ path('ibexa.user_settings.update', { 'identifier': settings_group.identifier }) }}"
+            >
+                {{ 'list.action.edit'|trans|desc('Edit') }}
+            </a>
+        {% endif %}
+        <table>
+            <tbody>
+                {% for user_setting in settings_group.settings %}
+                     <tr>
+                        <td>
+                            {{ value_definitions[user_setting.identifier].getDisplayValue(user_setting.value)|raw }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+    <h2>{{ 'my_account_settings.password.title'|trans|desc('Password') }}</h2>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td>
+                    {{ 'my_account_settings.password.description'|trans|desc('Current password') }}
+                </td>
+                <td>
+                    <a title="{{ 'my_account_settings.password.action.edit'|trans|desc('Edit') }}"
+                       href="{{ path('ibexa.user_profile.change_password') }}">
+                        {{ 'my_account_settings.password.action.edit'|trans|desc('Edit') }}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{%- endblock content -%}

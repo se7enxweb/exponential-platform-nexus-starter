@@ -1,0 +1,85 @@
+{% trans_default_domain 'ngtoolbar' %}
+
+{% if is_granted('ibexa:ngtoolbar:use') %}
+    <div
+        id="ngtoolbar"
+        class="ngtoolbar"
+        data-admin-url-template="{{ ngtoolbar.adminUrlTemplate }}"
+    >
+        <ul class="ngtoolbar__menu">
+            {% if content is defined and location is defined %}
+                {% set cms_url = ngtoolbar.adminUrlTemplate|replace({'{contentId}': content.id, '{locationId}': location.id}) %}
+
+                <li class="ngtoolbar__menu-item">
+                    <a class="ngtoolbar__menu-link" target="_blank" href="{{ cms_url }}">
+                        <img src="{{ asset('bundles/netgentoolbar/images/ibexa-logo.svg') }}"  />
+                        {{ 'ngtoolbar.admin_interface'|trans }}
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if nglayouts.layout is not null and (is_granted('ROLE_NGLAYOUTS_EDITOR') or is_granted('nglayouts:layout:edit', nglayouts.layout)) %}
+                {% set layouts_url = url('nglayouts_' ~ (nglayouts.debug ? 'dev_' : '') ~ 'app', {
+                    'siteaccess': ngtoolbar.adminSiteAccessName,
+                    '_fragment': 'layout/' ~ nglayouts.layout.id.toString() }
+                ) %}
+
+                <li class="ngtoolbar__menu-item">
+                    <a class="ngtoolbar__menu-link" target="_blank" href="{{ layouts_url }}">
+                        <img src="{{ asset('bundles/netgentoolbar/images/layouts-logo.svg') }}" />
+                        {{ nglayouts.layout.name }}
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="ngtoolbar__menu-item">
+                <button
+                    class="ngtoolbar__menu-link js-toggle-mode"
+                    data-icon-hide-src="{{ asset('bundles/netgentoolbar/images/eye-closed.svg') }}"
+                    data-icon-show-src="{{ asset('bundles/netgentoolbar/images/eye-open.svg') }}"
+                    data-label-show="{{ 'ngtoolbar.view_components'|trans }}"
+                    data-label-hide="{{ 'ngtoolbar.hide_components'|trans }}"
+                    data-block-type="components"
+                >
+                    <img class="js-toggle-mode-icon" src="{{ asset('bundles/netgentoolbar/images/eye-open.svg') }}"  />
+                    <span class="js-toggle-mode-label">
+                        {{ 'ngtoolbar.view_components'|trans }}
+                    </span>
+                </button>
+            </li>
+
+            <li class="ngtoolbar__menu-item">
+                <button
+                    class="ngtoolbar__menu-link js-toggle-mode"
+                    data-icon-hide-src="{{ asset('bundles/netgentoolbar/images/eye-closed.svg') }}"
+                    data-icon-show-src="{{ asset('bundles/netgentoolbar/images/eye-open.svg') }}"
+                    data-label-show="{{ 'ngtoolbar.view_items'|trans }}"
+                    data-label-hide="{{ 'ngtoolbar.hide_items'|trans }}"
+                    data-block-type="items"
+                >
+                    <img class="js-toggle-mode-icon" src="{{ asset('bundles/netgentoolbar/images/eye-open.svg') }}"  />
+                    <span class="js-toggle-mode-label">
+                        {{ 'ngtoolbar.view_items'|trans }}
+                    </span>
+                </button>
+            </li>
+        </ul>
+
+        <ul class="ngtoolbar__menu ngtoolbar__menu--secondary">
+            <li class="ngtoolbar__menu-item">
+                <a class="ngtoolbar__menu-link" href="{{ url('logout') }}">{{ 'ngtoolbar.logout'|trans }}</a>
+            </li>
+        </ul>
+    </div>
+
+    <script src="{{ asset('bundles/netgentoolbar/assets/toolbar.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/netgentoolbar/assets/toolbar.css') }}" />
+
+    <style>
+        {% for selector in offset_selectors|default(["#page"]) %}
+            {{ selector }} {
+                margin-top: var(--ngtoolbar-height);
+            }
+        {% endfor %}
+    </style>
+{% endif %}

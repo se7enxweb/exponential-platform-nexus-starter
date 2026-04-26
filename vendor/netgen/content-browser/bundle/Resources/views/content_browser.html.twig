@@ -1,0 +1,37 @@
+{% trans_default_domain 'ngcb' %}
+
+{% set item_name = item_name ?? '' %}
+{% set no_item_message = no_item_message ?? 'form.messages.no_item_selected'|trans %}
+{% set required = required is defined ? required : false %}
+{% set custom_params = custom_params ?? [] %}
+
+<div class="js-input-browse {% if item_name is empty %}item-empty{% endif %}"
+    {% if min is defined %}data-min_selected="{{ min }}"{% endif %}
+    {% if max is defined %}data-max_selected="{{ max }}"{% endif %}
+    {% if start_location is defined %}data-start_location="{{ start_location }}"{% endif %}
+    {% if show_tree is defined %}data-has_tree="{{ show_tree ? '1' : '0' }}"{% endif %}
+    {% if show_search is defined %}data-has_search="{{ show_search ? '1' : '0' }}"{% endif %}
+    {% if show_preview is defined %}data-has_preview="{{ show_preview ? '1' : '0' }}"{% endif %}
+
+    {% if custom_params is iterable %}
+        {% for key, value in custom_params %}
+            data-custom-{{ key }}="{{ value is iterable ? value|join(',') : value }}"
+        {% endfor %}
+    {% endif %}
+>
+
+    <div class="input-browse">
+        {% if not required %}
+            <span class="js-clear"><i class="material-icons">close</i></span>
+        {% endif %}
+
+        <a class="js-trigger" href="#">
+            <span class="js-name" data-empty-note="{{ no_item_message }}">
+                {{ item_name is not empty ? item_name : no_item_message }}
+            </span>
+        </a>
+    </div>
+
+    <input type="hidden" class="js-item-type" value="{{ item_type }}" />
+    <input type="hidden" class="js-value" id="{{ input_id }}" value="" />
+</div>

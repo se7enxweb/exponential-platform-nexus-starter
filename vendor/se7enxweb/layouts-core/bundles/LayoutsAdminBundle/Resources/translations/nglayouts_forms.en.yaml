@@ -1,0 +1,74 @@
+layout.type: 'Layout type'
+layout.name: 'Name'
+layout.main_locale: 'Main translation'
+layout.description: 'Description'
+layout.is_shared: 'Shared'
+
+block.view_type: 'View type'
+block.item_view_type: 'Item view type'
+block.name: 'Block label'
+
+collection.offset: 'Skip first No. of items'
+collection.limit: 'Number of items'
+collection.offset_limit: 'Offset & number of items'
+
+query.advanced_options: 'Advanced options'
+
+collection_item.view_type: 'View type'
+
+collection_item.edit_view_type.header: 'Edit item view type'
+collection_item.edit_view_type.current_view_type: 'Current item view type in block'
+collection_item.edit_view_type.button.cancel: 'Cancel'
+collection_item.edit_view_type.button.submit: 'Save'
+
+collection_slot.view_type: 'View type'
+
+collection_slot.edit_view_type.header: 'Edit slot view type at position'
+collection_slot.edit_view_type.current_view_type: 'Current item view type in block'
+collection_slot.edit_view_type.button.cancel: 'Cancel'
+collection_slot.edit_view_type.button.submit: 'Save'
+
+layout.copy.title: 'Enter the name for the new layout'
+layout.copy.button.copy: 'Copy layout'
+layout.copy.button.cancel: 'Cancel'
+
+layout.create.button.cancel: 'Cancel'
+layout.create.button.create: 'Create layout'
+
+layout.edit.button.cancel: 'Cancel'
+layout.edit.button.save: 'Save'
+layout.edit.title: 'Edit layout name and description'
+
+rule.description: 'Description'
+
+rule.edit.title: 'Edit mapping'
+rule.edit.button.cancel: 'Cancel'
+rule.edit.button.save: 'Save mapping'
+
+rule.copy.title: 'Duplicate mapping'
+rule.copy.copy_layout: 'Duplicate layout'
+rule.copy.layout_name: 'Layout name'
+rule.copy.layout_description: 'Layout description'
+rule.copy.button.cancel: 'Cancel'
+rule.copy.button.save: 'Copy mapping'
+
+target_type.button.cancel: 'Cancel'
+target_type.button.save: 'Save target'
+
+condition_type.button.cancel: 'Cancel'
+condition_type.button.save: 'Save condition'
+
+condition_type.route_parameter.parameter_name: 'Parameter name'
+condition_type.route_parameter.parameter_values: 'Parameter values'
+condition_type.query_parameter.parameter_name: 'Parameter name'
+condition_type.query_parameter.parameter_values: 'Parameter values'
+condition_type.time.from: 'From'
+condition_type.time.to: 'Until'
+
+import.file: 'Select file'
+import.file.no_file_selected: '(No file selected)'
+import.import_mode: 'Import mode'
+import.import_mode.copy: 'Copy existing entities'
+import.import_mode.overwrite: 'Overwrite existing entities'
+import.import_mode.skip: 'Skip existing entities'
+import.button.upload: 'Import'

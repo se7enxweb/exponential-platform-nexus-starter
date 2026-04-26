@@ -1,0 +1,72 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\IbexaFormsBundle\Tests\Form\FieldTypeHandler;
+
+use DateTime;
+use Ibexa\Core\FieldType\DateAndTime as DTValue;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
+use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler;
+use Netgen\Bundle\IbexaFormsBundle\Form\FieldTypeHandler\DateAndTime;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormBuilder;
+
+final class DateAndTimeTest extends TestCase
+{
+    public function testAssertInstanceOfFieldTypeHandler(): void
+    {
+        $dateAndTime = new DateAndTime();
+
+        self::assertInstanceOf(FieldTypeHandler::class, $dateAndTime);
+    }
+
+    public function testConvertFieldValueToForm(): void
+    {
+        $dateAndTime = new DateAndTime();
+        $dateTime = new DateTime();
+        $dateValue = new DTValue\Value($dateTime);
+
+        $returnedDate = $dateAndTime->convertFieldValueToForm($dateValue);
+
+        self::assertSame($dateTime, $returnedDate);
+    }
+
+    public function testConvertFieldValueFromForm(): void
+    {
+        $dateTime = new DateTime();
+        $dateAndTime = new DateAndTime();
+        $dateValue = new DTValue\Value($dateTime);
+
+        $returnedDate = $dateAndTime->convertFieldValueFromForm($dateTime);
+
+        self::assertSame((string) $dateValue, (string) $returnedDate);
+    }
+
+    public function testBuildFieldCreateForm(): void
+    {
+        $formBuilder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['add'])
+            ->getMock();
+
+        $formBuilder->expects(self::once())
+            ->method('add');
+
+        $fieldDefinition = new FieldDefinition(
+            [
+                'id' => 123,
+                'identifier' => 'identifier',
+                'isRequired' => true,
+                'descriptions' => ['fre-FR' => 'fre-FR'],
+                'names' => ['fre-FR' => 'fre-FR'],
+            ]
+        );
+
+        $languageCode = 'eng-GB';
+
+        $dateAndTime = new DateAndTime();
+
+        $dateAndTime->buildFieldCreateForm($formBuilder, $fieldDefinition, $languageCode);
+    }
+}

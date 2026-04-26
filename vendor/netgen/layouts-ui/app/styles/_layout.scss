@@ -1,0 +1,346 @@
+/* header */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-left: $leftWidth;
+  height: $topHeight;
+  background: $toolbarbg2;
+  color: #fff;
+  z-index: 10;
+  .bm-header {
+    display: flex;
+  }
+  .dropdown {
+    display: inline-block;
+    button {
+      background: transparent;
+      border: 0;
+      vertical-align: middle;
+      padding: 3px;
+    }
+    .dropdown-menu {
+      margin: 0;
+      border-radius: 0;
+      right: -1px;
+      margin-top: .25rem;
+      border-top-color: #fff;
+    }
+  }
+  .main_language {
+    padding-left: 1em;
+    font-size: .8125em;
+    color: #999;
+    height: $topHeight;
+    border-left: 2px solid $contentbg;
+    display: inline-flex;
+    align-items: center;
+  }
+  .layout-name {
+    flex: 1;
+    padding: 0 $gutter 0 0;
+    height: $topHeight;
+    display: flex;
+    align-items: center;
+    .chooser {
+      display: inline-block;
+    }
+    .show-form {
+      display: inline-block;
+      font-size: 1em;
+      margin: 0 1em;
+      i {
+        color: $toolbarColor;
+        margin-left: .25em;
+        font-size: 1em;
+        vertical-align: middle;
+      }
+    }
+    .js-show-form {
+      border-bottom: 1px dashed hsl(0, 0, 34);
+      cursor: pointer;
+    }
+    i {
+      color: hsl(0, 0, 72);
+      margin: 0 .1667em 0 0;
+    }
+  }
+  .actions {
+    padding: .4375em $gutter;
+  }
+  :focus {
+    outline: none;
+  }
+}
+
+/* app logo */
+.app-logo-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $leftWidth;
+  height: $topHeight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $darkBg;
+}
+.app-logo {
+  display: block;
+  background: transparent url('../images/layouts-logo.svg') no-repeat 50% 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* left toolbar */
+.left-toolbar {
+  position: fixed;
+  top: $topHeight;
+  left: 0;
+  bottom: 0;
+  width: $leftWidth;
+  background: $toolbarbg1;
+  color: $toolbarColor;
+  z-index: 30;
+  .disabler {
+    background: rgba(64, 64, 64, .8);
+  }
+  .disable {
+    position: relative;
+    &:hover {
+      color: inherit !important;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background: rgba($toolbarbg1, .85);
+      cursor: not-allowed;
+    }
+  }
+  .top-menu {
+    margin-top: 1px;
+    > div {
+      position: relative;
+    }
+    .disabler {
+      display: none;
+    }
+    .disable .disabler {
+      display: block;
+    }
+  }
+  .bottom-menu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    .button {
+      &:first-child {
+        border-top-width: 1px;
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+      &.active {
+        background: $toolbarBorderColor;
+      }
+    }
+  }
+  .button {
+    display: block;
+    border: 0;
+    background: transparent;
+    width: $leftWidth;
+    height: $leftWidth;
+    line-height: $leftWidth;
+    text-align: center;
+    border-color: $toolbarBorderColor;
+    border-width: 0 0 1px;
+    border-style: solid;
+    font-size: 1.5em;
+    transition: color 150ms, background-color 150ms;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      background: lighten($toolbarbg1, 3%);
+      color: #fff;
+    }
+    &.active {
+      background: $toolbarbg2;
+      color: #fff;
+    }
+    &::before {
+      @extend %icomoon;
+    }
+    &[data-target='blocks']::before {
+      content: '\e900';
+    }
+
+  }
+}
+
+/* content */
+.main-content {
+  position: fixed;
+  left: $leftWidth;
+  right: $rightWidth;
+  top: $topHeight;
+  // bottom:$bottomHeight;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: $gutter;
+  background: $contentbg;
+  .row {
+    margin-left: -.625rem;
+    margin-right: -.625rem;
+    > [class^='col-'] {
+      padding-left: .625rem;
+      padding-right: .625rem;
+    }
+  }
+  .zones {
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+  @media screen and (min-width: 1750px) {
+    right: $rightWidthLg;
+  }
+}
+
+/* footer */
+.app-footer {
+  // position:fixed;
+  // bottom:0;
+  // left:$leftWidth;
+  // right:$rightWidth;
+  // height:$bottomHeight;
+  // background:$footerbg;
+  display: none;
+  // @media screen and (min-width: 1750px){
+  //   right: $rightWidthLg;
+  // }
+}
+
+
+
+#{$namespace}.ngldev {
+  .app-logo {
+    filter: invert(100%);
+  }
+  .app-header {
+    .dropdown {
+      display: inline-block;
+      vertical-align: middle;
+      button {
+        display: none;
+      }
+      .dropdown-menu {
+        background: none;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        position: static;
+        li {
+          display: inline;
+          margin: 0;
+          padding: 0;
+        }
+        a {
+          @extend .btn;
+          @extend .btn-default;
+        }
+      }
+    }
+  }
+
+}
+
+#ngc-size-warning {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($toolbarbg2, .98);
+  color: #fff;
+  z-index: 1000000;
+  display: none;
+  opacity: 0;
+  .size-warning-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 94%;
+    max-width: 20rem;
+    line-height: 1.42857143;
+    font-size: .874rem;
+    .icon {
+      position: relative;
+      display: inline-block;
+      font-size: 2.625rem;
+      &::before,
+      &::after {
+        @extend .material-icons;
+      }
+      &::before {
+        content: 'desktop_mac';
+        font-size: 1.4285714286em;
+        color: hsla(0, 0, 100, .5);
+      }
+      &::after {
+        content: 'settings_ethernet';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: .35em;
+        color: hsla(0, 0, 100, .2);
+        font-size: .619047619em;
+      }
+    }
+    h2 {
+      margin: 0 0 .25em;
+      font-size: 1.5em;
+      font-weight: 700;
+      line-height: 1.42857143;
+    }
+    p {
+      margin: 0 0 1em;
+      font-size: 1em;
+      color: hsla(0, 0, 100, .6);
+    }
+  }
+  @media screen and (max-width: 799px) {
+    display: block;
+    opacity: 1;
+    animation: warningFadeIn .2s;
+  }
+  @keyframes warningFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  cursor: wait;
+  z-index: 1000;
+  display: none;
+}

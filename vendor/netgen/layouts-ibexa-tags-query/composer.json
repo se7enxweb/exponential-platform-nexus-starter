@@ -1,0 +1,45 @@
+{
+    "name": "netgen/layouts-ibexa-tags-query",
+    "description": "Netgen Layouts query based on Netgen Tags for Ibexa CMS",
+    "license": "GPL-2.0-only",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "netgen/layouts-ibexa": "^2.0",
+        "netgen/tagsbundle": "^6.0"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "scripts": {
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Layouts\\Ibexa\\TagsQuery\\": "lib/",
+            "Netgen\\Bundle\\LayoutsIbexaTagsQueryBundle\\": "bundle/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    }
+}

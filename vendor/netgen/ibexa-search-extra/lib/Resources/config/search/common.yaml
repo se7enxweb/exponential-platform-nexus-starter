@@ -1,0 +1,14 @@
+imports:
+    - { resource: common/asynchronous_indexing.yaml }
+    - { resource: common/field_value_mappers.yaml }
+    - { resource: common/fulltext.yaml }
+    - { resource: common/page_indexing.yaml }
+
+services:
+    netgen.ibexa_search_extra.fulltext.configured_factory:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\Query\ConfiguredFulltextCriterionFactory
+        arguments:
+            - '%netgen_ibexa_search_extra.fulltext.boost%'
+
+    Netgen\IbexaSearchExtra\Core\Search\Common\Query\ConfiguredFulltextCriterionFactory:
+        alias: netgen.ibexa_search_extra.fulltext.configured_factory

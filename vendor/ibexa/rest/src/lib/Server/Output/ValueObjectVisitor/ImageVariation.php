@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+
+namespace Ibexa\Rest\Server\Output\ValueObjectVisitor;
+
+use Ibexa\Contracts\Core\Variation\Values\ImageVariation as ImageVariationValue;
+use Ibexa\Contracts\Rest\Output\Generator;
+use Ibexa\Contracts\Rest\Output\ValueObjectVisitor;
+use Ibexa\Contracts\Rest\Output\Visitor;
+
+class ImageVariation extends ValueObjectVisitor
+{
+    /**
+     * @param \Ibexa\Contracts\Core\Variation\Values\ImageVariation $data
+     */
+    public function visit(Visitor $visitor, Generator $generator, mixed $data): void
+    {
+        $visitor->setHeader('Content-Type', $generator->getMediaType('ContentImageVariation'));
+        $generator->startObjectElement('ContentImageVariation');
+        $this->visitImageVariationAttributes($generator, $data);
+        $generator->endObjectElement('ContentImageVariation');
+    }
+
+    protected function visitImageVariationAttributes(Generator $generator, ImageVariationValue $data): void
+    {
+        $generator->startAttribute(
+            'href',
+            $this->router->generate(
+                'ibexa.rest.binary_content.get_image_variation',
+                [
+                    'imageId' => $data->imageId,
+                    'variationIdentifier' => $data->name,
+                ]
+            )
+        );
+        $generator->endAttribute('href');
+
+        $generator->startValueElement('uri', $data->uri);
+        $generator->endValueElement('uri');
+
+        if ($data->mimeType) {
+            $generator->startValueElement('contentType', $data->mimeType);
+            $generator->endValueElement('contentType');
+        }
+
+        if ($data->width) {
+            $generator->startValueElement('width', $data->width);
+            $generator->endValueElement('width');
+        }
+
+        if ($data->height) {
+            $generator->startValueElement('height', $data->height);
+            $generator->endValueElement('height');
+        }
+
+        if ($data->fileSize) {
+            $generator->startValueElement('fileSize', $data->fileSize);
+            $generator->endValueElement('fileSize');
+        }
+    }
+}

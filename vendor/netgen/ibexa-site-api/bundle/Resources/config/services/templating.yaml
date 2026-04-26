@@ -1,0 +1,108 @@
+services:
+    netgen.ibexa_site_api.twig.extension.field_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\FieldRenderingExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.field_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\FieldRenderingRuntime
+        arguments:
+            - '@twig'
+            - '@ibexa.templating.field_block_renderer'
+            - '@Ibexa\Core\MVC\Symfony\FieldType\View\ParameterProviderRegistry'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\ContentViewExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\ContentViewRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.content_renderer'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.embedded_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\EmbeddedContentViewExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.embedded_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\EmbeddedContentViewRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.content_renderer'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.ez_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\IbexaContentViewExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.ez_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\IbexaContentViewRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.content_renderer'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.ez_embedded_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\IbexaEmbeddedContentViewExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.ez_embedded_content_rendering:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\IbexaEmbeddedContentViewRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.content_renderer'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.image:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\ImageExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.image:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\ImageRuntime
+        arguments:
+            - '@Ibexa\Contracts\Core\Variation\VariationHandler'
+            - '@?logger'
+        tags:
+            - { name: twig.runtime }
+            - { name: monolog.logger, channel: ngsiteapi }
+
+    netgen.ibexa_site_api.twig.extension.query:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\QueryExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.query:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\QueryRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.query_type.query_executor'
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_site_api.twig.extension.get_attr_expression:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\GetAttrExpressionExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.extension.named_object:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\NamedObjectExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.ibexa_site_api.twig.runtime.named_object:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Templating\Twig\Extension\NamedObjectRuntime
+        arguments:
+            - '@netgen.ibexa_site_api.named_object.provider'
+            - '%kernel.debug%'
+            - '@?logger'
+        tags:
+            - { name: twig.runtime }
+            - { name: monolog.logger, channel: ngsiteapi }

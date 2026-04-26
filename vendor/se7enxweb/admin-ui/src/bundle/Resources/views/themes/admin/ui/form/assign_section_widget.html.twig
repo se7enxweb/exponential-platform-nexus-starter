@@ -1,0 +1,20 @@
+{%- block button_widget -%}
+    {%- if label is not same as(false) and label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        <svg class="ibexa-icon ibexa-icon--small-medium">
+            <use xlink:href="{{ ibexa_icon_path('assign-section') }}"></use>
+        </svg>
+        <span class="ibexa-btn__label">
+            {{ 'section.assign,content'|trans|desc('Assign Content') }}
+        </span>
+    </button>
+{%- endblock -%}

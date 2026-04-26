@@ -1,0 +1,61 @@
+{
+    "name": "netgen/ibexa-site-api",
+    "description": "Netgen's Site API for Ibexa CMS",
+    "type": "ibexa-bundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Petar Španja",
+            "email": "petar@spanja.info"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-dom": "*",
+        "ibexa/core": "^5.0",
+        "ibexa/http-cache": "^5.0",
+        "ibexa/fieldtype-richtext": "^5.0",
+        "netgen/ibexa-search-extra": "^4.0",
+        "twig/twig": "^3.22"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.3",
+        "netgen/tagsbundle": "^6.0",
+        "netgen/ibexa-fieldtype-enhanced-link": "^2.0",
+        "composer/package-versions-deprecated": "^1.11"
+    },
+    "replace": {
+        "netgen/ezplatform-site-api": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "suggest": {
+        "netgen/tagsbundle": "Allows using Tag relation Query Types and named Tag objects",
+        "netgen/ibexa-fieldtype-enhanced-link": "Field Type supporting internal/external links with rendering options"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\IbexaSiteApi\\": "lib",
+            "Netgen\\Bundle\\IbexaSiteApiBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\IbexaSiteApi\\Tests\\": "tests/lib",
+            "Netgen\\Bundle\\IbexaSiteApiBundle\\Tests\\": "tests/bundle"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-ibexa5": "7.0-dev"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always",
+        "test-integration": "@php vendor/bin/phpunit --colors=always -c phpunit-integration-legacy.xml"
+    },
+    "config": {
+        "allow-plugins": false
+    }
+}

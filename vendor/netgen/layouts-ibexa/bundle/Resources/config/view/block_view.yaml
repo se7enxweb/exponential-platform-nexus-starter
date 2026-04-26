@@ -1,0 +1,21 @@
+view:
+    block_view:
+        default:
+            ibexa_content_field:
+                template: "@nglayouts/block/ibexa_content_field.html.twig"
+                match:
+                    block\definition: ibexa_content_field
+                    block\view_type: ibexa_content_field
+            ibexa_component:
+                template: "@nglayouts/block/ibexa_component.html.twig"
+                match:
+                    block\definition\prefix: ibexa_component
+        app:
+            ibexa_content_field:
+                template: "@nglayouts_admin/app/block/ibexa_content_field.html.twig"
+                match:
+                    block\definition: ibexa_content_field
+            ibexa_component:
+                template: "@nglayouts_admin/app/block/ibexa_component.html.twig"
+                match:
+                    block\definition\prefix: ibexa_component

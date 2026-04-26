@@ -1,0 +1,18 @@
+.ibexa-dropdown-popover {
+    &.popover {
+        z-index: 10250;
+        max-width: initial;
+        background: initial;
+        border: 0;
+        pointer-events: all; // for popovers inside .modal-dialog
+    }
+
+    .popover-arrow {
+        display: none;
+    }
+
+    .popover-body {
+        padding: 0;
+        color: initial;
+    }
+}

@@ -1,0 +1,26 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{% trans_default_domain 'ibexa_systeminfo' %}
+
+{% block body_class %}ibexa-info-view ibexa-has-full-width-footer{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: [
+        { value: 'breadcrumb.admin'|trans|desc('Admin') },
+        { value: 'systeminfo'|trans|desc('System information') }
+    ]} %}
+{% endblock %}
+
+{% block header %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: 'systeminfo'|trans|desc('System information'),
+    } %}
+{% endblock %}
+
+{% block content %}
+    {{ ibexa_twig_component_group('admin-ui-systeminfo-tab-groups') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-tabs-js', null, 'ibexa') }}
+{% endblock %}

@@ -1,0 +1,34 @@
+ContentQueryFieldDefinition:
+    type: object
+    inherits: [FieldDefinition]
+    config:
+        fields:
+            settings:
+                type: ContentQueryFieldSettings
+                resolve: "@=value.getFieldSettings()"
+
+ContentQueryFieldSettings:
+    type: object
+    config:
+        fields:
+            queryType:
+                type: String
+                description: "Identifier of the query type executed by the field"
+                resolve: "@=value['QueryType']"
+            parameters:
+                type: "[ContentQueryFieldParameter]"
+                description: "Parameters used to generate the Query from the Query type"
+                resolve: "@=query('QueryFieldDefinitionParameters', value['Parameters'])"
+            returnedType:
+                type: ContentType
+                description: "Content type returned by the field"
+                resolve: "@=value['ReturnedType']"
+
+ContentQueryFieldParameter:
+    type: object
+    config:
+        fields:
+            name:
+                type: String
+            value:
+                type: String

@@ -1,0 +1,5 @@
+services:
+    netgen_tags.templating.admin_global_variable:
+        class: Netgen\TagsBundle\Templating\Twig\AdminGlobalVariable
+        arguments:
+            - "@ibexa.config.resolver"

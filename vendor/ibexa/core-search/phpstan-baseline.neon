@@ -1,0 +1,13 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/contracts/Persistence/CriterionMapper/AbstractFieldCriterionMapper.php
+
+		-
+			message: '#^Instanceof between T of Ibexa\\Contracts\\CoreSearch\\Values\\Query\\Criterion\\FieldValueCriterion and Ibexa\\Contracts\\CoreSearch\\Values\\Query\\Criterion\\FieldValueCriterion will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/contracts/Persistence/CriterionMapper/AbstractFieldCriterionMapper.php

@@ -1,0 +1,17 @@
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% set rootTagId = rootTagId|default(0) %}
+{% set showRootTag = showRootTag|default(true) %}
+{% set selectedTag = selectedTag|default(null) %}
+{% set disableSubtree = disableSubtree|default([]) %}
+
+{% block tags_tree %}
+    <div
+        class="tags-tree"
+        data-path="{{ path('netgen_tags_admin_tree_get_children', {'tagId': '_tagId_'}) }}"
+        data-rootTagId="{{ rootTagId }}"
+        data-showRootTag="{{ showRootTag ? 'true' : 'false' }}"
+        data-selectedTagPath="{{ selectedTag ? selectedTag.pathString : '' }}"
+        data-disableSubtree="{{ disableSubtree|join(',') }}"
+    ></div>
+{% endblock %}

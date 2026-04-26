@@ -1,0 +1,6 @@
+query_types:
+    ibexa_content_relation_list:
+        name: 'Ibexa relation list'
+
+    ibexa_content_reverse_relation_list:
+        name: 'Ibexa reverse relation list'

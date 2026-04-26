@@ -1,0 +1,19 @@
+{% trans_default_domain 'nglayouts_app' %}
+
+{% macro notice(notice) %}
+    <div class="notice">
+        <i class="material-icons" aria-hidden="true">info_outline</i>
+        <span class="msg">{{ notice }}</span>
+    </div>
+{% endmacro %}
+
+{% macro info(info, icon_class) %}
+    <div class="info">
+        {% if icon_class is defined and icon_class is not empty %}
+            <div class="info-icon">
+                <span class="{{ icon_class }}"></span>
+            </div>
+        {% endif %}
+        <span class="msg">{{ info }}</span>
+    </div>
+{% endmacro %}

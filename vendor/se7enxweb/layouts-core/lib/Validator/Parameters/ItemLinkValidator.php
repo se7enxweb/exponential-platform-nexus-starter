@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Validator\Parameters;
+
+use Netgen\Layouts\Item\CmsItemLoaderInterface;
+use Netgen\Layouts\Item\NullCmsItem;
+use Netgen\Layouts\Validator\Constraint\Parameters\ItemLink;
+use Netgen\Layouts\Validator\Constraint\ValueType;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Uri\InvalidUriException;
+use Uri\Rfc3986\Uri;
+
+use function count;
+use function in_array;
+use function is_string;
+use function str_replace;
+
+/**
+ * Validates if the provided value is a valid link to an item.
+ */
+final class ItemLinkValidator extends ConstraintValidator
+{
+    public function __construct(
+        private CmsItemLoaderInterface $cmsItemLoader,
+    ) {}
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if ($value === null || $value === '') {
+            return;
+        }
+
+        if (!$constraint instanceof ItemLink) {
+            throw new UnexpectedTypeException($constraint, ItemLink::class);
+        }
+
+        if (!is_string($value)) {
+            throw new UnexpectedTypeException($value, 'string');
+        }
+
+        $validator = $this->context->getValidator()->inContext($this->context);
+
+        try {
+            $uri = new Uri($value);
+        } catch (InvalidUriException) {
+            $this->context->buildViolation($constraint->invalidItemMessage)
+                ->addViolation();
+
+            return;
+        }
+
+        $scheme = $uri->getScheme() ?? '';
+        $host = $uri->getHost() ?? '';
+
+        if ($scheme === '' || $host === '') {
+            $this->context->buildViolation($constraint->invalidItemMessage)
+                ->addViolation();
+
+            return;
+        }
+
+        if (!$constraint->allowInvalid) {
+            $valueType = str_replace('-', '_', $scheme);
+            $itemValue = $host;
+
+            $validator->validate($valueType, new ValueType());
+            if (count($validator->getViolations()) > 0) {
+                // Validation constraint is already added to the validator
+                // by the ValueTypeValidator
+                return;
+            }
+
+            if (count($constraint->valueTypes) > 0 && !in_array($valueType, $constraint->valueTypes, true)) {
+                $this->context->buildViolation($constraint->valueTypeNotAllowedMessage)
+                    ->setParameter('%valueType%', $valueType)
+                    ->addViolation();
+
+                return;
+            }
+
+            $item = $this->cmsItemLoader->load($itemValue, $valueType);
+            if ($item instanceof NullCmsItem) {
+                $this->context->buildViolation($constraint->message)
+                    ->addViolation();
+            }
+        }
+    }
+}

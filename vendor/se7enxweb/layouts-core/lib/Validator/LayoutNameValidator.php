@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Validator;
+
+use Netgen\Layouts\API\Service\LayoutService;
+use Netgen\Layouts\Validator\Constraint\LayoutName;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+use function is_string;
+use function mb_trim;
+
+/**
+ * Validates if the provided layout name already exists in the system.
+ */
+final class LayoutNameValidator extends ConstraintValidator
+{
+    public function __construct(
+        private LayoutService $layoutService,
+    ) {}
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if (!$constraint instanceof LayoutName) {
+            throw new UnexpectedTypeException($constraint, LayoutName::class);
+        }
+
+        if ($value === null || $value === '') {
+            return;
+        }
+
+        if (!is_string($value)) {
+            throw new UnexpectedTypeException($value, 'string');
+        }
+
+        if ($this->layoutService->layoutNameExists(mb_trim($value), $constraint->excludedLayoutId)) {
+            $this->context->buildViolation($constraint->message)
+                ->addViolation();
+        }
+    }
+}

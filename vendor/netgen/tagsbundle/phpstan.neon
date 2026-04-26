@@ -1,0 +1,39 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    excludePaths:
+        # The following two paths are excluded since PHPStan crashes with "unknown interface" error
+        # which cannot be excluded with ignoreErrors config
+        - bundle/Core/Search/Elasticsearch/Query/Common/CriterionVisitor/Tags.php
+        - bundle/Core/Search/Elasticsearch/QueryDSL/PrefixQuery.php
+
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+
+        - '#with generic interface Symfony\\Component\\Form\\\w+ (but )?does not specify its types: TData#'
+        - '#extends generic class Symfony\\Component\\Form\\\w+ but does not specify its types: TData#'
+
+        - '#Method .*::getNbResults\(\) should return int<0, max> but returns int.#'
+
+        # Doctrine DBAL
+        - '#expects string\|null, Doctrine\\DBAL\\Query\\Expression\\CompositeExpression given#'
+        - '#\$value2 of method Doctrine\\DBAL\\Platforms\\AbstractPlatform::getBitAndComparisonExpression\(\) expects string, int given.#'
+
+        # Tags Bundle specifics
+        - '#Netgen\\TagsBundle\\Core\\FieldType\\Tags\\Value::__construct\(\) does not call parent constructor#'
+        - '#Variable property access on \$this\(Netgen\\TagsBundle\\API\\Repository\\Values\\Tags\\Tag\)#'
+
+        # Errors caused by public properties in Ibexa
+        - '#Call to function is_string\(\) with string will always evaluate to true.#'
+        - '#Call to function is_array\(\) with array(<.*>)? will always evaluate to true.#'
+        - '#Instanceof between (.*) and (.*) will always evaluate to true.#'
+        - '#should be contravariant with parameter#'
+        - '#should be covariant with return type#'
+        - "#Casting to bool something that's already bool.#"
+        - '#Access to protected property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData::\$(fieldDefinition|field)#'
+
+        # Errors caused by Ibexa Elasticsearch
+        - '#Ibexa\\Contracts\\Elasticsearch#'
+        - '#Ibexa\\Elasticsearch#'

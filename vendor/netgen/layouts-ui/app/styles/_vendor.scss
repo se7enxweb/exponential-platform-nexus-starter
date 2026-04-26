@@ -1,0 +1,13 @@
+//TODO: namespace, defaults variable maybe
+$namespace: '.ngc';
+
+//TODO: html, body
+#{$namespace}{
+  @import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
+  @import "../../node_modules/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker";
+  @import "datetime_picker";
+}
+
+@import "snackbar";
+@import "../../node_modules/@netgen/content-browser-ui/bundle/Resources/public/css/main";
+@import '../../node_modules/nprogress/nprogress';

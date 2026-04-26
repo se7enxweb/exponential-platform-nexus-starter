@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php_version: [8.0, 8.1, 8.2]
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: php-actions/composer@v6
+      with:
+        php_version:  ${{ matrix.php_version }}
+    - uses: php-actions/phpunit@v4
+      with:
+        php_version:  ${{ matrix.php_version }}
+        configuration: phpunit.xml.dist

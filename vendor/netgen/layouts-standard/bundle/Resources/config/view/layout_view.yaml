@@ -1,0 +1,52 @@
+view:
+    layout_view:
+        default:
+            layout_1:
+                template: "@nglayouts/layout/layout_1.html.twig"
+                match:
+                    layout\type: layout_1
+            layout_2:
+                template: "@nglayouts/layout/layout_2.html.twig"
+                match:
+                    layout\type: layout_2
+            layout_3:
+                template: "@nglayouts/layout/layout_3.html.twig"
+                match:
+                    layout\type: layout_3
+            layout_4:
+                template: "@nglayouts/layout/layout_4.html.twig"
+                match:
+                    layout\type: layout_4
+            layout_5:
+                template: "@nglayouts/layout/layout_5.html.twig"
+                match:
+                    layout\type: layout_5
+            layout_6:
+                template: "@nglayouts/layout/layout_6.html.twig"
+                match:
+                    layout\type: layout_6
+        app:
+            layout_1:
+                template: "@nglayouts_admin/app/layout/layout_1.html.twig"
+                match:
+                    layout\type: layout_1
+            layout_2:
+                template: "@nglayouts_admin/app/layout/layout_2.html.twig"
+                match:
+                    layout\type: layout_2
+            layout_3:
+                template: "@nglayouts_admin/app/layout/layout_3.html.twig"
+                match:
+                    layout\type: layout_3
+            layout_4:
+                template: "@nglayouts_admin/app/layout/layout_4.html.twig"
+                match:
+                    layout\type: layout_4
+            layout_5:
+                template: "@nglayouts_admin/app/layout/layout_5.html.twig"
+                match:
+                    layout\type: layout_5
+            layout_6:
+                template: "@nglayouts_admin/app/layout/layout_6.html.twig"
+                match:
+                    layout\type: layout_6

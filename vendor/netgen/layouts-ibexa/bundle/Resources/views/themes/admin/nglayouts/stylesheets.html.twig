@@ -1,0 +1,5 @@
+{% if app.current_route starts with 'nglayouts_admin' %}
+    {{ include('@NetgenLayoutsAdmin/admin/stylesheets.html.twig') }}
+{% endif %}
+
+<link rel="stylesheet" href="{{ asset('ibexa/admin/style.css', 'nglayouts_ibexa_' ~ (nglayouts.debug ? 'dev_' : '') ~ 'css') }}">

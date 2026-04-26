@@ -1,0 +1,32 @@
+{% if not parameter.isEmpty %}
+    {% set value = parameter.value %}
+
+    {% set link = null %}
+    {% set content = content|default('') %}
+
+    {% if value.linkType == enum('Netgen\\Layouts\\Parameters\\Value\\LinkType').Url or value.linkType == enum('Netgen\\Layouts\\Parameters\\Value\\LinkType').RelativeUrl %}
+        {% set link = value.link ~ value.linkSuffix %}
+    {% elseif value.linkType == enum('Netgen\\Layouts\\Parameters\\Value\\LinkType').Email %}
+        {% set link = 'mailto:' ~ value.link ~ value.linkSuffix %}
+    {% elseif value.linkType == enum('Netgen\\Layouts\\Parameters\\Value\\LinkType').Phone %}
+        {% set link = 'tel:' ~ value.link ~ value.linkSuffix %}
+    {% elseif value.linkType == enum('Netgen\\Layouts\\Parameters\\Value\\LinkType').Internal %}
+        {% set link = nglayouts_item_path(value.link) ~ value.linkSuffix %}
+    {% endif %}
+
+    {% if link is not empty %}
+        {% set attr = attr|default({}) %}
+
+        <a href="{{ link }}"
+            {% for name, value in attr %}
+                {% if name != 'target' %} {{ name }}="{{ value }}" {% endif %}
+            {% endfor %}
+
+            {% if value.newWindow %} target="_blank" rel="noopener noreferrer" {% endif %}
+        >
+            {{ content }}
+        </a>
+    {% else %}
+        {{ content }}
+    {% endif %}
+{% endif %}

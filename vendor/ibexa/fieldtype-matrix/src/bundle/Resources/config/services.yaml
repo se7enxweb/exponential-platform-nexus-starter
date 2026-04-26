@@ -1,0 +1,4 @@
+imports:
+    - { resource: services/fieldtype.yaml }
+    - { resource: services/command.yaml }
+    - { resource: services/graphql.yaml }

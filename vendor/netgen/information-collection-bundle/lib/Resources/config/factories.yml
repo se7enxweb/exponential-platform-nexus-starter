@@ -1,0 +1,23 @@
+services:
+    netgen_information_collection.factory.email_data:
+        class: Netgen\InformationCollection\Core\Factory\EmailDataFactory
+        arguments:
+            - '@ibexa.config.resolver'
+            - '@ibexa.api.service.field_type'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+            - '@Ibexa\Core\Helper\FieldHelper'
+            - '@twig'
+
+    netgen_information_collection.factory.auto_responder_data:
+        class: Netgen\InformationCollection\Core\Factory\AutoResponderDataFactory
+        arguments:
+            - '@ibexa.config.resolver'
+            - '@ibexa.api.service.field_type'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+            - '@Ibexa\Core\Helper\FieldHelper'
+            - '@twig'
+
+    netgen_information_collection.factory.field_data:
+        class: Netgen\InformationCollection\Core\Factory\FieldDataFactory
+        arguments:
+            - '@netgen_information_collection.field_handler.registry'

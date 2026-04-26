@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Overridden from ibexa/core, needs to be synchronized with it -->
+<!-- See: vendor/ibexa/core/phpunit-integration-legacy-solr.xml -->
+<phpunit
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        bootstrap="tests/bootstrap.php"
+        processIsolation="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        beStrictAboutTestsThatDoNotTestAnything="false"
+        colors="true"
+        failOnWarning="true"
+>
+    <coverage>
+        <include>
+            <directory suffix=".php">tests/integration</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="setupFactory" value="Netgen\IbexaSearchExtra\Tests\Integration\SetupFactory\RegressionSolr"/>
+        <env name="backendVersion" value="5"/>
+        <env name="fixtureDir" value="Solr"/>
+        <env name="solrServer" value="http://localhost:8983/"/>
+        <env name="CORES_SETUP" value="dedicated"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+        <ini name="error_reporting" value="-1"/>
+        <env name="DATABASE_URL" value="sqlite://:memory:"/>
+        <env name="KERNEL_CLASS" value="Ibexa\Contracts\Solr\Test\IbexaSolrTestKernel"/>
+        <env name="SEARCH_ENGINE" value="solr"/>
+    </php>
+    <testsuites>
+        <!-- Search service is used all over the place, so we must run the entire integration test suite -->
+        <testsuite name="integration_repository">
+            <directory>tests/lib/Kernel</directory>
+            <directory>vendor/ibexa/core/tests/integration/Core</directory>
+            <exclude>vendor/ibexa/core/tests/integration/Core/Repository/Filtering</exclude>
+            <!-- Excluding because overridden locally -->
+            <exclude>vendor/ibexa/core/tests/integration/Core/Repository/SearchServiceTest.php</exclude>
+            <exclude>vendor/ibexa/core/tests/integration/Core/Repository/SearchServiceLocationTest.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

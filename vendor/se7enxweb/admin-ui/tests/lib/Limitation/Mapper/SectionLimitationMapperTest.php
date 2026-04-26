@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+
+namespace Ibexa\Tests\AdminUi\Limitation\Mapper;
+
+use Ibexa\AdminUi\Limitation\Mapper\SectionLimitationMapper;
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\SectionService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Section;
+use Ibexa\Contracts\Core\Repository\Values\User\Limitation\SectionLimitation;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+
+class SectionLimitationMapperTest extends TestCase
+{
+    private const EXAMPLE_SECTION_ID = 0xFF;
+
+    private SectionService&MockObject $sectionServiceMock;
+
+    private LoggerInterface&MockObject $logger;
+
+    private SectionLimitationMapper $mapper;
+
+    protected function setUp(): void
+    {
+        $this->sectionServiceMock = $this->createMock(SectionService::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
+
+        $this->mapper = new SectionLimitationMapper($this->sectionServiceMock);
+        $this->mapper->setLogger($this->logger);
+    }
+
+    public function testMapLimitationValue(): void
+    {
+        $values = [3, 5, 7];
+
+        $expected = [];
+        $sectionsById = [];
+        foreach ($values as $i => $value) {
+            $expected[$i] = new Section([
+                'id' => $value,
+            ]);
+            $sectionsById[$value] = $expected[$i];
+        }
+
+        $this->sectionServiceMock
+            ->expects(self::exactly(count($values)))
+            ->method('loadSection')
+            ->willReturnCallback(static function (int $sectionId) use ($sectionsById): Section {
+                self::assertArrayHasKey($sectionId, $sectionsById);
+
+                return $sectionsById[$sectionId];
+            });
+
+        $result = $this->mapper->mapLimitationValue(new SectionLimitation([
+            'limitationValues' => $values,
+        ]));
+
+        self::assertEquals($expected, $result);
+    }
+
+    public function testMapLimitationValueWithNotExistingContentType(): void
+    {
+        $values = [self::EXAMPLE_SECTION_ID];
+
+        $this->sectionServiceMock
+            ->expects(self::once())
+            ->method('loadSection')
+            ->with($values[0])
+            ->willThrowException($this->createMock(NotFoundException::class));
+
+        $this->logger
+            ->expects(self::once())
+            ->method('error')
+            ->with('Could not map the Limitation value: could not find a Section with ID ' . $values[0]);
+
+        $actual = $this->mapper->mapLimitationValue(new SectionLimitation([
+            'limitationValues' => $values,
+        ]));
+
+        self::assertEmpty($actual);
+    }
+}

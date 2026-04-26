@@ -1,0 +1,49 @@
+services:
+    netgen_layouts.ibexa.validator.location:
+        class: Netgen\Layouts\Ibexa\Validator\LocationValidator
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_location }
+
+    netgen_layouts.ibexa.validator.content:
+        class: Netgen\Layouts\Ibexa\Validator\ContentValidator
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_content }
+
+    netgen_layouts.ibexa.validator.site_access:
+        class: Netgen\Layouts\Ibexa\Validator\SiteAccessValidator
+        arguments:
+            - "%ibexa.site_access.list%"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_site_access }
+
+    netgen_layouts.ibexa.validator.site_access_group:
+        class: Netgen\Layouts\Ibexa\Validator\SiteAccessGroupValidator
+        arguments:
+            - "%ibexa.site_access.groups%"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_site_access_group }
+
+    netgen_layouts.ibexa.validator.content_type:
+        class: Netgen\Layouts\Ibexa\Validator\ContentTypeValidator
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_content_type }
+
+    netgen_layouts.ibexa.validator.section:
+        class: Netgen\Layouts\Ibexa\Validator\SectionValidator
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_section }
+
+    netgen_layouts.ibexa.validator.object_state:
+        class: Netgen\Layouts\Ibexa\Validator\ObjectStateValidator
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: validator.constraint_validator, alias: nglayouts_ibexa_object_state }

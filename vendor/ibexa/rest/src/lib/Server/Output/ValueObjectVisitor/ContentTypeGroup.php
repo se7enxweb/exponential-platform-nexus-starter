@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+
+namespace Ibexa\Rest\Server\Output\ValueObjectVisitor;
+
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup as ContentTypeGroupValue;
+use Ibexa\Contracts\Rest\Output\Generator;
+use Ibexa\Contracts\Rest\Output\ValueObjectVisitor;
+use Ibexa\Contracts\Rest\Output\Visitor;
+
+/**
+ * ContentTypeGroup value object visitor.
+ */
+class ContentTypeGroup extends ValueObjectVisitor
+{
+    /**
+     * Visit struct returned by controllers.
+     *
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup $data
+     */
+    public function visit(Visitor $visitor, Generator $generator, mixed $data): void
+    {
+        $generator->startObjectElement('ContentTypeGroup');
+        $this->visitContentTypeGroupAttributes($visitor, $generator, $data);
+        $generator->endObjectElement('ContentTypeGroup');
+    }
+
+    protected function visitContentTypeGroupAttributes(Visitor $visitor, Generator $generator, ContentTypeGroupValue $data): void
+    {
+        $visitor->setHeader('Content-Type', $generator->getMediaType('ContentTypeGroup'));
+        $visitor->setHeader('Accept-Patch', $generator->getMediaType('ContentTypeGroupInput'));
+
+        $generator->startAttribute(
+            'href',
+            $this->router->generate(
+                'ibexa.rest.load_content_type_group',
+                ['contentTypeGroupId' => $data->id]
+            )
+        );
+        $generator->endAttribute('href');
+
+        $generator->startValueElement('id', $data->id);
+        $generator->endValueElement('id');
+
+        $generator->startValueElement('identifier', $data->identifier);
+        $generator->endValueElement('identifier');
+
+        $generator->startValueElement('created', $data->creationDate->format('c'));
+        $generator->endValueElement('created');
+
+        $generator->startValueElement('modified', $data->modificationDate->format('c'));
+        $generator->endValueElement('modified');
+
+        $generator->startObjectElement('Creator', 'User');
+        $generator->startAttribute(
+            'href',
+            $this->router->generate('ibexa.rest.load_user', ['userId' => $data->creatorId])
+        );
+        $generator->endAttribute('href');
+        $generator->endObjectElement('Creator');
+
+        $generator->startObjectElement('Modifier', 'User');
+        $generator->startAttribute(
+            'href',
+            $this->router->generate('ibexa.rest.load_user', ['userId' => $data->modifierId])
+        );
+        $generator->endAttribute('href');
+        $generator->endObjectElement('Modifier');
+
+        $generator->startObjectElement('ContentTypes', 'ContentTypeInfoList');
+        $generator->startAttribute(
+            'href',
+            $this->router->generate(
+                'ibexa.rest.list_content_types_for_group',
+                ['contentTypeGroupId' => $data->id]
+            )
+        );
+        $generator->endAttribute('href');
+        $generator->endObjectElement('ContentTypes');
+    }
+}

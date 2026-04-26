@@ -1,0 +1,11 @@
+{
+    "id": "35f4594c-6674-5815-add6-07f288b79686",
+    "type": "route_parameter",
+    "value": {
+        "parameter_name": "some_param",
+        "parameter_values": [
+            1,
+            2
+        ]
+    }
+}

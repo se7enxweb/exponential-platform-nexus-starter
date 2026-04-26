@@ -1,0 +1,12 @@
+when@test:
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+
+        Ibexa\Tests\Integration\Messenger\Stubs\FooMessageProvider: ~
+
+        Ibexa\Tests\Integration\Messenger\Stubs\FooMessageHandler:
+            tags:
+                -   name: messenger.message_handler
+                    bus: ibexa.messenger.bus

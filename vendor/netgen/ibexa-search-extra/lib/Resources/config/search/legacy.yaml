@@ -1,0 +1,85 @@
+services:
+    netgen.ibexa_search_extra.legacy.query.common.criterion_visitor.object_state_identifier:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Common\CriterionHandler\ObjectStateIdentifier
+        parent: Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+            - '@Ibexa\Core\Persistence\Legacy\Content\ObjectState\Handler'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.common.criterion_visitor.section_identifier:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Common\CriterionHandler\SectionIdentifier
+        parent: Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+            - '@Ibexa\Core\Persistence\Legacy\Content\Section\Handler'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.content.criterion_visitor.location_query:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Content\CriterionHandler\LocationQuery
+        parent: Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+            - '@ibexa.search.legacy.gateway.criteria_converter.location'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+
+    netgen.ibexa_search_extra.legacy.query.content.criterion_visitor.visible:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Content\CriterionHandler\Visible
+        parent: Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+
+    netgen.ibexa_search_extra.legacy.query.location.criterion_visitor.visible:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Location\CriterionHandler\Visible
+        parent: Ibexa\Core\Search\Legacy\Content\Common\Gateway\CriterionHandler
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.common.criterion_visitor.content_id:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Common\CriterionHandler\ContentId
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.common.criterion_handler.content_name:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Common\CriterionHandler\ContentName
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+            - '@ibexa.spi.persistence.legacy.language.handler'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.content.criterion_visitor.location_id:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Content\CriterionHandler\LocationId
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.content }
+
+    netgen.ibexa_search_extra.legacy.query.location.criterion_visitor.location_id:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Location\CriterionHandler\LocationId
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+        tags:
+            - { name: ibexa.search.legacy.gateway.criterion_handler.location }
+
+    netgen.ibexa_search_extra.legacy.query.common.sort_clause_handler.content_name:
+        class: Netgen\IbexaSearchExtra\Core\Search\Legacy\Query\Common\SortClauseHandler\ContentName
+        arguments:
+            - '@ibexa.api.storage_engine.legacy.connection'
+            - '@ibexa.spi.persistence.legacy.language.handler'
+        tags:
+            - { name: ibexa.search.legacy.gateway.sort_clause_handler.content }
+            - { name: ibexa.search.legacy.gateway.sort_clause_handler.location }

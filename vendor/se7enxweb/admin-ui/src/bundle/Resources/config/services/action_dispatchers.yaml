@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Form\ActionDispatcher\ContentTypeDispatcher:
+        parent: Ibexa\ContentForms\Form\ActionDispatcher\AbstractActionDispatcher
+        autowire: true
+        autoconfigure: false
+        public: false

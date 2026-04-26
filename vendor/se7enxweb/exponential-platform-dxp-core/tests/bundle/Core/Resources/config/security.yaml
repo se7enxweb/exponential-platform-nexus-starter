@@ -1,0 +1,7 @@
+security:
+    providers:
+        default:
+            id: ibexa.security.user_provider
+
+    firewalls:
+        main:

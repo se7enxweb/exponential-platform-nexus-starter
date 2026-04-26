@@ -1,0 +1,14 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\Bundle\FieldTypeRichText\Templating\Twig\Extension\RichTextConverterExtension:
+        arguments:
+            $richTextOutputConverter: '@ibexa.richtext.converter.output.xhtml5'
+            $richTextEditConverter: '@Ibexa\FieldTypeRichText\RichText\Converter\Html5Edit'
+
+    Ibexa\Bundle\FieldTypeRichText\Templating\Twig\Extension\YoutubeIdExtractorExtension: ~
+
+    Ibexa\Bundle\FieldTypeRichText\Templating\Twig\Extension\RichTextConfigurationExtension: ~

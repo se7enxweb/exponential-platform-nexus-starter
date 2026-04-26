@@ -1,0 +1,35 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\FieldTypeMatrix\GraphQL\Schema\MatrixFieldDefinitionMapper:
+        decorates: Ibexa\Contracts\GraphQL\Schema\Domain\Content\Mapper\FieldDefinition\FieldDefinitionMapper
+        arguments:
+            $innerMapper: '@Ibexa\FieldTypeMatrix\GraphQL\Schema\MatrixFieldDefinitionMapper.inner'
+            $strategies: !tagged_iterator ibexa.graphql.field_type.matrix_mapper.content_type.strategy
+
+    Ibexa\FieldTypeMatrix\GraphQL\Schema\NameHelper: ~
+
+    Ibexa\FieldTypeMatrix\GraphQL\Schema\MatrixFieldDefinitionSchemaWorker:
+        tags:
+            - { name: ibexa.graphql.domain.schema.worker }
+
+    Ibexa\FieldTypeMatrix\GraphQL\Schema\MatrixFieldDefinitionInputSchemaWorker:
+        tags:
+            - { name: ibexa.graphql.domain.schema.worker }
+
+    Ibexa\FieldTypeMatrix\GraphQL\InputHandler:
+        tags:
+            - { name: ibexa.graphql.field_type.input.handler, fieldtype: ibexa_matrix }
+
+    Ibexa\FieldTypeMatrix\GraphQL\FieldValueResolver:
+        arguments:
+            $strategies: !tagged_iterator ibexa.graphql.field_type.matrix_resolver.content.strategy
+        tags:
+            - { name: overblog_graphql.query, alias: "MatrixFieldValue", method: "resolveMatrixFieldValue" }
+
+    Ibexa\FieldTypeMatrix\GraphQL\Strategy\ItemContentResolvingStrategy:
+        tags:
+            - { name: ibexa.graphql.field_type.matrix_resolver.content.strategy, priority: -20 }

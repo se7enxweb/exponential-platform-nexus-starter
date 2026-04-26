@@ -1,0 +1,94 @@
+parameters:
+    # System Location IDs
+    ibexa.site_access.config.default.location_ids.content_structure: 2
+    ibexa.site_access.config.default.location_ids.media: 43
+    ibexa.site_access.config.default.location_ids.users: 5
+
+    # Pagination limits
+    ibexa.site_access.config.admin_group.search.pagination.limit: 10
+    ibexa.site_access.config.admin_group.pagination.trash_limit: 10
+    ibexa.site_access.config.admin_group.pagination.section_limit: 10
+    ibexa.site_access.config.admin_group.pagination.language_limit: 10
+    ibexa.site_access.config.admin_group.pagination.role_limit: 10
+    ibexa.site_access.config.admin_group.pagination.content_type_group_limit: 10
+    ibexa.site_access.config.admin_group.pagination.content_type_limit: 10
+    ibexa.site_access.config.admin_group.pagination.role_assignment_limit: 10
+    ibexa.site_access.config.admin_group.pagination.policy_limit: 10
+    ibexa.site_access.config.admin_group.pagination.version_draft_limit: 5
+    ibexa.site_access.config.admin_group.pagination.relation_limit: 10
+    ibexa.site_access.config.admin_group.pagination.reverse_relation_limit: 10
+    ibexa.site_access.config.admin_group.pagination.content_system_url_limit: 5
+    ibexa.site_access.config.admin_group.pagination.content_custom_url_limit: 5
+    ibexa.site_access.config.admin_group.pagination.content_role_limit: 5
+    ibexa.site_access.config.admin_group.pagination.content_policy_limit: 5
+    ibexa.site_access.config.admin_group.pagination.bookmark_limit: 10
+    ibexa.site_access.config.admin_group.pagination.notification_limit: 10
+    ibexa.site_access.config.admin_group.pagination.user_settings_limit: 10
+    ibexa.site_access.config.admin_group.pagination.content_draft_limit: 10
+    ibexa.site_access.config.admin_group.pagination.location_limit: 10
+    ibexa.site_access.config.admin_group.pagination.url_wildcards: 10
+
+    # Security
+    ibexa.site_access.config.admin_group.security.token_interval_spec: PT1H
+
+    # Subitems Module
+    ibexa.site_access.config.default.subitems_module.limit: 10
+
+    # User identifier
+    ibexa.site_access.config.admin_group.user_content_type_identifier: ['user', 'editor']
+
+    # User Group identifier
+    ibexa.site_access.config.admin_group.user_group_content_type_identifier: ['user_group']
+
+    # Subtree Operations
+    ibexa.site_access.config.admin_group.subtree_operations.copy_subtree.limit: 100
+    ibexa.site_access.config.admin_group.subtree_operations.query_subtree.limit: 500
+
+    # Notifications
+    ibexa.site_access.config.admin_group.notification_count.interval: 30000
+    ibexa.site_access.config.admin_group.notifications.error.timeout: 0
+    ibexa.site_access.config.admin_group.notifications.warning.timeout: 0
+    ibexa.site_access.config.admin_group.notifications.success.timeout: 5000
+    ibexa.site_access.config.admin_group.notifications.info.timeout: 0
+
+    # Views
+    ibexa.site_access.config.default.content_translate_view: {}
+    ibexa.site_access.config.default.limitation_value_templates:
+        - { template: '@@ibexadesign/limitation/limitation_values.html.twig', priority: 0 }
+    ibexa.site_access.config.admin_group.user_settings.templates.list: "@@ibexadesign/account/settings/list.html.twig"
+    ibexa.site_access.config.admin_group.user_settings.templates.update: "@@ibexadesign/account/settings/update.html.twig"
+    ibexa.site_access.config.admin_group.user_change_password.templates.form: "@@ibexadesign/account/change_password/index.html.twig"
+    ibexa.site_access.config.admin_group.user_forgot_password.templates.form: "@@ibexadesign/account/forgot_password/index.html.twig"
+    ibexa.site_access.config.admin_group.user_forgot_password_success.templates.form: "@@ibexadesign/account/forgot_password/confirmation_page.html.twig"
+    ibexa.site_access.config.admin_group.user_forgot_password_login.templates.form: "@@ibexadesign/account/forgot_password/index_with_login.html.twig"
+    ibexa.site_access.config.admin_group.user_forgot_password.templates.mail: "@@ibexadesign/account/forgot_password/mail.html.twig"
+    ibexa.site_access.config.admin_group.user_reset_password.templates.form: "@@ibexadesign/account/reset_password/index.html.twig"
+    ibexa.site_access.config.admin_group.user_reset_password.templates.invalid_link: "@@ibexadesign/account/reset_password/invalid_link_page.html.twig"
+    ibexa.site_access.config.admin_group.user_reset_password.templates.success: "@@ibexadesign/account/reset_password/confirmation_page.html.twig"
+    ibexa.site_access.config.admin_group.user_registration.templates.form: "@@ibexadesign/account/register/index.html.twig"
+    ibexa.site_access.config.admin_group.user_registration.templates.confirmation: "@@ibexadesign/account/register/register_confirmation.html.twig"
+    ibexa.site_access.config.admin_group.user_edit.templates.update: '@@ibexadesign/user/edit.html.twig'
+    ibexa.site_access.config.admin_group.user_edit.templates.create: '@@ibexadesign/user/create.html.twig'
+    ibexa.site_access.config.admin_group.user_invitation.templates.mail: "@@ibexadesign/user/invitation/mail.html.twig"
+
+
+    # Content Tree Module
+    ibexa.site_access.config.admin_group.content_tree_module.load_more_limit: 30
+    ibexa.site_access.config.admin_group.content_tree_module.children_load_max_limit: 200
+    ibexa.site_access.config.admin_group.content_tree_module.tree_max_depth: 10
+    ibexa.site_access.config.admin_group.content_tree_module.allowed_content_types: []
+    ibexa.site_access.config.admin_group.content_tree_module.ignored_content_types: []
+    ibexa.site_access.config.admin_group.content_tree_module.tree_root_location_id: ~
+    ibexa.site_access.config.default.content_tree_module.contextual_tree_root_location_ids: []
+
+    # Autosave
+    ibexa.site_access.config.default.autosave.enabled: false
+    ibexa.site_access.config.default.autosave.interval: 60
+
+    ibexa.site_access.config.admin_group.autosave.enabled: true
+    ibexa.site_access.config.admin_group.autosave.interval: 60
+
+    # User profiles
+    ibexa.site_access.config.default.user_profile.enabled: false
+    ibexa.site_access.config.default.user_profile.content_types: []
+    ibexa.site_access.config.default.user_profile.field_groups: []

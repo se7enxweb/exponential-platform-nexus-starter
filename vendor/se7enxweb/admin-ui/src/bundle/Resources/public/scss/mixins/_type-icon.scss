@@ -1,0 +1,24 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+@mixin type-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calculateRem(24px);
+    height: calculateRem(24px);
+    text-align: center;
+    border-radius: 50%;
+    background: $ibexa-color-primary;
+
+    .ibexa-icon {
+        fill: $ibexa-color-white;
+        width: calculateRem(16px);
+        height: calculateRem(16px);
+    }
+}
+
+@mixin type-icon-read {
+    fill: $ibexa-color-light-200;
+    opacity: 0.5;
+}

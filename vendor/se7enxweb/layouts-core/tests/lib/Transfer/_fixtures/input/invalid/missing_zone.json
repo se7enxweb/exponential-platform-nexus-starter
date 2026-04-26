@@ -1,0 +1,37 @@
+{
+    "__version": 2,
+    "layouts": [
+        {
+            "__type": "layout",
+            "id": "2331055f-452f-4112-a5a5-de31fb26a830",
+            "type_identifier": "test_layout_1",
+            "name": "My layout",
+            "description": "My layout description",
+            "status": "published",
+            "main_locale": "en",
+            "available_locales": [
+                "en"
+            ],
+            "creation_date": 1528371500,
+            "modification_date": 1528372000,
+            "is_shared": false,
+            "zones": {
+                "bottom": {
+                    "identifier": "bottom",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "left": {
+                    "identifier": "left",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "top": {
+                    "identifier": "top",
+                    "linked_zone": null,
+                    "blocks": []
+                }
+            }
+        }
+    ]
+}

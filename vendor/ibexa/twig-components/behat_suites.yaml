@@ -1,0 +1,11 @@
+imports:
+    - ../../ibexa/behat/behat_ibexa_oss.yaml
+
+browser:
+  suites:
+    twig-components:
+      paths:
+        - '%paths.base%/features/browser'
+      contexts:
+        - Ibexa\Behat\API\Context\TestContext
+        - Ibexa\Behat\Browser\Context\AuthenticationContext

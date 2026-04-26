@@ -1,0 +1,3 @@
+imports:
+    - { resource: elasticsearch/criterion_visitors.yaml }
+    - { resource: elasticsearch/document_factory.yaml }

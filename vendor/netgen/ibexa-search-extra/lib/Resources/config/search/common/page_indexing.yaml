@@ -1,0 +1,57 @@
+parameters:
+    netgen_ibexa_search_extra.page_indexing.configuration: []
+    netgen_ibexa_search_extra.page_indexing.enabled: false
+
+services:
+    netgen.ibexa_search_extra.page_indexing.text_extractor.native:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\TextExtractor\NativeTextExtractor
+        arguments:
+            - '@netgen.ibexa_search_extra.page_indexing.config_resolver'
+            - '@netgen.ibexa_search_extra.page_indexing.url_resolver'
+            - '@netgen.ibexa_search_extra.page_indexing.source_fetcher'
+
+    netgen.ibexa_search_extra.page_indexing.text_extractor:
+        alias: netgen.ibexa_search_extra.page_indexing.text_extractor.native
+
+    netgen.ibexa_search_extra.page_indexing.url_resolver.core:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\UrlResolver\CoreUrlResolver
+
+    netgen.ibexa_search_extra.page_indexing.url_resolver:
+        alias: netgen.ibexa_search_extra.page_indexing.url_resolver.core
+
+    netgen.ibexa_search_extra.page_indexing.source_fetcher.native:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\SourceFetcher\NativeSourceFetcher
+
+    netgen.ibexa_search_extra.page_indexing.source_fetcher:
+        alias: netgen.ibexa_search_extra.page_indexing.source_fetcher.native
+
+    netgen.ibexa_search_extra.page_indexing.text_resolver:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\TextResolver
+        arguments:
+            - '@netgen.ibexa_search_extra.page_indexing.url_resolver'
+            - '@netgen.ibexa_search_extra.page_indexing.source_fetcher'
+            - '@netgen.ibexa_search_extra.page_indexing.text_extractor'
+            - '@?logger'
+
+    netgen.ibexa_search_extra.page_indexing.config_resolver:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\ConfigResolver
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Location\Handler'
+            - '%netgen_ibexa_search_extra.page_indexing.configuration%'
+
+    netgen.ibexa_search_extra.page_indexing.command.index_pages:
+        class: Netgen\Bundle\IbexaSearchExtraBundle\Command\IndexPagesCommand
+        tags:
+            - { name: console.command }
+        arguments:
+            - '@Ibexa\Contracts\Core\Repository\ContentService'
+            - '@ibexa.spi.search'
+            - '@ibexa.api.persistence_handler'
+            - '%netgen_ibexa_search_extra.page_indexing.configuration%'
+
+    netgen.ibexa_search_extra.page_indexing.field_mapper:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\PageIndexing\FieldMapper
+        arguments:
+            - '@netgen.ibexa_search_extra.page_indexing.text_resolver'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Type\Handler'
+            - '@netgen.ibexa_search_extra.page_indexing.config_resolver'

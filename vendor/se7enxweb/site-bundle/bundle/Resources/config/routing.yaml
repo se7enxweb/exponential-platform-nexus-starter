@@ -1,0 +1,92 @@
+ngsite_download:
+    path: /ngsite/content/download/{contentId}/{fieldId}/{isInline}
+    controller: ngsite.controller.download
+    methods: [GET]
+    requirements:
+        contentId: '\d+'
+        fieldId: '\d+'
+        isInline: null|0|1
+    defaults:
+        isInline: null
+
+ngsite_user_register:
+    path: /user/register
+    controller: ngsite.controller.user.register
+
+ngsite_resend_activation_mail:
+    path: /user/activate
+    controller: ngsite.controller.user.activation_form
+
+ngsite_user_activate:
+    path: /user/activate/{hash}
+    controller: ngsite.controller.user.activate
+
+ngsite_user_forgot_password:
+    path: /user/forgotpassword
+    controller: ngsite.controller.user.forgot_password
+
+ngsite_user_reset_password:
+    path: /user/forgotpassword/{hash}
+    controller: ngsite.controller.user.reset_password
+
+ngsite_content_search:
+    path: /content/search
+    controller: ngsite.controller.search
+
+ngsite_view_modal:
+    path: /view-modal/{contentId}
+    controller: ngsite.controller.view_modal
+
+ngsite_info_collection_view_modal:
+    path: /info-collection/view-modal/{formContentId}/{refererLocationId}
+    controller: ngsite.controller.info_collection.view_modal
+    defaults:
+        refererLocationId: ~
+
+ngsite_info_collection_ajax_submit:
+    path: /info-collection/ajax-submit/{formContentId}
+    controller: ngsite.controller.info_collection.ajax_submit
+    methods: [POST]
+
+ngsite_view_content_by_remote_id:
+    path: /view/remote/content/{remoteId}
+    controller: ngsite.controller.view_content_by_remote_id
+    defaults:
+        allowed_siteaccess: [admin_group]
+
+ngsite_view_location_by_remote_id:
+    path: /view/remote/location/{remoteId}
+    controller: ngsite.controller.view_location_by_remote_id
+    defaults:
+        allowed_siteaccess: [admin_group]
+
+# Additional Ibexa Admin UI routes
+
+ibexa.location.view:
+    path: /view/location/{locationId}/{viewType}/{layout}/{contentId}
+    controller: ibexa_content::viewAction
+    defaults:
+        viewType: full
+        contentId: null
+        layout: true
+        allowed_siteaccess: [admin_group]
+    options:
+        expose: true
+
+# Rewire Ibexa built in routes to Netgen variants
+
+ibexa.user.register:
+    path: /user/register
+    controller: ngsite.controller.user.register
+
+ibexa.user.user_register:
+    path: /user/register
+    controller: ngsite.controller.user.register
+
+# Disable Ibexa built in routes
+
+ibexa.user.register_confirmation:
+    path: /_error/404
+
+ibexa.user.user_register_confirmation:
+    path: /_error/404

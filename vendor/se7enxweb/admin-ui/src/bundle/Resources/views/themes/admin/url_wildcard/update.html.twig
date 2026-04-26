@@ -1,0 +1,63 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{% trans_default_domain 'ibexa_url_wildcard' %}
+{% form_theme form '@ibexadesign/content/form_fields.html.twig' '@ibexadesign/content/tab/url/checkbox.html.twig' %}
+
+{% block breadcrumbs %}
+    {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: [
+        { value: 'breadcrumb.admin'|trans(domain='messages')|desc('Admin') },
+        { value: 'url_wildcard.breadcrumb.list'|trans|desc('URL management'), url: path('ibexa.url_management', {
+            '_fragment': 'ibexa-tab-link-manager-url-wildcards',
+        }) },
+        { value: 'url_wildcard.breadcrumb.edit'|trans|desc('Edit') }
+    ]} %}
+{% endblock %}
+
+{% block context_menu %}
+    {% set url_create_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu_configure.url_wildcard_edit_sidebar_right', [], {
+        submit_selector: '#' ~ form.save_and_close.vars.id,
+    }) %}
+
+    {{ knp_menu_render(url_create_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'}) }}
+{% endblock %}
+
+{% block header %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: 'url_wildcard.editing'|trans({'%url%': urlWildcard.sourceUrl|u.truncate(50) })|desc('Editing URL wildcard: %url%'),
+    } %}
+{% endblock %}
+
+{%- block content -%}
+    <div class="align-items-stretch ibexa-main-row">
+        <div class="container ibexa-container">
+            {{ form_start(form, {'action': actionUrl}) }}
+                {{ form_errors(form) }}
+                <div class="card ibexa-card ibexa-card--light">
+                    <div class="card-body ibexa-form-block">
+                        <div class="form-group">
+                            <label class="ibexa-label required">{{ 'url_wildcard.modal.create.url.wildcard'|trans|desc('URL wildcard') }}</label>
+                            {{ form_widget(form.source_url) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="ibexa-label required">{{ 'url_wildcard.modal.create.url.destintion'|trans|desc('Destination') }}</label>
+                            {{ form_widget(form.destination_url) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="ibexa-label">{{ 'url_wildcard.modal.create.redirect'|trans|desc('Redirect to wildcard destination') }}</label>
+                            {{ form_widget(form.forward) }}
+                            <small class="ibexa-form-help">
+                                <svg class="ibexa-icon ibexa-icon--small-medium ibexa-form-help__icon">
+                                    <use xlink:href="{{ ibexa_icon_path('system-information') }}"></use>
+                                </svg>
+                                <span class="ibexa-custom-url-from__helper-text">
+                                    {{ 'url_wildcard.modal.create.redirect.helper'|trans|desc('When checked, the URL displayed will be the URL of the destination. When unchecked, the wildcard will not redirect to the destination and the URL will stay the same.') }}
+                                </span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {{ form_widget(form.save_and_close, { attr: { hidden: 'hidden' } }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{%- endblock -%}

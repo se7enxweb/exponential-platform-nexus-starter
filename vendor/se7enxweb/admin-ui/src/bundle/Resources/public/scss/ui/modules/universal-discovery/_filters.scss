@@ -1,0 +1,15 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use 'mixins/filters-panel' as *;
+@use 'mixins/filters-row' as *;
+
+.c-filters {
+    @include c-filters-panel('.c-filters__row');
+
+    &__row {
+        @include c-filters-row('-title');
+
+        &--language {
+            padding-bottom: calculateRem(16px);
+        }
+    }
+}

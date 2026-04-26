@@ -1,0 +1,64 @@
+{% extends '@ibexadesign/content/edit_base.html.twig'  %}
+
+{% trans_default_domain 'ibexa_content_create' %}
+
+{% block meta %}
+    <meta name="LanguageCode" content="{{ language.languageCode }}"/>
+{% endblock %}
+
+{% block header %}
+    {% set content_create_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.content_create.sidebar_right', [], {
+        'parent_location': parent_location,
+        'content_type': content_type,
+        'language': language,
+        'content_create_struct': content_create_struct
+    }) %}
+
+    {% embed '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'creating'|trans|desc('Creating'),
+        title: 'new_content_item'|trans({'%contentType%': content_type.name})|desc('New %contentType%'),
+        icon_name: content_type.name,
+        show_autosave_status: true,
+        subtitle: 'editing_details_subtitle'|trans({ '%location%': parent_location.contentInfo.name })|desc('under %location%'),
+        context_actions: knp_menu_render(content_create_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+        {% block after_title %}
+            {{ ibexa_twig_component_group('admin-ui-content-form-create-header-actions', {
+                'parent_location': parent_location,
+                'content_type': content_type,
+                'language': language
+            }) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block form_before %}
+    {{ ibexa_twig_component_group('admin-ui-content-create-form-before', {
+        'parent_location': parent_location,
+        'content_type': content_type,
+        'language': language
+    }) }}
+{% endblock %}
+
+{% block form_fields %}
+    <section class="container">
+        <div class="card ibexa-card ibexa-card--light ibexa-card--no-padding">
+            <div class="card-body ibexa-card__body">
+                {{ parent() }}
+                {{ form_widget(form.publish, {'attr': {'hidden': 'hidden'}}) }}
+                {{ form_widget(form.publishAndEdit, { attr: { hidden: 'hidden' }}) }}
+                {{ form_widget(form.saveDraft, {'attr': {'hidden': 'hidden'}}) }}
+                {{ form_widget(form.saveDraftAndClose, { attr: { hidden: 'hidden' }}) }}
+                {{ form_widget(form.cancel, {'attr': {'hidden': 'hidden'}}) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block form_after %}
+    {{ ibexa_twig_component_group('admin-ui-content-create-form-after', {
+        'parent_location': parent_location,
+        'content_type': content_type,
+        'language': language
+    }) }}
+{% endblock %}

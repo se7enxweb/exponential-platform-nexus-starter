@@ -1,0 +1,691 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/bundle/Controller/ContentEditController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/bundle/Controller/UserController.php
+
+		-
+			message: '#^Cannot access property \$parentLocationId on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/UserController.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_shift expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/UserController.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\ContentForms\\FieldType\\FieldValueFormMapperInterface\:\:mapFieldValueForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/contracts/FieldType/FieldValueFormMapperInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\ContentForms\\FieldType\\FieldValueFormMapperInterface\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/contracts/FieldType/FieldValueFormMapperInterface.php
+
+		-
+			message: '#^Call to an undefined method Behat\\Testwork\\Environment\\Environment\:\:getContext\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Context/ContentEditContext.php
+
+		-
+			message: '#^Cannot call method submit\(\) on Behat\\Mink\\Element\\NodeElement\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Behat/Context/ContentEditContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\ContentTypeContext\:\:addFieldsTo\(\) has parameter \$fieldDefinitions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\ContentTypeContext\:\:iRemoveFieldFromContentType\(\) has parameter \$fieldIdentifier with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\ContentTypeContext\:\:newContentTypeCreateStruct\(\) has parameter \$identifier with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\ContentTypeContext\:\:updateFieldDefinition\(\) has parameter \$identifier with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Parameter \#2 \$fieldDefinition of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:removeFieldDefinition\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Parameter \#2 \$fieldDefinition of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:updateFieldDefinition\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Context/ContentTypeContext.php
+
+		-
+			message: '#^Call to an undefined method Behat\\Testwork\\Environment\\Environment\:\:getContext\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Cannot call method getText\(\) on Behat\\Mink\\Element\\NodeElement\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\FieldTypeFormContext\:\:aContentTypeWithAGivenFieldDefinition\(\) has parameter \$contentTypeName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\FieldTypeFormContext\:\:aContentTypeWithAGivenFieldDefinition\(\) has parameter \$fieldTypeIdentifier with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\FieldTypeFormContext\:\:getRequiredFieldTypeExceptions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Behat\\Context\\FieldTypeFormContext\:\:itShouldContainAGivenTypeInputField\(\) has parameter \$inputType with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Context/FieldTypeFormContext.php
+
+		-
+			message: '#^Call to an undefined method Behat\\Testwork\\Environment\\Environment\:\:getContext\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Context/SelectionFieldTypeFormContext.php
+
+		-
+			message: '#^Call to an undefined method Behat\\Testwork\\Environment\\Environment\:\:getContext\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Context/UserRegistrationContext.php
+
+		-
+			message: '#^Cannot access offset 0 on iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\UserGroup\>\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/lib/Behat/Context/UserRegistrationContext.php
+
+		-
+			message: '#^Cannot call method submit\(\) on Behat\\Mink\\Element\\NodeElement\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Behat/Context/UserRegistrationContext.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Content/Form/Provider/AbstractGroupedContentFormFieldsProvider.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:getViewData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Content/Form/Provider/AbstractGroupedContentFormFieldsProvider.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\ClickableInterface\|Symfony\\Component\\Form\\FormInterface\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Content/View/Builder/ContentCreateViewBuilder.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\ClickableInterface\|Symfony\\Component\\Form\\FormInterface\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Content/View/Builder/ContentEditViewBuilder.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:\$fieldDefinition\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Data/Content/ContentCreateData.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:\$fieldDefinition\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Data/Content/ContentUpdateData.php
+
+		-
+			message: '#^Cannot access offset mixed on iterable\<string, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Field\>\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/lib/Data/Mapper/ContentUpdateMapper.php
+
+		-
+			message: '#^Trait Ibexa\\ContentForms\\Data\\NewnessChecker is used zero times and is not analysed\.$#'
+			identifier: trait.unused
+			count: 1
+			path: src/lib/Data/NewnessChecker.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:\$fieldDefinition\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Data/User/UserCreateData.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\ContentForms\\Data\\Content\\FieldData\:\:\$fieldDefinition\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Data/User/UserUpdateData.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\DataTransformer\\AbstractBinaryBaseTransformer\:\:getReverseTransformedValue\(\) should return Ibexa\\Core\\FieldType\\Value but returns object\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/FieldType/DataTransformer/AbstractBinaryBaseTransformer.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\DataTransformer\\ImageAssetValueTransformer\:\:reverseTransform\(\) has parameter \$value with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/FieldType/DataTransformer/ImageAssetValueTransformer.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\FieldTypeFormMapperDispatcherInterface\:\:map\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/FieldTypeFormMapperDispatcherInterface.php
+
+		-
+			message: '#^Parameter \#2 \$type of method Symfony\\Component\\Form\\FormBuilderInterface\<mixed\>\:\:create\(\) expects class\-string\<Symfony\\Component\\Form\\FormTypeInterface\>\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/FieldType/Mapper/FormTypeBasedFieldValueFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\Mapper\\TimeFormMapper\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/TimeFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\Mapper\\UrlFormMapper\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/UrlFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\FieldType\\Mapper\\UserAccountFieldValueFormMapper\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/UserAccountFieldValueFormMapper.php
+
+		-
+			message: '#^Property Ibexa\\Core\\FieldType\\User\\Value\:\:\$email \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/FieldType/Mapper/UserAccountFieldValueFormMapper.php
+
+		-
+			message: '#^Property Ibexa\\Core\\FieldType\\User\\Value\:\:\$enabled \(bool\) does not accept bool\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/FieldType/Mapper/UserAccountFieldValueFormMapper.php
+
+		-
+			message: '#^Property Ibexa\\Core\\FieldType\\User\\Value\:\:\$login \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/FieldType/Mapper/UserAccountFieldValueFormMapper.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\:\:isClicked\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/lib/Form/EventSubscriber/SuppressValidationSubscriber.php
+
+		-
+			message: '#^Cannot call method getDefaultValue\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/EventSubscriber/UserFieldsSubscriber.php
+
+		-
+			message: '#^Cannot call method getValue\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Field\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/EventSubscriber/UserFieldsSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Ibexa\\ContentForms\\Form\\EventSubscriber\\UserFieldsSubscriber\:\:handleUserCreateData\(\) expects Ibexa\\ContentForms\\Data\\User\\UserCreateData, Ibexa\\ContentForms\\Data\\User\\UserCreateData\|Ibexa\\ContentForms\\Data\\User\\UserUpdateData given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/EventSubscriber/UserFieldsSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$data of method Ibexa\\ContentForms\\Form\\EventSubscriber\\UserFieldsSubscriber\:\:handleUserUpdateData\(\) expects Ibexa\\ContentForms\\Data\\User\\UserUpdateData, Ibexa\\ContentForms\\Data\\User\\UserCreateData\|Ibexa\\ContentForms\\Data\\User\\UserUpdateData given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/EventSubscriber/UserFieldsSubscriber.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\ContentForms\\Data\\Content\\ContentCreateData\|Ibexa\\ContentForms\\Data\\Content\\ContentUpdateData\:\:\$contentDraft\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\ContentForms\\Data\\Content\\ContentCreateData\|Ibexa\\ContentForms\\Data\\Content\\ContentUpdateData\:\:\$mainLanguageCode\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\ContentForms\\Data\\Content\\ContentCreateData\|Ibexa\\ContentForms\\Data\\Content\\ContentUpdateData\:\:getContentDraft\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\ContentForms\\Data\\Content\\ContentCreateData\|Ibexa\\ContentForms\\Data\\Content\\ContentUpdateData\:\:getLocationStructs\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct\:\:getFieldsData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Cannot access offset 0 on iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\>\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Cannot call method getData\(\) on Symfony\\Component\\Form\\FormInterface\<mixed\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Variable \$contentDraft might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/lib/Form/Processor/ContentFormProcessor.php
+
+		-
+			message: '#^Cannot call method getData\(\) on Symfony\\Component\\Form\\FormInterface\<mixed\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/Processor/SystemUrlRedirectProcessor.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\ContentForms\\Data\\User\\UserCreateData\|Ibexa\\ContentForms\\Data\\User\\UserUpdateData\:\:\$user\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Processor/User/UserCancelFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\ContentForms\\Data\\User\\UserCreateData\|Ibexa\\ContentForms\\Data\\User\\UserUpdateData\:\:getParentGroups\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/User/UserCancelFormProcessor.php
+
+		-
+			message: '#^Cannot call method getData\(\) on Symfony\\Component\\Form\\FormInterface\<mixed\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/Processor/User/UserCreateFormProcessor.php
+
+		-
+			message: '#^Cannot call method getData\(\) on Symfony\\Component\\Form\\FormInterface\<mixed\>\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/Processor/User/UserUpdateFormProcessor.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Form\\Transformer\\RelationTransformer\:\:transform\(\) should return array\{location\: int\|null, location_type\: string\} but returns array\{location\: int\<min, \-2\>\|int\<0, max\>\|null, location_type\: \-1\|0\|1\}\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Form/Transformer/RelationTransformer.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\Content\\BaseContentType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Content/BaseContentType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\Content\\ContentDraftCreateType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Content/ContentDraftCreateType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\Content\\ContentEditType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Content/ContentEditType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\Content\\ContentFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Content/ContentFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldDefinition\\User\\PasswordConstraintCheckboxType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldDefinition/User/PasswordConstraintCheckboxType.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strtolower expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/FieldDefinition/User/PasswordConstraintCheckboxType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\Author\\AuthorCollectionType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/Author/AuthorCollectionType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\Author\\AuthorEntryType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/Author/AuthorEntryType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\AuthorFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/AuthorFieldType.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Form\\Type\\FieldType\\AuthorFieldType\:\:getViewTransformer\(\) return type with generic interface Symfony\\Component\\Form\\DataTransformerInterface does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/AuthorFieldType.php
+
+		-
+			message: '#^Property Ibexa\\Core\\FieldType\\Author\\Author\:\:\$name \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/Form/Type/FieldType/AuthorFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\BinaryBaseFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/BinaryBaseFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\BinaryFileFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/BinaryFileFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\CheckboxFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/CheckboxFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\CountryFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/CountryFieldType.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Form\\Type\\FieldType\\CountryFieldType\:\:__construct\(\) has parameter \$countriesInfo with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Type/FieldType/CountryFieldType.php
+
+		-
+			message: '#^Method Ibexa\\ContentForms\\Form\\Type\\FieldType\\CountryFieldType\:\:getCountryChoices\(\) has parameter \$countriesInfo with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Type/FieldType/CountryFieldType.php
+
+		-
+			message: '#^Cannot access property \$attributes on Symfony\\Component\\HttpFoundation\\Request\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/lib/Form/Type/FieldType/DateFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\DateFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/DateFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\DateTimeFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/DateTimeFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\FloatFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/FloatFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\ISBNFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/ISBNFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\ImageAssetFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/ImageAssetFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\ImageFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/ImageFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\IntegerFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/IntegerFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\KeywordFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/KeywordFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\MapLocationFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/MapLocationFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\MediaFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/MediaFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\RelationFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/RelationFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\RelationListFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/RelationListFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\SelectionFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/SelectionFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\TextBlockFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/TextBlockFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\TextLineFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/TextLineFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\TimeFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/TimeFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\UrlFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/UrlFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\FieldType\\UserAccountFieldType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/FieldType/UserAccountFieldType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\JsonArrayType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/JsonArrayType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\LocationChoiceType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/LocationChoiceType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\LocationType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/LocationType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\RelationType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/RelationType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\SwitcherType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/SwitcherType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\User\\BaseUserType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/User/BaseUserType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\User\\UserCreateType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/User/UserCreateType.php
+
+		-
+			message: '#^Class Ibexa\\ContentForms\\Form\\Type\\User\\UserUpdateType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/User/UserUpdateType.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\Translation\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/ValidationErrorsProcessor.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\Translation\:\:\$values\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/ValidationErrorsProcessor.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\Translation\\Plural\:\:\$plural\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Validator/ValidationErrorsProcessor.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\ContentForms\\Content\\Form\\Provider\\AbstractGroupedContentFormFieldsProviderTest\:\:getFormMockWithFieldData\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: tests/lib/Content/Form/Provider/AbstractGroupedContentFormFieldsProviderTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\ContentForms\\Content\\Form\\Provider\\AbstractGroupedContentFormFieldsProviderTest\:\:getTestForms\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/lib/Content/Form/Provider/AbstractGroupedContentFormFieldsProviderTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\ContentForms\\FieldType\\DataTransformer\\RelationListValueTransformerTest\:\:dataProviderForTestReverseTransform\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/lib/FieldType/DataTransformer/RelationListValueTransformerTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\ContentForms\\Validator\\Constraints\\PasswordValidatorTest\:\:dataProviderForValidateNotSupportedValueType\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/lib/Validator/Constraints/PasswordValidatorTest.php
+
+		-
+			message: '#^Method Ibexa\\Tests\\ContentForms\\Validator\\Constraints\\UserAccountPasswordValidatorTest\:\:dataProviderForValidateNotSupportedValueType\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/lib/Validator/Constraints/UserAccountPasswordValidatorTest.php

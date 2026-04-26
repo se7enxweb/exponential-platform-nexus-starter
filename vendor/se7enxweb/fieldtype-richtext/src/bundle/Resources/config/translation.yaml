@@ -1,0 +1,29 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\FieldTypeRichText\Translation\Extractor\OnlineEditorCustomAttributesExtractor:
+        arguments:
+            $siteAccessList: '%ibexa.site_access.list%'
+        tags:
+            - { name: jms_translation.extractor, alias: ez_online_editor_attributes }
+
+    Ibexa\FieldTypeRichText\Translation\Extractor\CustomTagExtractor:
+        arguments:
+            $customTags: '%ibexa.field_type.richtext.custom_tags%'
+            $domain: '%ibexa.field_type.richtext.custom_tags.translation_domain%'
+            $allowlist: ['ezyoutube', 'eztwitter', 'ezfacebook']
+        tags:
+            -   name: jms_translation.extractor
+                alias: ibexa.translation_extractor.field_type.ibexa_richtext.custom_tags
+
+    Ibexa\FieldTypeRichText\Translation\Extractor\ChoiceAttributeExtractor:
+        arguments:
+            $customTags: '%ibexa.field_type.richtext.custom_tags%'
+            $domain: '%ibexa.field_type.richtext.custom_tags.translation_domain%'
+            $allowlist: ['ezyoutube', 'eztwitter', 'ezfacebook']
+        tags:
+            -   name: jms_translation.extractor
+                alias: ibexa.translation_extractor.field_type.ibexa_richtext.custom_tags.choices

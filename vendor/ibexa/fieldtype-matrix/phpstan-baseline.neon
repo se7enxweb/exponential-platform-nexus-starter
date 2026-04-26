@@ -1,0 +1,37 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Binary operation "%%" between int\|string and int\<0, max\> results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/bundle/Command/MigrateLegacyMatrixCommand.php
+
+		-
+			message: '#^Cannot access offset ''entries'' on array\|bool\|float\|int\|string\|null\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/bundle/Command/MigrateLegacyMatrixCommand.php
+
+		-
+			message: '#^Cannot access property \$identifier on array\<string, mixed\>\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Command/MigrateLegacyMatrixCommand.php
+
+		-
+			message: '#^Method Ibexa\\FieldTypeMatrix\\FieldType\\Mapper\\MatrixFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/MatrixFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\FieldTypeMatrix\\FieldType\\Mapper\\MatrixFormMapper\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/MatrixFormMapper.php
+
+		-
+			message: '#^Parameter \#2 \$callback of function array_filter expects \(callable\(string\)\: bool\)\|null, ''strlen'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/FieldType/Value/Row.php

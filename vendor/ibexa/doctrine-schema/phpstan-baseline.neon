@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method Ibexa\\Tests\\DoctrineSchema\\Exporter\\SchemaExporterTest\:\:providerForTestExport\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/lib/Exporter/SchemaExporterTest.php

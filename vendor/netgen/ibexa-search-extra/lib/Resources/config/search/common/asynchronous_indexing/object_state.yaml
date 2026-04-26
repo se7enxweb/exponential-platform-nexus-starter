@@ -1,0 +1,10 @@
+services:
+    Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\ObjectState\SetContentStateHandler:
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Location\Handler'
+            - '@ibexa.spi.search'
+            - '@?logger'
+        tags:
+            - { name: messenger.message_handler }
+            - { name: monolog.logger, channel: ngsearchextra }

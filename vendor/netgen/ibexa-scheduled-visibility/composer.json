@@ -1,0 +1,40 @@
+{
+    "name": "netgen/ibexa-scheduled-visibility",
+    "description": "Netgen's scheduled visibility mechanism for Ibexa CMS",
+    "type": "ibexa-bundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ibexa/core": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\IbexaScheduledVisibilityBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\IbexaScheduledVisibility\\Tests\\": "tests/bundle"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always"
+    }
+}

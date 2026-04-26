@@ -1,0 +1,19 @@
+parameters:
+    level: 3
+
+    bootstrapFiles:
+        - %rootDir%/../../../vendor/autoload.php
+
+    paths:
+        - src
+        - tests
+
+    excludePaths:
+        - src/DependencyInjection/Configuration.php
+        - tests/App/var (?)
+        - vendor
+
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'

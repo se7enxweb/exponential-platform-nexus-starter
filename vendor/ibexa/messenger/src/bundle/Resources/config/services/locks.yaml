@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ibexa.messenger.lock_factory:
+        class: Symfony\Component\Lock\LockFactory
+        arguments:
+            - !abstract defined in Symfony\Component\Messenger\DependencyInjection\IbexaMessengerExtension
+
+    ibexa.messenger.lock_store.dbal:
+        class: Ibexa\Bundle\Messenger\Lock\Store\DoctrineDbalStore
+        arguments:
+            $connOrUrl: '@ibexa.messenger.lock_store.dbal.doctrine_connection'
+            $options:
+                db_table: ibexa_messenger_lock_keys
+
+    ibexa.messenger.lock_store.dbal.doctrine_connection:
+        parent: 'ibexa.persistence.connection'
+        lazy: true

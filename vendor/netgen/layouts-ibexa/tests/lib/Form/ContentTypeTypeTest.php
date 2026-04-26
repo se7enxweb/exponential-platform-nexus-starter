@@ -1,0 +1,142 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Tests\Form;
+
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Core\Repository\Values\ContentType\ContentType;
+use Ibexa\Core\Repository\Values\ContentType\ContentTypeGroup;
+use Netgen\Layouts\Ibexa\Form\ContentTypeType;
+use Netgen\Layouts\Tests\TestCase\FormTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\Stub;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+#[CoversClass(ContentTypeType::class)]
+final class ContentTypeTypeTest extends FormTestCase
+{
+    private Stub&ContentTypeService $contentTypeServiceStub;
+
+    public function testSubmitValidData(): void
+    {
+        $this->configureContentTypeService();
+
+        $submittedData = ['article'];
+
+        $form = $this->factory->create(
+            ContentTypeType::class,
+            null,
+            [
+                'multiple' => true,
+                'types' => [
+                    'Group1' => ['article'],
+                    'Group3' => false,
+                ],
+            ],
+        );
+
+        $form->submit($submittedData);
+
+        self::assertTrue($form->isSynchronized());
+        self::assertSame($submittedData, $form->getData());
+    }
+
+    public function testGetParent(): void
+    {
+        self::assertSame(ChoiceType::class, $this->formType->getParent());
+    }
+
+    public function testConfigureOptions(): void
+    {
+        $this->configureContentTypeService();
+
+        $optionsResolver = new OptionsResolver();
+
+        $this->formType->configureOptions($optionsResolver);
+
+        $options = $optionsResolver->resolve(
+            [
+                'types' => [
+                    'Group1' => ['article'],
+                    'Group3' => false,
+                ],
+            ],
+        );
+
+        self::assertFalse($options['choice_translation_domain']);
+        self::assertSame(
+            [
+                'Group1' => [
+                    'Article' => 'article',
+                ],
+                'Group2' => [
+                    'Image' => 'image',
+                ],
+            ],
+            $options['choices'],
+        );
+    }
+
+    protected function getMainType(): FormTypeInterface
+    {
+        $this->contentTypeServiceStub = self::createStub(ContentTypeService::class);
+
+        return new ContentTypeType(
+            $this->contentTypeServiceStub,
+        );
+    }
+
+    private function configureContentTypeService(): void
+    {
+        $contentTypeGroup1 = new ContentTypeGroup(['identifier' => 'Group1']);
+        $contentTypeGroup2 = new ContentTypeGroup(['identifier' => 'Group2']);
+        $contentTypeGroup3 = new ContentTypeGroup(['identifier' => 'Group3']);
+
+        $this->contentTypeServiceStub
+            ->method('loadContentTypeGroups')
+            ->willReturn([$contentTypeGroup1, $contentTypeGroup2, $contentTypeGroup3]);
+
+        $this->contentTypeServiceStub
+            ->method('loadContentTypes')
+            ->willReturnMap(
+                [
+                    [
+                        $contentTypeGroup1,
+                        [],
+                        [
+                            new ContentType(
+                                [
+                                    'identifier' => 'article',
+                                    'names' => ['eng-GB' => 'Article'],
+                                    'mainLanguageCode' => 'eng-GB',
+                                ],
+                            ),
+                            new ContentType(
+                                [
+                                    'identifier' => 'news',
+                                    'names' => ['eng-GB' => 'News'],
+                                    'mainLanguageCode' => 'eng-GB',
+                                ],
+                            ),
+                        ],
+                    ],
+                    [
+                        $contentTypeGroup2,
+                        [],
+                        [
+                            new ContentType(
+                                [
+                                    'identifier' => 'image',
+                                    'names' => ['eng-GB' => 'Image'],
+                                    'mainLanguageCode' => 'eng-GB',
+                                ],
+                            ),
+                        ],
+                    ],
+                ],
+            );
+    }
+}

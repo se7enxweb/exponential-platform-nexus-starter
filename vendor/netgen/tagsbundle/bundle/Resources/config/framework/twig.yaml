@@ -1,0 +1,2 @@
+globals:
+    netgen_tags_admin: "@netgen_tags.templating.admin_global_variable"

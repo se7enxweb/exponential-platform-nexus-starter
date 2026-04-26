@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Translation\Extractor;
+
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use JMS\TranslationBundle\Model\FileSource;
+use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\ExtractorInterface;
+
+/**
+ * Generates translation strings for sort options (field and order).
+ */
+final class SortingTranslationExtractor implements ExtractorInterface
+{
+    /**
+     * Default translations for sort fields.
+     *
+     * @var array<int, string>
+     */
+    private array $defaultTranslations = [
+        1 => 'Location path',
+        2 => 'Publication date',
+        3 => 'Modification date',
+        4 => 'Section',
+        5 => 'Location depth',
+        6 => 'Content type identifier',
+        7 => 'Content type name',
+        8 => 'Location priority',
+        9 => 'Content name',
+    ];
+
+    private string $domain = 'ibexa_content_type';
+
+    public function extract(): MessageCatalogue
+    {
+        $catalog = new MessageCatalogue();
+        $locationClass = new \ReflectionClass(Location::class);
+
+        $sortConstants = array_filter(
+            $locationClass->getConstants(),
+            static fn ($value, $key): bool => is_int($value) && str_starts_with(strtolower($key), 'sort_field_'),
+            ARRAY_FILTER_USE_BOTH
+        );
+
+        foreach ($sortConstants as $sortId) {
+            if (!isset($this->defaultTranslations[$sortId])) {
+                continue;
+            }
+            $catalog->add(
+                $this->createMessage(
+                    'content_type.sort_field.' . $sortId,
+                    $this->defaultTranslations[$sortId],
+                    Location::class
+                )
+            );
+        }
+
+        $catalog->add($this->createMessage('content_type.sort_order.0', 'Descending', Location::class));
+        $catalog->add($this->createMessage('content_type.sort_order.1', 'Ascending', Location::class));
+
+        return $catalog;
+    }
+
+    private function createMessage(string $id, string $desc, string $source): Message
+    {
+        $message = new Message\XliffMessage($id, $this->domain);
+        $message->addSource(new FileSource($source));
+        $message->setMeaning($desc);
+        $message->setLocaleString($desc);
+        $message->addNote('key: ' . $id);
+
+        return $message;
+    }
+}

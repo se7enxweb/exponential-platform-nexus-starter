@@ -1,0 +1,664 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Core\Validator;
+
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\API\Values\Block\BlockCreateStruct;
+use Netgen\Layouts\API\Values\Block\BlockUpdateStruct;
+use Netgen\Layouts\API\Values\Collection\CollectionCreateStruct;
+use Netgen\Layouts\Block\BlockDefinition;
+use Netgen\Layouts\Block\BlockDefinitionInterface;
+use Netgen\Layouts\Block\ContainerDefinition;
+use Netgen\Layouts\Block\ContainerDefinitionInterface;
+use Netgen\Layouts\Core\Validator\BlockValidator;
+use Netgen\Layouts\Core\Validator\CollectionValidator;
+use Netgen\Layouts\Exception\Validation\ValidationException;
+use Netgen\Layouts\Tests\Block\Stubs\BlockDefinitionHandler;
+use Netgen\Layouts\Tests\Block\Stubs\BlockDefinitionHandlerWithRequiredParameter;
+use Netgen\Layouts\Tests\Block\Stubs\ContainerDefinitionHandler;
+use Netgen\Layouts\Tests\Core\Stubs\ConfigProvider;
+use Netgen\Layouts\Tests\TestCase\ValidatorTestCaseTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\VarExporter\Hydrator;
+
+#[CoversClass(BlockValidator::class)]
+final class BlockValidatorTest extends TestCase
+{
+    use ValidatorTestCaseTrait;
+
+    private BlockValidator $blockValidator;
+
+    protected function setUp(): void
+    {
+        $validator = $this->createValidator();
+
+        $collectionValidator = new CollectionValidator();
+        $collectionValidator->setValidator($validator);
+
+        $this->blockValidator = new BlockValidator($collectionValidator);
+        $this->blockValidator->setValidator($validator);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     */
+    #[DataProvider('validateBlockCreateStructDataProvider')]
+    public function testValidateBlockCreateStruct(array $params, bool $isValid): void
+    {
+        $isValid ?
+            $this->expectNotToPerformAssertions() :
+            $this->expectException(ValidationException::class);
+
+        $blockCreateStruct = new BlockCreateStruct($params['definition']);
+        Hydrator::hydrate($blockCreateStruct, $params);
+
+        $this->blockValidator->validateBlockCreateStruct($blockCreateStruct);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     */
+    #[DataProvider('validateBlockUpdateStructDataProvider')]
+    public function testValidateBlockUpdateStruct(array $params, bool $isValid): void
+    {
+        $isValid ?
+            $this->expectNotToPerformAssertions() :
+            $this->expectException(ValidationException::class);
+
+        $blockUpdateStruct = new BlockUpdateStruct();
+        Hydrator::hydrate($blockUpdateStruct, $params);
+
+        $this->blockValidator->validateBlockUpdateStruct(
+            Block::fromArray(
+                [
+                    'viewType' => 'large',
+                    'mainLocale' => 'en',
+                    'definition' => self::getBlockDefinition(false),
+                ],
+            ),
+            $blockUpdateStruct,
+        );
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public static function validateBlockCreateStructDataProvider(): iterable
+    {
+        return [
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => '',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => true,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => '',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => null,
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => '',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => null,
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                ],
+                false,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [],
+                ],
+                false,
+            ],
+
+            // Container block definitions
+
+            [
+                [
+                    'definition' => self::getContainerDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                    'collectionCreateStructs' => [],
+                ],
+                true,
+            ],
+            [
+                [
+                    'definition' => self::getBlockDefinition(),
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'isTranslatable' => false,
+                    'isAlwaysAvailable' => true,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                    'collectionCreateStructs' => [
+                        'default' => new CollectionCreateStruct(),
+                    ],
+                ],
+                true,
+            ],
+        ];
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public static function validateBlockUpdateStructDataProvider(): iterable
+    {
+        return [
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => '',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'nonexistent',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => null,
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => null,
+                    'itemViewType' => null,
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => '',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => '',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'nonexistent',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => null,
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => '',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => '',
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => null,
+                        'css_id' => 'id',
+                    ],
+                ],
+                false,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_id' => 'id',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => '',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                        'css_id' => null,
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [
+                        'css_class' => 'class',
+                    ],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                    'parameterValues' => [],
+                ],
+                true,
+            ],
+            [
+                [
+                    'locale' => 'en',
+                    'isAlwaysAvailable' => true,
+                    'viewType' => 'large',
+                    'itemViewType' => 'standard',
+                    'name' => 'My block',
+                ],
+                true,
+            ],
+        ];
+    }
+
+    private static function getBlockDefinition(bool $hasRequiredParam = true): BlockDefinitionInterface
+    {
+        $handler = $hasRequiredParam ?
+            new BlockDefinitionHandlerWithRequiredParameter() :
+            new BlockDefinitionHandler();
+
+        return BlockDefinition::fromArray(
+            [
+                'parameterDefinitions' => $handler->getParameterDefinitions(),
+                'configProvider' => ConfigProvider::fromShortConfig(['large' => ['standard']]),
+            ],
+        );
+    }
+
+    private static function getContainerDefinition(): ContainerDefinitionInterface
+    {
+        $handler = new ContainerDefinitionHandler([], ['main']);
+
+        return ContainerDefinition::fromArray(
+            [
+                'parameterDefinitions' => $handler->getParameterDefinitions(),
+                'configProvider' => ConfigProvider::fromShortConfig(['large' => ['standard']]),
+            ],
+        );
+    }
+}

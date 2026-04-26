@@ -1,0 +1,52 @@
+<div class="item-panel{{#if override}} override-item{{/if}}{{#if item.overrideItem}} overridden-item{{/if}}{{#if item.editing_position}} item-editing-position{{/if}}">
+  {{#unless item.is_dynamic}}<div class="handle"><i class="material-icons">drag_handle</i></div>{{/unless}}
+  <p class="name">
+    {{item.name}}
+  </p>
+  {{#> overrides/item_additional_icons}}{{!-- override with partial --}}{{/overrides/item_additional_icons}}
+  {{#unless item.is_visible}}
+    <div class="status-icon">
+      <span class="ngl-tooltip" title="{{#unless item.cms_visible}}Hidden in CMS{{else}}{{#> overrides/item_visibility_tooltip}}{{!-- override with partial --}}{{/overrides/item_visibility_tooltip}}{{/unless}}">
+        <i class="material-icons">visibility_off</i>
+      </span>
+    </div>
+  {{/unless}}
+  {{#ifCond item.item_view_type '||' item.slot_view_type}}
+    <div class="status-icon">
+      <span class="ngl-tooltip"
+        title="{{#if item.item_view_type}}<div>Overriden item view type to {{#replace "_" " "}}{{item.item_view_type}}{{/replace}}.</div>{{/if}}
+        {{#if item.slot_view_type}}<div>Overriden slot view type to {{#replace "_" " "}}{{item.slot_view_type}}{{/replace}}.</div>{{/if}}">
+        <i class="material-icons">info_outlined</i>
+      </span>
+    </div>
+  {{/ifCond}}
+  <div class="controls">
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="material-icons">more_horiz</i></button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        {{#if item.cms_url}}<li><a href="{{item.cms_url}}" target="_blank" rel="noopener noreferrer">Edit in CMS</a></li>{{/if}}
+        {{#> overrides/item_additional_actions}}{{!-- override with partial --}}{{/overrides/item_additional_actions}}
+        {{#unless item.is_dynamic}}
+          <li><a class="set-item-position">Set position</a></li>
+        {{/unless}}
+        {{#unless item.is_dynamic}}
+          <li><a class="override-item-view-type">Override item view type</a></li>
+        {{/unless}}
+        <li><a class="override-slot-view-type">Override slot view type</a></li>
+        {{#if item.can_remove_item}}<li><a class="remove-item">Remove</a></li>{{/if}}
+      </ul>
+    </div>
+    <div class="item-position">{{math item.position '+' 1}}</div>
+  </div>
+  {{#if item.editing_position}}
+    <div class="item-edit-position">
+      <input type="number" value="{{math item.position '+' 1}}" class="item-position-input" min="1">
+      <a href="#" class="btn btn-primary js-save-position">Save</a>
+      <a href="#" class="btn btn-default js-cancel-position">Cancel</a>
+    </div>
+  {{/if}}
+
+</div>
+{{#if item.overrideItem}}
+  {{> item_panel item=item.overrideItem override=true}}
+{{/if}}

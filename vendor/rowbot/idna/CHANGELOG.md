@@ -1,0 +1,65 @@
+# Changelog
+
+## [0.3.0] - 2025-09-18
+
+### Changed
+
+* Update data files to Unicode 17.0.0
+
+## [0.2.0] - 2025-06-01
+
+### Added
+
+* New option `IgnoreInvalidPunycode` that when set to `true` enables an ASCII fast-path (fast path not implemented yet).
+* Now requires `mbstring` extension
+
+### Changed
+
+* Update data files to Unicode 16.0.0
+* Setting `Transitional_Processing` to `true` now emits a deprecation notice.
+* Bumped minimum PHP version to 8.1
+* Bumped `phpstan/phpstan` to `^2.1`
+
+## [0.1.5] - 2022-01-10
+
+### Added
+
+* Add `UNICODE_VERSION` constant to `Idna` class that returns a string with the Unicode version of the data files used
+
+### Changed
+
+* Update data files to Unicode 14
+* Update PHPStan to 1.0
+
+## [0.1.4] - 2021-02-11
+
+### Added
+
+* Test on PHP 8 release
+
+### Fixed
+
+* Handle the rare possibility that string nomalization can fail
+
+## [0.1.3] - 2020-08-03
+
+### Fixed
+
+* Fix bug with domain names containing a URL delimiter
+
+## [0.1.2] - 2020-07-15
+
+### Added
+
+* Performance improvements
+
+## [0.1.1] - 2020-07-10
+
+### Added
+
+* Performance improvements
+* Reduced memory footprint
+
+## [0.1.0] - 2020-06-10
+
+* Initial release

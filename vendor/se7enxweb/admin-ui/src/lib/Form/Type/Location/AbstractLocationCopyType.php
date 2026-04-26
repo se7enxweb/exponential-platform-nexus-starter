@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\Type\Location;
+
+use Ibexa\AdminUi\Form\Type\Content\LocationType;
+use JMS\TranslationBundle\Annotation\Desc;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * @extends \Symfony\Component\Form\AbstractType<mixed>
+ */
+abstract class AbstractLocationCopyType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add(
+                'location',
+                LocationType::class,
+                ['label' => false]
+            )
+            ->add(
+                'new_parent_location',
+                LocationType::class,
+                ['label' => false]
+            )
+            ->add(
+                'copy',
+                SubmitType::class,
+                ['label' => /** @Desc("Copy") */ 'location_copy.copy', 'attr' => ['hidden' => true]]
+            );
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'translation_domain' => 'forms',
+        ]);
+    }
+}

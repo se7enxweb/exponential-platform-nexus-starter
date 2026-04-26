@@ -1,0 +1,94 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Oneup\FlysystemBundle\Tests\DependencyInjection\TestService:
+        public: true
+
+    google_cloud_storage_client:
+        class: Google\Cloud\Storage\StorageClient
+
+framework:
+    translator: { fallback: en }
+    secret: secret
+    router:
+        resource: '%kernel.project_dir%/config/routing.yml'
+        strict_requirements: '%kernel.debug%'
+    default_locale: en
+    session: ~
+    test: true
+    trusted_hosts: ~
+
+oneup_flysystem:
+    adapters:
+        local:
+            local:
+                location: '%kernel.cache_dir%/1up'
+                permissions:
+                    file:
+                        public: 0o644
+                        private: 0o600
+                    dir:
+                        public: 0o755
+                        private: 0o700
+
+        memory:
+            memory: ~
+
+        async_aws_s3:
+            async_aws_s3:
+                client: 'test'
+                bucket: 'test'
+
+        custom:
+            custom:
+                service: 'test'
+
+        ftp:
+            ftp:
+                options:
+                    host: hostname # required
+                    root: /root/path/ # required
+                    username: username # required
+                    password: password # required
+
+        gitlab:
+            gitlab:
+                client: 'test'
+
+        sftp:
+            sftp:
+                options:
+                    host: localhost
+                    username: foo
+                    root: '/upload'
+
+        googlecloudstorage:
+            googlecloudstorage:
+                client: 'google_cloud_storage_client'
+                bucket: 'test'
+                prefix: 'prefix'
+
+    filesystems:
+        myfilesystem:
+            adapter: local
+
+        myfilesystem2:
+            adapter: local
+            visibility: public
+            mount: 'local'
+
+        myfilesystem3:
+            adapter: local
+            visibility: private
+
+        myfilesystem4:
+            adapter: googlecloudstorage
+
+        myfilesystem5:
+            adapter: local
+
+        myfilesystem6:
+            adapter: local
+            directory_visibility: public

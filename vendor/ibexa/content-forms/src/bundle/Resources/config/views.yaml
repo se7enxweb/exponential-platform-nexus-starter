@@ -1,0 +1,78 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    # ContentEditView
+    Ibexa\ContentForms\Content\View\Builder\ContentEditViewBuilder:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@Ibexa\Core\MVC\Symfony\View\Configurator\ViewProvider'
+            - '@Ibexa\Core\MVC\Symfony\View\ParametersInjector\EventDispatcherInjector'
+            - '@Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher'
+        tags:
+            - { name: ibexa.view.builder }
+
+    Ibexa\ContentForms\Content\View\Provider\ContentEditView\Configured:
+        arguments:
+            - '@ibexa.content_forms.content_edit_view.matcher_factory'
+        tags:
+            - { name: ibexa.view.provider, type: Ibexa\ContentForms\Content\View\ContentEditView, priority: 10 }
+
+    ibexa.content_forms.content_edit_view.matcher_factory:
+        class: Ibexa\Bundle\Core\Matcher\ServiceAwareMatcherFactory
+        arguments:
+            - '@Ibexa\Bundle\Core\Matcher\ViewMatcherRegistry'
+            - '@ibexa.api.repository'
+            - 'Ibexa\Core\MVC\Symfony\Matcher\ContentBased'
+
+    ibexa.content_forms.content_edit_view.matcher_factory.dynamically_configured:
+        class: Ibexa\Core\MVC\Symfony\Matcher\DynamicallyConfiguredMatcherFactoryDecorator
+        decorates: ibexa.content_forms.content_edit_view.matcher_factory
+        arguments:
+            $innerConfigurableMatcherFactory: '@ibexa.content_forms.content_edit_view.matcher_factory.dynamically_configured.inner'
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: content_edit_view
+
+    Ibexa\ContentForms\Content\View\Filter\ContentEditViewFilter:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # ContentCreateView
+    Ibexa\ContentForms\Content\View\Builder\ContentCreateViewBuilder:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@Ibexa\Core\MVC\Symfony\View\Configurator\ViewProvider'
+            - '@Ibexa\Core\MVC\Symfony\View\ParametersInjector\EventDispatcherInjector'
+            - '@Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher'
+        tags:
+            - { name: ibexa.view.builder }
+
+    Ibexa\ContentForms\Content\View\Provider\ContentCreateView\Configured:
+        arguments:
+            - '@ibexa.content_forms.content_create_view.matcher_factory'
+        tags:
+            - {name: ibexa.view.provider, type: 'Ibexa\ContentForms\Content\View\ContentCreateView', priority: 10}
+
+    ibexa.content_forms.content_create_view.matcher_factory:
+        class: Ibexa\Bundle\Core\Matcher\ServiceAwareMatcherFactory
+        arguments:
+            - '@Ibexa\Bundle\Core\Matcher\ViewMatcherRegistry'
+            - '@ibexa.api.repository'
+            - 'Ibexa\Core\MVC\Symfony\Matcher\ContentBased'
+
+    ibexa.content_forms.content_create_view.matcher_factory.dynamically_configured:
+        class: Ibexa\Core\MVC\Symfony\Matcher\DynamicallyConfiguredMatcherFactoryDecorator
+        decorates: ibexa.content_forms.content_create_view.matcher_factory
+        arguments:
+            $innerConfigurableMatcherFactory: '@ibexa.content_forms.content_create_view.matcher_factory.dynamically_configured.inner'
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: content_create_view
+
+    Ibexa\ContentForms\Content\View\Filter\ContentCreateViewFilter:
+        arguments:
+            - '@ibexa.api.service.location'
+            - '@ibexa.api.service.content_type'
+        tags:
+            - { name: kernel.event_subscriber }

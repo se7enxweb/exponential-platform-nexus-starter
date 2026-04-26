@@ -1,0 +1,29 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ibexa.search.suggestion.serializer:
+        class: Symfony\Component\Serializer\Serializer
+        autoconfigure: false
+        arguments:
+            $normalizers:
+                - '@Ibexa\Search\Serializer\Normalizer\Suggestion\ContentSuggestionNormalizer'
+                - '@Ibexa\Search\Serializer\Normalizer\Suggestion\LocationNormalizer'
+                - '@Ibexa\Search\Serializer\Normalizer\Suggestion\ParentLocationCollectionNormalizer'
+                - '@Ibexa\Search\Serializer\Normalizer\Suggestion\SuggestionCollectionNormalizer'
+            $encoders:
+                - '@serializer.encoder.json'
+
+    Ibexa\Search\Serializer\Normalizer\Suggestion\ContentSuggestionNormalizer:
+        autoconfigure: false
+
+    Ibexa\Search\Serializer\Normalizer\Suggestion\ParentLocationCollectionNormalizer:
+        autoconfigure: false
+
+    Ibexa\Search\Serializer\Normalizer\Suggestion\LocationNormalizer:
+        autoconfigure: false
+
+    Ibexa\Search\Serializer\Normalizer\Suggestion\SuggestionCollectionNormalizer:
+        autoconfigure: false

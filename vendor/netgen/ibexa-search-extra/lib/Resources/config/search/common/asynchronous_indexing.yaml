@@ -1,0 +1,11 @@
+imports:
+    - { resource: asynchronous_indexing/common.yaml }
+    - { resource: asynchronous_indexing/content.yaml }
+    - { resource: asynchronous_indexing/location.yaml }
+    - { resource: asynchronous_indexing/object_state.yaml }
+    - { resource: asynchronous_indexing/section.yaml }
+    - { resource: asynchronous_indexing/trash.yaml }
+    - { resource: asynchronous_indexing/user.yaml }
+
+services:
+    netgen.ibexa_search_extra.asynchronous_indexing.messenger.bus: '@messenger.default_bus'

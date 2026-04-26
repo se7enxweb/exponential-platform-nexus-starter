@@ -1,0 +1,14 @@
+.idea/
+.env
+cypress/screenshots/
+cypress/fixtures/
+node_modules/
+vendor/
+.php-cs-fixer.cache
+composer.lock
+composer.phar
+package-lock.json
+studio.json
+yarn.lock
+yarn-error.log
+*.sublime-workspace

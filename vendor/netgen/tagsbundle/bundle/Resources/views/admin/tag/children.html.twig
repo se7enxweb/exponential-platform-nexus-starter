@@ -1,0 +1,76 @@
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% set can_manipulate_children = is_granted('ibexa:tags:edit') or is_granted('ibexa:tags:delete') %}
+{% set can_read = is_granted('ibexa:tags:read') %}
+{% set can_add = is_granted('ibexa:tags:add', tag is defined ? tag : null) %}
+{% set can_edit = is_granted('ibexa:tags:edit') %}
+{% set can_delete = is_granted('ibexa:tags:delete') %}
+
+<h3>{{ 'tag.children.title'|trans }} ({{ childrenTags|length }})</h3>
+
+
+    <div class="tags-btn-group">
+        <a href="{{ path('netgen_tags_admin_tag_search') }}" class="tags-btn tags-btn-primary"><i class="md-icon">search</i>{{ 'tag.search.search_tags'|trans }}</a>
+        {% if can_add %}
+            <a href="{{ path('netgen_tags_admin_tag_add_select', {'parentId': tag is defined ? tag.id : 0}) }}" class="tags-btn"><i class="md-icon">add</i>{{ 'tag.add.title'|trans }}</a>
+        {% endif %}
+    </div>
+
+{% if childrenTags is not empty %}
+    <form method="post" action="{{ path('netgen_tags_admin_tag_children', {'tagId': tag is defined ? tag.id : 0}) }}">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>{{ 'tag.tag_id'|trans }}</th>
+                    <th>{{ 'tag.tag_name'|trans }}</th>
+                    <th>{{ 'tag.translations'|trans }}</th>
+                    <th>{{ 'tag.modified'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for child in childrenTags %}
+                    <tr>
+                        <td>
+                            {% if can_manipulate_children %}
+                                <input type="checkbox" data-enable="Tags" name="Tags[]" id="childTag{{ child.id }}" value="{{ child.id }}"/><label for="childTag{{ child.id }}"></label>
+                            {% endif %}
+                        </td>
+                        <td>{{ child.id }}</td>
+                        <td><a href="{{ path('netgen_tags_admin_tag_show', {'tagId': child.id}) }}">{{ child.keyword }}</a></td>
+                        <td>
+                            {% for languageCode in child.keywords|keys %}
+                                {% if can_edit %}<a href="{{ path('netgen_tags_admin_tag_update', {'tagId': child.id, 'languageCode': languageCode}) }}">{% endif %}
+                                    {{ languageCode }}
+                                {% if can_edit %}</a>{% endif %}
+
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ child.modificationDate|date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if childrenTags.haveToPaginate() %}
+            {{ pagerfanta(childrenTags, 'netgen_tags_admin') }}
+        {% endif %}
+
+        <div class="tags-btn-group">
+            {% if can_edit %}
+                <button type="submit" name="MoveTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.move_selected'|trans }}</button>
+            {% endif %}
+
+            {% if can_read %}
+                <button type="submit" name="CopyTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.copy_selected'|trans }}</button>
+            {% endif %}
+
+            {% if can_delete %}
+                <button type="submit" name="DeleteTagsAction" class="tags-btn" data-enabler="Tags">{{ 'tag.button.delete_selected'|trans }}</button>
+            {% endif %}
+        </div>
+    </form>
+{% else %}
+    <p>{{ 'tag.children.no_children'|trans }}</p>
+{% endif %}

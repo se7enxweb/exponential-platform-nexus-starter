@@ -1,0 +1,53 @@
+{
+    "name": "netgen/query-translator",
+    "description": "Query Translator is a search query translator with AST representation",
+    "keywords": [
+        "search",
+        "query",
+        "tokenizer",
+        "parser",
+        "generator",
+        "translator",
+        "ast",
+        "solr",
+        "edismax",
+        "elasticsearch"
+    ],
+    "type": "library",
+    "homepage": "https://github.com/netgen/query-translator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Petar Španja",
+            "email": "petar@spanja.info"
+        }
+    ],
+    "require": {
+        "php": "^7.0||^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "symfony/phpunit-bridge": "*",
+        "friendsofphp/php-cs-fixer": "^2.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "QueryTranslator\\": "lib"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "QueryTranslator\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

@@ -1,0 +1,125 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\ContentBrowserBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\Form\Exception\InvalidConfigurationException;
+
+final class Configuration implements ConfigurationInterface
+{
+    public function __construct(
+        private ExtensionInterface $extension,
+    ) {}
+
+    /**
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder<'array'>
+     */
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder($this->extension->getAlias());
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode->children()
+            ->arrayNode('item_types')
+            ->useAttributeAsKey('identifier')
+            ->arrayPrototype()
+                ->children()
+                    ->stringNode('name')
+                        ->isRequired()
+                        ->cannotBeEmpty()
+                    ->end()
+                    ->integerNode('min_selected')
+                        ->treatNullLike(1)
+                        ->defaultValue(1)
+                        ->min(0)
+                    ->end()
+                    ->integerNode('max_selected')
+                        ->treatNullLike(0)
+                        ->defaultValue(0)
+                        ->min(0)
+                    ->end()
+                    ->arrayNode('tree')
+                        ->addDefaultsIfNotSet()
+                        ->canBeDisabled()
+                    ->end()
+                    ->arrayNode('search')
+                        ->addDefaultsIfNotSet()
+                        ->canBeDisabled()
+                    ->end()
+                    ->arrayNode('preview')
+                        ->validate()
+                            ->always(
+                                static function (array $v): array {
+                                    if ($v['enabled'] && !isset($v['template'])) {
+                                        throw new InvalidConfigurationException('When preview is enabled, template needs to be specified');
+                                    }
+
+                                    return $v;
+                                },
+                            )
+                        ->end()
+                        ->isRequired()
+                        ->canBeDisabled()
+                        ->children()
+                            ->stringNode('template')
+                                ->cannotBeEmpty()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('columns')
+                        ->validate()
+                            ->always(
+                                static function (array $v): array {
+                                    if (!isset($v['name'])) {
+                                        throw new InvalidConfigurationException('Column with "name" identifier is required');
+                                    }
+
+                                    return $v;
+                                },
+                            )
+                        ->end()
+                        ->performNoDeepMerging()
+                        ->arrayPrototype()
+                            ->validate()
+                                ->always(
+                                    static function (array $v): array {
+                                        $exception = new InvalidConfigurationException('Column specification needs to have either "template" or "value_provider" keys');
+
+                                        return match (true) {
+                                            isset($v['template'], $v['value_provider']),
+                                            !isset($v['template']) && !isset($v['value_provider']) => throw $exception,
+                                            default => $v,
+                                        };
+                                    },
+                                )
+                            ->end()
+                            ->children()
+                                ->stringNode('name')
+                                    ->isRequired()
+                                    ->cannotBeEmpty()
+                                ->end()
+                                ->stringNode('template')
+                                    ->cannotBeEmpty()
+                                ->end()
+                                ->stringNode('value_provider')
+                                    ->cannotBeEmpty()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('default_columns')
+                        ->performNoDeepMerging()
+                        ->stringPrototype()
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+
+        return $treeBuilder;
+    }
+}

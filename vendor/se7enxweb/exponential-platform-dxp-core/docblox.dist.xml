@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<docblox>
+  <parser>
+    <target>doc/apidoc</target>
+  </parser>
+  <transformer>
+    <target>doc/apidoc</target>
+  </transformer>
+  <files>
+    <directory>.</directory>
+    <ignore>doc/*</ignore>
+  </files>
+</docblox>

@@ -1,0 +1,26 @@
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% trans_default_domain 'ibexa_search' %}
+
+{% set content_breadcrumbs = '' %}
+{% set subtree_selected = form.subtree.vars.value is not empty %}
+
+{% if subtree_selected %}
+    {% set path_locations = ibexa_path_to_locations(form.subtree.vars.value) %}
+    {% set location = path_locations|last %}
+    {% set content_breadcrumbs = ibexa_content_name(location.contentInfo) %}
+{% endif %}
+
+{{ form_start(form, {'attr': {'class': 'ibexa-search-form'}}) }}
+    {{ form_widget(form.query, { attr: {
+        hidden: true,
+        class: 'ibexa-search-form__search-input',
+    }}) }}
+
+    {{ form_widget(form.last_modified, {'attr': {'hidden': 'hidden'}}) }}
+    {{ form_widget(form.created, {'attr': {'hidden': 'hidden'}}) }}
+    {{ form_widget(form.creator, {'attr': {'hidden': 'hidden'}}) }}
+
+    {% include '@ibexadesign/ui/search/results.html.twig' %}
+    {% include '@ibexadesign/ui/search/filters.html.twig' %}
+{{ form_end(form) }}

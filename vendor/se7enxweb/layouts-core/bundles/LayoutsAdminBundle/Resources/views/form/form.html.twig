@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% block children %}{% endblock %}
+
+    {{ form_rest(form) }}
+{{ form_end(form) }}

@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\DataTransformer;
+
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\ObjectStateService;
+use Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectState;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+
+/**
+ * Translates ObjectState's ID to domain specific ObjectState object.
+ */
+final readonly class ObjectStateTransformer implements DataTransformerInterface
+{
+    public function __construct(private ObjectStateService $objectStateService)
+    {
+    }
+
+    public function transform(mixed $value): ?int
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if (!$value instanceof ObjectState) {
+            throw new TransformationFailedException('Expected a ' . ObjectState::class . ' object.');
+        }
+
+        return $value->id;
+    }
+
+    public function reverseTransform(mixed $value): ?ObjectState
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            return $this->objectStateService->loadObjectState($value);
+        } catch (NotFoundException $e) {
+            throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+}

@@ -1,0 +1,108 @@
+[
+    {
+        "id": "399ad9ac-777a-50ba-945a-06e9f57add12",
+        "type": "test_layout_2",
+        "published": true,
+        "has_archived_state": false,
+        "has_published_state": true,
+        "created_at": "@string@.isDateTime()",
+        "updated_at": "@string@.isDateTime()",
+        "archive_created_at": null,
+        "archive_updated_at": null,
+        "shared": true,
+        "name": "My fifth layout",
+        "description": "My fifth layout description",
+        "main_locale": "en",
+        "available_locales": {
+            "en": "English"
+        },
+        "zones": [
+            {
+                "identifier": "bottom",
+                "name": "Bottom",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "left",
+                "name": "Left",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "right",
+                "name": "Right",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "top",
+                "name": "Top",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            }
+        ]
+    },
+    {
+        "id": "d8e55af7-cf62-5f28-ae15-331b457d82e9",
+        "type": "test_layout_2",
+        "published": true,
+        "has_archived_state": false,
+        "has_published_state": true,
+        "created_at": "@string@.isDateTime()",
+        "updated_at": "@string@.isDateTime()",
+        "archive_created_at": null,
+        "archive_updated_at": null,
+        "shared": true,
+        "name": "My third layout",
+        "description": "My third layout description",
+        "main_locale": "en",
+        "available_locales": {
+            "en": "English"
+        },
+        "zones": [
+            {
+                "identifier": "bottom",
+                "name": "Bottom",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "left",
+                "name": "Left",
+                "block_ids": [
+                    "d21c7114-12d7-46eb-89e3-8c84974b8655"
+                ],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "right",
+                "name": "Right",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            },
+            {
+                "identifier": "top",
+                "name": "Top",
+                "block_ids": [],
+                "allowed_block_definitions": true,
+                "linked_layout_id": null,
+                "linked_zone_identifier": null
+            }
+        ]
+    }
+]

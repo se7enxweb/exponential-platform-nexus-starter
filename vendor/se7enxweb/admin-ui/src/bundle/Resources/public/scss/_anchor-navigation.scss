@@ -1,0 +1,177 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-anchor-navigation {
+    $self: &;
+    background-color: $ibexa-color-white;
+    padding: calculateRem(24px) calculateRem(32px) 0 calculateRem(32px);
+
+    &__sections {
+        .card {
+            position: unset;
+        }
+    }
+
+    &__section {
+        border-bottom: calculateRem(1px) solid $ibexa-color-light;
+        margin-bottom: calculateRem(36px);
+
+        .ibexa-form-field:last-child {
+            margin-bottom: calculateRem(24px);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &--no-border {
+            border-bottom: none;
+        }
+    }
+
+    &__section-group {
+        display: none;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__section-header {
+        margin-bottom: calculateRem(24px);
+    }
+
+    &__section-help {
+        color: $ibexa-color-dark-400;
+        padding-bottom: calculateRem(24px);
+    }
+}
+
+.ibexa-anchor-navigation-menu {
+    &__header {
+        height: calculateRem(87px);
+        padding: calculateRem(20px) 0 0 calculateRem(17px);
+    }
+
+    &__body {
+        height: calc(100% - #{calculateRem(87px)});
+        font-size: $ibexa-text-font-size-medium;
+    }
+
+    &__close {
+        font-weight: 600;
+        margin-right: calculateRem(20px);
+    }
+
+    &__section-groups {
+        min-width: calculateRem(280px);
+        max-width: calculateRem(420px);
+        width: calc(25vw - #{calculateRem(50px)});
+        height: calculateRem(48px);
+    }
+
+    &__sections {
+        min-width: calculateRem(240px);
+        max-width: calculateRem(240px);
+        list-style: none;
+        display: none;
+        margin: calculateRem(24px) 0 0;
+        position: absolute;
+        right: calculateRem(30px);
+        z-index: 10;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__sections-header {
+        font-size: $ibexa-text-font-size-extra-large;
+        font-weight: 600;
+        color: $ibexa-color-primary;
+        margin: calculateRem(16px) 0;
+    }
+
+    &__sections-item {
+        height: calculateRem(32px);
+    }
+
+    &__sections-item-btn {
+        display: inline-flex;
+        width: 100%;
+        padding: 0;
+        border: calculateRem(1px) solid transparent;
+        text-align: left;
+        color: $ibexa-color-dark-400;
+        align-items: center;
+        font-weight: 600;
+        border-left: calculateRem(1px) solid $ibexa-color-light;
+
+        &::before {
+            content: '';
+            display: block;
+            width: calculateRem(2px);
+            height: calculateRem(32px);
+            margin: 0 calculateRem(16px) 0 0;
+            opacity: 0;
+        }
+
+        &::after {
+            content: '*';
+            width: calculateRem(16px);
+            display: inline-block;
+            opacity: 0;
+            margin: calculateRem(4px) 0 0 calculateRem(4px);
+            color: $ibexa-color-danger;
+            font-size: $ibexa-text-font-size-small;
+        }
+
+        &:hover {
+            color: $ibexa-color-primary;
+
+            &::before {
+                opacity: 1;
+                background-color: $ibexa-color-primary;
+            }
+        }
+
+        &--active {
+            color: $ibexa-color-primary;
+
+            &::before {
+                opacity: 1;
+                background-color: $ibexa-color-primary;
+            }
+        }
+
+        &--invalid {
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__sections-item-label {
+        max-width: calc(100% - #{calculateRem(45px)});
+    }
+
+    &__item-label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &__item-error {
+        margin-top: calculateRem(-3px);
+        fill: $ibexa-color-danger;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__error {
+        &--hidden {
+            display: none;
+        }
+    }
+}

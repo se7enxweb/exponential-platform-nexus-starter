@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.0/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    forceCoversAnnotation="false"
+    beStrictAboutOutputDuringTests="true"
+    beStrictAboutTodoAnnotatedTests="true"
+    beStrictAboutChangesToGlobalState="true"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+>
+    <testsuites>
+        <testsuite name="Netgen\TagsBundle\Tests\Core">
+            <directory>tests/Core</directory>
+        </testsuite>
+        <testsuite name="Netgen\TagsBundle\Tests\Templating">
+            <directory>tests/Templating</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage>
+        <include>
+            <directory>bundle</directory>
+        </include>
+        <exclude>
+            <directory>bundle/Controller</directory>
+            <directory>bundle/DependencyInjection</directory>
+            <directory>bundle/Resources</directory>
+            <file>bundle/NetgenTagsBundle.php</file>
+        </exclude>
+    </coverage>
+</phpunit>

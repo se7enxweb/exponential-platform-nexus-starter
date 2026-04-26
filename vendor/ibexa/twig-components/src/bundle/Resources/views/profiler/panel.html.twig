@@ -1,0 +1,43 @@
+{% if collector.renderedComponents is not empty %}
+    {% if collector.availableGroups is not empty %}
+        <h3>Available Twig Component groups</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Group</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in collector.availableGroups %}
+                <tr>
+                    <td>{{ group.group }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h3>Rendered Twig Components</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Group</th>
+            <th>Component Name</th>
+            <th>Component Class</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for component in collector.renderedComponents %}
+            <tr>
+                <td>{{ component.group }}</td>
+                <td>{{ component.name }}</td>
+                <td>{{ component.componentClass }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No Twig components were rendered.</p>
+{% endif %}
+
+

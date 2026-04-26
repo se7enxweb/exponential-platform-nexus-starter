@@ -1,0 +1,8 @@
+services:
+    Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\Query\CriterionVisitor\Content\VisibilityVisitor:
+        tags:
+            - { name: ibexa.search.elasticsearch.query.content.criterion.visitor }
+
+    Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\Query\CriterionVisitor\Location\VisibilityVisitor:
+        tags:
+            - { name: ibexa.search.elasticsearch.query.location.criterion.visitor }

@@ -1,0 +1,15 @@
+services:
+    netgen.ibexa_site_api.siteaccess.resolver.native:
+        class: Netgen\Bundle\IbexaSiteApiBundle\SiteAccess\Resolver\NativeResolver
+        arguments:
+            - '@ibexa.api.persistence_handler'
+            - '%netgen.ibexa_site_api.cross_siteaccess_content.recursion_limit%'
+            - '@ibexa.config.resolver'
+        calls:
+            - [ setSiteaccess, [ '@Ibexa\Core\MVC\Symfony\SiteAccess' ] ]
+            - [ setSiteaccessList, [ '%ibexa.site_access.list%' ] ]
+            - [ setSiteaccessGroupsBySiteaccess, [ '%ibexa.site_access.groups_by_site_access%' ] ]
+        lazy: true
+
+    netgen.ibexa_site_api.siteaccess.resolver:
+        alias: netgen.ibexa_site_api.siteaccess.resolver.native

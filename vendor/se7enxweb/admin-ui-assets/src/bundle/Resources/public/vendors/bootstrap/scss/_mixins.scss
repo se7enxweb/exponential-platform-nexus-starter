@@ -1,0 +1,42 @@
+// Toggles
+//
+// Used in conjunction with global variables to enable certain theme features.
+// This is a proxy/barrel file — it @forward all sub-modules so consumers
+// who do `@use "mixins" as *` receive all mixin definitions.
+// Note: vendor/rfs is NOT forwarded here — files that need rfs import it directly.
+
+// Deprecate
+@forward "mixins/deprecate";
+
+// Helpers
+@forward "mixins/breakpoints";
+@forward "mixins/color-mode";
+@forward "mixins/color-scheme";
+@forward "mixins/image";
+@forward "mixins/resize";
+@forward "mixins/visually-hidden";
+@forward "mixins/reset-text";
+@forward "mixins/text-truncate";
+
+// Utilities
+@forward "mixins/utilities";
+
+// Components
+@forward "mixins/backdrop";
+@forward "mixins/buttons";
+@forward "mixins/caret";
+@forward "mixins/pagination";
+@forward "mixins/lists";
+@forward "mixins/forms";
+@forward "mixins/table-variants";
+
+// Skins
+@forward "mixins/border-radius";
+@forward "mixins/box-shadow";
+@forward "mixins/gradients";
+@forward "mixins/transition";
+
+// Layout
+@forward "mixins/clearfix";
+@forward "mixins/container";
+@forward "mixins/grid";

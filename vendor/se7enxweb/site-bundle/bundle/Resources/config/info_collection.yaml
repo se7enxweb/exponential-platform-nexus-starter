@@ -1,0 +1,35 @@
+services:
+    ngsite.info_collection.referer_resolver:
+        class: Netgen\Bundle\SiteBundle\InfoCollection\RefererResolver
+        arguments:
+            - "@request_stack"
+            - "@router"
+
+    ngsite.info_collection.newsletter_service:
+        class: Netgen\Bundle\SiteBundle\InfoCollection\NewsletterService
+        arguments:
+            - "@mailer.mailer"
+            - "@ngsite.info_collection.mailer_lite"
+            - "%ngsite.default.info_collection.mailer_lite.api_key%"
+            - "@translator"
+            - "%ngsite.default.newsletter.sender_email%"
+            - "%ngsite.default.newsletter.recipient_email%"
+            - "@?logger"
+
+    ngsite.info_collection.action.newsletter:
+        class: Netgen\Bundle\SiteBundle\InfoCollection\Action\NewsletterAction
+        arguments:
+            - "@ngsite.info_collection.newsletter_service"
+        tags:
+            - { name: netgen_information_collection.action }
+
+    ngsite.info_collection.form.extension.honeypot_extension:
+        class: Netgen\Bundle\SiteBundle\InfoCollection\Form\Extension\HoneypotExtension
+        tags:
+            - { name: form.type_extension, extended_type: Netgen\Bundle\InformationCollectionBundle\Ibexa\ContentForms\InformationCollectionType }
+
+    ngsite.info_collection.mailer_lite:
+        class: MailerLiteApi\MailerLite
+        arguments:
+            # todo key is optional
+            - "%ngsite.default.info_collection.mailer_lite.api_key%"

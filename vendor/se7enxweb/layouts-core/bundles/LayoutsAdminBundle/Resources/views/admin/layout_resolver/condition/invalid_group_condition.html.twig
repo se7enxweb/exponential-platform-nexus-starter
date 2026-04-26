@@ -1,0 +1,11 @@
+{% trans_default_domain 'nglayouts' %}
+
+{% set can_edit = is_granted('nglayouts:mapping:edit_group', { rule_group: condition.ruleGroupId.toString }) %}
+
+<span class="settings-value">{{ 'layout_resolver.condition.null'|trans }}</span>
+
+{% if can_edit %}
+    <a href="#" class="remove-setting js-setting-delete" data-setting-id="{{ condition.id.toString }}" data-setting-type="condition">
+        <i class="material-icons">clear</i>
+    </a>
+{% endif %}

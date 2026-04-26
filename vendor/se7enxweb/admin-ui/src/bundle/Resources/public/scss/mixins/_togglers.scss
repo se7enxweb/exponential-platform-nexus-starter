@@ -1,0 +1,48 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+@mixin toggler-wrapper {
+    position: relative;
+    display: flex;
+    border: calculateRem(1px) solid $ibexa-color-dark-300;
+    border-radius: $ibexa-border-radius;
+    margin-right: calculateRem(10px);
+    font-size: calculateRem(14px);
+    line-height: 1;
+}
+
+@mixin toggler-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0;
+}
+
+@mixin toggler-icon-btn {
+    width: calculateRem(32px);
+    height: calculateRem(32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0;
+    padding: 0;
+    border-radius: 0;
+
+    .ibexa-icon {
+        fill: $ibexa-color-dark-300;
+    }
+}
+
+@mixin toggler-selected-btn {
+    color: $ibexa-color-white;
+    background: $ibexa-color-dark-300;
+    transition: transform 0.3s $ibexa-admin-transition;
+
+    .ibexa-icon {
+        fill: $ibexa-color-white;
+    }
+}

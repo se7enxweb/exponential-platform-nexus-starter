@@ -1,0 +1,71 @@
+{
+    "name": "ibexa/fieldtype-query",
+    "license": "(GPL-2.0-only or proprietary)",
+    "type": "ibexa-bundle",
+    "description": "Ibexa Field Type that defines a query.",
+    "replace": {
+        "ezsystems/ezplatform-query-fieldtype": "*"
+    },
+    "require": {
+        "php": ">=8.3",
+        "ext-json": "*",
+        "ibexa/admin-ui": "~5.0.x-dev",
+        "ibexa/content-forms": "~5.0.x-dev",
+        "ibexa/core": "~5.0.x-dev",
+        "ibexa/graphql": "~5.0.x-dev",
+        "ibexa/rest": "~5.0.x-dev",
+        "psr/log": "^3.0",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/expression-language": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/translation": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\Bundle\\FieldTypeQuery\\": "src/bundle/",
+            "Ibexa\\FieldTypeQuery\\": "src/lib/",
+            "Ibexa\\Contracts\\FieldTypeQuery\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\FieldTypeQuery\\": "tests/lib/",
+            "Ibexa\\Tests\\Bundle\\FieldTypeQuery\\": "tests/bundle/"
+        }
+    },
+    "require-dev": {
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/design-engine": "~5.0.x-dev",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/fieldtype-richtext": "~5.0.x-dev",
+        "ibexa/http-cache": "~5.0.x-dev",
+        "ibexa/notifications": "~5.0.x-dev",
+        "ibexa/phpstan": "~5.0.0@dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "ibexa/search": "~5.0.x-dev",
+        "ibexa/twig-components": "~5.0.x-dev",
+        "ibexa/user": "~5.0.x-dev",
+        "phpspec/phpspec": "^7.1 || ^8.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0"
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "test": "phpspec run --format=pretty",
+        "phpstan": "phpstan analyse"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": false
+    }
+}

@@ -1,0 +1,31 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         bootstrap="tests/integration/bootstrap.php"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         failOnWarning="true"
+         verbose="true">
+    <php>
+        <ini name="intl.default_locale" value="en" />
+        <ini name="date.timezone" value="UTC" />
+        <env name="KERNEL_CLASS" value="Ibexa\Tests\Integration\Messenger\DefaultTestKernel" />
+        <env name="SEARCH_ENGINE" value="legacy" />
+        <env name="DATABASE_URL" value="sqlite://i@i/var/test.db" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=4&amp;max[direct]=0&amp;verbose=0"/>
+
+        <!-- Test-only environment variables -->
+        <env name="TEST_IBEXA_MESSENGER_TRANSPORT_DSN" value="doctrine://default?table_name=ibexa_messenger_messages&amp;auto_setup=false" />
+        <!-- <env name="TEST_IBEXA_MESSENGER_LOCK_DSN" value="redis://redis.messenger_default:6379" />-->
+    </php>
+    <testsuites>
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
+</phpunit>

@@ -1,0 +1,129 @@
+services:
+    ngsite.relation.location_resolver:
+        class: Netgen\Bundle\SiteBundle\Relation\LocationRelationResolver
+        arguments:
+            - "@netgen.ibexa_site_api.load_service"
+            - "@?logger"
+        tags:
+            - { name: monolog.logger, channel: ngsite }
+
+    ngsite.relation.multimedia_resolver:
+        class: Netgen\Bundle\SiteBundle\Relation\MultimediaRelationResolver
+        arguments:
+            - "@ngsite.relation.location_resolver"
+
+    ngsite.helper.path_helper:
+        class: Netgen\Bundle\SiteBundle\Helper\PathHelper
+        arguments:
+            - "@netgen.ibexa_site_api.load_service"
+            - "@ibexa.config.resolver"
+            - "@router"
+
+    ngsite.helper.mail_helper:
+        class: Netgen\Bundle\SiteBundle\Helper\MailHelper
+        arguments:
+            # Using "@mailer.mailer" service since "@mailer" is
+            # overwritten by SwiftMailer Bundle
+            - "@mailer.mailer"
+            - "@twig"
+            - "@translator"
+            - "@ibexa.config.resolver"
+            - "@?logger"
+
+    ngsite.helper.redirect_helper:
+        class: Netgen\Bundle\SiteBundle\Helper\RedirectHelper
+        arguments:
+            - "@router"
+            - "@netgen.ibexa_site_api.site"
+
+    ngsite.repository.nguser_setting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Netgen\Bundle\SiteBundle\Entity\NgUserSetting
+
+    ngsite.repository.user_accountkey:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Netgen\Bundle\SiteBundle\Entity\UserAccountKey
+
+    ngsite.core.event.create_user:
+        class: Netgen\Bundle\SiteBundle\Core\EventListener\CreateUserListener
+        arguments:
+            - "@ngsite.repository.nguser_setting"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ngsite.opengraph.handler.site_name:
+        class: Netgen\Bundle\SiteBundle\OpenGraph\Handler\SiteName
+        arguments:
+            - "@netgen.ibexa_site_api.named_object.provider"
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: ngsite/site_name }
+
+    ngsite.opengraph.handler.site_image:
+        class: Netgen\Bundle\SiteBundle\OpenGraph\Handler\SiteImage
+        arguments:
+            - "@netgen.ibexa_site_api.named_object.provider"
+            - "@request_stack"
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: ngsite/site_image }
+
+    ngsite.query_type.search:
+        class: Netgen\Bundle\SiteBundle\QueryType\SearchQueryType
+        arguments:
+            - "@netgen.ibexa_site_api.site"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: ibexa.query_type }
+
+    ngsite.topic.url_generator:
+        class: Netgen\Bundle\SiteBundle\Topic\UrlGenerator
+        arguments:
+            - "@netgen.ibexa_site_api.find_service"
+            - "@netgen.ibexa_site_api.load_service"
+            - "@ibexa.config.resolver"
+            - "@router"
+
+    ngsite.search.resolver.suggestion:
+        class: Netgen\Bundle\SiteBundle\Core\Search\SuggestionResolver
+
+    ngsite.profiler.data_collector.git:
+        class: Netgen\Bundle\SiteBundle\DataCollector\GitDataCollector
+        arguments:
+            - "%kernel.project_dir%"
+        tags:
+            - { name: data_collector, template: '@NetgenSite/data_collector/git.html.twig', id: ngsite.data_collector.git }
+
+    ngsite.content_forms.field_type.binary_file_form_mapper:
+        class: Netgen\Bundle\SiteBundle\ContentForms\FieldType\Mapper\BinaryFileFormMapper
+        decorates: Ibexa\ContentForms\FieldType\Mapper\BinaryFileFormMapper
+        arguments:
+            - "@ibexa.api.service.field_type"
+
+    ngsite.security.voter.user_register:
+        class: Netgen\Bundle\SiteBundle\Security\Authorization\Voter\UserRegisterVoter
+        arguments:
+            - "@Ibexa\\Contracts\\Core\\Repository\\PermissionResolver"
+            - "@request_stack"
+        tags:
+            - { name: security.voter, priority: 512 }
+
+#    Custom user context hash providers are disabled by default.
+#    Enable them in your project if needed by copying one of the
+#    following service definitions.
+#
+#    ngsite.context_provider.session:
+#        class: Netgen\Bundle\SiteBundle\ContextProvider\SessionContextProvider
+#        arguments:
+#            - "@session"
+#    tags:
+#        - { name: fos_http_cache.user_context_provider }
+#
+#    ngsite.context_provider.user:
+#        class: Netgen\Bundle\SiteBundle\ContextProvider\UserContextProvider
+#        arguments:
+#            - "@Ibexa\\Contracts\\Core\\Repository\\PermissionService"
+#    tags:
+#        - { name: fos_http_cache.user_context_provider }

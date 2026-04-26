@@ -1,0 +1,15 @@
+{% extends '@ibexadesign/ui/edit_base.html.twig' %}
+
+{% trans_default_domain 'ibexa_section' %}
+
+{% set is_narrow_content = true %}
+
+{% block header %}
+    {% block header_admin %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="ibexa-edit-content__container">
+        {% block form %}{% endblock %}
+    </div>
+{% endblock %}

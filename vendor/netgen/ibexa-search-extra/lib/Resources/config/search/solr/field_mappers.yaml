@@ -1,0 +1,51 @@
+services:
+    netgen.ibexa_search_extra.solr.field_mapper.content.visibility:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\Content\ContentVisibilityFieldMapper
+        tags:
+            - { name: ibexa.search.solr.field.mapper.content }
+
+    netgen.ibexa_search_extra.solr.field_mapper.location.visibility:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\Location\LocationVisibilityFieldMapper
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\Handler'
+        tags:
+            - { name: ibexa.search.solr.field.mapper.location }
+
+    netgen.ibexa_search_extra.solr.field_mapper.content_translation.content_name:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\ContentTranslation\ContentNameFieldMapper
+        tags:
+            - { name: ibexa.search.solr.field.mapper.block.translation }
+
+    netgen.ibexa_search_extra.solr.field_mapper.content_translation.page:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\ContentTranslation\PageFieldMapper
+        arguments:
+            - '@netgen.ibexa_search_extra.page_indexing.field_mapper'
+            - '%netgen_ibexa_search_extra.page_indexing.enabled%'
+        tags:
+            - { name: ibexa.search.solr.field.mapper.block.translation }
+
+    netgen.ibexa_search_extra.solr.field_mapper.content.content_and_location_id:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\Content\ContentAndLocationIdFieldMapper
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\Location\Handler'
+        tags:
+            - { name: ibexa.search.solr.field.mapper.block }
+
+    netgen.ibexa_search_extra.solr.field_mapper.location.location_id:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\Location\LocationIdFieldMapper
+        tags:
+            - { name: ibexa.search.solr.field.mapper.location }
+
+    netgen.ibexa_search_extra.solr.field_mapper.common.user_enabled:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\Content\UserEnabledFieldMapper
+        tags:
+            - { name: ibexa.search.solr.field.mapper.block }
+
+    netgen.ibexa_search_extra.solr.field_mapper.content.full_text:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\FieldMapper\ContentTranslation\FulltextMetaFieldMapper
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Type\Handler'
+            - '@Ibexa\Core\Search\Common\FieldRegistry'
+            - '%netgen_ibexa_search_extra.fulltext.meta_fields%'
+        tags:
+            - { name: ibexa.search.solr.field.mapper.content.translation }

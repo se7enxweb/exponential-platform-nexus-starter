@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\TagsBundle\Core\Search\RelatedContent;
+
+use Ibexa\Contracts\Core\Repository\Values\Content\Query;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause;
+use Netgen\TagsBundle\API\Repository\Values\Content\Query\SortClause\ContentTypeId;
+
+use function in_array;
+
+final class SortClauseMapper
+{
+    /**
+     * @var string[]
+     */
+    private static array $allowedSortOptions = [
+        'content_id_ascending',
+        'content_id_descending',
+        'name_ascending',
+        'name_descending',
+        'date_modified_ascending',
+        'date_modified_descending',
+        'content_type_id_ascending',
+        'content_type_id_descending',
+    ];
+
+    /**
+     * Returns allowed sort options.
+     */
+    public function getSortOptions(): array
+    {
+        return self::$allowedSortOptions;
+    }
+
+    /**
+     * Maps given sort options to corresponding SortClause objects, if supported.
+     *
+     * @param string[] $sortOptions
+     *
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause[]
+     */
+    public function mapSortClauses(array $sortOptions): array
+    {
+        $sortClauses = [];
+
+        foreach ($sortOptions as $sortOption) {
+            if (!in_array($sortOption, self::$allowedSortOptions, true)) {
+                continue;
+            }
+
+            $sortClauses[] = $this->mapSortClause($sortOption);
+        }
+
+        return $sortClauses;
+    }
+
+    /**
+     * Maps given sort option to corresponding SortClause, if supported.
+     */
+    private function mapSortClause(string $sortOption): SortClause
+    {
+        return match ($sortOption) {
+            'content_id_ascending' => new SortClause\ContentId(Query::SORT_ASC),
+            'content_id_desc' => new SortClause\ContentId(Query::SORT_DESC),
+            'name_ascending' => new SortClause\ContentName(Query::SORT_ASC),
+            'name_descending' => new SortClause\ContentName(Query::SORT_DESC),
+            'content_type_id_ascending' => new ContentTypeId(Query::SORT_ASC),
+            'content_type_id_descending' => new ContentTypeId(Query::SORT_DESC),
+            'date_modified_ascending' => new SortClause\DateModified(Query::SORT_ASC),
+            default => new SortClause\DateModified(Query::SORT_DESC),
+        };
+    }
+}

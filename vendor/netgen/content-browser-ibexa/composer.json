@@ -1,0 +1,58 @@
+{
+    "name": "netgen/content-browser-ibexa",
+    "description": "Netgen Content Browser & Ibexa CMS integration",
+    "license": "GPL-2.0-only",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "netgen/content-browser": "~2.0.0",
+        "ibexa/core": "^5.0"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0",
+        "phpunit/phpunit": "^13.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.3",
+        "netgen/tagsbundle": "^6.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so -dxdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=coverage --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --ansi",
+        "phpstan-tests": "@php vendor/bin/phpstan analyse -c phpstan.tests.neon --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\ContentBrowser\\Ibexa\\": "lib/",
+            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\": "bundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\ContentBrowser\\Ibexa\\Tests\\": "tests/lib/",
+            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\Tests\\": "tests/bundle/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

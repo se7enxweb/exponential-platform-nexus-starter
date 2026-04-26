@@ -1,0 +1,5 @@
+services:
+    Ibexa\Core\Search\Common\FieldValueMapper\IdentifierMapper:
+        class: Netgen\IbexaSearchExtra\Core\Search\Common\FieldValueMapper\IdentifierMapper
+        tags:
+            - { name: ibexa.search.common.field_value.mapper }

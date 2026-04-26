@@ -1,0 +1,68 @@
+{
+    "name": "overblog/graphiql-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony GraphiQLBundle makes possible to render the UI into your symfony project",
+    "keywords": [
+        "GraphQL", "GraphiQL"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renato Mefi",
+            "email": "renato@mefi.in"
+        },
+        {
+            "name": "Overblog",
+            "homepage": "http://www.over-blog.com"
+        }
+    ],
+    "config" : {
+        "bin-dir": "bin",
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^8.0",
+        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
+        "symfony/twig-bundle": "^5.4 || ^6.0 || ^7.0",
+        "symfony/routing": "^5.4 || ^6.0 || ^7.00"
+    },
+    "require-dev": {
+        "overblog/graphql-bundle": "dev-master",
+        "webonyx/graphql-php": "^15.4",
+        "phpunit/phpunit": "^9.5.10",
+        "symfony/browser-kit": "^5.4 || ^6.0 || ^7.0",
+        "symfony/config": "^5.4 || ^6.0 || ^7.0",
+        "symfony/console": "^5.4 || ^6.0 || ^7.0",
+        "symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
+        "symfony/dom-crawler": "^5.4 || ^6.0 || ^7.0",
+        "symfony/expression-language": "^5.4 || ^6.0 || ^7.0",
+        "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
+        "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+        "symfony/templating": "^5.4 || ^6.0 || ^7.0",
+        "symfony/yaml": "^5.4 || ^6.0 || ^7.0",
+        "twig/twig": "^3.3.3"
+    },
+    "autoload": {
+        "psr-4": { "Overblog\\GraphiQLBundle\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Overblog\\GraphiQLBundle\\Tests\\": "tests/" }
+    },
+    "scripts": {
+        "test": "bin/phpunit --color=always",
+        "install-cs": "test -f php-cs-fixer.phar || wget https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/download/v3.48.0/php-cs-fixer.phar -O php-cs-fixer.phar",
+        "fix-cs": [
+            "@install-cs",
+            "@php php-cs-fixer.phar fix --diff -v --allow-risky=yes --ansi"
+        ],
+        "check-cs": [
+            "@install-cs",
+            "@php php-cs-fixer.phar fix --dry-run --diff -v --allow-risky=yes --ansi"
+        ],
+        "code-quality": [
+            "rm composer.lock",
+            "@composer install --ansi",
+            "@check-cs"
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+{% trans_default_domain 'locationview' %}
+
+<div class="ibexa-details__items">
+    <div class="ibexa-details__item-label" style="color: #71767c; font-size: .875rem; margin-right: .375rem;">
+        {{ 'content.last_modified'|trans|desc('Last modified:') }}
+    </div>
+    <div class="ibexa-details__item-content-wrapper">
+        <div class="ibexa-details__item-content ibexa-details__item-content--ellipsized" style="font-size: .875rem;">
+            {{ last_contributor_name }} at {{ content_info.modificationDate | date('d/m/Y H:i') }}
+        </div>
+    </div>
+</div>

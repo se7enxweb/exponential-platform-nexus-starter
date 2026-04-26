@@ -1,0 +1,142 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Persistence\Doctrine\Mapper;
+
+use Netgen\Layouts\Persistence\Doctrine\Mapper\LayoutMapper;
+use Netgen\Layouts\Persistence\Values\Layout\Layout;
+use Netgen\Layouts\Persistence\Values\Layout\Zone;
+use Netgen\Layouts\Persistence\Values\Status;
+use Netgen\Layouts\Tests\TestCase\ExportObjectTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+#[CoversClass(LayoutMapper::class)]
+final class LayoutMapperTest extends TestCase
+{
+    use ExportObjectTrait;
+
+    private LayoutMapper $mapper;
+
+    protected function setUp(): void
+    {
+        $this->mapper = new LayoutMapper();
+    }
+
+    public function testMapLayouts(): void
+    {
+        $data = [
+            [
+                'id' => '42',
+                'uuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+                'type' => 'test_layout_1',
+                'name' => 'My layout',
+                'description' => 'My layout description',
+                'created' => '123',
+                'modified' => '456',
+                'status' => '1',
+                'main_locale' => 'en',
+                'locale' => 'en',
+                'shared' => '1',
+            ],
+            [
+                'id' => 84,
+                'uuid' => '4adf0f00-f6c2-5297-9f96-039bfabe8d3b',
+                'type' => 'test_layout_2',
+                'name' => 'My other layout',
+                'description' => 'My other layout description',
+                'created' => 789,
+                'modified' => 111,
+                'status' => Status::Published->value,
+                'main_locale' => 'en',
+                'locale' => 'en',
+                'shared' => false,
+            ],
+        ];
+
+        $expectedData = [
+            [
+                'availableLocales' => ['en'],
+                'created' => 123,
+                'description' => 'My layout description',
+                'id' => 42,
+                'isShared' => true,
+                'mainLocale' => 'en',
+                'modified' => 456,
+                'name' => 'My layout',
+                'status' => Status::Published,
+                'type' => 'test_layout_1',
+                'uuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+            ],
+            [
+                'availableLocales' => ['en'],
+                'created' => 789,
+                'description' => 'My other layout description',
+                'id' => 84,
+                'isShared' => false,
+                'mainLocale' => 'en',
+                'modified' => 111,
+                'name' => 'My other layout',
+                'status' => Status::Published,
+                'type' => 'test_layout_2',
+                'uuid' => '4adf0f00-f6c2-5297-9f96-039bfabe8d3b',
+            ],
+        ];
+
+        $layouts = $this->mapper->mapLayouts($data);
+
+        self::assertContainsOnlyInstancesOf(Layout::class, $layouts);
+        self::assertSame($expectedData, $this->exportObjectList($layouts));
+    }
+
+    public function testMapZones(): void
+    {
+        $data = [
+            [
+                'identifier' => 'left',
+                'layout_id' => '1',
+                'status' => '1',
+                'root_block_id' => '3',
+                'linked_layout_uuid' => 'd8e55af7-cf62-5f28-ae15-331b457d82e9',
+                'linked_zone_identifier' => 'top',
+                'layout_uuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+            ],
+            [
+                'identifier' => 'right',
+                'layout_id' => 1,
+                'status' => Status::Published->value,
+                'root_block_id' => 4,
+                'linked_layout_uuid' => null,
+                'linked_zone_identifier' => null,
+                'layout_uuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+            ],
+        ];
+
+        $expectedData = [
+            'left' => [
+                'identifier' => 'left',
+                'layoutId' => 1,
+                'layoutUuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+                'linkedLayoutUuid' => 'd8e55af7-cf62-5f28-ae15-331b457d82e9',
+                'linkedZoneIdentifier' => 'top',
+                'rootBlockId' => 3,
+                'status' => Status::Published,
+            ],
+            'right' => [
+                'identifier' => 'right',
+                'layoutId' => 1,
+                'layoutUuid' => 'f06f245a-f951-52c8-bfa3-84c80154eadc',
+                'linkedLayoutUuid' => null,
+                'linkedZoneIdentifier' => null,
+                'rootBlockId' => 4,
+                'status' => Status::Published,
+            ],
+        ];
+
+        $zones = $this->mapper->mapZones($data);
+
+        self::assertContainsOnlyInstancesOf(Zone::class, $zones);
+        self::assertSame($expectedData, $this->exportObjectList($zones));
+    }
+}

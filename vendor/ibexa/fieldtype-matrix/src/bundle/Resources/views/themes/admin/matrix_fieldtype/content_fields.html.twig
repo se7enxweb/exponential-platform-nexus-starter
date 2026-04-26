@@ -1,0 +1,28 @@
+{% trans_default_domain 'ibexa_matrix_fieldtype' %}
+
+{% block ibexa_matrix_field %}
+    {% set columnsSettings = fieldSettings['columns'] %}
+    {% set fieldData = field.value.rows %}
+
+    {% set body_rows = [] %}
+    {% for data in fieldData %}
+        {% set body_row_cols = [] %}
+        {% for column in columnsSettings %}
+            {% set body_row_cols = body_row_cols|merge([{
+                content: data.cells[column['identifier']]|default
+            }]) %}
+        {% endfor %}
+        {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+    {% endfor %}
+
+    {% set head_cols = [] %}
+    {% for column in columnsSettings %}
+        {% set head_cols = head_cols|merge([{ content: column['name'] }]) %}
+    {% endfor %}
+
+    {% include '@ibexadesign/ui/component/table/table.html.twig' with {
+        headline: 'field.columns'|trans|desc('Columns'),
+        head_cols,
+        body_rows,
+    } %}
+{% endblock %}

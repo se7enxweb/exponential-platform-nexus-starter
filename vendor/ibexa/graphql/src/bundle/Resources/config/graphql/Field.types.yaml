@@ -1,0 +1,291 @@
+GenericFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+ImageFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+            id:
+                type: "String"
+                resolve: "@=value.id"
+            alternativeText:
+                type: "String"
+                resolve: "@=value.alternativeText"
+            fileName:
+                type: "String"
+                resolve: "@=value.fileName"
+            fileSize:
+                type: "Int"
+                resolve: "@=value.fileSize"
+            uri:
+                type: "String"
+                resolve: "@=value.uri"
+            width:
+                type: "Int"
+                resolve: "@=value.width"
+            height:
+                type: "Int"
+                resolve: "@=value.height"
+            additionalData:
+                type: "ImageAdditionalData"
+                resolve: "@=value.additionalData"
+            variations:
+                type: "[ImageVariation]"
+                args:
+                    identifier:
+                        type: "[ImageVariationIdentifier]!"
+                        description: "One or more variation identifiers."
+                resolve: "@=query('ImageVariations', value.value, args)"
+            variation:
+                type: ImageVariation
+                args:
+                    identifier:
+                        type: ImageVariationIdentifier!
+                        description: "A variation identifier."
+                resolve: "@=query('ImageVariation', value.value, args)"
+
+ImageAdditionalData:
+    type: object
+    config:
+        fields:
+            focalPointX:
+                type: "Int"
+                description: "The X value of focal point"
+            focalPointY:
+                type: "Int"
+                description: "The Y value of focal point"
+
+ImageVariation:
+    type: object
+    config:
+        fields:
+            uri:
+                type: "String"
+                description: "The image's URI (example: 'https://example.com/var/site/storage/images/_aliases/small/9/8/1/0/189-1-eng-GB/image.png')"
+            name:
+                type: "String"
+                description: "The name of the image alias (example: 'original')"
+            mimeType:
+                type: "String"
+                description: "The MIME type (for example 'image/png')"
+            fileName:
+                type: "String"
+                description: "The name of the file (for example 'my_image.png')"
+            lastModified:
+                type: DateTime
+                description: "When the variation was last modified"
+            width:
+                type: "Int"
+                description: "The width as number of pixels (example: 320)"
+            height:
+                type: "Int"
+                description: "The height as number of pixels (example: 200)"
+
+AuthorFieldValue:
+    type: object
+    config:
+        fields:
+            id:
+                type: "Int"
+            name:
+                type: "String"
+            email:
+                type: "String"
+
+BinaryFileFieldValue:
+    type: object
+    config:
+        fields:
+            fileName:
+                type: "String"
+                resolve: "@=value.fileName"
+            fileSize:
+                type: "Int"
+                resolve: "@=value.fileSize"
+            mimeType:
+                type: "String"
+                resolve: "@=value.mimeType"
+            uri:
+                type: "String"
+                resolve: "@=value.uri"
+
+CountryFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+DateFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "Unix timestamp"
+                resolve: "@=value.value ? value.value.getTimestamp() : null"
+            formatted:
+                type: "String"
+                description: "Formatted date"
+                resolve: "@=query('DateTimeFormat', args['format'], value.value)"
+                args:
+                    format:
+                        type: String
+                        description: "A format string compatible with PHP's date() function"
+
+DateAndTimeFieldValue:
+    type: object
+    inherits: ["DateFieldValue"]
+
+EmailAddressFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value.email"
+
+KeywordFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+MapLocationFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+            latitude:
+                type: "String"
+                resolve: "@=value.latitude"
+            longitude:
+                type: "String"
+                resolve: "@=value.longitude"
+            address:
+                type: "String"
+                resolve: "@=value.address"
+
+MediaFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: String
+                description: "String representation of the value"
+                resolve: "@=value.uri"
+            hasController:
+                type: Boolean
+                description: "If the media has a controller when being displayed."
+                resolve: "@=value.hasController"
+            autoplay:
+                type: Boolean
+                description: "If the media should be automatically played."
+                resolve: "@=value.autoplay"
+            loop:
+                type: Boolean
+                description: "If the media should be played in a loop."
+                resolve: "@=value.loop"
+            height:
+                type: Int
+                description: "Height of the media."
+                resolve: "@=value.height"
+            width:
+                type: Int
+                description: "Width of the media."
+                resolve: "@=value.width"
+    inherits: [BinaryFileFieldValue]
+
+PriceFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+RatingFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+RichTextFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+            xml:
+                type: "String"
+                description: "The raw docbook xml"
+                resolve: "@=value"
+            plaintext:
+                type: "String"
+                description: "Plain text representation of the value, without tags. Warning: the text representation may not be perfect."
+                resolve: "@=query('RichTextXmlToPlainText', value.xml)"
+            html5:
+                type: "String"
+                description: "HTML5 representation."
+                resolve: "@=query('RichTextXmlToHtml5', value.xml)"
+            html5_edit:
+                type: "String"
+                description: "Editable HTML5 representation."
+                resolve: "@=query('RichTextXmlToHtml5Edit', value.xml)"
+
+SelectionFieldValue:
+    type: object
+    config:
+        fields:
+            text:
+                type: "String"
+                description: "String representation of the value"
+                resolve: "@=value"
+
+UrlFieldValue:
+    type: object
+    config:
+        fields:
+            link:
+                type: String
+                description: "The link's URL"
+                resolve: "@=value.link"
+            text:
+                type: String
+                description: "The link's name or description"
+                resolve: "@=value.text"
+
+RelationsConnection:
+    type: relay-connection
+    config:
+        nodeType: Item
+        connectionFields:
+            sliceSize:
+                type: Int!
+            orderBy:
+                type: String

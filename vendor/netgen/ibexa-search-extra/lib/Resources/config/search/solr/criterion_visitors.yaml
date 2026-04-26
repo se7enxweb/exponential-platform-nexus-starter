@@ -1,0 +1,113 @@
+services:
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.object_state_identifier:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ObjectStateIdentifier
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\ObjectState\Handler'
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.section_identifier:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\SectionIdentifier
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\Section\Handler'
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.subdocument_query:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\SubdocumentQuery
+        arguments:
+            - '@netgen.ibexa_search_extra.solr.query.content.criterion_visitor.subdocument_query.aggregate'
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    # Note: services tagged with 'netgen.ibexa_search_extra.solr.query.content.criterion_visitor.subdocument_query'
+    # are registered to this one using container compiler pass
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.subdocument_query.aggregate:
+        class: Ibexa\Solr\Query\Common\CriterionVisitor\Aggregate
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.location_query:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\LocationQuery
+        arguments:
+            - '@ibexa.solr.query.location.criterion_visitor.aggregate'
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.visible:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\Visible
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.location.criterion_visitor.visible:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Location\CriterionVisitor\Visible
+        tags:
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.content_id_in:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ContentIdIn
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.content_id_between:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ContentIdBetween
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.location_id_in:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\LocationIdIn
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.location_id_between:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\LocationIdBetween
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.location.criterion_visitor.location_id_in:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Location\CriterionVisitor\LocationIdIn
+        tags:
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.location.criterion_visitor.location_id_between:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Location\CriterionVisitor\LocationIdBetween
+        tags:
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.content_name_in:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ContentNameIn
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.content_name_like:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ContentNameLike
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.common.criterion_visitor.content_name_range:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\ContentNameRange
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.user_enabled:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\CriterionVisitor\UserEnabled
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+            - { name: ibexa.search.solr.query.location.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.full_text:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\FullText
+        factory: [ '@netgen.ibexa_search_extra.solr.query.content.criterion_visitor.full_text_factory', 'createCriterionVisitor' ]
+        tags:
+            - { name: ibexa.search.solr.query.content.criterion.visitor }
+
+    netgen.ibexa_search_extra.solr.query.location.criterion_visitor.full_text:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Location\CriterionVisitor\FullText
+        factory: [ '@netgen.ibexa_search_extra.solr.query.location.criterion_visitor.full_text_factory', 'createCriterionVisitor' ]
+        tags:
+            - { name: ibexa.search.solr.query.location.criterion.visitor }

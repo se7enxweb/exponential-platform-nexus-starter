@@ -1,0 +1,38 @@
+{
+    "id": "28df256a-2467-5527-b398-9269ccc652de",
+    "definition_identifier": "list",
+    "is_translatable": true,
+    "is_always_available": true,
+    "main_locale": "en",
+    "available_locales": [
+        "en",
+        "hr"
+    ],
+    "view_type": "grid",
+    "item_view_type": "standard_with_intro",
+    "name": "My published block",
+    "placeholders": [],
+    "parameters": {
+        "en": {
+            "number_of_columns": 3,
+            "paged_collections:enabled": null,
+            "paged_collections:type": null,
+            "paged_collections:max_pages": null,
+            "paged_collections:ajax_first": null
+        },
+        "hr": {
+            "number_of_columns": 3,
+            "paged_collections:enabled": null,
+            "paged_collections:type": null,
+            "paged_collections:max_pages": null,
+            "paged_collections:ajax_first": null
+        }
+    },
+    "configuration": {
+        "key": {"visited_key": "visited_value"}
+    },
+    "collections": {
+        "default": {"visited_key": "visited_value"},
+        "featured": {"visited_key": "visited_value"}
+    }
+}

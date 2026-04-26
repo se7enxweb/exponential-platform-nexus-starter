@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Core\StructBuilder;
+
+use Netgen\Layouts\API\Values\Block\BlockUpdateStruct;
+use Netgen\Layouts\API\Values\Config\Config;
+use Netgen\Layouts\API\Values\Config\ConfigList;
+use Netgen\Layouts\Config\ConfigDefinition;
+use Netgen\Layouts\Core\StructBuilder\ConfigStructBuilder;
+use Netgen\Layouts\Parameters\ParameterList;
+use Netgen\Layouts\Tests\API\Stubs\ConfigAwareValue;
+use Netgen\Layouts\Tests\Config\Stubs\ConfigDefinitionHandler;
+use Netgen\Layouts\Tests\Core\CoreTestCase;
+
+abstract class ConfigStructBuilderTestBase extends CoreTestCase
+{
+    private ConfigStructBuilder $structBuilder;
+
+    final protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->structBuilder = new ConfigStructBuilder();
+    }
+
+    final public function testBuildConfigUpdateStructs(): void
+    {
+        $handler = new ConfigDefinitionHandler();
+
+        $block = ConfigAwareValue::fromArray(
+            [
+                'configs' => new ConfigList(
+                    [
+                        'config' => Config::fromArray(
+                            [
+                                'parameters' => new ParameterList(),
+                                'definition' => ConfigDefinition::fromArray(
+                                    [
+                                        'parameterDefinitions' => $handler->getParameterDefinitions(),
+                                    ],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $struct = new BlockUpdateStruct();
+
+        $this->structBuilder->buildConfigUpdateStructs($block, $struct);
+
+        self::assertArrayHasKey('config', $struct->configStructs);
+
+        $configStruct = $struct->getConfigStruct('config');
+
+        self::assertSame(['param' => null, 'param2' => null], $configStruct->parameterValues);
+    }
+}

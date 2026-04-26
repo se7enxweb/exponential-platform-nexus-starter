@@ -1,0 +1,42 @@
+parameters:
+    ibexa.field_type.richtext.custom_tags.translation_domain: 'custom_tags'
+    ibexa.field_type.richtext.custom_styles.translation_domain: 'custom_styles'
+    ibexa.field_type.richtext.online_editor.translation_domain: 'online_editor'
+
+services:
+    _defaults:
+        autowire: true
+        public: false
+
+    # RichText Custom Tags UI config attribute type mappers
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\CustomTag\CommonAttributeMapper:
+        tags:
+            - { name: ibexa.field_type.richtext.configuration.custom_tag.mapper, priority: 0 }
+
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\CustomTag\ChoiceAttributeMapper:
+        parent: Ibexa\FieldTypeRichText\Configuration\UI\Mapper\CustomTag\CommonAttributeMapper
+        autowire: true
+        public: false
+        tags:
+            - { name: ibexa.field_type.richtext.configuration.custom_tag.mapper, priority: 10 }
+
+    # RichText Custom Tags UI config mapper
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\CustomTag:
+        arguments:
+            $customTagsConfiguration: '%ibexa.field_type.richtext.custom_tags%'
+            $translatorBag: '@translator'
+            $translationDomain: '%ibexa.field_type.richtext.custom_tags.translation_domain%'
+            $customTagAttributeMappers: !tagged_iterator ibexa.field_type.richtext.configuration.custom_tag.mapper
+
+    # RichText Custom Styles UI config mapper
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\CustomStyle:
+        arguments:
+            $customStylesConfiguration: '%ibexa.field_type.richtext.custom_styles%'
+            $translationDomain: '%ibexa.field_type.richtext.custom_styles.translation_domain%'
+
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\OnlineEditorConfigMapper:
+        alias: Ibexa\FieldTypeRichText\Configuration\UI\Mapper\OnlineEditor
+
+    Ibexa\FieldTypeRichText\Configuration\UI\Mapper\OnlineEditor:
+        arguments:
+            $translationDomain: '%ibexa.field_type.richtext.online_editor.translation_domain%'

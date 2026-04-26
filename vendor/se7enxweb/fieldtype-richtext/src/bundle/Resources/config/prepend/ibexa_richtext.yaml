@@ -1,0 +1,61 @@
+alloy_editor:
+    native_attributes:
+        table: [border]
+custom_tags:
+    ezfacebook:
+        template: '@ibexadesign/ibexa_richtext/custom_tags/ezfacebook.html.twig'
+        icon: '/bundles/ibexafieldtyperichtext/assets/images/custom_tags/admin/icons/facebook.svg#facebook'
+        attributes:
+            post_url:
+                type: 'string'
+                required: true
+            width:
+                type: 'number'
+    eztwitter:
+        template: '@ibexadesign/ibexa_richtext/custom_tags/eztwitter.html.twig'
+        icon: '/bundles/ibexafieldtyperichtext/assets/images/custom_tags/admin/icons/twitter.svg#twitter'
+        attributes:
+            tweet_url:
+                type: 'string'
+                required: true
+            # see https://dev.twitter.com/web/embedded-tweets/parameters
+            cards:
+                type: 'choice'
+                required: false
+                default_value: ''
+                choices: ['', 'hidden']
+            conversation:
+                type: 'choice'
+                default_value: ''
+                choices: ['', 'none']
+            theme:
+                type: 'choice'
+                default_value: 'light'
+                required: true
+                choices: ['light', 'dark']
+            link_color:
+                type: 'string'
+                default_value: ''
+            width:
+                type: 'number'
+                default_value: 500
+            lang:
+                type: 'string'
+                default_value: 'en'
+            dnt:
+                type: 'boolean'
+                default_value: true
+    ezyoutube:
+        template: '@ibexadesign/ibexa_richtext/custom_tags/ezyoutube.html.twig'
+        icon: '/bundles/ibexafieldtyperichtext/assets/images/custom_tags/admin/icons/video.svg#video'
+        attributes:
+            video_url:
+                type: 'string'
+                required: true
+            width:
+                type: 'number'
+            height:
+                type: 'number'
+            autoplay:
+                type: 'boolean'
+                default_value: false

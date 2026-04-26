@@ -1,0 +1,14 @@
+{
+    "id": "00872ad1-60e2-5947-95c2-e2eb75427af6",
+    "offset": 0,
+    "limit": 5,
+    "is_translatable": false,
+    "is_always_available": true,
+    "main_locale": "en",
+    "available_locales": [
+        "en"
+    ],
+    "items": [],
+    "slots": [],
+    "query": null
+}

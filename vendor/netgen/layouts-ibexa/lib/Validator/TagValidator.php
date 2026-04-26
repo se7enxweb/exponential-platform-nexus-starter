@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Validator;
+
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Netgen\Layouts\Ibexa\Validator\Constraint\Tag;
+use Netgen\TagsBundle\API\Repository\TagsService;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag as APITag;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+use function is_int;
+
+/**
+ * Validates if the provided value is an ID of a valid tag in Netgen Tags.
+ */
+final class TagValidator extends ConstraintValidator
+{
+    public function __construct(
+        private TagsService $tagsService,
+    ) {}
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if ($value === null) {
+            return;
+        }
+
+        if (!$constraint instanceof Tag) {
+            throw new UnexpectedTypeException($constraint, Tag::class);
+        }
+
+        if (!is_int($value)) {
+            throw new UnexpectedTypeException($value, 'int');
+        }
+
+        if (!$constraint->allowInvalid) {
+            try {
+                $this->tagsService->sudo(
+                    static fn (TagsService $tagsService): APITag => $tagsService->loadTag($value),
+                );
+            } catch (NotFoundException) {
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('%tagId%', (string) $value)
+                    ->addViolation();
+            }
+        }
+    }
+}

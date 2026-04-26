@@ -1,0 +1,17 @@
+services:
+    netgen_toolbar.site_access.admin_site_access_resolver:
+        class: Netgen\Bundle\ToolbarBundle\SiteAccess\AdminSiteAccessResolver
+        arguments:
+            - "%netgen_toolbar.admin_site_access_mapping%"
+            - "%netgen_toolbar.default_admin_site_access%"
+            - "%ibexa.site_access.groups_by_site_access%"
+            - "@Ibexa\\Core\\MVC\\Symfony\\SiteAccess"
+
+    netgen_toolbar.twig.global_variable:
+        class: Netgen\Bundle\ToolbarBundle\Twig\GlobalVariable
+        arguments:
+            - "@router"
+            - "@ibexa.config.resolver"
+            - "@netgen_toolbar.site_access.admin_site_access_resolver"
+            - "%netgen_toolbar.legacy_admin_site_access%"
+            - "%kernel.bundles%"

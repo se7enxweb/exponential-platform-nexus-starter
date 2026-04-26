@@ -1,0 +1,4 @@
+assets:
+    packages:
+        ibexa_file:
+            base_path: '%ngsite.ibexa_file_storage_path%'

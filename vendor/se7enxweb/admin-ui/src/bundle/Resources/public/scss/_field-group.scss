@@ -1,0 +1,175 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-view-rawcontentview {
+    margin-bottom: calculateRem(25px);
+    background-color: $ibexa-color-white;
+
+    .ibexa-raw-content-title {
+        margin-top: calculateRem(30px);
+        padding: 0 0 calculateRem(15px) 0;
+        color: $ibexa-color-black;
+        align-items: center;
+        border-bottom: calculateRem(1px) solid $ibexa-color-light;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        h3 {
+            margin: 0;
+        }
+
+        &__text {
+            margin: 0;
+            font-size: $ibexa-text-font-size-large;
+            line-height: calculateRem(33px);
+            color: $ibexa-color-black;
+            font-weight: 600;
+        }
+
+        &__language-form {
+            display: flex;
+
+            .ibexa-label {
+                margin: calculateRem(8px) calculateRem(8px) 0;
+            }
+
+            .ibexa-dropdown {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.ibexa-fieldgroup {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        min-height: calculateRem(70px);
+    }
+
+    &__name {
+        color: $ibexa-color-dark;
+        border-bottom: calculateRem(1px) solid $ibexa-color-light;
+        padding: calculateRem(24px) calculateRem(8px);
+        font-weight: normal;
+        font-size: $ibexa-text-font-size;
+    }
+
+    &__toggler-label-show {
+        display: none;
+    }
+
+    &__toggler-label-hide {
+        display: inline;
+    }
+
+    &__toggler {
+        position: relative;
+        display: block;
+        padding: calculateRem(24px) calculateRem(16px);
+        font-size: $ibexa-text-font-size-medium;
+        font-weight: normal;
+        color: $ibexa-color-black;
+        text-decoration: none;
+
+        &:focus,
+        &:hover {
+            color: $ibexa-color-primary;
+            text-decoration: none;
+
+            &::after {
+                border-top: calculateRem(5px) solid $ibexa-color-primary;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            top: calculateRem(33px);
+            right: 0;
+            content: '';
+            border-left: calculateRem(5px) solid transparent;
+            border-right: calculateRem(5px) solid transparent;
+            border-top: calculateRem(5px) solid $ibexa-color-black;
+            transition: all $ibexa-admin-transition-duration $ibexa-admin-transition;
+        }
+
+        &.collapsed {
+            .ibexa-fieldgroup {
+                &__toggler-label-show {
+                    display: inline;
+                }
+
+                &__toggler-label-hide {
+                    display: none;
+                }
+            }
+
+            &:after {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    &__content {
+        padding-left: calculateRem(32px);
+        padding-right: calculateRem(32px);
+    }
+
+    .ibexa-content-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: calculateRem(24px);
+
+        &__name {
+            margin-bottom: calculateRem(8px);
+            color: $ibexa-color-dark-300;
+            font-size: $ibexa-text-font-size-small;
+        }
+
+        &__value {
+            width: 100%;
+
+            .ibexa_string-field,
+            .ibexa_text-field {
+                display: inline-block;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .ibexa_country-field {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .ibexa-field-preview {
+        &--ibexa_object_relation_list {
+            .table {
+                margin-bottom: 0;
+            }
+        }
+
+        &__meta-title-row {
+            th {
+                font-weight: normal;
+                padding-bottom: calculateRem(24px);
+            }
+        }
+
+        &__meta-value-row {
+            td {
+                padding-bottom: calculateRem(10px);
+            }
+        }
+    }
+
+    &.container {
+        @media (min-width: 1921px) {
+            max-width: calculateRem(2000px);
+        }
+    }
+}

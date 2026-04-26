@@ -1,0 +1,38 @@
+services:
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.block.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\BlockFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.block_translation.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\BlockTranslationFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.block_translation.page_text:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\BlockTranslationFieldMapper\PageFieldMapper
+        arguments:
+            - '@netgen.ibexa_search_extra.page_indexing.field_mapper'
+            - '%netgen_ibexa_search_extra.page_indexing.enabled%'
+        tags:
+            - { name: netgen.ibexa_search_extra.elasticsearch.field_mapper.block_translation }
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.content.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\ContentFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.content_translation.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\ContentTranslationFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.location_translation.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\LocationTranslationFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.location.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\LocationFieldMapper\Aggregate
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.content.visibility:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\ContentFieldMapper\ContentVisibilityFieldMapper
+        tags:
+            - { name: netgen.ibexa_search_extra.elasticsearch.field_mapper.content }
+
+    netgen.ibexa_search_extra.elasticsearch.field_mapper.location.visibility:
+        class: Netgen\IbexaSearchExtra\Core\Search\Elasticsearch\DocumentMapper\LocationFieldMapper\LocationVisibilityFieldMapper
+        arguments:
+            - '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+        tags:
+            - { name: netgen.ibexa_search_extra.elasticsearch.field_mapper.location }

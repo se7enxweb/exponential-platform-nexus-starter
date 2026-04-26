@@ -1,0 +1,282 @@
+<?php
+
+namespace Kaliop\IbexaMigrationBundle\Core\Executor;
+
+use Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectStateGroup;
+use Kaliop\IbexaMigrationBundle\API\Collection\ObjectStateGroupCollection;
+use Kaliop\IbexaMigrationBundle\API\Exception\InvalidStepDefinitionException;
+use Kaliop\IbexaMigrationBundle\API\Exception\MigrationBundleException;
+use Kaliop\IbexaMigrationBundle\API\EnumerableMatcherInterface;
+use Kaliop\IbexaMigrationBundle\API\MigrationGeneratorInterface;
+use Kaliop\IbexaMigrationBundle\Core\Matcher\ObjectStateGroupMatcher;
+
+/**
+ * Handles object-state-group migrations.
+ */
+class ObjectStateGroupManager extends RepositoryExecutor implements MigrationGeneratorInterface, EnumerableMatcherInterface
+{
+    /**
+     * @var array
+     */
+    protected $supportedStepTypes = array('object_state_group');
+    protected $supportedActions = array('create', 'load', 'update', 'delete');
+
+    /**
+     * @var ObjectStateGroupMatcher
+     */
+    protected $objectStateGroupMatcher;
+
+    /**
+     * @param ObjectStateGroupMatcher $objectStateGroupMatcher
+     */
+    public function __construct(ObjectStateGroupMatcher $objectStateGroupMatcher)
+    {
+        $this->objectStateGroupMatcher = $objectStateGroupMatcher;
+    }
+
+    /**
+     * Handles the create step of object state group migrations
+     */
+    protected function create($step)
+    {
+        foreach (array('names', 'identifier') as $key) {
+            if (!isset($step->dsl[$key])) {
+                throw new InvalidStepDefinitionException("The '$key' key is missing in a object state group creation definition");
+            }
+        }
+
+        $objectStateService = $this->repository->getObjectStateService();
+
+        $objectStateGroupIdentifier = $this->resolveReference($step->dsl['identifier']);
+        $objectStateGroupCreateStruct = $objectStateService->newObjectStateGroupCreateStruct($objectStateGroupIdentifier);
+        $objectStateGroupCreateStruct->defaultLanguageCode = $this->getLanguageCode($step); // was: self::DEFAULT_LANGUAGE_CODE;
+
+        foreach ($step->dsl['names'] as $languageCode => $name) {
+            $objectStateGroupCreateStruct->names[$languageCode] = $name;
+        }
+        if (isset($step->dsl['descriptions'])) {
+            foreach ($step->dsl['descriptions'] as $languageCode => $description) {
+                $objectStateGroupCreateStruct->descriptions[$languageCode] = $description;
+            }
+        }
+
+        $objectStateGroup = $objectStateService->createObjectStateGroup($objectStateGroupCreateStruct);
+
+        $this->setReferences($objectStateGroup, $step);
+
+        return $objectStateGroup;
+    }
+
+    protected function load($step)
+    {
+        $groupsCollection = $this->matchObjectStateGroups('load', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        $this->setReferences($groupsCollection, $step);
+
+        return $groupsCollection;
+    }
+
+    /**
+     * Handles the update step of object state group migrations
+     *
+     * @todo add support for defaultLanguageCode
+     */
+    protected function update($step)
+    {
+        $objectStateService = $this->repository->getObjectStateService();
+
+        $groupsCollection = $this->matchObjectStateGroups('update', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        if (count($groupsCollection) > 1 && isset($step->dsl['identifier'])) {
+            throw new MigrationBundleException("Can not execute Object State Group update because multiple groups match, and an identifier is specified in the dsl.");
+        }
+
+        foreach ($groupsCollection as $objectStateGroup) {
+            $objectStateGroupUpdateStruct = $objectStateService->newObjectStateGroupUpdateStruct();
+
+            if (isset($step->dsl['identifier'])) {
+                $objectStateGroupUpdateStruct->identifier = $this->resolveReference($step->dsl['identifier']);
+            }
+            if (isset($step->dsl['names'])) {
+                foreach ($step->dsl['names'] as $languageCode => $name) {
+                    $objectStateGroupUpdateStruct->names[$languageCode] = $name;
+                }
+            }
+            if (isset($step->dsl['descriptions'])) {
+                foreach ($step->dsl['descriptions'] as $languageCode => $description) {
+                    $objectStateGroupUpdateStruct->descriptions[$languageCode] = $description;
+                }
+            }
+            $objectStateGroup = $objectStateService->updateObjectStateGroup($objectStateGroup, $objectStateGroupUpdateStruct);
+
+            $this->setReferences($objectStateGroup, $step);
+        }
+
+        return $groupsCollection;
+    }
+
+    /**
+     * Handles the delete step of object state group migrations
+     */
+    protected function delete($step)
+    {
+        $groupsCollection = $this->matchObjectStateGroups('delete', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        $this->setReferences($groupsCollection, $step);
+
+        $objectStateService = $this->repository->getObjectStateService();
+
+        foreach ($groupsCollection as $objectStateGroup) {
+            $objectStateService->deleteObjectStateGroup($objectStateGroup);
+        }
+
+        return $groupsCollection;
+    }
+
+    /**
+     * @param string $action
+     * @return ObjectStateGroupCollection
+     * @throws \Exception
+     */
+    protected function matchObjectStateGroups($action, $step)
+    {
+        if (!isset($step->dsl['match'])) {
+            throw new InvalidStepDefinitionException("A match condition is required to $action an object state group");
+        }
+
+        // convert the references passed in the match
+        $match = $this->resolveReferencesRecursively($step->dsl['match']);
+
+        $tolerateMisses = isset($step->dsl['match_tolerate_misses']) ? $this->resolveReference($step->dsl['match_tolerate_misses']) : false;
+
+        return $this->objectStateGroupMatcher->match($match, $tolerateMisses);
+    }
+
+    /**
+     * @param ObjectStateGroup $objectStateGroup
+     * @param array $references the definitions of the references to set
+     * @throws InvalidStepDefinitionException
+     * @return array key: the reference names, values: the reference values
+     */
+    protected function getReferencesValues($objectStateGroup, array $references, $step)
+    {
+        $refs = array();
+
+        foreach ($references as $key => $reference) {
+            $reference = $this->parseReferenceDefinition($key, $reference);
+            switch ($reference['attribute']) {
+                case 'object_state_group_id':
+                case 'id':
+                    $value = $objectStateGroup->id;
+                    break;
+                case 'object_state_group_identifier':
+                case 'identifier':
+                    $value = $objectStateGroup->identifier;
+                    break;
+                default:
+                    throw new InvalidStepDefinitionException('Object State Group Manager does not support setting references for attribute ' . $reference['attribute']);
+            }
+
+            $refs[$reference['identifier']] = $value;
+        }
+
+        return $refs;
+    }
+
+    /**
+     * @param array $matchCondition
+     * @param string $mode
+     * @param array $context
+     * @throws \Exception
+     * @return array
+     */
+    public function generateMigration(array $matchConditions, $mode, array $context = array())
+    {
+        $data = array();
+        $currentUser = $this->authenticateUserByContext($context);
+        try {
+            $objectStateGroupCollection = $this->objectStateGroupMatcher->match($matchConditions);
+
+            /** @var \Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectStateGroup $objectStateGroup */
+            foreach ($objectStateGroupCollection as $objectStateGroup) {
+
+                $groupData = array(
+                    'type' => reset($this->supportedStepTypes),
+                    'mode' => $mode,
+                );
+
+                switch ($mode) {
+                    case 'create':
+                        $groupData = array_merge(
+                            $groupData,
+                            array(
+                                'identifier' => $objectStateGroup->identifier,
+                            )
+                        );
+                        break;
+                    case 'update':
+                        $groupData = array_merge(
+                            $groupData,
+                            array(
+                                'match' => array(
+                                    ObjectStateGroupMatcher::MATCH_OBJECTSTATEGROUP_IDENTIFIER => $objectStateGroup->identifier
+                                ),
+                                'identifier' => $objectStateGroup->identifier,
+                            )
+                        );
+                        break;
+                    case 'delete':
+                        $groupData = array_merge(
+                            $groupData,
+                            array(
+                                'match' => array(
+                                    ObjectStateGroupMatcher::MATCH_OBJECTSTATEGROUP_IDENTIFIER => $objectStateGroup->identifier
+                                )
+                            )
+                        );
+                        break;
+                    default:
+                        throw new InvalidStepDefinitionException("Executor 'object_state_group' doesn't support mode '$mode'");
+                }
+
+                if ($mode != 'delete') {
+                    $names = array();
+                    $descriptions = array();
+                    foreach ($objectStateGroup->languageCodes as $languageCode) {
+                        $names[$languageCode] =  $objectStateGroup->getName($languageCode);
+                    }
+                    foreach ($objectStateGroup->languageCodes as $languageCode) {
+                        $descriptions[$languageCode] =  $objectStateGroup->getDescription($languageCode);
+                    }
+                    $groupData = array_merge(
+                        $groupData,
+                        array(
+                            'names' => $names,
+                            'descriptions' => $descriptions,
+                        )
+                    );
+                }
+
+                $data[] = $groupData;
+            }
+        } finally {
+            $this->authenticateUserByReference($currentUser);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function listAllowedConditions()
+    {
+        return $this->objectStateGroupMatcher->listAllowedConditions();
+    }
+}

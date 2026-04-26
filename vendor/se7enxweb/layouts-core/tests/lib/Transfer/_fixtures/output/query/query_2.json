@@ -1,0 +1,21 @@
+{
+    "id": "0303abc4-c894-59b5-ba95-5cf330b99c66",
+    "is_translatable": true,
+    "is_always_available": true,
+    "main_locale": "en",
+    "available_locales": [
+        "en",
+        "hr"
+    ],
+    "parameters": {
+        "en": {
+            "param": null,
+            "param2": null
+        },
+        "hr": {
+            "param": null,
+            "param2": null
+        }
+    },
+    "query_type": "test_query_type"
+}

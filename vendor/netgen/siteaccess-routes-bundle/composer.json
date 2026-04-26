@@ -1,0 +1,45 @@
+{
+    "name": "netgen/siteaccess-routes-bundle",
+    "description": "Netgen Siteaccess Routes Bundle is an Ibexa Platform bundle which allows you to specify in which siteaccesses or siteaccess groups can a route be used",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "ibexa",
+        "netgen",
+        "siteaccess-routes-bundle",
+        "siteaccess"
+    ],
+    "homepage": "https://github.com/netgen/NetgenSiteAccessRoutesBundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "ibexa/core": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\SiteAccessRoutesBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Bundle\\SiteAccessRoutesBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.x-dev"
+        }
+    }
+}

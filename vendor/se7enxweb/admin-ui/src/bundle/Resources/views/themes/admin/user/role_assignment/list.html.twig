@@ -1,0 +1,133 @@
+{% form_theme form_role_assignments_delete '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_role' %}
+
+<section>
+    {% set body_rows = [] %}
+    {% for role_assignment in pager.currentPageResults %}
+        {% set body_row_cols = [] %}
+
+        {% set col_raw %}
+            {% if can_assign %}
+                {{ form_widget(form_role_assignments_delete.role_assignments[role_assignment.id]) }}
+            {% else %}
+                {% do form_role_assignments_delete.role_assignments.setRendered %}
+            {% endif %}
+        {% endset %}
+        {% set body_row_cols = body_row_cols|merge([{
+            has_checkbox: true,
+            content: col_raw,
+            raw: true,
+        }]) %}
+
+        {% set content %}
+            {% set assignment_link_content = role_assignment.usergroup is defined ? role_assignment.usergroup : role_assignment.user %}
+            <a href="{{ ibexa_url(assignment_link_content) }}">
+                {{ ibexa_content_name(assignment_link_content)|escape('html') }}
+            </a>
+        {% endset %}
+
+        {% set body_row_cols = body_row_cols|merge([
+            {
+                content: content,
+                raw: true,
+            },
+        ]) %}
+
+        {% set col_raw %}
+            {%- set limitation = role_assignment.rolelimitation -%}
+            {%- if limitation -%}
+                <ul class="list-unstyled m-0">
+                    <li>
+                        <span class="font-weight-bold" title="{{ 'policy.limitation.identifier_tooltip' | trans({'%identifier%': limitation.identifier})|desc('"%identifier%" Limitation') }}">
+                            {{ ('policy.limitation.identifier.' ~ limitation.identifier|lower)|trans({'%identifier%': limitation.identifier}, 'ibexa_content_forms_policies')|desc('%identifier%') }}:
+                        </span>
+                        {{ ibexa_render_limitation_value(limitation) }}
+                    </li>
+                </ul>
+            {%- else -%}
+                {{- 'policy.limitation.none'|trans|desc('None') -}}
+            {%- endif -%}
+        {% endset %}
+        {% set body_row_cols = body_row_cols|merge([{
+            content: col_raw,
+            raw: true,
+        }]) %}
+
+        {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+    {% endfor %}
+
+    {% embed '@ibexadesign/ui/component/table/table.html.twig' with {
+        headline: 'role_assignment.view.list.header'|trans|desc('Users and Groups'),
+        head_cols: [
+            { has_checkbox: true },
+            { content: 'role_assignment.view.list.panel.assignments.column.user_group'|trans|desc('User/Group') },
+            { content: 'role_assignment.view.list.panel.assignments.column.limitation'|trans|desc('Limitation') },
+        ],
+        body_rows,
+        empty_table_info_text: 'role_assignment.view.list.no_assignments.info'|trans|desc('Add users assignment'),
+        empty_table_action_text: 'role_assignment.view.list.no_assignments.action'|trans|desc('Select assignments to effectively manage user roles access by adding them to specific groups.'),
+    } %}
+        {% block header %}
+            {% embed '@ibexadesign/ui/component/table/table_header.html.twig' %}
+                {% trans_default_domain 'ibexa_role' %}
+
+                {% block actions %}
+                    {% if can_assign %}
+                        <a
+                            href="{{ path('ibexa.role_assignment.create', {roleId: role.id}) }}"
+                            class="btn ibexa-btn ibexa-btn--tertiary ibexa-btn--small">
+                            <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--relations">
+                                <use xlink:href="{{ ibexa_icon_path('assign-user') }}"></use>
+                            </svg>
+                            <span class="ibexa-btn__label">
+                                {{ 'role_assignment.view.list.action.add'|trans|desc('Assign to Users/Groups') }}
+                            </span>
+                        </a>
+                        {% set modal_data_target = 'delete-role-assignments-modal' %}
+                        <button
+                            id="delete-role-assignments"
+                            type="button"
+                            class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--small"
+                            disabled
+                            data-bs-toggle="modal"
+                            data-bs-target="#{{ modal_data_target }}"
+                        >
+                            <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--trash">
+                                <use xlink:href="{{ ibexa_icon_path('trash') }}"></use>
+                            </svg>
+                            <span class="ibexa-btn__label">
+                                {{ 'role_assignment.view.list.action.delete'|trans|desc('Unassign') }}
+                            </span>
+                        </button>
+                        {% include '@ibexadesign/ui/modal/bulk_delete_confirmation.html.twig' with {
+                            'id': modal_data_target,
+                            'message': 'role_assignments.modal.message'|trans|desc('Do you want to unassign the Users/Groups?'),
+                            'data_click': '#role_assignments_delete_delete',
+                            'delete_label': 'role_assignments.modal.delete_label'|trans|desc('Unassign'),
+                        }%}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+        {% block between_header_and_table %}
+            {{ form_start(form_role_assignments_delete, {
+                'action': path('ibexa.role_assignment.bulk_delete', {"roleId": role.id} ),
+                'attr': { 'class': 'ibexa-toggle-btn-state', 'data-toggle-button-id': '#delete-role-assignments' }
+            }) }}
+        {% endblock %}
+    {% endembed %}
+
+    {{ form_end(form_role_assignments_delete) }}
+
+    {% if pager.haveToPaginate %}
+        {% include '@ibexadesign/ui/pagination.html.twig' with {
+            'pager': pager,
+            'paginaton_params' : {
+                'routeName': route_name,
+                'routeParams': {'_fragment': 'ibexa-tab-users-and-groups', 'roleId': role.id},
+                'pageParameter': '[assignmentPage]',
+            }
+        } %}
+    {% endif %}
+</section>

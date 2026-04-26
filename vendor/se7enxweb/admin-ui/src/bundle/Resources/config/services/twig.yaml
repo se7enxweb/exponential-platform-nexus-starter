@@ -1,0 +1,39 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\FieldEditRenderingExtension:
+        arguments:
+            - '@ibexa.templating.field_block_renderer'
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\FieldGroupRenderingExtension:
+        arguments:
+            - '@Ibexa\Core\Helper\FieldsGroups\FieldsGroupsList'
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\FormatIntervalExtension:
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\LimitationValueRenderingExtension:
+        arguments:
+            - '@Ibexa\AdminUi\Limitation\Templating\LimitationBlockRenderer'
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\FocusModeExtension:
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\UserProfileExtension:
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\LocationExtension:
+        tags:
+            - { name: twig.extension }

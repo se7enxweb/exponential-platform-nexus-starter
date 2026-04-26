@@ -1,0 +1,7 @@
+{% if target.valueObject is not null %}
+    {% set path = nglayouts_ibexa_location_path(target.valueObject) %}
+
+    {{ path != null ? path|join(' / ') : '(INVALID LOCATION)' }}
+{% else %}
+    {{ '(INVALID LOCATION)' }}
+{% endif %}

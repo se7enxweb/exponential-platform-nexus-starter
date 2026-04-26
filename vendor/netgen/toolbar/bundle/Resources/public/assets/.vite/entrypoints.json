@@ -1,0 +1,25 @@
+{
+  "base": "/build/",
+  "entryPoints": {
+    "toolbar": {
+      "css": [
+        "/build/toolbar.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/build/toolbar.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "6.4.3",
+    6,
+    4,
+    3
+  ],
+  "viteServer": null
+}

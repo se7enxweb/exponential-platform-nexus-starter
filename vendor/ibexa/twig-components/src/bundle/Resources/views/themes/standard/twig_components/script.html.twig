@@ -1,0 +1,19 @@
+<script
+        type="{{ type }}"
+        src="{{ src }}"
+        {%- if async is not empty %}
+            async="{{ async }}"
+        {% endif -%}
+
+        {%- if defer is not empty %}
+            defer="{{ defer }}"
+        {% endif -%}
+
+        {%- if crossorigin is not empty %}
+            crossorigin="{{ crossorigin }}"
+        {% endif -%}
+
+        {%- if integrity is not empty %}
+            integrity="{{ integrity }}"
+        {% endif -%}
+></script>

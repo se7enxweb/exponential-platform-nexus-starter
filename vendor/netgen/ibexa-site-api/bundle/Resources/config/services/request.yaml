@@ -1,0 +1,14 @@
+services:
+    netgen.ibexa_site_api.value_resolver.content:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Request\ValueResolver\ContentValueResolver
+        arguments:
+            - '@netgen.ibexa_site_api.load_service'
+        tags:
+            - { name: 'controller.argument_value_resolver', priority: 100 }
+
+    netgen.ibexa_site_api.value_resolver.location:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Request\ValueResolver\LocationValueResolver
+        arguments:
+            - '@netgen.ibexa_site_api.load_service'
+        tags:
+            - { name: 'controller.argument_value_resolver', priority: 100 }

@@ -1,0 +1,123 @@
+@use "../variables" as *;
+@use "../functions" as *;
+@use "../vendor/rfs" as *;
+@use "sass:meta";
+@use "sass:map" as sass-map;
+@use "sass:list";
+@use "sass:string" as sass-string;
+
+// Utility generator
+// Used to generate utilities & print utilities
+@mixin generate-utility($utility, $infix: "", $is-rfs-media-query: false) {
+  $values: sass-map.get($utility, values);
+
+  // If the values are a list or string, convert it into a map
+  @if meta.type-of($values) == "string" or meta.type-of(list.nth($values, 1)) != "list" {
+    $values: list.zip($values, $values);
+  }
+
+  @each $key, $value in $values {
+    $properties: sass-map.get($utility, property);
+
+    // Multiple properties are possible, for example with vertical or horizontal margins or paddings
+    @if meta.type-of($properties) == "string" {
+      $properties: list.append((), $properties);
+    }
+
+    // Use custom class if present
+    $property-class: list.nth($properties, 1);
+    @if sass-map.has-key($utility, class) { $property-class: sass-map.get($utility, class); }
+    @if $property-class == null { $property-class: ""; }
+
+    // Use custom CSS variable name if present, otherwise default to `class`
+    $css-variable-name: sass-map.get($utility, class);
+    @if sass-map.has-key($utility, css-variable-name) { $css-variable-name: sass-map.get($utility, css-variable-name); }
+
+    // State params to generate pseudo-classes
+    $state: ();
+    @if sass-map.has-key($utility, state) { $state: sass-map.get($utility, state); }
+
+    @if $property-class == "" and sass-string.slice($infix, 1, 1) == "-" { $infix: sass-string.slice($infix, 2); }
+
+    // Don't prefix if value key is null (e.g. with shadow class)
+    $property-class-modifier: "";
+    @if $key {
+      @if $property-class == "" and $infix == "" {
+        $property-class-modifier: "" + $key;
+      } @else {
+        $property-class-modifier: "-" + $key;
+      }
+    }
+
+    @if sass-map.get($utility, rfs) {
+      // Inside the media query
+      @if $is-rfs-media-query {
+        $val: rfs-value($value);
+
+        // Do not render anything if fluid and non fluid values are the same
+        @if $val == rfs-fluid-value($value) {
+          $value: null;
+        } @else {
+          $value: $val;
+        }
+      }
+      @else {
+        $value: rfs-fluid-value($value);
+      }
+    }
+
+    $is-css-var: sass-map.get($utility, css-var);
+    $is-local-vars: sass-map.get($utility, local-vars);
+    $is-rtl: sass-map.get($utility, rtl);
+
+    @if $value != null {
+      @if $is-rtl == false {
+        /* rtl:begin:remove */
+      }
+
+      @if $is-css-var {
+        .#{$property-class + $infix + $property-class-modifier} {
+          --#{$prefix}#{$css-variable-name}: #{$value};
+        }
+
+        @each $pseudo in $state {
+          .#{$property-class + $infix + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
+            --#{$prefix}#{$css-variable-name}: #{$value};
+          }
+        }
+      } @else {
+        .#{$property-class + $infix + $property-class-modifier} {
+          @each $property in $properties {
+            @if $is-local-vars {
+              @each $local-var, $variable in $is-local-vars {
+                --#{$prefix}#{$local-var}: #{$variable};
+              }
+            }
+            $important: null;
+            @if $enable-important-utilities { $important: !important; }
+            #{$property}: $value $important;
+          }
+        }
+
+        @each $pseudo in $state {
+          .#{$property-class + $infix + $property-class-modifier}-#{$pseudo}:#{$pseudo} {
+            @each $property in $properties {
+              @if $is-local-vars {
+                @each $local-var, $variable in $is-local-vars {
+                  --#{$prefix}#{$local-var}: #{$variable};
+                }
+              }
+              $important: null;
+              @if $enable-important-utilities { $important: !important; }
+              #{$property}: $value $important;
+            }
+          }
+        }
+      }
+
+      @if $is-rtl == false {
+        /* rtl:end:remove */
+      }
+    }
+  }
+}

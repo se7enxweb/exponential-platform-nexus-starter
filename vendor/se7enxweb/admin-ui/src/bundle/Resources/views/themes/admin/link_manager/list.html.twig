@@ -1,0 +1,91 @@
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_linkmanager' %}
+
+{%- block content -%}
+    <section>
+        {{ form_start(form, {'attr': {'class': 'ibexa-search-links-form'}}) }}
+            <div class="ibexa-search-links-form__input-wrapper">
+                {{ form_widget(form.searchQuery, { attr: {
+                    'placeholder': 'url.search.placeholder'|trans|desc('Search for URLs'),
+                }}) }}
+            </div>
+            <div class="ibexa-search-links-form__status-wrapper">
+                {{ form_label(form.status) }}
+                {{ form_widget(form.status) }}
+            </div>
+        {{ form_end(form) }}
+    </section>
+
+    <section>
+        {% set body_rows = [] %}
+        {% for url in urls %}
+            {% set body_row_cols = [] %}
+            {% set edit_url = path('ibexa.link_manager.edit', { urlId: url.id }) %}
+            {% set view_url = path('ibexa.link_manager.view', { urlId: url.id }) %}
+
+            {% set col_raw %}
+                <a href="{{ view_url }}">{{ url.url|u.truncate(50) }}</a>
+                <a href="{{ url.url }}" target="_blank">
+                    <svg class="ibexa-icon ibexa-icon--small-medium">
+                        <use xlink:href="{{ ibexa_icon_path('open-newtab') }}"></use>
+                    </svg>
+                </a>
+            {% endset %}
+            {% set body_row_cols = body_row_cols|merge([{
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set body_row_cols = body_row_cols|merge([
+                { content: url.isValid ? 'url.status.valid'|trans : 'url.status.invalid'|trans },
+                { content: url.lastChecked ? url.lastChecked|ibexa_full_datetime : 'Never' },
+                { content: url.modified|ibexa_full_datetime },
+            ]) %}
+
+            {% set col_raw %}
+                {% if can_edit %}
+                    <a
+                        href="{{ edit_url }}"
+                        class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--no-text"
+                        title="{{ 'url.action.edit'|trans|desc('Edit') }}"
+                    >
+                        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--edit">
+                            <use xlink:href="{{ ibexa_icon_path('edit') }}"></use>
+                        </svg>
+                    </a>
+                {% endif %}
+            {% endset %}
+            {% set body_row_cols = body_row_cols|merge([{
+                has_action_btns: true,
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+        {% endfor %}
+
+        {% include '@ibexadesign/ui/component/table/table.html.twig' with {
+            headline: 'url.list.title'|trans({ '%count%': urls.count })|desc('Links (%count%)'),
+            head_cols: [
+                { content: 'url.label.address'|trans|desc('Address') },
+                { content: 'url.label.status'|trans|desc('Status') },
+                { content: 'url.label.last_checked'|trans|desc('Last checked') },
+                { content: 'url.label.modified'|trans|desc('Modified') },
+                { },
+            ],
+            body_rows,
+            empty_table_info_text: 'url.list.no_urls'|trans|desc('No URLs'),
+        } %}
+
+        {% if urls.haveToPaginate %}
+            {% include '@ibexadesign/ui/pagination.html.twig' with {
+                'pager': urls
+            } %}
+        {% endif %}
+    </section>
+{%- endblock -%}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-link-manager-list-js', null, 'ibexa') }}
+{% endblock %}

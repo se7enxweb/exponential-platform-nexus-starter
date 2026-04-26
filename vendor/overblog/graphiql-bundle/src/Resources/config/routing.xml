@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="overblog_graphiql_endpoint" path="/graphiql">
+        <default key="_controller">Overblog\GraphiQLBundle\Controller\GraphiQLController::indexAction</default>
+    </route>
+
+    <route id="overblog_graphiql_endpoint_multiple" path="/graphiql/{schemaName}">
+        <default key="_controller">Overblog\GraphiQLBundle\Controller\GraphiQLController::indexAction</default>
+    </route>
+</routes>

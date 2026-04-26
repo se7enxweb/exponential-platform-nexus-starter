@@ -1,0 +1,13 @@
+services:
+    Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\Trash\RecoverHandler:
+        arguments:
+            - '@Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\SubtreeIndexer'
+            - '@ibexa.spi.search'
+        tags:
+            - { name: messenger.message_handler }
+
+    Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\MessageHandler\Search\Trash\TrashHandler:
+        arguments:
+            - '@ibexa.spi.search'
+        tags:
+            - { name: messenger.message_handler }

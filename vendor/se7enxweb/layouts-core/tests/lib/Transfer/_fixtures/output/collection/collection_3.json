@@ -1,0 +1,22 @@
+{
+    "id": "da050624-8ae0-5fb9-ae85-092bf8242b89",
+    "offset": 4,
+    "limit": 2,
+    "is_translatable": true,
+    "is_always_available": true,
+    "main_locale": "en",
+    "available_locales": [
+        "en",
+        "hr"
+    ],
+    "items": [
+        {"visited_key": "visited_value"},
+        {"visited_key": "visited_value"},
+        {"visited_key": "visited_value"}
+    ],
+    "slots": [
+        {"visited_key": "visited_value"},
+        {"visited_key": "visited_value"}
+    ],
+    "query": {"visited_key": "visited_value"}
+}

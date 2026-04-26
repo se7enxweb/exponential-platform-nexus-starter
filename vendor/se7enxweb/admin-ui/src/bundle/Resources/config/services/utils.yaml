@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Util\:
+        resource: "../../../../lib/Util"
+
+    Ibexa\AdminUi\Util\ContentTypeFieldsExpressionParserInterface:
+        alias: Ibexa\AdminUi\Util\ContentTypeFieldsExpressionParser
+
+    Ibexa\AdminUi\Util\ContentTypeFieldsExpressionParser: ~
+
+    Ibexa\AdminUi\Util\ContentTypeFieldsExtractorInterface:
+        alias: Ibexa\AdminUi\Util\ContentTypeFieldsExtractor
+
+    Ibexa\AdminUi\Util\ContentTypeFieldsExtractor: ~

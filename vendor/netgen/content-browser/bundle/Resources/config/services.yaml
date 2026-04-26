@@ -1,0 +1,215 @@
+services:
+    # Config services
+
+    netgen_content_browser.config:
+        synthetic: true
+        public: true
+
+    # API controllers
+
+    netgen_content_browser.controller.base:
+        class: Symfony\Bundle\FrameworkBundle\Controller\AbstractController
+        abstract: true
+        calls:
+            - setContainer: ["@Psr\\Container\\ContainerInterface"]
+
+    netgen_content_browser.controller.api.load_config:
+        class: Netgen\Bundle\ContentBrowserBundle\Controller\API\LoadConfig
+        parent: netgen_content_browser.controller.base
+        arguments:
+            - "@netgen_content_browser.backend"
+            - "@netgen_content_browser.config"
+            - "@netgen_content_browser.item_serializer"
+            - "@translator"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_content_browser.controller.api.load_sub_locations:
+        class: Netgen\Bundle\ContentBrowserBundle\Controller\API\LoadSubLocations
+        parent: netgen_content_browser.controller.base
+        arguments:
+            - "@netgen_content_browser.backend"
+            - "@netgen_content_browser.item_serializer"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_content_browser.controller.api.load_sub_items:
+        class: Netgen\Bundle\ContentBrowserBundle\Controller\API\LoadSubItems
+        parent: netgen_content_browser.controller.base
+        arguments:
+            - "@netgen_content_browser.backend"
+            - "@netgen_content_browser.item_serializer"
+            - "@netgen_content_browser.pager.factory"
+            - "%netgen_content_browser.browser.default_limit%"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_content_browser.controller.api.search_items:
+        class: Netgen\Bundle\ContentBrowserBundle\Controller\API\SearchItems
+        parent: netgen_content_browser.controller.base
+        arguments:
+            - "@netgen_content_browser.backend"
+            - "@netgen_content_browser.item_serializer"
+            - "@netgen_content_browser.pager.factory"
+            - "%netgen_content_browser.browser.default_limit%"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_content_browser.controller.api.render_item:
+        class: Netgen\Bundle\ContentBrowserBundle\Controller\API\RenderItem
+        parent: netgen_content_browser.controller.base
+        arguments:
+            - "@netgen_content_browser.config"
+            - "@netgen_content_browser.item_renderer"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    # Event listeners
+
+    netgen_content_browser.event_listener.set_is_api_request:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\SetIsApiRequestListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.set_config:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\SetConfigListener
+        arguments:
+            - "@service_container"
+            - "@netgen_content_browser.registry.config"
+            - "@event_dispatcher"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.set_backend:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\SetBackendListener
+        arguments:
+            - "@service_container"
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.throwable_conversion:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\ThrowableConversionListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.throwable_serializer:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\ThrowableSerializerListener
+        arguments:
+            - "%kernel.debug%"
+            - "@?logger"
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: ngcb }
+
+    # Registries
+
+    netgen_content_browser.registry.backend:
+        class: Netgen\ContentBrowser\Registry\BackendRegistry
+        arguments:
+            - !abstract "Set in ItemTypePass"
+
+    netgen_content_browser.registry.config:
+        class: Netgen\ContentBrowser\Registry\ConfigRegistry
+        arguments:
+            - !abstract "Set in ItemTypePass"
+
+    # Main services
+
+    netgen_content_browser.backend:
+        synthetic: true
+        public: true
+
+    netgen_content_browser.item_serializer:
+        class: Netgen\ContentBrowser\Item\Serializer\ItemSerializer
+        arguments:
+            - "@netgen_content_browser.backend"
+            - "@netgen_content_browser.column_provider"
+
+    netgen_content_browser.item_renderer:
+        class: Netgen\ContentBrowser\Item\Renderer\ItemRenderer
+        arguments:
+            - "@twig"
+            - "@?logger"
+        tags:
+            - { name: monolog.logger, channel: ngcb }
+
+    netgen_content_browser.column_provider:
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnProvider
+        arguments:
+            - "@netgen_content_browser.item_renderer"
+            - "@netgen_content_browser.config"
+            - !tagged_locator { tag: netgen_content_browser.column_value_provider, index_by: identifier }
+
+    # Form types
+
+    netgen_content_browser.form.type.content_browser:
+        class: Netgen\ContentBrowser\Form\Type\ContentBrowserType
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: form.type }
+
+    netgen_content_browser.form.type.content_browser_integer:
+        class: Netgen\ContentBrowser\Form\Type\ContentBrowserIntegerType
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: form.type }
+
+    netgen_content_browser.form.type.content_browser_dynamic:
+        class: Netgen\ContentBrowser\Form\Type\ContentBrowserDynamicType
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+            - "@netgen_content_browser.registry.config"
+        tags:
+            - { name: form.type }
+
+    netgen_content_browser.form.type.content_browser_multiple:
+        class: Netgen\ContentBrowser\Form\Type\ContentBrowserMultipleType
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: form.type }
+
+    netgen_content_browser.form.type.content_browser_multiple_integer:
+        class: Netgen\ContentBrowser\Form\Type\ContentBrowserMultipleIntegerType
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: form.type }
+
+    # Value resolvers
+
+    netgen_content_browser.value_resolver.item:
+        class: Netgen\Bundle\ContentBrowserBundle\ValueResolver\ItemValueResolver
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: controller.argument_value_resolver }
+
+    netgen_content_browser.value_resolver.location:
+        class: Netgen\Bundle\ContentBrowserBundle\ValueResolver\LocationValueResolver
+        arguments:
+            - "@netgen_content_browser.registry.backend"
+        tags:
+            - { name: controller.argument_value_resolver }
+
+    # Column value providers
+
+    netgen_content_browser.column_value_provider.name:
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\Name
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: name }
+
+    # Pager
+
+    netgen_content_browser.pager.factory:
+        class: Netgen\ContentBrowser\Pager\PagerFactory
+        arguments:
+            - "%netgen_content_browser.browser.max_limit%"

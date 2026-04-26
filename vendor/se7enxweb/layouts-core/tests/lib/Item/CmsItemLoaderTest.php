@@ -1,0 +1,137 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Item;
+
+use Netgen\Layouts\Exception\Item\ItemException;
+use Netgen\Layouts\Item\CmsItem;
+use Netgen\Layouts\Item\CmsItemBuilderInterface;
+use Netgen\Layouts\Item\CmsItemLoader;
+use Netgen\Layouts\Item\NullCmsItem;
+use Netgen\Layouts\Tests\Item\Stubs\Value;
+use Netgen\Layouts\Tests\Item\Stubs\ValueLoader;
+use Netgen\Layouts\Tests\Stubs\Container;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use stdClass;
+
+#[CoversClass(CmsItemLoader::class)]
+final class CmsItemLoaderTest extends TestCase
+{
+    private Stub&CmsItemBuilderInterface $cmsItemBuilderStub;
+
+    private CmsItemLoader $cmsItemLoader;
+
+    protected function setUp(): void
+    {
+        $this->cmsItemBuilderStub = self::createStub(CmsItemBuilderInterface::class);
+    }
+
+    public function testLoad(): void
+    {
+        $item = CmsItem::fromArray(
+            [
+                'value' => 42,
+                'remoteId' => 'abc',
+                'name' => 'Some value',
+                'valueType' => 'value',
+                'isVisible' => true,
+                'object' => new Value(42, 'abc'),
+            ],
+        );
+
+        $this->cmsItemLoader = new CmsItemLoader(
+            $this->cmsItemBuilderStub,
+            new Container(['value' => new ValueLoader(true)]),
+        );
+
+        $this->cmsItemBuilderStub
+            ->method('build')
+            ->willReturn($item);
+
+        self::assertSame($item, $this->cmsItemLoader->load(42, 'value'));
+    }
+
+    public function testLoadItemWithNoItem(): void
+    {
+        $this->cmsItemLoader = new CmsItemLoader(
+            $this->cmsItemBuilderStub,
+            new Container(['value' => new ValueLoader(false)]),
+        );
+
+        $loadedValue = $this->cmsItemLoader->load(42, 'value');
+
+        self::assertInstanceOf(NullCmsItem::class, $loadedValue);
+        self::assertSame('value', $loadedValue->valueType);
+    }
+
+    public function testLoadItemThrowsItemException(): void
+    {
+        $this->expectException(ItemException::class);
+        $this->expectExceptionMessage('Value loader for "value" value type does not exist.');
+
+        $this->cmsItemLoader = new CmsItemLoader($this->cmsItemBuilderStub, new Container());
+
+        $this->cmsItemLoader->load(42, 'value');
+    }
+
+    public function testLoadByRemoteId(): void
+    {
+        $item = CmsItem::fromArray(
+            [
+                'value' => 42,
+                'remoteId' => 'abc',
+                'name' => 'Some value',
+                'valueType' => 'value',
+                'isVisible' => true,
+                'object' => new Value(42, 'abc'),
+            ],
+        );
+
+        $this->cmsItemLoader = new CmsItemLoader(
+            $this->cmsItemBuilderStub,
+            new Container(['value' => new ValueLoader(true)]),
+        );
+
+        $this->cmsItemBuilderStub
+            ->method('build')
+            ->willReturn($item);
+
+        self::assertSame($item, $this->cmsItemLoader->loadByRemoteId(42, 'value'));
+    }
+
+    public function testLoadByRemoteIdItemThrowsItemExceptionWithNoItem(): void
+    {
+        $this->cmsItemLoader = new CmsItemLoader(
+            $this->cmsItemBuilderStub,
+            new Container(['value' => new ValueLoader(false)]),
+        );
+
+        $loadedValue = $this->cmsItemLoader->loadByRemoteId(42, 'value');
+
+        self::assertInstanceOf(NullCmsItem::class, $loadedValue);
+        self::assertSame('value', $loadedValue->valueType);
+    }
+
+    public function testLoadByRemoteIdItemThrowsItemExceptionWithNoLoader(): void
+    {
+        $this->expectException(ItemException::class);
+        $this->expectExceptionMessage('Value loader for "value" value type does not exist.');
+
+        $this->cmsItemLoader = new CmsItemLoader($this->cmsItemBuilderStub, new Container());
+
+        $this->cmsItemLoader->loadByRemoteId(42, 'value');
+    }
+
+    public function testLoadByRemoteIdItemThrowsItemExceptionWithInvalidLoader(): void
+    {
+        $this->expectException(ItemException::class);
+        $this->expectExceptionMessage('Value loader for "value" value type does not exist.');
+
+        $this->cmsItemLoader = new CmsItemLoader($this->cmsItemBuilderStub, new Container(['value' => new stdClass()]));
+
+        $this->cmsItemLoader->loadByRemoteId(42, 'value');
+    }
+}

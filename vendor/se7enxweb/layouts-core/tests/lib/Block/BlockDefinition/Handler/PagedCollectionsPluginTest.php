@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Block\BlockDefinition\Handler;
+
+use Netgen\Layouts\Block\BlockDefinition\Handler\PagedCollectionsBlockInterface;
+use Netgen\Layouts\Block\BlockDefinition\Handler\PagedCollectionsPlugin;
+use Netgen\Layouts\Parameters\ParameterBuilderFactory;
+use Netgen\Layouts\Parameters\ParameterType;
+use Netgen\Layouts\Parameters\Registry\ParameterTypeRegistry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+#[CoversClass(PagedCollectionsPlugin::class)]
+final class PagedCollectionsPluginTest extends TestCase
+{
+    private PagedCollectionsPlugin $plugin;
+
+    private ParameterBuilderFactory $parameterBuilderFactory;
+
+    protected function setUp(): void
+    {
+        $this->plugin = new PagedCollectionsPlugin(['load_more' => 'Load more'], ['group']);
+
+        $parameterTypeRegistry = new ParameterTypeRegistry(
+            [
+                new ParameterType\ChoiceType(),
+                new ParameterType\IntegerType(),
+                new ParameterType\BooleanType(),
+                new ParameterType\Compound\BooleanType(),
+            ],
+        );
+
+        $this->parameterBuilderFactory = new ParameterBuilderFactory(
+            $parameterTypeRegistry,
+        );
+    }
+
+    public function testGetExtendedHandlers(): void
+    {
+        self::assertSame(
+            [PagedCollectionsBlockInterface::class],
+            [...(function (): iterable { yield from $this->plugin::getExtendedHandlers(); })()],
+        );
+    }
+
+    public function testBuildParameters(): void
+    {
+        $builder = $this->parameterBuilderFactory->createParameterBuilder();
+        $this->plugin->buildParameters($builder);
+
+        self::assertCount(1, $builder);
+
+        self::assertTrue($builder->has('paged_collections:enabled'));
+        self::assertInstanceOf(ParameterType\Compound\BooleanType::class, $builder->get('paged_collections:enabled')->getType());
+        self::assertSame(['group'], $builder->get('paged_collections:enabled')->getGroups());
+        self::assertTrue($builder->get('paged_collections:enabled')->isTranslatable());
+
+        $compoundBuilder = $builder->get('paged_collections:enabled');
+
+        self::assertCount(3, $compoundBuilder);
+
+        self::assertTrue($compoundBuilder->has('paged_collections:type'));
+        self::assertInstanceOf(ParameterType\ChoiceType::class, $compoundBuilder->get('paged_collections:type')->getType());
+        self::assertSame(['group'], $compoundBuilder->get('paged_collections:type')->getGroups());
+        self::assertSame(['Load more' => 'load_more'], $compoundBuilder->get('paged_collections:type')->getOption('options'));
+        self::assertTrue($compoundBuilder->get('paged_collections:type')->isTranslatable());
+
+        self::assertTrue($compoundBuilder->has('paged_collections:max_pages'));
+        self::assertInstanceOf(ParameterType\IntegerType::class, $compoundBuilder->get('paged_collections:max_pages')->getType());
+        self::assertSame(['group'], $compoundBuilder->get('paged_collections:max_pages')->getGroups());
+        self::assertSame(1, $compoundBuilder->get('paged_collections:max_pages')->getOption('min'));
+        self::assertTrue($compoundBuilder->get('paged_collections:max_pages')->isTranslatable());
+
+        self::assertTrue($compoundBuilder->has('paged_collections:ajax_first'));
+        self::assertInstanceOf(ParameterType\BooleanType::class, $compoundBuilder->get('paged_collections:ajax_first')->getType());
+        self::assertSame(['group'], $compoundBuilder->get('paged_collections:ajax_first')->getGroups());
+        self::assertTrue($compoundBuilder->get('paged_collections:ajax_first')->isTranslatable());
+    }
+}

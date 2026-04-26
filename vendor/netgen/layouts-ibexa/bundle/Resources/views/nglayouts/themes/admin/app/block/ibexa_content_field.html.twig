@@ -1,0 +1,15 @@
+{% extends '@nglayouts_admin/app/block/block.html.twig' %}
+
+{% import '@NetgenLayoutsAdmin/app/parts/macros.html.twig' as macros %}
+
+{% trans_default_domain 'nglayouts_app' %}
+
+{% block content %}
+    {% set field_identifier = block.parameter('field_identifier') %}
+
+    {% if not field_identifier.isEmpty %}
+        {{ macros.info('block.info.ibexa_content_field'|trans({ '%field%': field_identifier.value }), 'icon-ibexa_content_field') }}
+    {% else %}
+        {{ macros.notice('block.notice.empty_ibexa_content_field'|trans) }}
+    {% endif %}
+{% endblock %}

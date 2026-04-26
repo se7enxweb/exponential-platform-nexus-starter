@@ -1,0 +1,16 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Ibexa\AdminUi\UI\Module\ContentTree\NodeFactory:
+        arguments:
+            $contentService: '@ibexa.api.service.content'
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+            $configResolver: '@ibexa.config.resolver'
+            $maxLocationIdsInSingleAggregation: '%ibexa.admin_ui.content_tree.node_factory.max_location_ids_in_single_aggregation%'
+
+    Ibexa\AdminUi\UI\Config\Provider\Module\ContentTree:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'contentTree' }

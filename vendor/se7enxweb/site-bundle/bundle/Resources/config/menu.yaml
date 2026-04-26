@@ -1,0 +1,75 @@
+services:
+    ngsite.menu.relation_list_menu_builder:
+        class: Netgen\Bundle\SiteBundle\Menu\RelationListMenuBuilder
+        arguments:
+            - "@ngsite.menu.factory.location"
+            - "@netgen.ibexa_site_api.load_service"
+            - "@netgen.ibexa_site_api.named_object.provider"
+            - "@?logger"
+        tags:
+            - { name: monolog.logger, channel: ngsite }
+
+    ngsite.menu.voter.location_path:
+        class: Netgen\Bundle\SiteBundle\Menu\Voter\LocationPathVoter
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: knp_menu.voter }
+
+    ngsite.menu.factory.location:
+        class: Netgen\Bundle\SiteBundle\Menu\Factory\LocationFactory
+        arguments:
+            - "@event_dispatcher"
+            - "@ngsite.menu.factory.location.extension.fallback"
+            - !tagged_iterator ngsite.menu.factory.location.extension
+
+    ngsite.menu.factory.location.extension.fallback:
+        class: Netgen\Bundle\SiteBundle\Menu\Factory\LocationFactory\FallbackExtension
+        arguments:
+            - "@router"
+
+    ngsite.menu.factory.location.extension.shortcut:
+        class: Netgen\Bundle\SiteBundle\Menu\Factory\LocationFactory\ShortcutExtension
+        arguments:
+            - "@router"
+            - "@request_stack"
+            - "@netgen.ibexa_site_api.load_service"
+            - "@?logger"
+        tags:
+            - { name: ngsite.menu.factory.location.extension, priority: 0 }
+            - { name: monolog.logger, channel: ngsite }
+
+    ngsite.menu.factory.location.extension.menu_item:
+        class: Netgen\Bundle\SiteBundle\Menu\Factory\LocationFactory\MenuItemExtension
+        arguments:
+            - "@router"
+            - "@request_stack"
+            - "@ibexa.config.resolver"
+            - "@ngsite.menu.factory.location.extension.children_builder"
+            - "@?logger"
+        tags:
+            - { name: ngsite.menu.factory.location.extension, priority: 0 }
+            - { name: monolog.logger, channel: ngsite }
+
+    ngsite.menu.factory.location.extension.children_builder:
+        class: Netgen\Bundle\SiteBundle\Menu\Factory\LocationFactory\ChildrenBuilder
+        arguments:
+            - "@netgen.ibexa_site_api.load_service"
+            - "@netgen.ibexa_site_api.filter_service"
+            - "@?logger"
+
+    ngsite.menu.main_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@ngsite.menu.relation_list_menu_builder", createRelationListMenu]
+        arguments:
+            - main_menu
+        tags:
+            - { name: knp_menu.menu, alias: ngsite_main_menu }
+
+    ngsite.menu.additional_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@ngsite.menu.relation_list_menu_builder", createRelationListMenu]
+        arguments:
+            - additional_menu
+        tags:
+            - { name: knp_menu.menu, alias: ngsite_additional_menu }

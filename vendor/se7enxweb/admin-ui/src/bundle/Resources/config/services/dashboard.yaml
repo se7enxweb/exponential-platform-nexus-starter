@@ -1,0 +1,72 @@
+services:
+    Ibexa\AdminUi\Tab\Dashboard\MyDraftsTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: false
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: dashboard-my }
+
+    Ibexa\AdminUi\Tab\Dashboard\MyContentTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: false
+        arguments:
+            $contentLocationSubtreeQueryType: '@Ibexa\AdminUi\QueryType\ContentLocationSubtreeQueryType'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: dashboard-my }
+
+    Ibexa\AdminUi\Tab\Dashboard\EveryoneContentTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: false
+        arguments:
+            $contentLocationSubtreeQueryType: '@Ibexa\AdminUi\QueryType\ContentLocationSubtreeQueryType'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: dashboard-everyone }
+
+    Ibexa\AdminUi\Tab\Dashboard\MyMediaTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: false
+        arguments:
+            $mediaLocationSubtreeQueryType: '@Ibexa\AdminUi\QueryType\MediaLocationSubtreeQueryType'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: dashboard-my }
+
+    Ibexa\AdminUi\Tab\Dashboard\EveryoneMediaTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: false
+        arguments:
+            $mediaLocationSubtreeQueryType: '@Ibexa\AdminUi\QueryType\MediaLocationSubtreeQueryType'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: dashboard-everyone }
+
+    Ibexa\AdminUi\Tab\Dashboard\PagerLocationToDataMapper:
+        autowire: true
+        public: false
+
+    ibexa.adminui.dashboard.me:
+        parent: Ibexa\TwigComponents\Component\TemplateComponent
+        arguments:
+            $template: '@@ibexadesign/ui/dashboard/block/me.html.twig'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-dashboard-blocks' }
+
+    ibexa.adminui.dashboard.all:
+        parent: Ibexa\TwigComponents\Component\TemplateComponent
+        arguments:
+            $template: '@@ibexadesign/ui/dashboard/block/all.html.twig'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-dashboard-blocks' }
+
+    ibexa.adminui.dashboard.my.tab_groups:
+        parent: Ibexa\AdminUi\Component\TabsComponent
+        arguments:
+            $groupIdentifier: 'dashboard-my'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-dashboard-my-tab-groups' }
+
+    ibexa.adminui.dashboard.all.tab_groups:
+        parent: Ibexa\AdminUi\Component\TabsComponent
+        arguments:
+            $groupIdentifier: 'dashboard-everyone'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-dashboard-all-tab-groups' }

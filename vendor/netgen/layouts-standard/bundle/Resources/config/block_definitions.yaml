@@ -1,0 +1,179 @@
+block_definitions:
+    title:
+        name: 'Title'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-title.svg'
+        translatable: true
+        view_types:
+            title:
+                name: 'Title'
+
+    text:
+        name: 'Text'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-text.svg'
+        translatable: true
+        view_types:
+            text:
+                name: 'Text'
+
+    button:
+        name: 'Button / Link'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-button.svg'
+        translatable: true
+        view_types:
+            button:
+                name: 'Button / Link'
+
+    markdown:
+        name: 'Markdown'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-markdown.svg'
+        translatable: true
+        view_types:
+            markdown:
+                name: 'Markdown'
+
+    rich_text:
+        name: 'Rich text'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-rich_text.svg'
+        translatable: true
+        view_types:
+            rich_text:
+                name: 'Rich text'
+
+    html_snippet:
+        name: 'HTML snippet'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-html_snippet.svg'
+        view_types:
+            html_snippet:
+                name: 'HTML snippet'
+
+    full_view:
+        name: 'Full view'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-full_view.svg'
+        view_types:
+            full_view:
+                name: 'Full view'
+
+    twig_block:
+        name: 'Twig block'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-twig_block.svg'
+        view_types:
+            twig_block:
+                name: 'Twig block'
+
+    external_video:
+        name: 'External video'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-external_video.svg'
+        view_types:
+            external_video:
+                name: 'External video'
+
+    map:
+        name: 'Map'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-map.svg'
+        view_types:
+            map:
+                name: 'Map'
+
+    list:
+        name: 'List'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-list.svg'
+        collections: ~
+        forms:
+            full:
+                enabled: false
+            content: ~
+            design: ~
+        view_types:
+            list:
+                name: 'List'
+                valid_parameters: ['!number_of_columns']
+            grid:
+                name: 'Grid'
+
+    gallery:
+        name: 'Gallery'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-gallery.svg'
+        collections: ~
+        forms:
+            full:
+                enabled: false
+            content: ~
+            design: ~
+        view_types:
+            slider:
+                name: 'Slider'
+                valid_parameters:
+                    - '!autoplay_time'
+                    - '!number_of_thumbnails'
+                    - '!thumbnails_to_move'
+                    - '!show_details'
+                    - '!show_details_on_hover'
+                    - '!enable_lightbox'
+            thumb_gallery:
+                name: 'Thumb gallery'
+                valid_parameters:
+                     - '!show_pagination'
+                     - '!enable_lightbox'
+                     - '!number_of_thumbnails'
+                     - '!thumbnails_to_move'
+            grid_gallery:
+                name: 'Grid gallery'
+                valid_parameters:
+                     - '!next_and_previous'
+                     - '!show_pagination'
+                     - '!infinite_loop'
+                     - '!transition'
+                     - '!autoplay'
+                     - '!autoplay_time'
+                     - '!show_details'
+                     - '!show_details_on_hover'
+                     - '!thumbnails_to_move'
+            sushi_bar:
+                name: 'Sushi bar'
+                valid_parameters:
+                     - '!transition'
+                     - '!show_details'
+                     - '!show_details_on_hover'
+                     - '!enable_lightbox'
+
+    column:
+        name: 'Column'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-column.svg'
+        translatable: true
+        view_types:
+            column:
+                name: 'Column'
+
+    two_columns:
+        name: 'Two columns'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-two_columns.svg'
+        translatable: true
+        view_types:
+            two_columns_50_50:
+                name: '50:50'
+            two_columns_33_66:
+                name: '33:66'
+            two_columns_66_33:
+                name: '66:33'
+
+    three_columns:
+        name: 'Three columns'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-three_columns.svg'
+        translatable: true
+        view_types:
+            three_columns_33_33_33:
+                name: '33:33:33'
+            three_columns_50_25_25:
+                name: '50:25:25'
+            three_columns_25_50_25:
+                name: '25:50:25'
+            three_columns_25_25_50:
+                name: '25:25:50'
+
+    four_columns:
+        name: 'Four columns'
+        icon: '/bundles/netgenlayoutsstandard/images/blocks/icon-four_columns.svg'
+        translatable: true
+        view_types:
+            four_columns:
+                name: '25:25:25:25'

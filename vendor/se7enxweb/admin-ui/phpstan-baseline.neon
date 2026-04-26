@@ -1,0 +1,3061 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#2 \$languageCode of class Ibexa\\AdminUi\\Form\\Data\\Asset\\ImageAssetUploadData constructor expects string\|null, bool\|float\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/AssetController.php
+
+		-
+			message: '#^Cannot access property \$isHidden on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot access property \$name on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot call method getContentInfo\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Content\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot call method getLanguageCode\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Cannot call method getMainLocationId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentController\:\:proxyCreateAction\(\) should return Symfony\\Component\\HttpFoundation\\Response but returns Symfony\\Component\\HttpFoundation\\Response\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$content of method Ibexa\\Core\\Helper\\TranslationHelper\:\:getTranslatedContentName\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Content, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Content\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:createContentDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:hideContent\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:revealContent\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:updateContentMetadata\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Core\\Helper\\TranslationHelper\:\:getTranslatedContentNameByContentInfo\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Parameter \#1 \$locationId of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:loadLocation\(\) expects int, int\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentController.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\UI\\Value\\Content\\ContentDraftInterface\:\:getVersionId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/bundle/Controller/ContentDraftController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentDraftController\:\:createContentRemoveData\(\) has parameter \$pagerfanta with generic class Pagerfanta\\Pagerfanta but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/bundle/Controller/ContentDraftController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentEditController\:\:proxyTranslateAction\(\) should return Symfony\\Component\\HttpFoundation\\Response but returns Symfony\\Component\\HttpFoundation\\Response\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/bundle/Controller/ContentEditController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/bundle/Controller/ContentOnTheFlyController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentOnTheFlyController\:\:buildEditView\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/bundle/Controller/ContentOnTheFlyController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentOnTheFlyController\:\:createContentAction\(\) should return Ibexa\\Core\\MVC\\Symfony\\View\\BaseView\|Symfony\\Component\\HttpFoundation\\Response but returns Symfony\\Component\\HttpFoundation\\Response\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/bundle/Controller/ContentOnTheFlyController.php
+
+		-
+			message: '#^Argument of an invalid type Symfony\\Component\\Form\\FormInterface\<mixed\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot access property \$id on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup\|null\.$#'
+			identifier: property.nonObject
+			count: 8
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot access property \$id on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\|null\.$#'
+			identifier: property.nonObject
+			count: 5
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot access property \$languageCode on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot access property \$modifierId on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot call method getAPIUser\(\) on Symfony\\Component\\Security\\Core\\User\\UserInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot call method getLanguageCode\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Parameter \#1 \$contentType of method Ibexa\\Bundle\\AdminUi\\Controller\\ContentTypeController\:\:tryToCreateContentTypeDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Parameter \#1 \$contentType of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:copyContentType\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Variable \$contentTypeGroupList in PHPDoc tag @var does not match assigned variable \$types\.$#'
+			identifier: varTag.differentVariable
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Variable \$newContentTypeDraft might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/bundle/Controller/ContentTypeController.php
+
+		-
+			message: '#^Cannot access property \$id on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^Cannot access property \$identifier on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^Parameter \#1 \$contentTypeGroup of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:deleteContentTypeGroup\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^Parameter \#1 \$contentTypeGroup of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:updateContentTypeGroup\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentTypeGroup\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^Parameter \#1 \$identifier of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:newContentTypeGroupCreateStruct\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentTypeGroupController.php
+
+		-
+			message: '#^Cannot call method getContentInfo\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/bundle/Controller/ContentViewController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentViewController\:\:createContentEditForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/bundle/Controller/ContentViewController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\ContentViewController\:\:getInvitationForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/bundle/Controller/ContentViewController.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_column expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ContentViewController.php
+
+		-
+			message: '#^Parameter \#2 \$fieldDefinition of method Ibexa\\Contracts\\Core\\Repository\\ContentTypeService\:\:updateFieldDefinition\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition, Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/FieldDefinitionController.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/LanguageController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/LanguageController.php
+
+		-
+			message: '#^Parameter \#1 \$language of method Ibexa\\Contracts\\Core\\Repository\\LanguageService\:\:deleteLanguage\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LanguageController.php
+
+		-
+			message: '#^Parameter \#1 \$languages of class Ibexa\\AdminUi\\Form\\Data\\Language\\LanguagesDeleteData constructor expects array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\>, array\<int, bool\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LanguageController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/bundle/Controller/LinkManagerController.php
+
+		-
+			message: '#^Cannot access property \$parentLocationId on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:createLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:getLocationChildCount\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:moveSubtree\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:updateLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\Core\\Repository\\TrashService\:\:trash\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$location1 of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:swapLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#1 \$locationId of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:loadLocation\(\) expects int, int\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#2 \$location2 of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:swapLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#2 \$section of method Ibexa\\Contracts\\Core\\Repository\\SectionService\:\:assignSectionToSubtree\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Parameter \#2 \$targetParentLocation of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:copySubtree\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: src/bundle/Controller/LocationController.php
+
+		-
+			message: '#^Argument of an invalid type array\<Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Cannot access property \$id on Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Cannot access property \$mainLanguageCode on Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:setContentState\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Parameter \#1 \$objectState of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:updateObjectState\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState, Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Parameter \#2 \$objectStateGroup of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:setContentState\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup, Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Parameter \#3 \$objectState of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:setContentState\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState, Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateCreateStruct\:\:\$names \(array\<string\>\) does not accept array\<string\|null\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateUpdateStruct\:\:\$identifier \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateUpdateStruct\:\:\$names \(array\<string\>\) does not accept array\<string\|null\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateController.php
+
+		-
+			message: '#^Cannot access property \$id on Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Cannot access property \$mainLanguageCode on Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Parameter \#1 \$identifier of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:newObjectStateGroupCreateStruct\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Parameter \#1 \$objectStateGroup of method Ibexa\\Contracts\\Core\\Repository\\ObjectStateService\:\:updateObjectStateGroup\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup, Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroup\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroupCreateStruct\:\:\$names \(array\<string\>\) does not accept array\<string\|null\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroupUpdateStruct\:\:\$identifier \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectStateGroupUpdateStruct\:\:\$names \(array\<string\>\) does not accept array\<string\|null\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/ObjectStateGroupController.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy\:\:\$originalId\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/bundle/Controller/PolicyController.php
+
+		-
+			message: '#^Argument of an invalid type array\<int, mixed\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/PolicyController.php
+
+		-
+			message: '#^Parameter \#2 \$policy of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:updatePolicyByRoleDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PolicyDraft, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/PolicyController.php
+
+		-
+			message: '#^Parameter \#2 \$policyDraft of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:removePolicyByRoleDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PolicyDraft, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/bundle/Controller/PolicyController.php
+
+		-
+			message: '#^Argument of an invalid type array\<int, mixed\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/RoleAssignmentController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\RoleAssignmentController\:\:createLimitations\(\) should return array\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation\\RoleLimitation\> but returns list\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation\\SectionLimitation\|Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation\\SubtreeLimitation\|null\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/bundle/Controller/RoleAssignmentController.php
+
+		-
+			message: '#^Parameter \#1 \$roleAssignment of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:removeRoleAssignment\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\RoleAssignment, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\RoleAssignment\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/RoleAssignmentController.php
+
+		-
+			message: '#^Cannot access property \$identifier on Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Role\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/RoleController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/RoleController.php
+
+		-
+			message: '#^Parameter \#1 \$role of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:deleteRole\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Role, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Role\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/RoleController.php
+
+		-
+			message: '#^Argument of an invalid type array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Cannot access property \$name on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Cannot call method getName\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Parameter \#1 \$section of method Ibexa\\Contracts\\Core\\Repository\\SectionService\:\:deleteSection\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Parameter \#2 \$section of method Ibexa\\Contracts\\Core\\Repository\\SectionService\:\:assignSection\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Section\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/SectionController.php
+
+		-
+			message: '#^Cannot call method getContentInfo\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Cannot call method getLanguageCode\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Cannot call method getMainLocationId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:deleteTranslation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Core\\Helper\\TranslationHelper\:\:getTranslatedContentNameByContentInfo\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/TranslationController.php
+
+		-
+			message: '#^Argument of an invalid type array\<bool\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/URLWildcardController.php
+
+		-
+			message: '#^PHPDoc tag @var with type Symfony\\Component\\Form\\Form is not subtype of native type Symfony\\Component\\Form\\FormInterface\.$#'
+			identifier: varTag.nativeType
+			count: 2
+			path: src/bundle/Controller/URLWildcardController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\URLWildcardStruct\:\:\$destinationUrl \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/URLWildcardController.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\URLWildcardStruct\:\:\$sourceUrl \(string\) does not accept string\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/bundle/Controller/URLWildcardController.php
+
+		-
+			message: '#^Cannot call method getLanguageCode\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/UrlAliasController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\AdminUi\\Controller\\Controller\:\:redirectToLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/bundle/Controller/UrlAliasController.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\Contracts\\Core\\Repository\\URLAliasService\:\:createUrlAlias\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/UrlAliasController.php
+
+		-
+			message: '#^Parameter \#2 \$path of method Ibexa\\Contracts\\Core\\Repository\\URLAliasService\:\:createUrlAlias\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/UrlAliasController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\ClickableInterface\|Symfony\\Component\\Form\\FormInterface\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/bundle/Controller/User/ProfileEditController.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: src/bundle/Controller/UserOnTheFlyController.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\AdminUi\\Controller\\UserOnTheFlyController\:\:buildEditView\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/bundle/Controller/UserOnTheFlyController.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: src/bundle/Controller/UserOnTheFlyController.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/bundle/Controller/UserOnTheFlyController.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between null and Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/bundle/Controller/UserOnTheFlyController.php
+
+		-
+			message: '#^Argument of an invalid type array\<int, mixed\>\|null supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/bundle/Controller/VersionController.php
+
+		-
+			message: '#^Cannot call method getId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/VersionController.php
+
+		-
+			message: '#^Cannot call method getMainLocationId\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/bundle/Controller/VersionController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:loadVersionInfo\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/VersionController.php
+
+		-
+			message: '#^Parameter \#1 \$contentInfo of method Ibexa\\Core\\Helper\\TranslationHelper\:\:getTranslatedContentNameByContentInfo\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentInfo\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Controller/VersionController.php
+
+		-
+			message: '#^Property Ibexa\\Bundle\\AdminUi\\Templating\\Twig\\ComponentExtension\:\:\$registry is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/bundle/Templating/Twig/ComponentExtension.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Core\\MVC\\Symfony\\Templating\\FieldBlockRendererInterface\:\:setTwig\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/bundle/Templating/Twig/FieldEditRenderingExtension.php
+
+		-
+			message: '#^Parameter \#2 \$initializer of method ProxyManager\\Factory\\LazyLoadingValueHolderFactory\:\:createProxy\(\) expects Closure\(Ibexa\\AdminUi\\UI\\Config\\ConfigWrapper\|null\=, Ibexa\\AdminUi\\UI\\Config\\ConfigWrapper&ProxyManager\\Proxy\\ValueHolderInterface\<Ibexa\\AdminUi\\UI\\Config\\ConfigWrapper\>&ProxyManager\\Proxy\\VirtualProxyInterface\=, string\=, array\<string, mixed\>\=, Closure\|null\=\)\: bool, Closure\(mixed, ProxyManager\\Proxy\\LazyLoadingInterface, mixed, array, mixed\)\: true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Templating/Twig/UiConfigExtension.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\Component\\Renderer\\RendererInterface\:\:renderGroup\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/contracts/Component/Renderer/RendererInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\Component\\Renderer\\RendererInterface\:\:renderGroup\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/contracts/Component/Renderer/RendererInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\Component\\Renderer\\RendererInterface\:\:renderSingle\(\) has parameter \$groupName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/contracts/Component/Renderer/RendererInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\Component\\Renderer\\RendererInterface\:\:renderSingle\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/contracts/Component/Renderer/RendererInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\UI\\Action\\UiActionEventInterface\:\:getForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/contracts/UI/Action/UiActionEventInterface.php
+
+		-
+			message: '#^Method Ibexa\\Contracts\\AdminUi\\UI\\Action\\UiActionEventInterface\:\:setForm\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/contracts/UI/Action/UiActionEventInterface.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\Behat\\Component\\Fields\\FieldTypeComponent\:\:selectFromRepository\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/BrowserContext/ContentUpdateContext.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\BrowserContext\\UDWContext\:\:changeUDWTab\(\) has parameter \$tabName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/BrowserContext/UDWContext.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/ContentItemAdminPreview.php
+
+		-
+			message: '#^Parameter \#1 \$selector of method Ibexa\\AdminUi\\Behat\\Component\\Fields\\FieldTypeComponentInterface\:\:setParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\VisibleCSSLocator, Ibexa\\Behat\\Browser\\Locator\\CSSLocator given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/ContentItemAdminPreview.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/DraftConflictDialog.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/lib/Behat/Component/Fields/Authors.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/Checkbox.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between array\<bool\> and bool will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/lib/Behat/Component/Fields/Checkbox.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentQuery.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableInterface\:\:getColumnValues\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentRelationMultiple.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withColumnLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentRelationMultiple.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withRowLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentRelationMultiple.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/lib/Behat/Component/Fields/ContentRelationMultiple.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withColumnLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentRelationSingle.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withRowLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ContentRelationSingle.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/ContentRelationSingle.php
+
+		-
+			message: '#^Parameter \#1 \$date of method Ibexa\\AdminUi\\Behat\\Component\\DateAndTimePopup\:\:setDate\(\) expects DateTimeInterface, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Date.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/Date.php
+
+		-
+			message: '#^Parameter \#1 \$date of method Ibexa\\AdminUi\\Behat\\Component\\DateAndTimePopup\:\:setDate\(\) expects DateTimeInterface, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/DateAndTime.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/DateAndTime.php
+
+		-
+			message: '#^Parameter \#1 \$object of function date_format expects DateTimeInterface, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/lib/Behat/Component/Fields/DateAndTime.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/FieldTypeComponent.php
+
+		-
+			message: '#^Parameter \#1 \$baseElement of static method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:base\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/File.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/File.php
+
+		-
+			message: '#^Parameter \#1 \$baseElement of static method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:base\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Image.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/Image.php
+
+		-
+			message: '#^Parameter \#1 \$baseElement of static method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:base\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ImageAsset.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/ImageAsset.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Keywords.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/MapLocation.php
+
+		-
+			message: '#^Parameter \#1 \$baseElement of static method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:base\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Media.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Media.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/NonEditableField.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Component\\Fields\\RichText\:\:equalsEmbedInlineItem\(\) has parameter \$itemName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Component/Fields/RichText.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Component\\Fields\\RichText\:\:equalsEmbedItem\(\) has parameter \$itemName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Component/Fields/RichText.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/Selection.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/TextLine.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/Fields/Time.php
+
+		-
+			message: '#^Parameter \#1 \$object of function date_format expects DateTimeInterface, DateTime\|false given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/lib/Behat/Component/Fields/Time.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\Behat\\Browser\\Locator\\CSSLocatorBuilder\:\:withDescendant\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Component/Fields/URL.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withEmptyLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/SubItemsList.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Component/SubItemsList.php
+
+		-
+			message: '#^Cannot call method findAll\(\) on Ibexa\\Behat\\Browser\\Element\\ElementInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/lib/Behat/Component/Table/Table.php
+
+		-
+			message: '#^Cannot call method setTimeout\(\) on Ibexa\\Behat\\Browser\\Element\\ElementInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/lib/Behat/Component/Table/Table.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Component\\Table\\Table\:\:getHeaderPositions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Component/Table/Table.php
+
+		-
+			message: '#^Variable \$rowElement might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/lib/Behat/Component/Table/Table.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Component\\UniversalDiscoveryWidget\:\:changeTab\(\) has parameter \$tabName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Behat/Component/UniversalDiscoveryWidget.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Component\\UniversalDiscoveryWidget\:\:getItemsFromLevel\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Component/UniversalDiscoveryWidget.php
+
+		-
+			message: '#^Parameter \#1 \$expectedText of method Ibexa\\Behat\\Browser\\Assert\\ElementAssertInterface\:\:textEquals\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/ContentTypePage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/ContentTypePage.php
+
+		-
+			message: '#^Binary operation "\+" between int\|string\|false and 1 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/lib/Behat/Page/ContentTypeUpdatePage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/DashboardPage.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableInterface\:\:getColumnValues\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Page/ObjectStateGroupPage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/ObjectStateGroupPage.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableInterface\:\:getColumnValues\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/lib/Behat/Page/RolePage.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Page\\RolePage\:\:verifyAssignments\(\) has parameter \$expectedAssignments with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Page/RolePage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Behat/Page/RolePage.php
+
+		-
+			message: '#^Property Ibexa\\AdminUi\\Behat\\Page\\RolePage\:\:\$policies \(Ibexa\\AdminUi\\Behat\\Component\\Table\\Table\) does not accept Ibexa\\AdminUi\\Behat\\Component\\Table\\TableInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/Behat/Page/RolePage.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\AdminUi\\Behat\\Page\\RolesPage\:\:\$adminList\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Behat/Page/RolesPage.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Page\\SearchPage\:\:isElementInResults\(\) has parameter \$elementData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Page/SearchPage.php
+
+		-
+			message: '#^Parameter \#1 \$expectedText of method Ibexa\\Behat\\Browser\\Assert\\ElementAssertInterface\:\:textEquals\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/SectionPage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/SectionPage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/SectionsPage.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableInterface\:\:getColumnValues\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Behat/Page/SystemInfoPage.php
+
+		-
+			message: '#^Parameter \#1 \$locator of method Ibexa\\AdminUi\\Behat\\Component\\Table\\TableBuilder\:\:withParentLocator\(\) expects Ibexa\\Behat\\Browser\\Locator\\CSSLocator, Ibexa\\Behat\\Browser\\Locator\\LocatorInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Behat/Page/SystemInfoPage.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Behat\\Page\\TrashPage\:\:select\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Behat/Page/TrashPage.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Component\\Renderer\\DefaultRenderer\:\:renderGroup\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Component/Renderer/DefaultRenderer.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Component\\Renderer\\DefaultRenderer\:\:renderSingle\(\) has parameter \$groupName with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Component/Renderer/DefaultRenderer.php
+
+		-
+			message: '#^Offset ''meta'' might not exist on array\{position\: int, meta\?\: bool\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/lib/Config/AdminUiForms/ContentTypeFieldTypesResolver.php
+
+		-
+			message: '#^Property Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinitionUpdateStruct\:\:\$names \(array\<string, string\>\|null\) does not accept array\<string, string\|null\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/EventListener/AddNewTranslationFieldDefinition.php
+
+		-
+			message: '#^Cannot call method isTranslatable\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\FieldDefinition\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/EventListener/ContentProxyCreateDraftListener.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_filter expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Field\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/EventListener/ContentProxyCreateDraftListener.php
+
+		-
+			message: '#^Parameter \#1 \$passwordExpiresAt of method Ibexa\\AdminUi\\EventListener\\CredentialsExpirationWarningListener\:\:generateNotification\(\) expects DateTimeInterface, DateTimeImmutable\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/EventListener/CredentialsExpirationWarningListener.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Contracts\\Translation\\TranslatorInterface\:\:setLocale\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/EventListener/InContextTranslationListener.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Contracts\\Translation\\TranslatorInterface\:\:setLocale\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/EventListener/RequestLocaleListener.php
+
+		-
+			message: '#^Parameter \#1 \$locale of method Symfony\\Component\\HttpFoundation\\Request\:\:setLocale\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/EventListener/RequestLocaleListener.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\EventListener\\SetViewParametersListener\:\:getIgnoredContentFields\(\) has parameter \$fieldsData with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/EventListener/SetViewParametersListener.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\EventListener\\SetViewParametersListener\:\:resolveParentLocation\(\) should return Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location but returns Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/EventListener/SetViewParametersListener.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Exception\\ValueMapperNotFoundException\:\:__construct\(\) has parameter \$code with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Exception/ValueMapperNotFoundException.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Exception\\ValueMapperNotFoundException\:\:__construct\(\) has parameter \$limitationType with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Exception/ValueMapperNotFoundException.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\FieldDefinitionFormMapperInterface\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/FieldDefinitionFormMapperInterface.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\FieldTypeDefinitionFormMapperDispatcher\:\:map\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/FieldTypeDefinitionFormMapperDispatcher.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\FieldTypeDefinitionFormMapperDispatcherInterface\:\:map\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/FieldTypeDefinitionFormMapperDispatcherInterface.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\AuthorFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/AuthorFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\AuthorFormMapper\:\:mapFieldValueForm\(\) has parameter \$fieldForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/AuthorFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\BinaryFileFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/BinaryFileFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\CheckboxFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/CheckboxFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\CountryFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/CountryFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\DateFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/DateFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\DateTimeFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/DateTimeFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\FloatFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/FloatFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\ISBNFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/ISBNFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\ImageFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/ImageFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\IntegerFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/IntegerFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\MediaFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/MediaFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\RelationFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/RelationFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\RelationListFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/RelationListFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\SelectionFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/SelectionFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\TextBlockFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/TextBlockFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\TextLineFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/TextLineFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\TimeFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/TimeFormMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\FieldType\\Mapper\\UserAccountFormMapper\:\:mapFieldDefinitionForm\(\) has parameter \$fieldDefinitionForm with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/FieldType/Mapper/UserAccountFormMapper.php
+
+		-
+			message: '#^Property Ibexa\\AdminUi\\Form\\Data\\ContentTypeData\:\:\$isNew on left side of \?\? is not nullable nor uninitialized\.$#'
+			identifier: nullCoalesce.initializedProperty
+			count: 1
+			path: src/lib/Form/Data/ContentTypeData.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getFieldDefinitions\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentCreateMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getFieldValue\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTranslationMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getFieldsByLanguage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTranslationMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$defaultAlwaysAvailable\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$defaultSortField\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$defaultSortOrder\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$fieldDefinitions\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$identifier\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$mainLanguageCode\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$nameSchema\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$remoteId\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$urlAliasSchema\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getDescription\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getDescriptions\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getNames\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:isContainer\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentTypeDraftMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getFieldsByLanguage\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Data/FormMapper/ContentUpdateMapper.php
+
+		-
+			message: '#^Parameter \#1 \$limitations of method Ibexa\\AdminUi\\Form\\Data\\Policy\\PolicyCreateData\:\:setLimitations\(\) expects array\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation\>, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataMapper/PolicyCreateMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$function\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/DataMapper/PolicyUpdateMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$module\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/DataMapper/PolicyUpdateMapper.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:getLimitations\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/DataMapper/PolicyUpdateMapper.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Core\\Repository\\Values\\User\\RoleCopyStruct\:\:\$role\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Form/DataMapper/RoleCopyMapper.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ContentInfoTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ContentInfoTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ContentTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ContentTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ContentTypeGroupTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ContentTypeGroupTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ContentTypeTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ContentTypeTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\DateIntervalToArrayTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/DateIntervalToArrayTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\DateIntervalTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/DateIntervalTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\BinaryFileValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/BinaryFileValueTransformer.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\BinaryFileValueTransformer\:\:transform\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/BinaryFileValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\DateTimeValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/DateTimeValueTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$timestamp of static method Ibexa\\Core\\FieldType\\DateAndTime\\Value\:\:fromTimestamp\(\) expects int, float\|int\<min, \-1\>\|int\<1, max\>\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/DateTimeValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\DateValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/DateValueTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$timestamp of static method Ibexa\\Core\\FieldType\\Date\\Value\:\:fromTimestamp\(\) expects int, float\|int\<min, \-1\>\|int\<1, max\>\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/DateValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\FieldValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/FieldValueTransformer.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<string, mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/ImageAssetValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\ImageAssetValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/ImageAssetValueTransformer.php
+
+		-
+			message: '#^Instanceof between Ibexa\\Core\\FieldType\\ImageAsset\\Value and Ibexa\\Core\\FieldType\\ImageAsset\\Value will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/ImageAssetValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\ImageValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/ImageValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\KeywordValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/KeywordValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\RelationListValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/RelationListValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\RelationValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/RelationValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\FieldType\\TimeValueTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/FieldType/TimeValueTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\LanguageTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/LanguageTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\LocationTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/LocationTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\LocationsTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/LocationsTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(string\)\: mixed\)\|null, array\{Ibexa\\Contracts\\Core\\Repository\\LocationService, ''loadLocation''\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/LocationsTransformer.php
+
+		-
+			message: '#^Offset ''multilingualOptions'' might not exist on array\<string, mixed\>\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/lib/Form/DataTransformer/MultilingualSelectionTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ObjectStateGroupTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ObjectStateGroupTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\ObjectStateTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/ObjectStateTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\PolicyTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/PolicyTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\SectionTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/SectionTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\SectionsTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/SectionsTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\TrashItemTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/TrashItemTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\UDWBasedValueModelTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/UDWBasedValueModelTransformer.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/lib/Form/DataTransformer/UDWBasedValueModelTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\UserCollectionTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/UserCollectionTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(string\)\: mixed\)\|null, array\{Ibexa\\Contracts\\Core\\Repository\\UserService, ''loadUser''\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/UserCollectionTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\UserGroupCollectionTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/UserGroupCollectionTransformer.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(string\)\: mixed\)\|null, array\{Ibexa\\Contracts\\Core\\Repository\\UserService, ''loadUserGroup''\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/DataTransformer/UserGroupCollectionTransformer.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\DataTransformer\\VersionInfoTransformer implements generic interface Symfony\\Component\\Form\\DataTransformerInterface but does not specify its types\: T, R$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/DataTransformer/VersionInfoTransformer.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\ContentTypeFormFactory\:\:addContentTypeTranslation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/ContentTypeFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\ContentTypeFormFactory\:\:contentTypeCopy\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/ContentTypeFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\ContentTypeFormFactory\:\:contentTypeEdit\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/ContentTypeFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\ContentTypeFormFactory\:\:removeContentTypeTranslation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/ContentTypeFormFactory.php
+
+		-
+			message: '#^Parameter \#1 \$name of method Symfony\\Component\\Form\\FormFactoryInterface\:\:createNamed\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/lib/Form/Factory/ContentTypeFormFactory.php
+
+		-
+			message: '#^Cannot call method getSection\(\) on Ibexa\\AdminUi\\Form\\Data\\Section\\SectionUpdateData\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:addCustomUrl\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:addLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:addTranslation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:assignContentSectionForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:contentEdit\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:copyLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:copyLocationSubtree\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createContent\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createContentTypeGroup\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createLanguage\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createObjectStateGroup\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createPolicy\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createPolicyWithLimitation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createRole\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createRoleAssignment\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createSearchForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createSection\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createURLWildcard\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createURLWildcardUpdate\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createUrlEditForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:createUrlListForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteContentTypeGroups\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteContentTypes\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteLanguage\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteLanguages\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteObjectStateGroup\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteObjectStateGroups\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deletePolicies\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deletePolicy\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteRole\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteRoleAssignment\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteRoleAssignments\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteRoles\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteSection\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteSections\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteTranslation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteURLWildcard\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:deleteUser\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:editUser\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:moveLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:removeBookmark\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:removeContentDraft\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:removeCustomUrl\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:removeLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:removeVersion\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:swapLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:trashLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateContentMainLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateLanguage\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateObjectStateGroup\(\) should return Symfony\\Component\\Form\\FormInterface\<Ibexa\\AdminUi\\Form\\Data\\ObjectState\\ObjectStateGroupUpdateData\> but returns Symfony\\Component\\Form\\FormInterface\<Ibexa\\AdminUi\\Form\\Data\\ObjectState\\ObjectStateGroupUpdateData\|null\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updatePolicy\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateRole\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateSection\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateVisibilityContent\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\FormFactory\:\:updateVisibilityLocation\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/FormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\TrashFormFactory\:\:deleteTrashItem\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/TrashFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\TrashFormFactory\:\:emptyTrash\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/TrashFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\TrashFormFactory\:\:restoreTrashItem\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/TrashFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Factory\\TrashFormFactory\:\:searchTrash\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Factory/TrashFormFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Processor\\ContentType\\ContentTypeFormProcessor\:\:setOptions\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Form/Processor/ContentType/ContentTypeFormProcessor.php
+
+		-
+			message: '#^PHPDoc tag @var for variable \$fieldDefForm contains generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Processor/ContentType/ContentTypeFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\ContentForms\\Data\\Content\\ContentCreateData\|Ibexa\\ContentForms\\Data\\Content\\ContentUpdateData\:\:getContentDraft\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct\:\:getContentDraft\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct\:\:getFieldsData\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct\:\:getLocationStructs\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct\:\:isNew\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Parameter \#1 \$contentCreateStruct of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:createContent\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentCreateStruct, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Parameter \#2 \$contentUpdateStruct of method Ibexa\\Contracts\\Core\\Repository\\ContentService\:\:updateContent\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentUpdateStruct, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\ContentStruct given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Processor/PreviewFormProcessor.php
+
+		-
+			message: '#^Access to protected property Ibexa\\AdminUi\\Form\\Data\\ContentTranslationData\:\:\$content\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Form/Processor/TranslationFormProcessor.php
+
+		-
+			message: '#^Access to protected property Ibexa\\AdminUi\\Form\\Data\\ContentTranslationData\:\:\$fieldsData\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Form/Processor/TranslationFormProcessor.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\SubmitHandler\:\:handleAjax\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/SubmitHandler.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\SubmitHandler\:\:handleAjax\(\) should return Symfony\\Component\\HttpFoundation\\JsonResponse but returns Symfony\\Component\\HttpFoundation\\Response\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Form/SubmitHandler.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\CanHaveDrafts\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/CanHaveDrafts.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\HasAssetRelation\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/HasAssetRelation.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\HasChildren\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/HasChildren.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\HasReverseRelations\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/HasReverseRelations.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\HasUniqueAssetRelation\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/HasUniqueAssetRelation.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\OptionsFactory\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/OptionsFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\TrashLocationOptionProvider\\TrashLocationOptionProvider\:\:addOptions\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/TrashLocationOptionProvider/TrashLocationOptionProvider.php
+
+		-
+			message: '#^Parameter \#1 \$locationId of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:loadLocation\(\) expects int, int\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/ChoiceList/Loader/ContentEditTranslationChoiceLoader.php
+
+		-
+			message: '#^Parameter \#2 \$restrictedLanguagesCodes of class Ibexa\\AdminUi\\Form\\Type\\ChoiceList\\Loader\\ContentCreateLanguageChoiceLoader constructor expects array\<string\>, array\<int\|string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Content/Draft/ContentCreateType.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Type\\Content\\Translation\\TranslationAddType\:\:addLanguageFields\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Content/Translation/TranslationAddType.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_filter expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Content/Translation/TranslationAddType.php
+
+		-
+			message: '#^Parameter \#1 \$locationId of method Ibexa\\Contracts\\Core\\Repository\\LocationService\:\:loadLocation\(\) expects int, int\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Content/Translation/TranslationAddType.php
+
+		-
+			message: '#^Parameter \#1 \$child of method Symfony\\Component\\Form\\FormBuilderInterface\<array\<string, mixed\>\|null\>\:\:add\(\) expects string\|Symfony\\Component\\Form\\FormBuilderInterface, int\|string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/ContentType/FieldDefinitionsCollectionType.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_filter expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/ContentType/Translation/TranslationAddType.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\Type\\Embedded\\SectionType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Embedded/SectionType.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\:\:isClicked\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Type/Extension/Content/ContentEditTypeExtension.php
+
+		-
+			message: '#^Call to an undefined method Ibexa\\Contracts\\Core\\Repository\\Strategy\\ContentThumbnail\\Field\\ThumbnailStrategy\:\:hasStrategy\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Form/Type/FieldDefinition/FieldDefinitionType.php
+
+		-
+			message: '#^Property Ibexa\\AdminUi\\Form\\Type\\FieldDefinition\\FieldDefinitionType\:\:\$groupsList is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/lib/Form/Type/FieldDefinition/FieldDefinitionType.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Type\\Location\\LocationTrashType\:\:addConfirmCheckbox\(\) has parameter \$form with generic interface Symfony\\Component\\Form\\FormInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Location/LocationTrashType.php
+
+		-
+			message: '#^Parameter \#1 \$module of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:getLimitationTypesByModuleFunction\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Policy/PolicyUpdateType.php
+
+		-
+			message: '#^Parameter \#2 \$availableLimitationTypes of method Ibexa\\AdminUi\\Form\\Type\\Policy\\PolicyUpdateType\:\:generateLimitationList\(\) expects array\<Ibexa\\Contracts\\Core\\Limitation\\Type\>, iterable\<Ibexa\\Contracts\\Core\\Limitation\\Type\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Policy/PolicyUpdateType.php
+
+		-
+			message: '#^Parameter \#2 \$function of method Ibexa\\Contracts\\Core\\Repository\\RoleService\:\:getLimitationTypesByModuleFunction\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Form/Type/Policy/PolicyUpdateType.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Form\\Type\\Search\\SearchType\:\:__construct\(\) has parameter \$baseType with generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/Search/SearchType.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\Form\\Type\\UniversalDiscoveryWidget\\UniversalDiscoveryWidgetType extends generic class Symfony\\Component\\Form\\AbstractType but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Form/Type/UniversalDiscoveryWidget/UniversalDiscoveryWidgetType.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ObjectState\\ObjectState\:\:\$defaultLanguageCode\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Limitation/Mapper/ObjectStateLimitationMapper.php
+
+		-
+			message: '#^Variable \$section in PHPDoc tag @var does not match assigned variable \$role\.$#'
+			identifier: varTag.differentVariable
+			count: 1
+			path: src/lib/Menu/Admin/Role/PolicyCreateRightSidebarBuilder.php
+
+		-
+			message: '#^Variable \$section in PHPDoc tag @var does not match assigned variable \$role\.$#'
+			identifier: varTag.differentVariable
+			count: 1
+			path: src/lib/Menu/Admin/Role/PolicyEditRightSidebarBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$location of method Ibexa\\AdminUi\\Siteaccess\\SiteaccessResolverInterface\:\:getSiteAccessesListForLocation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Menu/ContentEditRightSidebarBuilder.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\LookupLimitationResult\:\:\$hasAccess\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Menu/ContentRightSidebarBuilder.php
+
+		-
+			message: '#^Cannot call method setAttribute\(\) on Knp\\Menu\\ItemInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/lib/Menu/ContentRightSidebarBuilder.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface\:\:getFlashBag\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Notification/FlashBagNotificationHandler.php
+
+		-
+			message: '#^Cannot access offset mixed on iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\>\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/lib/Pagination/Mapper/AbstractPagerContentToDataMapper.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\LookupLimitationResult\:\:\$hasAccess\.$#'
+			identifier: property.protected
+			count: 1
+			path: src/lib/Permission/LimitationResolver.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\LookupPolicyLimitations\:\:\$limitations\.$#'
+			identifier: property.protected
+			count: 2
+			path: src/lib/Permission/LookupLimitationsTransformer.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$limitationValues\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Permission/PermissionChecker.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\User\\UserGroup\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Permission/PermissionChecker.php
+
+		-
+			message: '#^Variable \$searchData in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/lib/QueryType/TrashSearchQueryType.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\REST\\Value\\Operation\:\:__construct\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/REST/Value/Operation.php
+
+		-
+			message: '#^Cannot assign offset string to array\<string\>\|string\.$#'
+			identifier: offsetAssign.dimType
+			count: 1
+			path: src/lib/Resolver/IconPathResolver.php
+
+		-
+			message: '#^Cannot access offset ''path'' on array\{scheme\?\: string, host\?\: string, port\?\: int\<0, 65535\>, user\?\: string, pass\?\: string, path\?\: string, query\?\: string, fragment\?\: string\}\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/lib/Security/Authentication/RedirectToDashboardListener.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Service\\ContentTypeService\:\:getContentTypes\(\) should return array\<Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\> but returns iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/Service/ContentTypeService.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$fieldDefinitions\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Service/MetaFieldType/MetaFieldDefinitionService.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy\:\:\$originalId\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\ValueObject\:\:\$pathString\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Parameter \#1 \$limitation of method Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PolicyStruct\:\:addLimitation\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Limitation, object given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Parameter \#1 \$value of class Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\Criterion\\ContentId constructor expects array\<int\>\|int, array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Parameter \#2 \$policy of method Ibexa\\Core\\Repository\\RoleService\:\:updatePolicyByRoleDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PolicyDraft, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Parameter \#2 \$policyDraft of method Ibexa\\Core\\Repository\\RoleService\:\:removePolicyByRoleDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\PolicyDraft, Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Variable \$location in PHPDoc tag @var does not exist\.$#'
+			identifier: varTag.variableNotFound
+			count: 1
+			path: src/lib/Service/Role/RoleService.php
+
+		-
+			message: '#^Instanceof between Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType and Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/lib/Specification/ContentType/ContentTypeIsUserGroup.php
+
+		-
+			message: '#^Parameter \#3 \$languageCodes of class Ibexa\\AdminUi\\Form\\Data\\ContentType\\Translation\\TranslationRemoveData constructor expects array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\>, array\<string, false\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/ContentType/TranslationsTab.php
+
+		-
+			message: '#^Parameter \#1 \$query of class Ibexa\\Core\\Pagination\\Pagerfanta\\LocationSearchAdapter constructor expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\LocationQuery, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/Dashboard/EveryoneContentTab.php
+
+		-
+			message: '#^Parameter \#1 \$query of class Ibexa\\Core\\Pagination\\Pagerfanta\\LocationSearchAdapter constructor expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\LocationQuery, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/Dashboard/EveryoneMediaTab.php
+
+		-
+			message: '#^Parameter \#1 \$query of class Ibexa\\Core\\Pagination\\Pagerfanta\\LocationSearchAdapter constructor expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\LocationQuery, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/Dashboard/MyContentTab.php
+
+		-
+			message: '#^Parameter \#1 \$query of class Ibexa\\Core\\Pagination\\Pagerfanta\\LocationSearchAdapter constructor expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\LocationQuery, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/Dashboard/MyMediaTab.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_filter expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Language\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Tab/Dashboard/PagerLocationToDataMapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Tab\\LocationView\\LocationsTab\:\:createLocationUpdateMainForm\(\) has parameter \$contentInfo with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/lib/Tab/LocationView/LocationsTab.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Tab\\LocationView\\UrlsTab\:\:createCustomUrlAddForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Tab/LocationView/UrlsTab.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Tab\\LocationView\\UrlsTab\:\:createCustomUrlRemoveForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Tab/LocationView/UrlsTab.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Tab\\LocationView\\VersionsTab\:\:createVersionRemoveForm\(\) return type with generic interface Symfony\\Component\\Form\\FormInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/Tab/LocationView/VersionsTab.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$text\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Call to an undefined method Peast\\Syntax\\Node\\Expression\:\:getLeadingComments\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Call to an undefined method Peast\\Syntax\\Node\\Expression\:\:getLocation\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Call to an undefined method Peast\\Syntax\\Node\\Expression\:\:getType\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Call to an undefined method Peast\\Syntax\\Node\\Expression\:\:getValue\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Translation\\Extractor\\JavaScriptFileVisitor\:\:visitPhpFile\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Translation\\Extractor\\JavaScriptFileVisitor\:\:visitPhpFile\(\) has parameter \$ast with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\Translation\\Extractor\\JavaScriptFileVisitor\:\:visitTwigFile\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Parameter \#1 \$desc of method JMS\\TranslationBundle\\Model\\Message\:\:setDesc\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Parameter \#1 \$source of static method Peast\\Peast\:\:latest\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Translation/Extractor/JavaScriptFileVisitor.php
+
+		-
+			message: '#^Access to an undefined property PhpParser\\Node\:\:\$args\.$#'
+			identifier: property.notFound
+			count: 5
+			path: src/lib/Translation/Extractor/NotificationTranslationExtractor.php
+
+		-
+			message: '#^Call to function is_object\(\) with PhpParser\\Comment\\Doc will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/lib/Translation/Extractor/NotificationTranslationExtractor.php
+
+		-
+			message: '#^Instanceof between string and PhpParser\\Comment\\Doc will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: src/lib/Translation/Extractor/NotificationTranslationExtractor.php
+
+		-
+			message: '#^Parameter \#1 \$fqcn of static method Symfony\\Component\\Form\\Util\\StringUtil\:\:fqcnToBlockPrefix\(\) expects string, class\-string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Action/FormUiActionMapper.php
+
+		-
+			message: '#^Property Ibexa\\AdminUi\\UI\\Action\\FormUiActionMappingDispatcher\:\:\$mappers \(array\<Ibexa\\Contracts\\AdminUi\\UI\\Action\\FormUiActionMapperInterface\>\) does not accept Traversable\<mixed, Ibexa\\Contracts\\AdminUi\\UI\\Action\\FormUiActionMapperInterface\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/lib/UI/Action/FormUiActionMappingDispatcher.php
+
+		-
+			message: '#^Class Ibexa\\AdminUi\\UI\\Config\\ConfigWrapper implements generic interface ArrayAccess but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UI/Config/ConfigWrapper.php
+
+		-
+			message: '#^Parameter \#1 \$string1 of function strnatcasecmp expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Config/Provider/ContentTypes.php
+
+		-
+			message: '#^Parameter \#2 \$string2 of function strnatcasecmp expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Config/Provider/ContentTypes.php
+
+		-
+			message: '#^Offset ''dirname'' might not exist on array\{dirname\?\: string, basename\: string, extension\?\: string, filename\: string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/lib/UI/Config/Provider/CurrentBackOfficePath.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UI\\Config\\Provider\\Languages\:\:getConfig\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/UI/Config/Provider/Languages.php
+
+		-
+			message: '#^Cannot access offset int on iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\ContentType\\ContentType\>\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/lib/UI/Dataset/ContentDraftListDataset.php
+
+		-
+			message: '#^Cannot call method getContentInfo\(\) on Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\VersionInfo\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/lib/UI/Dataset/ContentDraftListDataset.php
+
+		-
+			message: '#^Parameter \#1 \$contentDraftListItem of method Ibexa\\AdminUi\\UI\\Value\\ValueFactory\:\:createContentDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\DraftList\\Item\\ContentDraftListItem, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\DraftList\\ContentDraftListItemInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Dataset/ContentDraftListDataset.php
+
+		-
+			message: '#^Parameter \#1 \$contentDraftListItem of method Ibexa\\AdminUi\\UI\\Value\\ValueFactory\:\:createUnauthorizedContentDraft\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\DraftList\\Item\\UnauthorizedContentDraftListItem, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\DraftList\\ContentDraftListItemInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Dataset/ContentDraftListDataset.php
+
+		-
+			message: '#^Parameter \#3 \$logger of class Ibexa\\AdminUi\\UI\\Dataset\\CustomUrlsDataset constructor expects Psr\\Log\\LoggerInterface, Psr\\Log\\LoggerInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Dataset/DatasetFactory.php
+
+		-
+			message: '#^Access to an undefined property Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\:\:\$main\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/UI/Dataset/LocationsDataset.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, iterable\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Dataset/LocationsDataset.php
+
+		-
+			message: '#^PHPDoc tag @var with type Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\SortClause is not subtype of native type Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\SortClause\\ContentName\|Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\SortClause\\DatePublished\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: src/lib/UI/Module/ContentTree/NodeFactory.php
+
+		-
+			message: '#^Parameter \#2 \$length of function array_chunk expects int\<1, max\>, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UI/Module/ContentTree/NodeFactory.php
+
+		-
+			message: '#^Generator expects value type Ibexa\\Contracts\\Core\\Repository\\FieldType, Ibexa\\Contracts\\Core\\FieldType\\FieldType given\.$#'
+			identifier: generator.valueType
+			count: 1
+			path: src/lib/UI/Module/FieldTypeToolbar/FieldTypeToolbarFactory.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UI\\Value\\Content\\Location\\Mapper\:\:prioritizeMainLocation\(\) should return array\<Ibexa\\AdminUi\\UI\\Value\\Content\\Location\> but returns array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UI/Value/Content/Location/Mapper.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\Event\\Subscriber\\ReadAllowedContentTypes\:\:getAllowedContentTypesIdentifiers\(\) has parameter \$contentTypesAllowedViaConfig with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/UniversalDiscovery/Event/Subscriber/ReadAllowedContentTypes.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\Event\\Subscriber\\ReadAllowedContentTypes\:\:getAllowedContentTypesIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/lib/UniversalDiscovery/Event/Subscriber/ReadAllowedContentTypes.php
+
+		-
+			message: '#^Access to protected property Ibexa\\Contracts\\Core\\Repository\\Values\\User\\LookupLimitationResult\:\:\$hasAccess\.$#'
+			identifier: property.protected
+			count: 2
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:getLocations\(\) should return array\<array\{location\: Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, permissions\: array\{create\: array\{hasAccess\: bool, restrictedContentTypeIds\: array\<int\>, restrictedLanguageCodes\: array\<string\>\}, edit\: array\{hasAccess\: bool, restrictedContentTypeIds\: array\<int\>, restrictedLanguageCodes\: array\<string\>\}\}\}\> but returns list\<array\{location\: Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location, permissions\: array\<string, mixed\>\}\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:getSortClause\(\) should return Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\SortClause but returns object\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:getSubitemContents\(\) should return array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Content\> but returns list\<Ibexa\\Rest\\Server\\Values\\Version\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:getSubitemLocations\(\) should return array\<Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location\> but returns array\<string, int\<0, max\>\|list\<Ibexa\\Rest\\Server\\Values\\RestLocation\>\|null\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Parameter \#1 \$query of method Ibexa\\Contracts\\Core\\Repository\\SearchService\:\:findLocations\(\) expects Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\LocationQuery, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Parameter \#1 \$value of class Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Query\\Criterion\\LocationId constructor expects array\<int\>\|int, list\<string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Parameter \#2 \$locationPath of method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:getRelativeLocationPath\(\) expects array\<int\>, list\<string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Parameter \#2 \$locations of method Ibexa\\AdminUi\\UniversalDiscovery\\UniversalDiscoveryProvider\:\:moveSelectedLocationOnTop\(\) expects array\<mixed\>, Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Location given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/UniversalDiscovery/UniversalDiscoveryProvider.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\Autosave\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Autosave.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\Autosave\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/Autosave.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\AutosaveInterval\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/AutosaveInterval.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\AutosaveInterval\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/AutosaveInterval.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\FocusMode\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/FocusMode.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\FocusMode\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/FocusMode.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\InContextTranslation\:\:mapFieldForm\(\) has parameter \$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/InContextTranslation.php
+
+		-
+			message: '#^Method Ibexa\\AdminUi\\UserSetting\\InContextTranslation\:\:mapFieldForm\(\) return type with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/lib/UserSetting/InContextTranslation.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Validator/Constraints/LocationHasChildrenValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Validator/Constraints/LocationHaveUniqueAssetRelationValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Validator/Constraints/LocationIsContainerValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/lib/Validator/Constraints/LocationIsNotRootValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/Constraints/LocationIsWithinCopySubtreeLimitValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/Constraints/UniqueContentTypeIdentifierValidator.php
+
+		-
+			message: '#^Instanceof between Ibexa\\AdminUi\\Form\\Data\\ContentTypeData and Ibexa\\AdminUi\\Form\\Data\\ContentTypeData will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/lib/Validator/Constraints/UniqueContentTypeIdentifierValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/Constraints/UniqueFieldDefinitionIdentifierValidator.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface\:\:setParameter\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/lib/Validator/Constraints/UniqueFieldDefinitionIdentifierValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/lib/Validator/Constraints/UniqueURLValidator.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Form\\FormInterface\<mixed\>\:\:getClickedButton\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/lib/View/Builder/ContentTranslateViewBuilder.php
+
+		-
+			message: '#^Parameter \#2 \$twig of class Ibexa\\AdminUi\\Limitation\\Templating\\LimitationBlockRenderer constructor expects Twig\\Environment, Twig\\Environment\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/bundle/Templating/Twig/LimitationValueRenderingExtensionTest.php
+
+		-
+			message: '#^Undefined variable\: \$ret$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/bundle/Templating/Twig/LimitationValueRenderingExtensionTest.php
+
+		-
+			message: '#^Access to protected property Ibexa\\AdminUi\\Form\\Data\\ContentTranslationData\:\:\$fieldsData\.$#'
+			identifier: property.protected
+			count: 4
+			path: tests/lib/Form/Data/ContentTranslationDataTest.php
+
+		-
+			message: '#^Parameter \#1 \$policy of class Ibexa\\AdminUi\\Form\\Data\\Policy\\PolicyUpdateData constructor expects Ibexa\\Contracts\\Core\\Repository\\Values\\User\\Policy\|null, array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/lib/Form/DataMapper/PolicyUpdateMapperTest.php
+
+		-
+			message: '#^Property Ibexa\\Tests\\AdminUi\\Form\\DataMapper\\PolicyUpdateMapperTest\:\:\$mapper is never written, only read\.$#'
+			identifier: property.onlyRead
+			count: 1
+			path: tests/lib/Form/DataMapper/PolicyUpdateMapperTest.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: tests/lib/Form/DataMapper/PolicyUpdateMapperTest.php
+
+		-
+			message: '#^Property Ibexa\\Tests\\AdminUi\\Form\\Type\\Extension\\EventSubscriber\\ModifyFieldDefinitionFieldsSubscriberTest\:\:\$formBuilder with generic interface Symfony\\Component\\Form\\FormBuilderInterface does not specify its types\: TData$#'
+			identifier: missingType.generics
+			count: 1
+			path: tests/lib/Form/Type/Extension/EventSubscriber/ModifyFieldDefinitionFieldsSubscriberTest.php

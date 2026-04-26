@@ -1,0 +1,34 @@
+{% trans_default_domain 'nglayouts_ibexa_admin' %}
+
+<section class="ibexa-view-rawcontentview">
+    <div class="ibexa-raw-content-title">
+        <div class="ibexa-raw-content-title__text">{{ 'component_layouts.title'|trans }}</div>
+    </div>
+
+    {% if component_layouts is not empty %}
+        <div class="ibexa-content-preview">
+            <ul class="layout-list">
+                <li class="layout-list-head">
+                    <div class="layout-name">{{ 'component_layouts.layout_name'|trans }}</div>
+                    <div class="layout-description">{{ 'component_layouts.description'|trans }}</div>
+                    <div class="layout-modified">{{ 'component_layouts.modified'|trans }}</div>
+                    <div class="layout-actions"></div>
+                    <div class="layout-dropdown"></div>
+                </li>
+
+                {% for layout_data in component_layouts %}
+                    {{ nglayouts_render_layout(
+                        layout_data.layout, {
+                            additional_data: layout_data.view_types|map(v => v|humanize)|join(', ')
+                        },
+                        'ibexa_admin'
+                    ) }}
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="bg-white p-3 mb-5">
+            <p>{{ 'component_layouts.no_layouts'|trans }}</p>
+        </div>
+    {% endif %}
+</section>

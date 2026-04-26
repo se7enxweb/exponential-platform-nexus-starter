@@ -1,0 +1,65 @@
+{% extends '@admin/content/location_view.html.twig' %}
+
+{% trans_default_domain 'ibexa_locationview' %}
+
+{% block title %}{{ content.name }}{% endblock %}
+
+{% block header %}
+    {% set hide_bookmarks = hide_bookmarks|default(false) %}
+    {% embed '@ibexadesign/ui/page_title.html.twig' with {
+        title: ibexa_content_name(content),
+    } %}
+        {% block top_side %}
+            {% if hide_bookmarks is same as false %}
+                {% if location is defined and location_is_bookmarked is defined %}
+                    {% include '@ibexadesign/account/bookmarks/toggle_switch.html.twig' with {
+                        location: location,
+                        location_is_bookmarked: location_is_bookmarked
+                    } %}
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+        {% block bottom %}
+            <div style="display: flex; justify-content: space-between;">
+                <div style="flex-basis: 50%; max-width: 50%;">
+                    <span class="ibexa-icon-tag">
+                        {% set url = path('ibexa.content_type.view', { 'contentTypeId': content_type.id, 'contentTypeGroupId': content_type.contentTypeGroups|first.id }) %}
+                        <a href="{{ url }}">
+                            <svg class="ibexa-icon ibexa-icon--small ibexa-icon--{{ content_type.identifier }}">
+                                <use xlink:href="{{ ibexa_content_type_icon(content_type.identifier) }}"></use>
+                            </svg>
+                        </a>
+                        <a href="{{ url }}">{{ content_type.name }}</a>
+                    </span>
+                    {% set language_names = [] %}
+                    {% for language in content.versionInfo.languages %}
+                        {% set language_names = language_names|merge([language.name]) %}
+                    {% endfor %}
+                    {{ language_names|join(', ') }}
+                </div>
+                <div style="flex-basis: 50%; display: flex; justify-content: flex-end">
+                    {{ render(controller('Netgen\\Bundle\\IbexaAdminUIExtraBundle\\Controller\\Content\\LastModifiedInfo', {
+                        'content': content,
+                    })) }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    <div id="ng-visibility-alert"
+         data-url="{{ path('netgen.ibexa_admin_ui_extra.content.visibility.locations', { contentId: content.id }) }}"
+    >
+        {{ render(controller('Netgen\\Bundle\\IbexaAdminUIExtraBundle\\Controller\\Content\\VisibilityInfo', {
+            'contentId': content.id,
+            'iconPath': ibexa_icon_path('hide'),
+        })) }}
+    </div>
+
+    {{ ibexa_render_component_group(
+        'location-view-content-alerts',
+        {
+            'versionInfo': content.versionInfo,
+            'location': location,
+        }
+    ) }}
+{% endblock %}

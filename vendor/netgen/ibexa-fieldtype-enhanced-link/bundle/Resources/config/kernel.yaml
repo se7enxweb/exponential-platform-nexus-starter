@@ -1,0 +1,17 @@
+system:
+    default:
+        field_templates:
+            - { template: '@ibexadesign/ngenhancedlink/field_view.html.twig', priority: 1 }
+
+    admin_group:
+        admin_ui_forms:
+            content_edit:
+                form_templates:
+                    - { template: '@ibexadesign/ngenhancedlink/field_edit.html.twig', priority: 100 }
+
+        fielddefinition_edit_templates:
+            - { template: "@ibexadesign/ngenhancedlink/fielddefinition_edit.twig", priority: 100 }
+
+        # not used?
+        fielddefinition_settings_templates:
+            - { template: '@ibexadesign/ngenhancedlink/fielddefinition_settings.html.twig', priority: 100 }

@@ -1,0 +1,18 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+@mixin tag {
+    font-size: $ibexa-text-font-size-small;
+    font-weight: normal;
+    color: $ibexa-color-dark;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: calculateRem(24px);
+    margin-right: calculateRem(4px);
+    margin-top: calculateRem(4px);
+    padding: calculateRem(1px) calculateRem(25px) calculateRem(1px) calculateRem(8px);
+    background: $ibexa-color-light-400;
+    border: calculateRem(1px) solid $ibexa-color-light-400;
+    border-radius: $ibexa-border-radius;
+}

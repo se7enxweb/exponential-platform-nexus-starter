@@ -1,0 +1,33 @@
+{
+    "name": "pagerfanta/doctrine-orm-adapter",
+    "type": "library",
+    "description": "Pagerfanta adapter for Doctrine ORM",
+    "keywords": ["pagerfanta", "doctrine", "orm"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "doctrine/orm": "^2.8",
+        "pagerfanta/core": "^3.0",
+        "symfony/deprecation-contracts": "^2.1 || ^3.0"
+    },
+    "require-dev": {
+        "doctrine/annotations": "^1.11.1",
+        "doctrine/cache": "^1.11 || ^2.0",
+        "phpunit/phpunit": "^9.6 || ^10.0",
+        "symfony/cache": "^4.4 || ^5.4 || ^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagerfanta\\Doctrine\\ORM\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pagerfanta\\Doctrine\\ORM\\Tests\\": "Tests"
+        }
+    },
+    "minimum-stability": "dev"
+}

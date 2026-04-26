@@ -1,0 +1,13 @@
+services:
+    Ibexa\Solr\Handler:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Handler
+        arguments:
+            - '@ibexa.solr.gateway'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+            - '@ibexa.solr.document_mapper'
+            - '@ibexa.solr.result_extractor.content'
+            - '@ibexa.solr.result_extractor.location'
+            - '@ibexa.solr.core_filter'
+        tags:
+            - {name: ibexa.search.engine, alias: solr}
+        lazy: true

@@ -1,0 +1,4 @@
+framework:
+    messenger:
+        transports:
+            redis: '%env(TEST_IBEXA_MESSENGER_TRANSPORT_DSN)%'

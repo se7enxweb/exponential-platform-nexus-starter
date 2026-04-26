@@ -1,0 +1,78 @@
+{
+    "name": "ibexa/http-cache",
+    "description": "HTTP cache handling for Ibexa DXP.",
+    "type": "ibexa-bundle",
+    "license": "(GPL-2.0-only or proprietary)",
+    "replace": {
+        "ezsystems/ezplatform-http-cache": "*"
+    },
+    "authors": [
+        {
+            "name": "Ibexa",
+            "email": "dev-team@ibexa.co"
+        }
+    ],
+    "require": {
+        "php": " >=8.3",
+        "friendsofsymfony/http-cache": "^3.1",
+        "friendsofsymfony/http-cache-bundle": "^3.1.2",
+        "ibexa/core": "~5.0.x-dev",
+        "ibexa/rest": "~5.0.x-dev",
+        "php-http/curl-client": "^2.1",
+        "psr/http-client": "^1.0",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/routing": "^7.4",
+        "symfony/yaml": "^7.4",
+        "toflar/psr6-symfony-http-cache-store": "^4.2"
+    },
+    "require-dev": {
+        "guzzlehttp/psr7": "^2.7",
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.0",
+        "phpspec/phpspec": "^7.1 || ^8.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.6",
+        "symfony/phpunit-bridge": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\HttpCache\\": "src/lib/",
+            "Ibexa\\Bundle\\HttpCache\\": "src/bundle/",
+            "Ibexa\\Contracts\\HttpCache\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\HttpCache\\": "tests/lib/",
+            "Ibexa\\Tests\\Bundle\\HttpCache\\": "tests/bundle/"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "unit": "phpunit -c phpunit.xml",
+        "spec": "phpspec run --format=pretty",
+        "check-cs": "@fix-cs --dry-run",
+        "phpstan": "phpstan analyse",
+        "test": [
+            "@unit",
+            "@spec"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": false
+    }
+}

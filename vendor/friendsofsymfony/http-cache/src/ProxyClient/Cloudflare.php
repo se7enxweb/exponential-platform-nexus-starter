@@ -1,0 +1,195 @@
+<?php
+
+/*
+ * This file is part of the FOSHttpCache package.
+ *
+ * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FOS\HttpCache\ProxyClient;
+
+use FOS\HttpCache\ProxyClient\Invalidation\ClearCapable;
+use FOS\HttpCache\ProxyClient\Invalidation\PrefixCapable;
+use FOS\HttpCache\ProxyClient\Invalidation\PurgeCapable;
+use FOS\HttpCache\ProxyClient\Invalidation\TagCapable;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\UriInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Cloudflare HTTP cache invalidator.
+ *
+ * Additional constructor options:
+ * - zone_identifier       Identifier for your Cloudflare zone you want to purge the cache for
+ * - authentication_token  API authorization token, requires Zone.Cache Purge permissions
+ *
+ * @author Simon Jones <simon@studio24.net>
+ */
+class Cloudflare extends HttpProxyClient implements ClearCapable, PrefixCapable, PurgeCapable, TagCapable
+{
+    /**
+     * @see https://api.cloudflare.com/#getting-started-endpoints
+     */
+    private const API_ENDPOINT = '/client/v4';
+
+    /**
+     * Batch URL purge limit.
+     *
+     * @see https://api.cloudflare.com/#zone-purge-files-by-url
+     */
+    private const URL_BATCH_PURGE_LIMIT = 30;
+
+    /**
+     * Array of data to send to Cloudflare for purge by URLs request.
+     *
+     * To reduce the number of requests to cloudflare, we buffer the URLs.
+     * During flush, we build requests with batches of URL_BATCH_PURGE_LIMIT.
+     *
+     * @var array<string|array{url: string, headers: string[]}>
+     */
+    private array $purgeByUrlsData = [];
+
+    public function __construct(
+        Dispatcher $dispatcher,
+        array $options = [],
+        ?RequestFactoryInterface $requestFactory = null,
+    ) {
+        if (!function_exists('json_encode')) {
+            throw new \Exception('ext-json is required for cloudflare invalidation');
+        }
+
+        parent::__construct($dispatcher, $options, $requestFactory);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Tag invalidation only available with Cloudflare enterprise account
+     *
+     * @see https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host-or-prefix
+     */
+    public function invalidateTags(array $tags): static
+    {
+        if (!$tags) {
+            return $this;
+        }
+
+        $this->queueRequest(
+            'POST',
+            sprintf(self::API_ENDPOINT.'/zones/%s/purge_cache', $this->options['zone_identifier']),
+            [],
+            false,
+            json_encode(['tags' => $tags], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES)
+        );
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * URL prefix only available with Cloudflare enterprise plans.
+     *
+     * The prefixes need to include the domain name, but not the protocol, e.g. "www.example.com/path"
+     *
+     * @see https://developers.cloudflare.com/api/resources/cache/methods/purge/
+     */
+    public function invalidatePrefixes(array $prefixes): static
+    {
+        if (!$prefixes) {
+            return $this;
+        }
+
+        $this->queueRequest(
+            'POST',
+            sprintf(self::API_ENDPOINT.'/zones/%s/purge_cache', $this->options['zone_identifier']),
+            [],
+            false,
+            json_encode(['prefixes' => $prefixes], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @see https://api.cloudflare.com/#zone-purge-files-by-url
+     * @see https://developers.cloudflare.com/cache/how-to/purge-cache#purge-by-single-file-by-url For details on headers you can pass to clear the cache correctly
+     */
+    public function purge(string $url, array $headers = []): static
+    {
+        if (!empty($headers)) {
+            $this->purgeByUrlsData[] = [
+                'url' => $url,
+                'headers' => $headers,
+            ];
+        } else {
+            $this->purgeByUrlsData[] = $url;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @see https://api.cloudflare.com/#zone-purge-all-files
+     */
+    public function clear(): static
+    {
+        $this->queueRequest(
+            'POST',
+            sprintf(self::API_ENDPOINT.'/zones/%s/purge_cache', $this->options['zone_identifier']),
+            ['Accept' => 'application/json'],
+            false,
+            json_encode(['purge_everything' => true], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES)
+        );
+
+        return $this;
+    }
+
+    public function flush(): int
+    {
+        // Queue requests for purge by URL
+        foreach (\array_chunk($this->purgeByUrlsData, self::URL_BATCH_PURGE_LIMIT) as $urlChunk) {
+            $this->queueRequest(
+                'POST',
+                sprintf(self::API_ENDPOINT.'/zones/%s/purge_cache', $this->options['zone_identifier']),
+                [],
+                false,
+                json_encode(['files' => $urlChunk], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES)
+            );
+        }
+        $this->purgeByUrlsData = [];
+
+        return parent::flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * Always provides authentication token
+     */
+    protected function queueRequest(string $method, UriInterface|string $url, array $headers, bool $validateHost = true, $body = null): void
+    {
+        parent::queueRequest(
+            $method,
+            $url,
+            $headers + ['Authorization' => 'Bearer '.$this->options['authentication_token']],
+            $validateHost,
+            $body
+        );
+    }
+
+    protected function configureOptions(): OptionsResolver
+    {
+        $resolver = parent::configureOptions();
+
+        $resolver->setRequired([
+            'authentication_token',
+            'zone_identifier',
+        ]);
+
+        return $resolver;
+    }
+}

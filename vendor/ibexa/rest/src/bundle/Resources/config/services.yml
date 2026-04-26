@@ -1,0 +1,432 @@
+parameters:
+    ibexa.rest.output.visitor.json.regexps:
+        - '(^application/vnd\.ibexa\.api(\.[A-Za-z]+)+\+json)'
+        - '(^application/json)'
+    ibexa.rest.output.visitor.xml.regexps:
+        - '(^application/vnd\.ibexa\.api(\.[A-Za-z]+)+\+xml)'
+        - '(^application/xml)'
+        - '(^.*/.*)'
+    ibexa.rest.path_prefix.pattern: !php/const \Ibexa\Bundle\Rest\UriParser\UriParser::DEFAULT_REST_PREFIX_PATTERN
+
+services:
+    Ibexa\Bundle\Rest\Serializer\SerializerFactory:
+        arguments:
+            - !tagged_iterator 'ibexa.rest.serializer.normalizer'
+            - !tagged_iterator 'ibexa.rest.serializer.encoder'
+
+    ibexa.rest.serializer:
+        class: Symfony\Component\Serializer\Serializer
+        autoconfigure: false
+        factory: [ '@Ibexa\Bundle\Rest\Serializer\SerializerFactory', 'create' ]
+
+    Ibexa\Bundle\Rest\Routing\OptionsLoader:
+        arguments:
+            - '@Ibexa\Bundle\Rest\Routing\OptionsLoader\RouteCollectionMapper'
+        tags:
+            - { name: routing.loader }
+
+    Ibexa\Bundle\Rest\Routing\OptionsLoader\RouteCollectionMapper:
+        arguments:
+            - '@Ibexa\Bundle\Rest\Routing\OptionsLoader\Mapper'
+
+    Ibexa\Bundle\Rest\Routing\OptionsLoader\Mapper: ~
+
+    Ibexa\Bundle\Rest\CorsOptions\RestProvider:
+        arguments: ["@router.default"]
+        tags:
+            - { name: nelmio_cors.options_provider }
+
+    Ibexa\Rest\Output\FieldTypeSerializer:
+        arguments:
+            - '@ibexa.api.service.field_type'
+            - '@Ibexa\Rest\FieldTypeProcessorRegistry'
+
+    Ibexa\Contracts\Rest\UriParser\UriParserInterface: '@Ibexa\Bundle\Rest\UriParser\UriParser'
+
+    Ibexa\Bundle\Rest\UriParser\UriParser:
+        arguments:
+            $urlMatcher: '@Symfony\Component\Routing\Matcher\UrlMatcherInterface'
+            $restPrefixPattern: '%ibexa.rest.path_prefix.pattern%'
+
+    Ibexa\Rest\Input\ParserTools: ~
+
+    Ibexa\Rest\Input\FieldTypeParser:
+        arguments:
+            - '@ibexa.api.service.content'
+            - '@ibexa.api.service.content_type'
+            - '@ibexa.api.service.field_type'
+            - '@Ibexa\Rest\FieldTypeProcessorRegistry'
+
+    Ibexa\Bundle\Rest\ApiLoader\Factory:
+        arguments: ['@ibexa.config.resolver', '@ibexa.api.repository']
+        calls:
+            - [setRequestStack, ["@request_stack"]]
+
+    Ibexa\Rest\Server\Service\ExpressionRouterRootResourceBuilder:
+         arguments: ["@router", '@Ibexa\Bundle\Core\Routing\DefaultRouter', '@ibexa.config.resolver']
+
+    Ibexa\Rest\Server\Controller:
+        autowire: true
+        calls:
+            - [ setInputDispatcher, ['@Ibexa\Rest\Input\Dispatcher'] ]
+            - [ setRouter, ["@router"] ]
+            - [ setUriParser, ['@Ibexa\Contracts\Rest\UriParser\UriParserInterface'] ]
+            - [ setRepository, ['@ibexa.api.repository'] ]
+
+    Ibexa\Rest\Server\Controller\Root:
+        parent: Ibexa\Rest\Server\Controller
+        arguments: ['@Ibexa\Rest\Server\Service\ExpressionRouterRootResourceBuilder']
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\Server\Controller\Section\:
+        resource: '../../../lib/Server/Controller/Section'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\BinaryContent:
+        parent: Ibexa\Rest\Server\Controller
+        arguments:
+            - '@ibexa.field_type.ibexa_image.variation_service'
+            - '@ibexa.config.resolver'
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\Server\Controller\Content\:
+        resource: '../../../lib/Server/Controller/Content'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\ContentType\:
+        resource: '../../../lib/Server/Controller/ContentType'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\Role\:
+        resource: '../../../lib/Server/Controller/Role'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\Language\:
+        resource: '../../../lib/Server/Controller/Language'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\Location\:
+        resource: '../../../lib/Server/Controller/Location'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\ObjectState\:
+        resource: '../../../lib/Server/Controller/ObjectState'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\Trash\:
+        resource: '../../../lib/Server/Controller/Trash'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\User\:
+        resource: '../../../lib/Server/Controller/User'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\URLWildcard\:
+        resource: '../../../lib/Server/Controller/URLWildcard'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\URLAlias\:
+        resource: '../../../lib/Server/Controller/URLAlias'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\Views:
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        arguments:
+            - '@ibexa.api.service.search'
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\Server\Controller\Session\:
+        resource: '../../../lib/Server/Controller/Session'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $permissionResolver: '@Ibexa\Contracts\Core\Repository\PermissionResolver'
+            $userService: '@Ibexa\Contracts\Core\Repository\UserService'
+            $csrfTokenManager: '@Ibexa\Rest\Server\Security\CsrfTokenManager'
+            $securityTokenStorage: '@Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface'
+            $csrfTokenIntention: '%ibexa.rest.csrf_token_intention%'
+            $configResolver: '@Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface'
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\Server\Controller\Bookmark\:
+        resource: '../../../lib/Server/Controller/Bookmark'
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Rest\Server\Controller\JWT:
+        autowire: true
+        autoconfigure: true
+        parent: Ibexa\Rest\Server\Controller
+        tags: [controller.service_arguments]
+
+    Ibexa\Bundle\Rest\EventListener\RequestListener:
+        arguments:
+            $uriParser: '@Ibexa\Contracts\Rest\UriParser\UriParserInterface'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Bundle\Rest\EventListener\ResponseListener:
+        arguments:
+            - '@Ibexa\Rest\Server\View\AcceptHeaderVisitorDispatcher'
+        calls:
+            - ['setLogger', ['@?logger']]
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: request }
+
+    Ibexa\Bundle\Rest\EventListener\CsrfListener:
+        arguments:
+            - "@event_dispatcher"
+            - "%form.type_extension.csrf.enabled%"
+            - '%ibexa.rest.csrf_token_intention%'
+            - '@?Ibexa\Rest\Server\Security\CsrfTokenManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Bundle\Rest\EventListener\UserCheckRequestListener:
+        arguments:
+            $permissionResolver: '@Ibexa\Contracts\Core\Repository\PermissionResolver'
+            $security: '@security.helper'
+        calls:
+            - [setLogger, ['@logger']]
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: request }
+
+    Ibexa\Bundle\Rest\EventListener\SupportedMediaTypesSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Rest\Server\Controller\Options:
+        parent: Ibexa\Rest\Server\Controller
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\Server\Controller\Services:
+        arguments: ['%ibexa.field_type.country.data%']
+        tags: [controller.service_arguments]
+
+    Ibexa\Rest\FieldTypeProcessorRegistry:
+        lazy: true
+
+    Ibexa\Rest\FieldTypeProcessor\ImageProcessor:
+        factory: ['@Ibexa\Bundle\Rest\ApiLoader\Factory', getImageFieldTypeProcessor]
+        arguments:
+            - "@router"
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_image }
+
+    Ibexa\Rest\FieldTypeProcessor\ImageAssetFieldTypeProcessor:
+        factory: ['@Ibexa\Bundle\Rest\ApiLoader\Factory', getImageAssetFieldTypeProcessor]
+        arguments:
+            - "@router"
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_image_asset }
+
+    Ibexa\Rest\FieldTypeProcessor\DateAndTimeProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_datetime }
+
+    Ibexa\Rest\FieldTypeProcessor\DateProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_date }
+
+    Ibexa\Rest\FieldTypeProcessor\MediaProcessor:
+        factory: ['@Ibexa\Bundle\Rest\ApiLoader\Factory', getMediaFieldTypeProcessor]
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_media }
+
+    Ibexa\Rest\FieldTypeProcessor\RelationListProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_object_relation_list }
+        calls:
+            - [setRouter, ["@router"]]
+            - [setLocationService, ['@ibexa.api.service.location']]
+
+    Ibexa\Rest\FieldTypeProcessor\RelationProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_object_relation }
+        calls:
+            - [setRouter, ["@router"]]
+            - [setLocationService, ['@ibexa.api.service.location']]
+
+    Ibexa\Rest\FieldTypeProcessor\TimeProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_time }
+
+    Ibexa\Rest\FieldTypeProcessor\BinaryProcessor:
+        factory: ['@Ibexa\Bundle\Rest\ApiLoader\Factory', getBinaryFileFieldTypeProcessor]
+        arguments:
+            - '@ibexa.core.io.default_url_decorator'
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_binaryfile }
+
+    Ibexa\Rest\FieldTypeProcessor\FloatProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_float }
+
+    Ibexa\Rest\FieldTypeProcessor\StringProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_string }
+
+    Ibexa\Rest\FieldTypeProcessor\UserProcessor:
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_user }
+
+    ### OUTPUT
+
+    # Main REST output dispatcher
+    # Gets a <requestMatch> => output.visitor mapping with the ibexa.rest.output.visitor tag.
+    Ibexa\Rest\Server\View\AcceptHeaderVisitorDispatcher: ~
+
+    # format output visitors
+    ibexa.rest.output.visitor.json:
+        class: Ibexa\Contracts\Rest\Output\Visitor
+        arguments:
+            $generator: '@Ibexa\Rest\Output\Generator\Json'
+            $normalizer: '@ibexa.rest.serializer'
+            $encoder: '@ibexa.rest.serializer.encoder.json'
+            $valueObjectVisitorResolver: '@Ibexa\Contracts\Rest\Output\ValueObjectVisitorResolver'
+            $format: 'json'
+        tags:
+            - { name: ibexa.rest.output.visitor, regexps: ibexa.rest.output.visitor.json.regexps }
+
+    ibexa.rest.output.visitor.xml:
+        class: Ibexa\Contracts\Rest\Output\Visitor
+        arguments:
+            $generator: '@Ibexa\Rest\Output\Generator\Xml'
+            $normalizer: '@ibexa.rest.serializer'
+            $encoder: '@ibexa.rest.serializer.encoder.xml'
+            $valueObjectVisitorResolver: '@Ibexa\Contracts\Rest\Output\ValueObjectVisitorResolver'
+            $format: 'xml'
+        tags:
+            - { name: ibexa.rest.output.visitor, regexps: ibexa.rest.output.visitor.xml.regexps }
+
+    # format output generators
+    Ibexa\Rest\Output\Generator\Xml:
+        arguments:
+            $fieldTypeHashGenerator: '@Ibexa\Rest\Output\Generator\Xml\FieldTypeHashGenerator'
+
+    Ibexa\Rest\Output\Generator\Xml\FieldTypeHashGenerator:
+        arguments:
+            $normalizer: '@ibexa.rest.serializer'
+            $logger: '@logger'
+            $strictMode: '%ibexa.rest.strict_mode%'
+        tags:
+            - { name: monolog.logger, channel: ibexa.rest }
+
+    Ibexa\Rest\Output\Generator\Json:
+        arguments:
+            - '@Ibexa\Rest\Output\Generator\Json\FieldTypeHashGenerator'
+        calls:
+            - [ setFormatOutput, [ "%kernel.debug%" ] ]
+
+    Ibexa\Rest\Output\Generator\Json\FieldTypeHashGenerator:
+        arguments:
+            $normalizer: '@ibexa.rest.serializer'
+            $logger: '@logger'
+            $strictMode: '%ibexa.rest.strict_mode%'
+        tags:
+            - { name: monolog.logger, channel: ibexa.rest }
+
+    # value objects visitors
+    ibexa.rest.output.value_object_visitor.Exception.InvalidArgumentException:
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\InvalidArgumentException
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: \Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException }
+
+    Ibexa\Rest\Input\Dispatcher:
+        arguments:
+            - '@Ibexa\Contracts\Rest\Input\ParsingDispatcher'
+            - []
+
+    Ibexa\Contracts\Rest\Input\ParsingDispatcher:
+        arguments:
+            - '@event_dispatcher'
+
+    Ibexa\Rest\Input\Handler\Json:
+        tags:
+            - { name: ibexa.rest.input.handler, format: json }
+
+    Ibexa\Rest\Input\Handler\Xml:
+        tags:
+            - { name: ibexa.rest.input.handler, format: xml }
+
+    Ibexa\Bundle\Core\Routing\DefaultRouter:
+        class: Ibexa\Bundle\Core\Routing\DefaultRouter
+        parent: hautelook.router.template
+        calls:
+            - [ setOption, [ strict_requirements, ~ ] ]
+
+    Ibexa\Bundle\Rest\Routing\ExpressionLanguage\ContentTypeHeaderMatcherExpressionFunction:
+        arguments:
+            $mediaTypeParser: '@Ibexa\Contracts\Rest\Input\MediaTypeParserInterface'
+        tags:
+            - { name: routing.expression_language_function, function: 'ibexa_get_media_type' }
+
+    Ibexa\Contracts\Rest\Input\MediaTypeParser: ~
+
+    Ibexa\Contracts\Rest\Input\MediaTypeParserInterface: '@Ibexa\Contracts\Rest\Input\MediaTypeParser'
+
+    Ibexa\Contracts\Rest\Input\Parser\Query\Criterion\BaseCriterionProcessor:
+        abstract: true
+        arguments:
+            $parsingDispatcher: '@Ibexa\Contracts\Rest\Input\ParsingDispatcher'
+
+    Ibexa\Contracts\Rest\Output\ValueObjectVisitorResolverInterface: '@Ibexa\Contracts\Rest\Output\ValueObjectVisitor'
+
+    Ibexa\Contracts\Rest\Output\ValueObjectVisitorResolver: ~
+
+    Ibexa\Contracts\Rest\Input\Parser\Query\SortClause\BaseSortClauseProcessor:
+        abstract: true
+        arguments:
+            $parsingDispatcher: '@Ibexa\Contracts\Rest\Input\ParsingDispatcher'

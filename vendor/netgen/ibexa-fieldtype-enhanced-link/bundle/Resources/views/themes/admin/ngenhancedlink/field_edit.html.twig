@@ -1,0 +1,36 @@
+{% extends '@ibexadesign/content/form_fields.html.twig' %}
+
+{% trans_default_domain 'field_edit' %}
+
+{% use '@ibexadesign/ngenhancedlink/field_edit/internal_link.html.twig' %}
+
+{% block ibexa_fieldtype_ngenhancedlink_widget %}
+    {% set limit = 1 %}
+    {% set default_location = form.vars.default_location ? form.vars.default_location.id : null %}
+    {% set allowed_content_type_identifiers = form.parent.vars.value.fieldDefinition.fieldSettings.selectionContentTypes %}
+    {% set allowed_link_type = form.parent.vars.value.fieldDefinition.fieldSettings.allowedLinkType %}
+    {% set helper = 'ngenhancedlink.helper'|trans|desc('Stores a Relation to a Content item.') %}
+    {% set is_translation = is_translation ?? false %}
+
+    <div class="link-type-options hidden" data-allowed-link-type="{{ allowed_link_type }}">
+        {{- form_row(form.link_type, { disabled: is_translation }) -}}
+        {{- form_row(form.rel_attribute, { disabled: is_translation }) -}}
+    </div>
+    <div class="internal-link-form hidden">
+        {{ block('ibexa_fieldtype_ngenhancedlink_internal_link_widget') }}
+        {% if form.suffix is defined %}
+            {{- form_row(form.suffix, { disabled: is_translation }) -}}
+        {% endif %}
+        {% if form.label_internal is defined %}
+            {{- form_row(form.label_internal, { disabled: is_translation }) -}}
+        {% endif %}
+        {{- form_row(form.target_internal, { disabled: is_translation }) -}}
+    </div>
+    <div class="external-link-form hidden">
+        {{- form_row(form.url, { disabled: is_translation }) -}}
+        {% if form.label_external is defined %}
+            {{- form_row(form.label_external, { disabled: is_translation }) -}}
+        {% endif %}
+        {{- form_row(form.target_external, { disabled: is_translation }) -}}
+    </div>
+{% endblock %}

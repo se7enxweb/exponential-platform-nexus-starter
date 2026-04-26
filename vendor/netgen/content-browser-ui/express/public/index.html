@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="ngcb-base-path" content="/cb/">
+  <meta name="theme-color" content="#000000" />
+  <title>Netgen Content Browser</title>
+  <style type="text/css">
+    html {height: 100%; font-family: 'Roboto', 'Helvetica Neue', sans-serif;}
+    body {height: 100%; margin: 0;}
+    .cb-demo {display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;}
+    .cb-demo-item {margin: 1em 0;}
+  </style>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div class="cb-demo">
+    <div class="cb-demo-item">
+      <div
+          class="js-input-browse item-empty"
+          data-disabled="false"
+          data-min_selected="1"
+          data-max_selected="1"
+      >
+        <div class="row-input">
+          <select name="cb_item_type" class="js-item-type">
+            <option value="layout">Layout</option>
+            <option value="netgen_tags">Netgen Tags</option>
+            <option value="ibexa_location">Ibexa location</option>
+            <option value="ibexa_content">Ibexa content</option>
+          </select>
+        </div>
+
+        <input type="hidden" name="cb_value" class="js-value">
+
+        <div class="input-browse">
+          <span class="js-clear">clear</span>
+
+          <a class="js-trigger" href="#">
+            <span class="js-name" data-empty-note="(No item selected)">(No item selected)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cb-demo-item">
+      <div class="js-input-browse item-empty"
+           data-min_selected="1"
+           data-max_selected="1"
+           data-start_location="2"
+           data-custom-param1="value1"
+           data-custom-param2="value2"
+           data-custom-hello-world="value1"
+           data-custom
+           data-custom-="test"
+      >
+        <div class="input-browse">
+          <a class="js-trigger" href="#">
+            <span class="js-name" data-empty-note="(No item selected)">(No item selected)</span>
+          </a>
+        </div>
+
+        <input type="hidden" class="js-item-type" value="ibexa_location">
+        <input type="hidden" class="js-value">
+      </div>
+    </div>
+
+    <div class="cb-demo-item">
+      <div class="js-multiple-browse"
+        data-browser-prototype="<div class=&quot;item&quot;><a href=&quot;#&quot; class=&quot;js-remove&quot;><i class=&quot;material-icons&quot;>close</i></a><span class=&quot;name&quot;></span><input type=&quot;hidden&quot; name=&quot;__name__&quot; required=&quot;required&quot; /></div>"
+        data-input=""
+        data-cy="multiple-browse"
+      >
+        <div class="items" data-cy="multiple-items">
+          <div class="no-items">
+              (NO ITEMS SELECTED)
+          </div>
+        </div>
+        <input type="hidden" class="js-item-type" value="ibexa_location">
+        <a href="#" class="js-trigger" data-cy="multiple-add">Add items</a>
+      </div>
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
+</html>

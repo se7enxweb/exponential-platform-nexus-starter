@@ -1,0 +1,1 @@
+module.exports = [".\/vendor\/se7enxweb\/admin-ui\/src\/bundle\/Resources\/encore\/ibexa.webpack.libs.config.js"];

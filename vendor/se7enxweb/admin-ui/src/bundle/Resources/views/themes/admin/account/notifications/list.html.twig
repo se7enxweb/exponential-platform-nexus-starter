@@ -1,0 +1,27 @@
+{% trans_default_domain 'ibexa_notifications' %}
+
+{% embed '@ibexadesign/ui/component/table/table.html.twig' with {
+    head_cols: [],
+    class: 'ibexa-table--not-striped ibexa-list--notifications',
+    attr: {
+        'data-notifications': path('ibexa.notifications.render.page'),
+        'data-notifications-count': path('ibexa.notifications.count'),
+        'data-notifications-count-interval': notifications_count_interval,
+        'data-notifications-total': pager.nbResults,
+    }
+} %}
+    {% block tbody %}
+        {% if pager.count is same as(0) %}
+        <div class="ibexa-notifications-modal__empty">
+            <img
+                src="{{ empty_image|default(asset('/bundles/ibexaadminui/img/ibexa-empty-table.svg')) }}"
+            />
+            <h2 class="ibexa-notifications-modal__empty-text">{{ 'notifications.list.empty'|trans|desc('You don\'t have any notifications.') }}</h2>
+        </div>
+        {% else %}
+            {% for notification in sidebarNotifications %}
+                {{ notification|raw }}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+{% endembed %}

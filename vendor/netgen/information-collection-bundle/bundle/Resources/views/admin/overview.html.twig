@@ -1,0 +1,73 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% extends netgen_information_collection_admin.pageLayoutTemplate %}
+
+{% block content %}
+    {% include "@NetgenInformationCollection/admin/flash_messages.html.twig" %}
+
+    <h1>{{ 'netgen_information_collection_admin_overview_title'|trans({'%count%': objects.count}) }}</h1>
+
+    {% if objects is not empty %}
+        <form method="post" action="{{ path('netgen_information_collection.route.admin.handle_contents') }}">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'netgen_information_collection_admin_overview_content_name'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_content_type'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_first_collection'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_last_collection'|trans }}</th>
+                        <th>{{ 'netgen_information_collection_admin_overview_collections'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in objects %}
+                        {% set content_id = object.content.id %}
+                        <tr>
+                            <td>
+                                <input id="{{ content_id }}_id" name="ContentId[]" value="{{ content_id }}" title="Select collections for removal." type="checkbox" data-enable="Item">
+                                <label for="{{ content_id }}_id">
+                                </label>
+                            </td>
+                            <td>
+                                <img src="{{ asset('bundles/netgeninformationcollection/admin/images/Document.png') }}" alt="section" title="section" width="16" height="16">
+                                &nbsp;
+                                {% if object.hasLocation %}<a href="{{ path("ibexa.url.alias", { "contentId": object.content.contentInfo.id }) }}">{% endif %}
+                                    {{ ibexa_content_name(object.content) }}
+                                {% if object.hasLocation %}</a>{% endif %}
+                            </td>
+                            <td>
+                                {{ object.contentType.identifier }}
+                            </td>
+                            <td>
+                                {{ object.firstCollection.created|date("Y.m.d H:i") }}
+                            </td>
+                            <td>
+                                {{ object.lastCollection.created|date("Y.m.d H:i") }}
+                            </td>
+                            <td class="number" align="right">
+                                <a href="{{ path("netgen_information_collection.route.admin.collection_list", {"contentId": content_id}) }}">
+                                    {{ object.count }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if objects.haveToPaginate() %}
+                {{ pagerfanta( objects, 'netgen_information_collection_admin' ) }}
+            {% endif %}
+
+            <div class="ng-ui-btn-group">
+                <button type="submit" name="DeleteCollectionByContentAction" class="ng-ui-btn" data-enabler="Item">
+                    {{ 'netgen_information_collection_admin_overview_delete'|trans }}
+                </button>
+            </div>
+
+        </form>
+    {% else %}
+        <p>{{ 'netgen_information_collection_admin_overview_no_objects'|trans }}</p>
+    {% endif %}
+
+{% endblock %}

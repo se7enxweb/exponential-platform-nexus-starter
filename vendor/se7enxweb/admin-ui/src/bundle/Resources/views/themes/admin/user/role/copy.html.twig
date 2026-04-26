@@ -1,0 +1,28 @@
+{% extends '@ibexadesign/user/role/base.html.twig' %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% trans_default_domain 'ibexa_role' %}
+
+{% block header_admin %}
+    {% set role_copy_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.role_copy.sidebar_right', [], {'role': role}) %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'role.copying'|trans|desc('Copying'),
+        title: 'role.view.copy.title'|trans({'%identifier%': role.identifier})|desc('Copying Role: %identifier%'),
+        context_actions: knp_menu_render(role_copy_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <section>
+            <div class="card ibexa-card ibexa-card--light">
+                <div class="card-body ibexa-card__body ibexa-form-block">
+                    {{ form_row(form.new_identifier, { row_attr: { class: 'ibexa-form-field' }, attr: {'autofocus': 'autofocus'}}) }}
+                </div>
+            </div>
+        </section>
+        {{ form_widget(form.copy, { 'attr': { 'hidden': 'hidden' } }) }}
+    {{ form_end(form) }}
+{% endblock %}

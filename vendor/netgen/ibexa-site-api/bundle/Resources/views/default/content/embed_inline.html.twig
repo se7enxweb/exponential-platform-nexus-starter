@@ -1,0 +1,8 @@
+{# content \Netgen\IbexaSiteApi\API\Values\Content #}
+{# location \Netgen\IbexaSiteApi\API\Values\Location #}
+
+{% if location is defined %}
+    <a href="{{ location.path }}"{% if class is defined %} class="{{ class }}"{% endif %}>{{ content.name }}</a>
+{% else %}
+    <a href="{{ content.path }}"{% if class is defined %} class="{{ class }}"{% endif %}>{{ content.name }}</a>
+{% endif %}

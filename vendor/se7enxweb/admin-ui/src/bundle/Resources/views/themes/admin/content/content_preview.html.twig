@@ -1,0 +1,76 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{% trans_default_domain 'ibexa_content_preview' %}
+
+{% set is_published = content.contentInfo.published and content.contentInfo.mainLocationId is not null %}
+{% set preselected_site_access = preselected_site_access|default(siteaccesses|first) %}
+{% set is_back_to_top_disabled = true %}
+
+{% block body_class %}ibexa-content-preview{% endblock %}
+
+{% block left_sidebar %}{% endblock %}
+
+{% form_theme site_access_form '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% block header_row %}
+    <div class="ibexa-preview-header">
+            <div class="ibexa-preview-header__item ibexa-preview-header__item--siteaccess ibexa-preview-header__item--separation-line">
+                {{ form(site_access_form) }}
+            </div>
+        <div class="ibexa-preview-header__item ibexa-preview-header__item--actions">
+            <button data-preview-mode="desktop" class="btn ibexa-btn ibexa-btn--no-text ibexa-btn--dark-selector ibexa-btn--selected ibexa-preview-header__action">
+                <svg class="ibexa-icon ibexa-icon--medium ibexa-icon--desktop">
+                    <use xlink:href="{{ ibexa_icon_path('view-desktop') }}"></use>
+                </svg>
+            </button>
+            <button data-preview-mode="tablet" class="btn ibexa-btn ibexa-btn--no-text ibexa-btn--dark-selector ibexa-preview-header__action">
+                <svg class="ibexa-icon ibexa-icon--medium ibexa-icon--tablet">
+                    <use xlink:href="{{ ibexa_icon_path('view-tablet') }}"></use>
+                </svg>
+            </button>
+            <button data-preview-mode="mobile" class="btn ibexa-btn ibexa-btn--no-text ibexa-btn--dark-selector ibexa-preview-header__action">
+                <svg class="ibexa-icon ibexa-icon--light ibexa-icon--medium ibexa-icon--mobile">
+                    <use xlink:href="{{ ibexa_icon_path('view-mobile') }}"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="ibexa-preview-header__item ibexa-preview-header__item--back">
+            {% if referrer == 'content_draft_edit' %}
+                {% set back_url = url('ibexa.content.draft.edit', {
+                    contentId: content.id,
+                    versionNo: version_no,
+                    language: language_code,
+                    locationId: is_published ? location.id : null,
+                }) %}
+            {% else %}
+                {% set back_url = url('ibexa.content.view', {
+                    contentId: content.id,
+                    locationId: location.id,
+                }) %}
+            {% endif %}
+
+            <a
+                class="ibexa-preview-header__link btn ibexa-btn ibexa-btn--secondary-light"
+                href="{{ back_url }}"
+            >
+                <span class="ibexa-btn__label">{{ 'preview_header.back'|trans({}, 'ibexa_content')|desc('Close') }}</span>
+            </a>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block content_column %}
+    {% block content_header %}{% endblock %}
+    {% block content %}
+        <div class="ibexa-preview">
+            <div class="ibexa-preview__iframe ibexa-preview__iframe--desktop">
+                <iframe src="{{ preview_url }}" frameborder="0"></iframe>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-content-preview-js', null, 'ibexa') }}
+{% endblock %}

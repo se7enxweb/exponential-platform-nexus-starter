@@ -1,0 +1,3 @@
+'role.policy.queues': 'Queues'
+'role.policy.queues.all_functions': 'All functions'
+'role.policy.queues.read': 'Read'

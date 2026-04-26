@@ -1,0 +1,23 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="nl-modal">
+        <a href="#" class="close-modal"></a>
+
+        <div class="nl-modal-head">
+            {% block header %}{% endblock %}
+        </div>
+
+        <div class="nl-modal-body">
+            {% block children %}{% endblock %}
+        </div>
+
+        {% block actions %}
+            <div class="nl-modal-actions">
+                {% block buttons %}{% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+
+    {{ form_rest(form) }}
+{{ form_end(form) }}

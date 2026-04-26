@@ -1,0 +1,258 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% do {layout, rule} = collector.data %}
+
+    {% if layout %}
+        {% set status = 'green' %}
+    {% elseif layout === false %}
+        {% set status = 'yellow' %}
+    {% endif %}
+
+    {% set icon %}
+        <img src="{{ asset('layouts-logo-silhouette.svg', 'nglayouts_admin_images') }}" alt="Netgen Layouts" />
+
+        <span class="sf-toolbar-value">
+            {% if layout %}
+                {{ layout.name }}
+            {% elseif layout === false %}
+                No layout resolved
+            {% endif %}
+        </span>
+    {% endset %}
+
+    {% set text %}
+        {% if layout %}
+            <div class="sf-toolbar-info-piece">
+                <b>Resolved layout</b>
+
+                <span>
+                    <a href="{{ layout.path }}" target="_blank">
+                        {{ layout.name }}
+                    </a>
+                </span>
+            </div>
+
+            <div class="sf-toolbar-info-piece">
+                <b>Layout type</b>
+
+                <span>{{ layout.type }}</span>
+            </div>
+
+            <div class="sf-toolbar-info-piece">
+                <b>Rule UUID</b>
+
+                <span>{{ rule ? rule.id : 'No rule' }}</span>
+            </div>
+        {% endif %}
+
+        <div class="sf-toolbar-info-piece">
+            <b>Netgen Layouts version</b>
+
+            <span>{{ collector.data.version }}</span>
+        </div>
+
+        <div class="sf-toolbar-info-piece">
+            <b>Resources</b>
+
+            <span>
+                <a href="{{ 'https://docs.netgen.io/projects/layouts/en/' ~ collector.data.docs_version ~ '/' }}" target="_blank" rel="noopener noreferrer">
+                    Read Netgen Layouts docs
+                </a>
+            </span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            <img src="{{ asset('layouts-logo-silhouette.svg', 'nglayouts_admin_images') }}" alt="Netgen Layouts" />
+        </span>
+
+        <strong>Netgen Layouts</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    {% do {layout, rule, blocks} = collector.data %}
+
+    <div class="sf-tabs">
+        <div class="tab">
+            <h3 class="tab-title">Rendered layout</h3>
+
+            <div class="tab-content nl-container">
+                {% if layout %}
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="value">{{ collector.data.version }}</span>
+                            <span class="label">Netgen Layouts version</span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="value">
+                                <a href="{{ layout.path }}" target="_blank">
+                                    {{ layout.name }}
+                                </a>
+                            </span>
+                            <span class="label">Layout name</span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="value">{{ layout.type }}</span>
+                            <span class="label">Layout type</span>
+                        </div>
+
+                        {% if rule %}
+                            <div class="metric">
+                                <span class="value">{{ rule.id }}</span>
+                                <span class="label">Rule UUID</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="value">
+                                {% if layout.template_path is not empty %}
+                                    <a href="{{ layout.template_path|file_link(1) }}">{{ layout.template }}</a>
+                                {% else %}
+                                    {{ layout.template }}
+                                {% endif %}
+                            </span>
+                            <span class="label">Template</span>
+                        </div>
+                        <div class="metric">
+                            <span class="value">{{ layout.context }}</span>
+                            <span class="label">Context</span>
+                        </div>
+                    </div>
+
+                    {% if rule %}
+                        <h2>Rule targets</h2>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="key">Target type</th>
+                                    <th scope="col">Target value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for target in rule.targets %}
+                                <tr>
+                                    <th>{{ target.type }}</th>
+                                    <td>{{ profiler_dump(target.value, maxDepth=0) }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <h2>Rule conditions</h2>
+
+                        {% if rule.conditions is defined and rule.conditions|length > 0 %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="key">Condition type</th>
+                                        <th scope="col">Condition value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for condition in rule.conditions %}
+                                    <tr>
+                                        <th>{{ condition.type }}</th>
+                                        <td>{{ profiler_dump(condition.value, maxDepth=0) }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class="empty">
+                                <p>Rule does not have any conditions.</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="value">{{ collector.data.version }}</span>
+                            <span class="label">Netgen Layouts version</span>
+                        </div>
+                    </div>
+
+                    <div class="empty">
+                        <p>No layout was resolved for this request.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="tab">
+            <h3 class="tab-title">Rendered blocks</h3>
+
+            <div class="tab-content">
+                {% if blocks|length > 0 %}
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="value">{{ blocks|length }}</span>
+                            <span class="label">Blocks rendered</span>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Block UUID</th>
+                                <th scope="col">Layout info</th>
+                                <th scope="col">Block info</th>
+                                <th scope="col">Template</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for block in blocks %}
+                            <tr>
+                                <th>{{ block.id }}</th>
+                                <td class="font-normal">
+                                    <a href="{{ block.layout_path }}">
+                                        {{ block.layout_name }}
+                                    </a>
+                                </td>
+                                <td class="font-normal">
+                                    {% if block.name is not empty %}
+                                        <div class="metadata">
+                                            <strong>Name</strong>: {{ block.name }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="metadata">
+                                        <strong>Block definition</strong>: {{ block.definition }}
+                                    </div>
+                                    <div class="metadata">
+                                        <strong>View type</strong>: {{ block.view_type }}
+                                    </div>
+                                    <div class="metadata">
+                                        <strong>Locale</strong>: {{ block.locale }}
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if block.template_path is not empty %}
+                                        <a href="{{ block.template_path|file_link(1) }}">{{ block.template }}</a>
+                                    {% else %}
+                                        {{ block.template }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="empty">
+                        <p>No blocks were rendered during this request.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

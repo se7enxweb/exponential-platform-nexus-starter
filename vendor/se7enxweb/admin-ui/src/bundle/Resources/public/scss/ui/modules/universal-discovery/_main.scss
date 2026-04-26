@@ -1,0 +1,50 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.m-ud {
+    position: fixed;
+    z-index: 10250;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    padding: calculateRem(16px);
+    background-color: $ibexa-color-dark;
+
+    .c-grid {
+        overflow: hidden;
+
+        &__items-wrapper {
+            .c-thumbnail {
+                .ibexa-icon {
+                    width: calculateRem(80px);
+                    height: calculateRem(80px);
+                    fill: $ibexa-color-dark-300;
+                }
+            }
+        }
+
+        &--marked {
+            .c-thumbnail {
+                .ibexa-icon {
+                    fill: $ibexa-color-dark;
+                }
+            }
+        }
+    }
+
+    .c-selected-locations-item {
+        .c-thumbnail {
+            .ibexa-icon {
+                fill: $ibexa-color-dark-300;
+            }
+        }
+    }
+}
+
+.ibexa-is-branch-resizing {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

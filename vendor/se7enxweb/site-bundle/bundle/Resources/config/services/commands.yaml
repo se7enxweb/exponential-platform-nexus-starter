@@ -1,0 +1,87 @@
+services:
+    ngsite.command.content_type.move:
+        class: Netgen\Bundle\SiteBundle\Command\MoveContentTypeCommand
+        arguments:
+            - "@ibexa.api.repository"
+            - "@ibexa.api.service.content_type"
+        tags:
+            - { name: console.command, command: 'ngsite:content-type:move' }
+
+    ngsite.command.content.update_always_available:
+        class: Netgen\Bundle\SiteBundle\Command\UpdateContentAlwaysAvailableCommand
+        arguments:
+            - "@ibexa.api.repository"
+            - "@ibexa.api.service.content"
+        tags:
+            - { name: console.command, command: 'ngsite:content:update-always-available' }
+
+    ngsite.command.update_publish_date:
+        class: Netgen\Bundle\SiteBundle\Command\UpdatePublishDateCommand
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: console.command, command: 'ngsite:content:update-publish-date' }
+
+    ngsite.command.symlink_project:
+        class: Netgen\Bundle\SiteBundle\Command\SymlinkProjectCommand
+        arguments:
+            - "@kernel"
+            - "@filesystem"
+        tags:
+            - { name: console.command, command: 'ngsite:symlink:project' }
+
+    ngsite.command.dump_database:
+        class: Netgen\Bundle\SiteBundle\Command\DumpDatabaseCommand
+        arguments:
+            - "@ibexa.persistence.connection"
+        tags:
+            - { name: console.command, command: 'ngsite:database:dump' }
+
+    ngsite.command.generate_image_variations:
+        class: Netgen\Bundle\SiteBundle\Command\GenerateImageVariationsCommand
+        arguments:
+            - "@ibexa.api.repository"
+            - "@ibexa.field_type.ibexa_image.variation_service"
+            - "@ibexa.cache_pool"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: console.command, command: 'ngsite:content:generate-image-variations' }
+
+    ngsite.command.profiler_cache_purger:
+        class: Netgen\Bundle\SiteBundle\Command\ProfilerCachePurgerCommand
+        arguments:
+            - "@?profiler"
+        tags:
+            - { name: console.command, command: 'ngsite:profiler:clear-cache' }
+
+    ngsite.command.tag_content:
+        class: Netgen\Bundle\SiteBundle\Command\TagContentByTypesCommand
+        arguments:
+            - "@ibexa.api.repository"
+            - "@ibexa.api.service.content"
+            - "@netgen.ibexa_site_api.repository.filtering_search_service"
+            - "@netgen_tags.api.service.tags"
+        tags:
+            - { name: console.command, command: 'ngsite:content:tag-content' }
+
+    ngsite.command.generate_showcase:
+        class: Netgen\Bundle\SiteBundle\Command\GenerateShowcaseCommand
+        arguments:
+            - "@netgen.ibexa_site_api.named_object.provider"
+            - "@netgen.ibexa_site_api.filter_service"
+            - "@ibexa.api.repository"
+            - "@netgen_layouts.api.service.layout_resolver"
+            - "@netgen_layouts.api.service.layout"
+            - "@netgen_layouts.api.service.block"
+            - "@netgen_layouts.api.service.collection"
+            - "@netgen_layouts.api.service.transaction"
+            - "@netgen_layouts.layout.registry.layout_type"
+            - "@netgen_layouts.block.registry.block_definition"
+            - "@netgen_layouts.block.registry.block_type"
+            - "@netgen_layouts.collection.registry.item_definition"
+            - "@ibexa.config.resolver"
+            - "@Ibexa\\Core\\MVC\\Symfony\\Locale\\LocaleConverterInterface"
+            - "@Ibexa\\Core\\MVC\\Symfony\\SiteAccess"
+            - "@database_connection"
+        tags:
+            - { name: console.command, command: 'ngsite:content:generate-showcase' }

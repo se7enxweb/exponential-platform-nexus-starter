@@ -1,0 +1,32 @@
+{% extends "@ibexadesign/content_type/content_type_group/base.html.twig" %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_content_type' %}
+
+{% block header_admin %}
+    {% set content_type_group_edit_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.content_type_group_edit.sidebar_right', [], {
+        save_and_close_id: form.update.vars.id,
+    }) %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'content_type_group.edit.action_name'|trans|desc('Editing content type group'),
+        icon_name: 'file',
+        title: content_type_group.identifier,
+        show_autosave_status: false,
+        context_actions: knp_menu_render(content_type_group_edit_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <section>
+            <div class="card ibexa-card ibexa-card--light">
+                <div class="card-body ibexa-card__body ibexa-form-block">
+                    {{ form_row(form.identifier, { row_attr: { class: 'ibexa-form-field' } }) }}
+                </div>
+            </div>
+        </section>
+        {{ form_widget(form.update, { attr: { hidden: 'hidden' }}) }}
+    {{ form_end(form) }}
+{% endblock %}

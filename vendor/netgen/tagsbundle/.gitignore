@@ -1,0 +1,15 @@
+.idea/
+.tmp/
+coverage/
+node_modules/
+/vendor/
+var/
+composer.phar
+composer.lock
+grunt.lock
+yarn.lock
+package-lock.json
+phpunit.phar
+.php_cs.cache
+.php-cs-fixer.cache
+.phpunit.result.cache

@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\Contracts\CoreSearch\Values\Query\CriterionMapper:
+        arguments:
+            $mappers: !tagged_iterator ibexa.core_search.criterion_mapper
+
+    Ibexa\CoreSearch\CriterionMapper\FieldValueCriterionMapper:
+        tags:
+            - { name: ibexa.core_search.criterion_mapper, priority: -100 }
+
+    Ibexa\CoreSearch\CriterionMapper\LogicalAndCriterionMapper:
+        tags:
+            - { name: ibexa.core_search.criterion_mapper, priority: -100 }
+
+    Ibexa\CoreSearch\CriterionMapper\LogicalOrCriterionMapper:
+        tags:
+            - { name: ibexa.core_search.criterion_mapper, priority: -100 }

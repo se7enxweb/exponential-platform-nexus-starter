@@ -1,0 +1,192 @@
+.material-icon-left {
+  &::before {
+    content: 'keyboard_arrow_left';
+  }
+}
+.material-icon-right {
+  &::before {
+    content: 'keyboard_arrow_right';
+  }
+}
+.material-icon-up {
+  &::before {
+    content: 'keyboard_arrow_up';
+  }
+}
+.material-icon-down {
+  &::before {
+    content: 'keyboard_arrow_down';
+  }
+}
+.material-icon-time {
+  &::before {
+    content: 'access_time';
+  }
+}
+.material-icon-calendar {
+  &::before {
+    content: 'today';
+  }
+}
+.material-icon-down {
+  &::before {
+    content: 'keyboard_arrow_down';
+  }
+}
+.material-icon-trash {
+  &::before {
+    content: 'delete';
+  }
+}
+.material-icon-close {
+  &::before {
+    content: 'close';
+  }
+}
+.material-icon-today {
+  &::before {
+    content: 'my_location';
+  }
+}
+
+
+.bootstrap-datetimepicker-widget {
+    .sidebar-panel:first-child &,
+    .tab-pane:last-child & {
+        margin-bottom: 1.25rem;
+
+        .material-icons {
+            &::before {
+                color: #ffffff;
+            }
+        }
+
+        .picker-switch.accordion-toggle {
+            td span {
+                background-color: #595959;
+                height: 42px;
+                position: relative;
+
+                &:before {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);
+                }
+            }
+        }
+
+        table {
+            thead tr:first-child th:hover {
+                background: #666666;
+            }
+
+            td {
+                &.day:hover,
+                span:hover {
+                    background: #666666;
+                }
+            }
+        }
+    }
+}
+
+.datetimepicker {
+  padding-right: 2rem;
+  position: relative;
+
+    .sidebar-panel:first-child &,
+    .tab-pane:last-child & {
+        padding-right: 0;
+        margin-right: .25rem;
+
+        .datetime {
+            input[type='text'] {
+
+                #sidebar & {
+                    padding-right: 2.125rem;
+
+                }
+            }
+
+            .input-icon {
+                transform: translateY(0);
+                top: 0;
+                padding-right: 0.25em;
+            }
+        }
+
+        .js-clear-input {
+            right: auto;
+            left: 100%;
+            top: .25rem;
+            margin-top: 0;
+
+            i { color: #ffffff;}
+        }
+
+        .dropdown-menu {
+            background-color: #4f4f4f;
+            color: white;
+
+            *  {
+                color: white;
+            }
+        }
+  }
+
+  .input-group {
+    flex: 1;
+  }
+  .js-clear-input {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    width: 2rem;
+    top: 50%;
+    height: 2rem;
+    margin-top: -1rem;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    transition: opacity .25s;
+    color: #d0021b;
+    i {
+      vertical-align: middle;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  .datetime {
+    position: relative;
+    margin: 0 0 .5em;
+    input[type="text"] {
+      margin: 0;
+      padding-right: 3em;
+      cursor: pointer;
+    }
+    .input-icon {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: .25em .5em;
+      pointer-events: none;
+    }
+  }
+  .datetime-formatted {
+    position: absolute;
+    left: -999em;
+    top: -999em;
+    width: 0px !important;
+    height: 0px !important;
+    visibility: hidden;
+  }
+  &.date-entered {
+    .js-clear-input {
+      opacity: 1;
+      pointer-events: initial;
+    }
+  }
+}

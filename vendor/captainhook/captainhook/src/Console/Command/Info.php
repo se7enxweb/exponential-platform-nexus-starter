@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * This file is part of CaptainHook
+ *
+ * (c) Sebastian Feldmann <sf@sebastian-feldmann.info>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace CaptainHook\App\Console\Command;
+
+use CaptainHook\App\Console\IOUtil;
+use CaptainHook\App\Runner\Config\Visualizer;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
+
+/**
+ * Command to display configuration information
+ *
+ * @package CaptainHook
+ * @author  Sebastian Feldmann <sf@sebastian-feldmann.info>
+ * @link    https://github.com/captainhook-git/captainhook
+ * @since   Class available since Release 5.24.0
+ */
+class Info extends RepositoryAware
+{
+    /**
+     * Configure the command
+     *
+     * @return void
+     */
+    protected function configure(): void
+    {
+        parent::configure();
+        $this->setName('config:info')
+             ->setAliases(['info'])
+             ->setDescription('Displays information about the configuration')
+             ->setHelp('Displays information about the configuration')
+             ->addArgument('hook', InputArgument::OPTIONAL, 'Hook you want to investigate')
+             ->addOption(
+                 'actions',
+                 'a',
+                 InputOption::VALUE_NONE,
+                 'List all actions'
+             )
+             ->addOption(
+                 'conditions',
+                 'p',
+                 InputOption::VALUE_NONE,
+                 'List all conditions'
+             )
+             ->addOption(
+                 'options',
+                 'o',
+                 InputOption::VALUE_NONE,
+                 'List all options'
+             )
+             ->addOption(
+                 'action-config',
+                 null,
+                 InputOption::VALUE_NONE,
+                 'List all action settings'
+             )
+             ->addOption(
+                 'application-config',
+                 null,
+                 InputOption::VALUE_NONE,
+                 'List all application settings'
+             )
+             ->addOption(
+                 'extensive',
+                 'e',
+                 InputOption::VALUE_NONE,
+                 'Show more detailed information'
+             );
+    }
+
+    /**
+     * Execute the command
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface   $input
+     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
+     * @throws \CaptainHook\App\Exception\InvalidHookName
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        try {
+            $io     = $this->getIO($input, $output);
+            $config = $this->createConfig($input, true, ['git-directory']);
+            $repo   = $this->createRepository(dirname($config->getGitDirectory()));
+
+            $this->determineVerbosity($output, $config);
+
+            $editor = new Visualizer($io, $config, $repo);
+            $editor->setHook(IOUtil::argToString($input->getArgument('hook')))
+                   ->display(Visualizer\Settings::OPT_ACTIONS, $input->getOption('actions'))
+                   ->display(Visualizer\Settings::OPT_CONDITIONS, $input->getOption('conditions'))
+                   ->display(Visualizer\Settings::OPT_OPTIONS, $input->getOption('options'))
+                   ->display(Visualizer\Settings::OPT_CONFIG, $input->getOption('action-config'))
+                   ->display(Visualizer\Settings::OPT_SETTINGS, $input->getOption('application-config'))
+                   ->extensive($input->getOption('extensive'))
+                   ->run();
+
+            return 0;
+        } catch (Throwable $e) {
+            return $this->crash($output, $e);
+        }
+    }
+}

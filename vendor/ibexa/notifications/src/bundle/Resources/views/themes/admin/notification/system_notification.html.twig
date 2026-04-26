@@ -1,0 +1,24 @@
+{% extends base_template %}
+
+{% trans_default_domain 'ibexa_notification' %}
+
+{% block icon %}
+    {% set icon = icon|default('info') %}
+    <span class="type__icon">
+        <svg class="ibexa-icon ibexa-icon--{{ icon }}">
+            <use xlink:href="{{ ibexa_icon_path(icon) }}"></use>
+        </svg>
+    </span>
+{% endblock %}
+
+{% block notification_type %}
+    <span class="type__text">
+        {{ subject|default('') }}
+    </span>
+{% endblock %}
+
+{% block message %}
+    {% block content %}
+        <p title="{{ content|default('') }}" class="description__text{% if content|length > 100 %} description__text--ellipsis{% endif %}">{{ content|default('') }}</p>
+    {% endblock %}
+{% endblock %}

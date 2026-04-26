@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\SystemInfo\Tab\SystemInfo\TabFactory:
+        arguments:
+            $httpKernelRuntime: '@twig.runtime.httpkernel'
+
+    ibexa.support_tools.systeminfo.tab_groups:
+        parent: Ibexa\AdminUi\Component\TabsComponent
+        arguments:
+            $template: '@@ibexadesign/ui/tab/system_info.html.twig'
+            $groupIdentifier: 'systeminfo'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-systeminfo-tab-groups' }

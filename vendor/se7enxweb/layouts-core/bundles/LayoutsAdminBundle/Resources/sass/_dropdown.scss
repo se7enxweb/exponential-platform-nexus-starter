@@ -1,0 +1,113 @@
+.nl-dropdown {
+    position: relative;
+    &[data-position='right'] {
+        text-align: right;
+        .nl-dropdown-menu {
+            right: 0;
+            left: auto;
+        }
+    }
+    .nl-dropdown-menu {
+        visibility: hidden;
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        border-radius: 0;
+        background: #fff;
+        color: #000;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        z-index: -10;
+        margin: 0;
+        padding: .5em 0;
+        list-style-type: none;
+        > li {
+            padding: 0;
+            margin: 0;
+            > a,
+            > span,
+            > button {
+                display: block;
+                font-size: 13px;
+                padding: .6em 1em;
+                white-space: nowrap;
+                text-decoration: none;
+                transition: background-color .2s ease;
+                border: 0;
+                background: transparent;
+                width: 100%;
+                text-align: inherit;
+                &[disabled] {
+                    opacity: .2;
+                    cursor: default;
+                }
+                &:hover {
+                    background: #F4F8FE;
+                    color: #3671E7;
+                }
+            }
+            > a,
+            > button {
+                color: inherit;
+                .note {
+                    display: block;
+                    font-size: .6923076923em;
+                    color: hsl(0, 0, 65);
+                }
+            }
+        }
+    }
+    &.nl-dropdown-active {
+        .nl-dropdown-menu {
+            visibility: visible;
+            z-index: 1000;
+            top: 100%;
+            bottom: auto;
+            animation: showDropdown 200ms ease-out;
+        }
+        &.nl-dropdown-top {
+            .nl-dropdown-menu {
+                top: auto;
+                bottom: 100%;
+            }
+        }
+        .nl-dropdown-toggle,
+        .nl-dropdown-toggle:hover {
+            background: #EEEEEE;
+            color: #9F9E9E;
+        }
+    }
+    .checkbox {
+        text-align: left;
+        padding: 0 1em;
+        font-size: 13px;
+        label {
+            white-space: nowrap;
+        }
+    }
+    .filter-checked-amount {
+        display: inline-block;
+        position: absolute;
+        right: 1em;
+        top: 0;
+        font-size: 10px;
+        padding: .5em;
+        min-width: 2em;
+        font-weight: 700;
+        text-align: center;
+        line-height: 1;
+        transform: translate3d(0, -50%, 0);
+        background: #F3590A;
+        color: #fff;
+        border-radius: 500em;
+        z-index: 2;
+    }
+}
+
+@keyframes showDropdown {
+    from {
+        opacity: 0;
+    }
+    top {
+        opacity: 1;
+    }
+}

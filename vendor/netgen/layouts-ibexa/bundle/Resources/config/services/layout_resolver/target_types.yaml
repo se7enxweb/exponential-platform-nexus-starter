@@ -1,0 +1,56 @@
+services:
+    netgen_layouts.ibexa.layout_resolver.value_object_provider.location:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\ValueObjectProvider\LocationProvider
+        arguments:
+            - "@ibexa.api.repository"
+
+    netgen_layouts.ibexa.layout_resolver.value_object_provider.content:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\ValueObjectProvider\ContentProvider
+        arguments:
+            - "@ibexa.api.repository"
+
+    netgen_layouts.ibexa.layout_resolver.target_type.location:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Location
+        arguments:
+            - "@netgen_layouts.ibexa.content_extractor"
+            - "@netgen_layouts.ibexa.layout_resolver.value_object_provider.location"
+            - "@netgen_layouts.ibexa.utils.remote_id_converter"
+        tags:
+            - { name: netgen_layouts.target_type, priority: 150 }
+
+    netgen_layouts.ibexa.layout_resolver.target_type.content:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Content
+        arguments:
+            - "@netgen_layouts.ibexa.content_extractor"
+            - "@netgen_layouts.ibexa.layout_resolver.value_object_provider.content"
+            - "@netgen_layouts.ibexa.utils.remote_id_converter"
+        tags:
+            - { name: netgen_layouts.target_type, priority: 140 }
+
+    netgen_layouts.ibexa.layout_resolver.target_type.children:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Children
+        arguments:
+            - "@netgen_layouts.ibexa.content_extractor"
+            - "@netgen_layouts.ibexa.layout_resolver.value_object_provider.location"
+            - "@netgen_layouts.ibexa.utils.remote_id_converter"
+        tags:
+            - { name: netgen_layouts.target_type, priority: 120 }
+
+    netgen_layouts.ibexa.layout_resolver.target_type.subtree:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\Subtree
+        arguments:
+            - "@netgen_layouts.ibexa.content_extractor"
+            - "@netgen_layouts.ibexa.layout_resolver.value_object_provider.location"
+            - "@netgen_layouts.ibexa.utils.remote_id_converter"
+        tags:
+            - { name: netgen_layouts.target_type, priority: 130 }
+
+    netgen_layouts.ibexa.layout_resolver.target_type.semantic_path_info:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\SemanticPathInfo
+        tags:
+            - { name: netgen_layouts.target_type, priority: 110 }
+
+    netgen_layouts.ibexa.layout_resolver.target_type.semantic_path_info_prefix:
+        class: Netgen\Layouts\Ibexa\Layout\Resolver\TargetType\SemanticPathInfoPrefix
+        tags:
+            - { name: netgen_layouts.target_type, priority: 100 }

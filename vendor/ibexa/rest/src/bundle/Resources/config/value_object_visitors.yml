@@ -1,0 +1,663 @@
+services:
+    Ibexa\Contracts\Rest\Output\ValueObjectVisitor:
+        calls:
+            - [ setUriParser, [ '@Ibexa\Contracts\Rest\UriParser\UriParserInterface' ] ]
+            - [ setRouter, [ "@router" ] ]
+            - [ setTemplateRouter, [ '@Ibexa\Bundle\Core\Routing\DefaultRouter'] ]
+
+    # Errors
+    ibexa.rest.output.value_object_visitor.InvalidArgumentException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\InvalidArgumentException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\NotFoundException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\NotFoundException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UnauthorizedException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UnauthorizedException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Exceptions\UnauthorizedException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\BadStateException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\BadStateException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Exceptions\BadStateException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\BadRequestException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\BadRequestException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Exceptions\BadRequestException }
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Rest\Exceptions\Parser }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentFieldValidationException:
+        parent: Ibexa\Rest\Server\Output\ValueObjectVisitor\BadRequestException
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentFieldValidationException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - {  name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Exceptions\ContentFieldValidationException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ForbiddenException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ForbiddenException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Exceptions\ForbiddenException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\NotImplementedException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\NotImplementedException
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Exceptions\NotImplementedException }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Exception:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Exception
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Exception }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\HttpException:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        arguments: [ "%kernel.debug%", "@translator" ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Symfony\Component\HttpKernel\Exception\HttpException }
+
+    # Language
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\LanguageList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\LanguageList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Language:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Language
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Language }
+
+    # Section
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\SectionList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\SectionList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\SectionList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedSection:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedSection
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedSection }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Section:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Section
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Section }
+
+    # URLWildcard
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\URLWildcardList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\URLWildcardList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\URLWildcardList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\URLWildcard:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\URLWildcard
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\URLWildcard }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedURLWildcard:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedURLWildcard
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedURLWildcard }
+
+    # URLAlias
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAliasList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAliasList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\URLAliasList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAliasRefList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAliasRefList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\URLAliasRefList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAlias:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\URLAlias
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\URLAlias }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedURLAlias:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedURLAlias
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedURLAlias }
+
+    # Content
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Author:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Author
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Core\FieldType\Author\Author }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ContentList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestContent:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestContent
+        arguments: ['@Ibexa\Core\Helper\TranslationHelper']
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestContent }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContent:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContent
+        arguments: ['@Ibexa\Core\Helper\TranslationHelper']
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedContent }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\VersionList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedVersion:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedVersion
+        arguments: [ '@Ibexa\Rest\Output\FieldTypeSerializer' ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedVersion }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionInfo:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionInfo
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ImageVariation:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ImageVariation
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Variation\Values\ImageVariation }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Version:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Version
+        arguments: [ '@Ibexa\Rest\Output\FieldTypeSerializer'  ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\Version }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionTranslationInfo:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\VersionTranslationInfo
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\VersionTranslationInfo }
+
+    # UserGroup
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroup
+        arguments:
+            $relationListFacade: '@Ibexa\Contracts\Core\Repository\ContentService\RelationListFacadeInterface'
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\UserGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestUserGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedUserGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedUserGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedUserGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroupList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroupList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\UserGroupList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroupRefList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserGroupRefList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\UserGroupRefList }
+
+    # User
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\UserList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserRefList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserRefList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\UserRefList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedUser:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedUser
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedUser }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\User:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\User
+        arguments:
+            $relationListFacade: '@Ibexa\Contracts\Core\Repository\ContentService\RelationListFacadeInterface'
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\User }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUser:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUser
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestUser }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\UserSession:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\UserSession
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\UserSession }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\DeletedUserSession:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\DeletedUserSession
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\DeletedUserSession }
+
+    # ContentType
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentType:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentType
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\ContentType\ContentType }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestContentType:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestContentType
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestContentType }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContentType:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContentType
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedContentType }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ContentTypeList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeInfoList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeInfoList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ContentTypeInfoList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContentTypeGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedContentTypeGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedContentTypeGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroupList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroupList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ContentTypeGroupList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroupRefList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeGroupRefList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ContentTypeGroupRefList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\FieldDefinitionList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\FieldDefinitionList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\FieldDefinitionList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedFieldDefinition:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedFieldDefinition
+        arguments: [ '@Ibexa\Rest\Output\FieldTypeSerializer'  ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedFieldDefinition }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Field:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        arguments: [ '@Ibexa\Rest\Output\FieldTypeSerializer' ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Field }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestFieldDefinition:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestFieldDefinition
+        arguments: [ '@Ibexa\Rest\Output\FieldTypeSerializer'  ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestFieldDefinition }
+
+    # Relation
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RelationList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RelationList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RelationList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestRelation:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestRelation
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestRelation }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedRelation:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedRelation
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedRelation }
+
+    # Role
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RoleList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RoleList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RoleList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedRole:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedRole
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedRole }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\PublishedRole:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\PublishedRole
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\PublishedRole }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Role:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Role
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\Role }
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\RoleDraft }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Policy:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Policy
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\Policy }
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\User\PolicyDraft }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedPolicy:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedPolicy
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedPolicy }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\PolicyList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\PolicyList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\PolicyList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RoleAssignmentList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RoleAssignmentList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RoleAssignmentList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserRoleAssignment:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserRoleAssignment
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestUserRoleAssignment }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserGroupRoleAssignment:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestUserGroupRoleAssignment
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestUserGroupRoleAssignment }
+
+    # Location
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedLocation:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedLocation
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedLocation }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestLocation:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestLocation
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestLocation }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Location:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Location
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Location }
+        arguments:
+            $locationService: '@ibexa.api.service.location'
+            $relationListFacade: '@Ibexa\Contracts\Core\Repository\ContentService\RelationListFacadeInterface'
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\LocationList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\LocationList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\LocationList }
+
+    # Trash
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Trash:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Trash
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\Trash }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestTrashItem:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestTrashItem
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestTrashItem }
+
+    # Views
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestExecutedView:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestExecutedView
+        arguments:
+            - '@ibexa.api.service.location'
+            - '@Ibexa\Contracts\Core\Repository\ContentService\RelationListFacadeInterface'
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\RestExecutedView }
+
+    # Aggregations
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Range:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Range
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Query\Aggregation\Range }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RangeAggregationResult:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RangeAggregationResult
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Search\AggregationResult\RangeAggregationResult }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\StatsAggregationResult:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\StatsAggregationResult
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Search\AggregationResult\StatsAggregationResult }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\TermAggregationResult:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\TermAggregationResult
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\Content\Search\AggregationResult\TermAggregationResult }
+
+    # Object state
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectState:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectState
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectState }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectStateGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedObjectStateGroup:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedObjectStateGroup
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedObjectStateGroup }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateGroupList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateGroupList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ObjectStateGroupList }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\RestObjectState:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\RestObjectState
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Values\RestObjectState }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedObjectState:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CreatedObjectState
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CreatedObjectState }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ObjectStateList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ObjectStateList }
+
+    Ibexa\Rest\Output\ValueObjectVisitor\ContentObjectStates:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Output\ValueObjectVisitor\ContentObjectStates
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Values\ContentObjectStates }
+
+    # Services
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CountryList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\CountryList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CountryList}
+
+    # REST specific
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\TemporaryRedirect:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\TemporaryRedirect
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\TemporaryRedirect }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\PermanentRedirect:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\PermanentRedirect
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\PermanentRedirect }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\ResourceCreated:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\ResourceCreated
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\ResourceCreated }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\NoContent:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\NoContent
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\NoContent }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Root:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Root
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Values\Root }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\SeeOther:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\SeeOther
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\SeeOther }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Conflict:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Conflict
+        arguments: [ true  ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\Conflict }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\Options:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\Options
+        arguments: [ true  ]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\Options }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\OK:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\OK
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\OK }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\CachedValue:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        arguments:
+            - '@ibexa.config.resolver'
+        calls:
+            - [setRequestStack, ["@request_stack"]]
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\CachedValue }
+
+    Ibexa\Rest\Server\Output\ValueObjectVisitor\BookmarkList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        class: Ibexa\Rest\Server\Output\ValueObjectVisitor\BookmarkList
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\Rest\Server\Values\BookmarkList }

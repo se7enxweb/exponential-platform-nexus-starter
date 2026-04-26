@@ -1,0 +1,45 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Ibexa\FieldTypeQuery\FieldType\Query\Type:
+        parent: Ibexa\Core\FieldType\FieldType
+        public: true
+        autowire: true
+        autoconfigure: false
+        tags:
+            - { name: ibexa.field_type, alias: '%ibexa.field_type.query.content.identifier%', legacy_alias: '%ibexa.field_type.query.content.legacy_identifier%' }
+        arguments:
+            $queryTypeRegistry: '@Ibexa\Core\QueryType\ArrayQueryTypeRegistry'
+            $identifier: '%ibexa.field_type.query.content.identifier%'
+
+    Ibexa\FieldTypeQuery\FieldType\Mapper\QueryFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: '%ibexa.field_type.query.content.identifier%' }
+        arguments:
+            $contentTypeService: '@ibexa.api.service.content_type'
+
+    Ibexa\FieldTypeQuery\FieldType\Form\QueryFieldFormType: ~
+
+    Ibexa\FieldTypeQuery\Persistence\Legacy\Content\FieldValue\Converter\QueryConverter:
+        tags:
+            - { name: ibexa.field_type.storage.legacy.converter, alias: '%ibexa.field_type.query.content.identifier%' }
+
+    ibexa.query_field_type.not_indexable:
+        class: Ibexa\Core\FieldType\Unindexed
+        tags:
+            - { name: ibexa.field_type.indexable, alias: '%ibexa.field_type.query.content.identifier%' }
+
+    Ibexa\FieldTypeQuery\ContentView\FieldDefinitionIdentifierMatcher:
+        tags:
+            - { name: ibexa.view.matcher }
+        calls:
+            - [setRepository, ['@ibexa.api.repository']]
+
+    Ibexa\FieldTypeQuery\ContentView\QueryResultsInjector:
+        arguments:
+            $views: { field: '%ibexa.field_type.query.content.view.field%', item: '%ibexa.field_type.query.content.view.item%' }
+        tags:
+            - { name: kernel.event_subscriber }

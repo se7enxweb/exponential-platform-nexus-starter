@@ -1,0 +1,81 @@
+[
+    {
+        "id": "28df256a-2467-5527-b398-9269ccc652de",
+        "layout_id": "81168ed3-86f9-55ea-b153-101f96f2c136",
+        "definition_identifier": "list",
+        "name": "My published block",
+        "parent_position": 0,
+        "parameters": {
+            "number_of_columns": 3,
+            "paged_collections:enabled": null,
+            "paged_collections:type": null,
+            "paged_collections:max_pages": null,
+            "paged_collections:ajax_first": null,
+            "css_class": null,
+            "css_id": null,
+            "set_container": null
+        },
+        "view_type": "grid",
+        "item_view_type": "standard_with_intro",
+        "published": true,
+        "has_published_state": true,
+        "locale": "en",
+        "is_translatable": true,
+        "always_available": true,
+        "is_container": false,
+        "placeholders": [],
+        "collections": [
+            {
+                "identifier": "default",
+                "collection_id": "45a6e6f5-0ae7-588b-bf2a-0e4cc24ec60a",
+                "collection_type": "dynamic",
+                "offset": 0,
+                "limit": null
+            },
+            {
+                "identifier": "featured",
+                "collection_id": "da050624-8ae0-5fb9-ae85-092bf8242b89",
+                "collection_type": "dynamic",
+                "offset": 4,
+                "limit": 2
+            }
+        ],
+        "config": []
+    },
+    {
+        "id": "c2a30ea3-95ef-55b0-a584-fbcfd93cec9e",
+        "layout_id": "81168ed3-86f9-55ea-b153-101f96f2c136",
+        "definition_identifier": "list",
+        "name": "My fourth block",
+        "parent_position": 1,
+        "parameters": {
+            "number_of_columns": 3,
+            "paged_collections:enabled": null,
+            "paged_collections:type": null,
+            "paged_collections:max_pages": null,
+            "paged_collections:ajax_first": null,
+            "css_class": null,
+            "css_id": null,
+            "set_container": null
+        },
+        "view_type": "grid",
+        "item_view_type": "standard",
+        "published": true,
+        "has_published_state": true,
+        "locale": "en",
+        "is_translatable": false,
+        "always_available": true,
+        "is_container": false,
+        "placeholders": [],
+        "collections": [
+            {
+                "identifier": "default",
+                "collection_id": "08937ca0-18f4-5806-84df-8c132c36cabe",
+                "collection_type": "dynamic",
+                "offset": 0,
+                "limit": null
+            }
+        ],
+        "config": []
+    }
+]

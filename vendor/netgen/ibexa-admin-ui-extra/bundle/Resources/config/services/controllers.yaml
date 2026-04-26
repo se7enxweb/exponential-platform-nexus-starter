@@ -1,0 +1,41 @@
+services:
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Content\UpdateAlwaysAvailable:
+        arguments:
+            - '@translator'
+            - '@ibexa.api.service.content'
+            - '@Netgen\Bundle\IbexaAdminUIExtraBundle\Form\FormFactory'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+        calls:
+            - [setContainer , ['@Psr\Container\ContainerInterface']]
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
+
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Content\VisibilityInfo:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        arguments:
+            - '@ibexa.api.service.location'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '@ibexa.api.service.content'
+            - '@Ibexa\AdminUi\Resolver\IconPathResolver'
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
+
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Content\LastModifiedInfo:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
+
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Queues:
+        arguments:
+            $transportLocator: '@messenger.receiver_locator'
+            $queuesEnabled: '%netgen_ibexa_admin_ui_extra.queues.enabled%'
+            $allowedTransports: '%netgen_ibexa_admin_ui_extra.queues.transports%'
+            $permissionResolver: '@Ibexa\Contracts\Core\Repository\PermissionResolver'
+        calls:
+            - [setContainer , ['@Psr\Container\ContainerInterface']]
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber

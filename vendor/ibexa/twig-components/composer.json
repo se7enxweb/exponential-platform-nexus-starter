@@ -1,0 +1,81 @@
+{
+    "name": "ibexa/twig-components",
+    "license": "(GPL-2.0-only or proprietary)",
+    "type": "ibexa-bundle",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "keywords": [
+        "ibexa-dxp"
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ibexa/core": "~5.0.x-dev",
+        "ibexa/design-engine": "~5.0.x-dev",
+        "knplabs/knp-menu": "^3.8",
+        "symfony/asset": "^7.4",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/ux-twig-component": "^2.32",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "deptrac/deptrac": "^4",
+        "ibexa/behat": "~5.0.x-dev",
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/phpstan": "~5.0.x-dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "ibexa/test-core": "~5.0.x-dev",
+        "matthiasnoback/symfony-config-test": "^4.3.0 || ^5.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3.1 || ^5.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\Bundle\\TwigComponents\\": "src/bundle/",
+            "Ibexa\\Contracts\\TwigComponents\\": "src/contracts/",
+            "Ibexa\\TwigComponents\\": "src/lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\Bundle\\TwigComponents\\": "tests/bundle/",
+            "Ibexa\\Tests\\Integration\\TwigComponents\\": "tests/integration/",
+            "Ibexa\\Tests\\TwigComponents\\": "tests/lib/"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "test-unit": "phpunit -c phpunit.xml",
+        "test-integration": "phpunit -c phpunit.integration.xml",
+        "test": [
+            "@test-unit",
+            "@test-integration"
+        ],
+        "phpstan": "phpstan analyse -c phpstan.neon",
+        "deptrac": "php vendor/bin/deptrac analyse"
+    },
+    "scripts-descriptions": {
+        "fix-cs": "Automatically fixes code style in all files",
+        "check-cs": "Run code style checker for all files",
+        "test": "Run automatic tests",
+        "phpstan": "Run static code analysis",
+        "deptrac": "Run Deptrac architecture testing"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": false
+    }
+}

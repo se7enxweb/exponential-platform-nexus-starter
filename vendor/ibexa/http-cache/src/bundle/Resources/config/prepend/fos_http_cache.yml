@@ -1,0 +1,12 @@
+proxy_client:
+    default: varnish
+    varnish:
+        http:
+            servers: ['$http_cache.purge_servers$']
+        tag_mode: 'purgekeys'
+
+user_context:
+    enabled: true
+    hash_cache_ttl: 600
+    # NOTE: These are also defined/used in AppCache, in Varnish VCL, and Fastly VCL
+    session_name_prefix: IBX_SESSION_ID

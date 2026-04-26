@@ -1,0 +1,45 @@
+name: Frontend
+
+on:
+  push:
+    branches:
+      - 'master'
+      - '[0-9].[0-9]+'
+  pull_request: ~
+
+jobs:
+  frontend:
+    name: ${{ matrix.script }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        script: ['prod']
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '14'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+
+      # Install Flex as a global dependency to enable usage of extra.symfony.require
+      # while keeping Flex recipes from applying
+      - run: composer global config --no-plugins allow-plugins.symfony/flex true
+      - run: composer global require --no-scripts symfony/flex
+
+      - run: composer config extra.symfony.require ~7.4.0
+
+      - uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: highest
+          composer-options: '--prefer-dist'
+          ignore-cache: 'yes'
+
+      - run: yarn install
+
+      - run: yarn run ${{ matrix.script }}

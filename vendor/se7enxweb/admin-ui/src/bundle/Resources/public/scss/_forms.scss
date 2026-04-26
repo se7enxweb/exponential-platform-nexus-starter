@@ -1,0 +1,124 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/inputs' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins' as *;
+
+form:not(.form-inline) {
+    .col-form-legend {
+        @include label-required();
+
+        & {
+            font-weight: 700;
+            font-size: calculateRem(16px);
+            color: $ibexa-color-black;
+            margin-bottom: 0;
+            margin-top: calculateRem(20px);
+        }
+    }
+
+    .form-control {
+        background-color: $ibexa-color-white;
+    }
+
+    .form-control:not(.flatpickr-input)[readonly] {
+        color: $ibexa-color-dark-300;
+        background-color: $ibexa-color-light-300;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .form-control:focus {
+        @include input-active;
+
+        &.is-invalid {
+            @include input-invalid;
+        }
+    }
+}
+
+.ibexa-form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+
+    &--align-left {
+        justify-content: flex-start;
+    }
+
+    .col-form-label,
+    .form-control,
+    .ibexa-field-edit__label {
+        margin-right: calculateRem(8px);
+    }
+}
+
+.ibexa-table--no-border {
+    .ibexa-form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+    }
+}
+
+.ibexa-field {
+    &__label {
+        @include label-required();
+    }
+}
+
+.ibexa-trash-with-asset-checkbox-list {
+    .form-check-input {
+        position: absolute;
+    }
+}
+
+.ibexa-content-create[readonly] {
+    pointer-events: none;
+}
+
+.ibexa-form-error {
+    display: flex;
+    font-size: $ibexa-text-font-size-small;
+    font-style: normal;
+    color: $ibexa-color-danger;
+    line-height: calculateRem(18px);
+    box-sizing: border-box;
+
+    &:empty {
+        margin-top: 0;
+    }
+
+    &:not(& > &) {
+        flex-direction: column;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        font-style: normal;
+        margin-top: calculateRem(8px);
+    }
+
+    &__icon {
+        fill: $ibexa-color-danger;
+        margin-right: calculateRem(4px);
+        flex-shrink: 0;
+    }
+}
+
+.ibexa-form-help {
+    display: flex;
+    font-size: $ibexa-text-font-size-small;
+    color: $ibexa-color-dark-400;
+    line-height: calculateRem(18px);
+    margin-top: calculateRem(8px);
+
+    &__icon {
+        flex-shrink: 0;
+        fill: $ibexa-color-dark-400;
+        margin-right: calculateRem(4px);
+    }
+}

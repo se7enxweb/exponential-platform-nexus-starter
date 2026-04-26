@@ -1,0 +1,19 @@
+{
+    "name": "netgen/media-site-data",
+    "description": "Demo data for Netgen Media Site",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "conflicts": {
+        "ibexa/core": "<5.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    }
+}

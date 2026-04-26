@@ -1,0 +1,84 @@
+{
+    "name": "netgen/content-browser",
+    "description": "Netgen Content Browser is a Symfony bundle that provides an interface which selects items from any kind of backend and returns the IDs of selected items back to the calling code.",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "ext-mbstring": "*",
+        "netgen/content-browser-ui": "~2.0.0",
+        "symfony/asset": "^7.3 || ^8.0",
+        "symfony/config": "^7.3 || ^8.0",
+        "symfony/deprecation-contracts": "^3.6",
+        "symfony/dependency-injection": "^7.3 || ^8.0",
+        "symfony/error-handler": "^7.3 || ^8.0",
+        "symfony/event-dispatcher": "^7.3 || ^8.0",
+        "symfony/event-dispatcher-contracts": "^3.6",
+        "symfony/form": "^7.3 || ^8.0",
+        "symfony/framework-bundle": "^7.3 || ^8.0",
+        "symfony/http-foundation": "^7.3 || ^8.0",
+        "symfony/http-kernel": "^7.3 || ^8.0",
+        "symfony/options-resolver": "^7.3 || ^8.0",
+        "symfony/security-core": "^7.3 || ^8.0",
+        "symfony/security-bundle": "^7.3 || ^8.0",
+        "symfony/translation": "^7.3 || ^8.0",
+        "symfony/translation-contracts": "^3.6",
+        "symfony/twig-bundle": "^7.3 || ^8.0",
+        "symfony/yaml": "^7.3 || ^8.0",
+        "twig/twig": "^3.23",
+        "pagerfanta/pagerfanta": "^3.8 || ^4.8"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0",
+        "phpunit/phpunit": "^13.0",
+        "symfony/runtime": "^7.3 || ^8.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.3",
+        "zenstruck/browser": "^1.10",
+        "mtdowling/jmespath.php": "^2.8"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true,
+            "*": false
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "test-api": "@php vendor/bin/phpunit -c phpunit-api.xml --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so -dxdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=coverage --colors=always",
+        "coverage-api": "@php -dzend_extension=xdebug.so -dxdebug.mode=coverage vendor/bin/phpunit -c phpunit-api.xml --coverage-html=coverage_api --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --ansi",
+        "phpstan-tests": "@php vendor/bin/phpstan analyse -c phpstan.tests.neon --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\ContentBrowser\\": "lib/",
+            "Netgen\\Bundle\\ContentBrowserBundle\\": "bundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\ContentBrowser\\Tests\\": "tests/lib/",
+            "Netgen\\ContentBrowser\\Tests\\App\\": "tests/application/src/",
+            "Netgen\\Bundle\\ContentBrowserBundle\\Tests\\": "tests/bundle/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

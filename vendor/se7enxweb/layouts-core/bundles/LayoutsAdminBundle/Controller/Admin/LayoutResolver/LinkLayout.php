@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Controller\Admin\LayoutResolver;
+
+use Netgen\Bundle\LayoutsBundle\Controller\AbstractController;
+use Netgen\Layouts\API\Service\LayoutResolverService;
+use Netgen\Layouts\API\Service\LayoutService;
+use Netgen\Layouts\API\Values\LayoutResolver\Rule;
+use Netgen\Layouts\Exception\BadStateException;
+use Netgen\Layouts\Exception\NotFoundException;
+use Netgen\Layouts\View\ViewInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Uid\Uuid;
+
+use function sprintf;
+
+final class LinkLayout extends AbstractController
+{
+    public function __construct(
+        private LayoutResolverService $layoutResolverService,
+        private LayoutService $layoutService,
+    ) {}
+
+    /**
+     * Updates the linked layout of the rule.
+     *
+     * @throws \Netgen\Layouts\Exception\BadStateException If provided layout does not exist
+     */
+    public function __invoke(Rule $rule, Request $request): ViewInterface
+    {
+        $this->denyAccessUnlessGranted(
+            'nglayouts:mapping:edit',
+            [
+                'rule_group' => $rule->ruleGroupId->toString(),
+            ],
+        );
+
+        $layoutId = $request->request->getString('layout_id');
+        if ($layoutId === '') {
+            throw new BadStateException('layout_id', 'Valid layout ID needs to be specified.');
+        }
+
+        try {
+            $layout = $this->layoutService->loadLayout(Uuid::fromString($layoutId));
+        } catch (NotFoundException $e) {
+            throw new BadStateException(
+                'layout_id',
+                sprintf(
+                    'Layout with UUID "%s" does not exist.',
+                    $layoutId,
+                ),
+                $e,
+            );
+        }
+
+        $ruleUpdateStruct = $this->layoutResolverService->newRuleUpdateStruct();
+        $ruleUpdateStruct->layoutId = $layout->id;
+
+        $updatedRule = $this->layoutResolverService->updateRule(
+            $rule,
+            $ruleUpdateStruct,
+        );
+
+        return $this->buildView($updatedRule, ViewInterface::CONTEXT_ADMIN);
+    }
+}

@@ -1,0 +1,43 @@
+{% extends "@ibexadesign/user/policy/base.html.twig" %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_role' %}
+
+{% block header_admin %}
+    {% set policy_edit_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.policy_create.sidebar_right', [], {
+        role,
+        save_id: form.save.vars.id,
+    }) %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'policy.editing'|trans|desc('Editing'),
+        title: 'policy.view.edit.title'|trans()|desc('Edit Limitations'),
+        context_actions: knp_menu_render(policy_edit_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <div class="container">
+            <section class="ibexa-fieldgroup">
+                <h2 class="ibexa-fieldgroup__name mb-3"><b>{{ 'policy.add.policy.title'|trans|desc('Adding Policy of type:') }}</b> {{ form.vars.value.module|capitalize ~ ' / ' ~ form.vars.value.function|capitalize }}</h2>
+            </section>
+
+            <section class="ibexa-fieldgroup">
+                <div class="ibexa-fieldgroup__content">
+                    {{ form_widget(form.policy, {"attr": {"hidden": "hidden", "dropdown_hidden": true}}) }}
+
+                    {% for limitation_form in form.limitations %}
+                        {{ include(limitation_form.vars.template, {form: limitation_form}, with_context = false) }}
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+        {{ form_widget(form.save, { attr: { hidden: 'hidden' }}) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-policy-create-with-limitation-js', null, 'ibexa') }}
+{% endblock %}

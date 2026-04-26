@@ -1,0 +1,17 @@
+{% extends '@nglayouts/block/block.html.twig' %}
+
+{% block content %}
+    {% set content = block.parameter('content').valueObject %}
+
+    {% if content is not null %}
+        {{ ng_view_content(
+            content,
+            block.viewType, {
+                'layout': false,
+                'params': {
+                    'block': block,
+                }|merge(ibexa_params|default({}))
+            }
+        ) }}
+    {% endif %}
+{% endblock %}

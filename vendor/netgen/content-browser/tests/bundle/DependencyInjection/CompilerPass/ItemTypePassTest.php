@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\DependencyInjection\CompilerPass;
+
+use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractContainerBuilderTestCase;
+use Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\ItemTypePass;
+use Netgen\ContentBrowser\Exceptions\RuntimeException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use stdClass;
+use Symfony\Component\DependencyInjection\Argument\AbstractArgument;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
+use Symfony\Component\DependencyInjection\Reference;
+
+#[CoversClass(ItemTypePass::class)]
+final class ItemTypePassTest extends AbstractContainerBuilderTestCase
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->container->addCompilerPass(new ItemTypePass());
+    }
+
+    public function testProcess(): void
+    {
+        $this->setDefinition('netgen_content_browser.registry.backend', new Definition(stdClass::class, [new AbstractArgument()]));
+        $this->setDefinition('netgen_content_browser.registry.config', new Definition(stdClass::class, [new AbstractArgument()]));
+
+        $this->setParameter(
+            'netgen_content_browser.item_types',
+            [
+                'test' => [
+                    'name' => 'item_types.test',
+                    'preview' => [
+                        'template' => 'template.html.twig',
+                    ],
+                ],
+            ],
+        );
+
+        $backend = new Definition(stdClass::class);
+        $backend->addTag('netgen_content_browser.backend', ['item_type' => 'test']);
+        $this->setDefinition('netgen_content_browser.backend.test', $backend);
+
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'netgen_content_browser.registry.backend',
+            0,
+            ['test' => new Reference('netgen_content_browser.backend.test')],
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            'netgen_content_browser.registry.config',
+            0,
+            ['test' => new Reference('netgen_content_browser.config.test')],
+        );
+
+        self::assertFalse($this->container->hasParameter('netgen_content_browser.item_types'));
+    }
+
+    public function testProcessThrowsRuntimeExceptionWithoutBackend(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No backend registered for "test" item type. Make sure that "item_type" attribute exists in the tag or your backend uses AsBackend attribute.');
+
+        $this->setDefinition('netgen_content_browser.registry.backend', new Definition(stdClass::class));
+        $this->setDefinition('netgen_content_browser.registry.config', new Definition(stdClass::class));
+
+        $this->setParameter(
+            'netgen_content_browser.item_types',
+            [
+                'test' => [
+                    'name' => 'item_types.test',
+                    'preview' => [
+                        'template' => 'template.html.twig',
+                    ],
+                ],
+            ],
+        );
+
+        $this->compile();
+    }
+
+    public function testProcessThrowsRuntimeExceptionWithNoTagType(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No backend registered for "test" item type. Make sure that "item_type" attribute exists in the tag or your backend uses AsBackend attribute.');
+
+        $this->setDefinition('netgen_content_browser.registry.backend', new Definition(stdClass::class));
+        $this->setDefinition('netgen_content_browser.registry.config', new Definition(stdClass::class));
+
+        $this->setParameter(
+            'netgen_content_browser.item_types',
+            [
+                'test' => [
+                    'name' => 'item_types.test',
+                    'preview' => [
+                        'template' => 'template.html.twig',
+                    ],
+                ],
+            ],
+        );
+
+        $backend = new Definition(stdClass::class);
+        $backend->addTag('netgen_content_browser.backend');
+        $this->setDefinition('netgen_content_browser.backend.test', $backend);
+
+        $this->compile();
+    }
+
+    public function testProcessThrowsRuntimeExceptionWithInvalidItemType(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Item type must begin with a letter and be followed by any combination of letters, digits and underscore, "Test type" given.');
+
+        $this->setDefinition('netgen_content_browser.registry.backend', new Definition(stdClass::class));
+        $this->setDefinition('netgen_content_browser.registry.config', new Definition(stdClass::class));
+
+        $this->setParameter(
+            'netgen_content_browser.item_types',
+            [
+                'Test type' => [
+                    'name' => 'item_types.test',
+                    'preview' => [
+                        'template' => 'template.html.twig',
+                    ],
+                ],
+            ],
+        );
+
+        $backend = new Definition(stdClass::class);
+        $backend->addTag('netgen_content_browser.backend', ['item_type' => 'test']);
+        $this->setDefinition('netgen_content_browser.backend.test', $backend);
+
+        $this->compile();
+    }
+
+    public function testProcessWithEmptyContainer(): void
+    {
+        $this->compile();
+
+        self::assertInstanceOf(FrozenParameterBag::class, $this->container->getParameterBag());
+    }
+}

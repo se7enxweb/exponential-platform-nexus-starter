@@ -1,0 +1,10 @@
+parameters:
+    ngsite.debug.excluded_profiler_channels: [doctrine, event]
+
+services:
+    ngsite.debug.log_processor:
+        class: Netgen\Bundle\SiteBundle\Debug\DebugProcessor
+        arguments:
+            - "@ngsite.debug.log_processor.inner"
+            - "%ngsite.debug.excluded_profiler_channels%"
+        decorates: debug.log_processor

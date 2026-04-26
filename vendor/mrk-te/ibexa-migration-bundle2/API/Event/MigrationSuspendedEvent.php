@@ -1,0 +1,35 @@
+<?php
+
+namespace Kaliop\IbexaMigrationBundle\API\Event;
+
+use Symfony\Contracts\EventDispatcher\Event;
+use Kaliop\IbexaMigrationBundle\API\Value\MigrationStep;
+use Kaliop\IbexaMigrationBundle\API\Exception\MigrationSuspendedException;
+
+class MigrationSuspendedEvent extends Event
+{
+    protected $step;
+    protected $exception;
+
+    public function __construct(MigrationStep $step, MigrationSuspendedException $exception)
+    {
+        $this->step = $step;
+        $this->exception = $exception;
+    }
+
+    /**
+     * @return MigrationStep
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
+
+    /**
+     * @return MigrationSuspendedException
+     */
+    public function getException()
+    {
+        return $this->exception;
+    }
+}

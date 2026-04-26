@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+
+namespace Ibexa\Bundle\Core\DependencyInjection\Configuration;
+
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+
+interface FieldTypeParserInterface extends ParserInterface
+{
+    /**
+     * Returns the fieldType identifier the config parser works for.
+     * Required to create configuration node under system.<site_access>.fieldtypes.
+     *
+     * @return string
+     */
+    public function getFieldTypeIdentifier();
+
+    /**
+     * Adds fieldType semantic configuration definition.
+     *
+     * @phpstan-param \Symfony\Component\Config\Definition\Builder\NodeBuilder<null> $nodeBuilder Node just under ibexa.system.<site_access>.fieldtypes.<identifier>
+     */
+    public function addFieldTypeSemanticConfig(NodeBuilder $nodeBuilder);
+}

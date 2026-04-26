@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Ibexa\AdminUi\Component\Content\PreviewUnavailableTwigComponent:
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-content-edit-form-before' }
+
+    Ibexa\AdminUi\Component\Content\ContentEditMetaFieldsComponent:
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-content-edit-sections' }

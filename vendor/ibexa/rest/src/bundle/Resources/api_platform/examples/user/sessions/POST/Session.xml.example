@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Session media-type="application/vnd.ibexa.api.Session+xml" href="/api/ibexa/v2/user/sessions/ABCDEFGHIJKLMNOPQRSTUVWXYZ">
+  <name>IBX_SESSION_ID0123456789ABCDEFGHIJKLMNOPQRSTUV</name>
+  <identifier>ABCDEFGHIJKLMNOPQRSTUVWXYZ</identifier>
+  <csrfToken>0123456789ABCDEF.GHIJKLMNOP_QRSTUVWXYZabcdefghijklmnopqrstuv.wxyz0123456-789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq</csrfToken>
+  <User media-type="application/vnd.ibexa.api.User+xml" href="/api/ibexa/v2/user/users/14"/>
+</Session>

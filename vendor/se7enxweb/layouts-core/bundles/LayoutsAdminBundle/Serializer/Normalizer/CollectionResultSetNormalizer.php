@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Serializer\Normalizer;
+
+use Netgen\Bundle\LayoutsAdminBundle\Serializer\Values\Value;
+use Netgen\Layouts\Collection\Result\ManualItem;
+use Netgen\Layouts\Collection\Result\ResultSet;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+use function in_array;
+
+final class CollectionResultSetNormalizer implements NormalizerInterface, NormalizerAwareInterface
+{
+    use NormalizerAwareTrait;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function normalize(mixed $data, ?string $format = null, array $context = []): array
+    {
+        /** @var \Netgen\Layouts\Collection\Result\ResultSet $resultSet */
+        $resultSet = $data->value;
+
+        $results = $this->buildValues($resultSet);
+        $overflowItems = $this->buildValues($this->getOverflowItems($resultSet));
+
+        return [
+            'items' => $this->normalizer->normalize($results, $format, $context),
+            'overflow_items' => $this->normalizer->normalize($overflowItems, $format, $context),
+        ];
+    }
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    {
+        if (!$data instanceof Value) {
+            return false;
+        }
+
+        return $data->value instanceof ResultSet;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            Value::class => false,
+        ];
+    }
+
+    /**
+     * Returns all items from the collection which are overflown. Overflown items
+     * are those NOT included in the provided result set, as defined by collection
+     * offset and limit.
+     *
+     * @return iterable<\Netgen\Layouts\API\Values\Collection\Item>
+     */
+    private function getOverflowItems(ResultSet $resultSet): iterable
+    {
+        $includedPositions = [];
+        foreach ($resultSet->results as $result) {
+            if ($result->item instanceof ManualItem) {
+                $includedPositions[] = $result->item->collectionItem->position;
+            }
+
+            if ($result->subItem instanceof ManualItem) {
+                $includedPositions[] = $result->subItem->collectionItem->position;
+            }
+        }
+
+        foreach ($resultSet->collection->items as $collectionItem) {
+            if (!in_array($collectionItem->position, $includedPositions, true)) {
+                yield $collectionItem;
+            }
+        }
+    }
+
+    /**
+     * Builds the list of Value objects for provided list of values.
+     *
+     * @param iterable<object> $values
+     *
+     * @return iterable<array-key, \Netgen\Bundle\LayoutsAdminBundle\Serializer\Values\Value>
+     */
+    private function buildValues(iterable $values): iterable
+    {
+        foreach ($values as $key => $value) {
+            yield $key => new Value($value);
+        }
+    }
+}

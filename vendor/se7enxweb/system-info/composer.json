@@ -1,0 +1,69 @@
+{
+    "name": "se7enxweb/system-info",
+    "description": "Providing information about the system Exponential is running on, and Exponential install itself",
+    "license": "(GPL-2.0-or-later or proprietary)",
+    "type": "ibexa-bundle",
+    "replace": {
+        "ibexa/system-info": "*",
+        "ezsystems/ez-support-tools": "*"
+    },
+    "require": {
+        "php": " >=8.3",
+        "ext-json": "*",
+        "ibexa/admin-ui": "~5.0.x-dev",
+        "ibexa/core": "~5.0.x-dev",
+        "ibexa/twig-components": "~5.0.x-dev",
+        "zetacomponents/system-information": "^1.1.1"
+    },
+    "require-dev": {
+        "ibexa/templated-uri-bundle": "^4.0",
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/content-forms": "~5.0.x-dev",
+        "ibexa/design-engine": "~5.0.x-dev",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/fieldtype-richtext": "~5.0.x-dev",
+        "ibexa/http-cache": "~5.0.x-dev",
+        "ibexa/notifications": "~5.0.x-dev",
+        "ibexa/phpstan": "~5.0.x-dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "ibexa/rest": "~5.0.x-dev",
+        "ibexa/search": "~5.0.x-dev",
+        "ibexa/test-core": "~5.0.x-dev",
+        "ibexa/user": "~5.0.x-dev",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\SystemInfo\\": "src/lib/",
+            "Ibexa\\Bundle\\SystemInfo\\": "src/bundle/",
+            "Ibexa\\Contracts\\SystemInfo\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\SystemInfo\\": "tests/lib/",
+            "Ibexa\\Tests\\Integration\\SystemInfo\\": "tests/integration/",
+            "Ibexa\\Tests\\Bundle\\SystemInfo\\": "tests/bundle/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "test": "phpunit -c phpunit.xml",
+        "test-integration": "phpunit -c phpunit.integration.xml",
+        "phpstan": "phpstan analyse"
+    },
+    "config": {
+        "allow-plugins": false,
+        "sort-packages": true
+    }
+}

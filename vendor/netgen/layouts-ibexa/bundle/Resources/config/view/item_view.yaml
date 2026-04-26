@@ -1,0 +1,29 @@
+view:
+    item_view:
+        default:
+            ibexa_content:
+                template: "@nglayouts/item/ibexa_content.html.twig"
+                match:
+                    item\value_type: ibexa_content
+            ibexa_location:
+                template: "@nglayouts/item/ibexa_location.html.twig"
+                match:
+                    item\value_type: ibexa_location
+        ajax:
+            ibexa_content:
+                template: "@nglayouts/item/ibexa_content.html.twig"
+                match:
+                    item\value_type: ibexa_content
+            ibexa_location:
+                template: "@nglayouts/item/ibexa_location.html.twig"
+                match:
+                    item\value_type: ibexa_location
+        app:
+            ibexa_content:
+                template: "@nglayouts_admin/app/item/ibexa_content.html.twig"
+                match:
+                    item\value_type: ibexa_content
+            ibexa_location:
+                template: "@nglayouts_admin/app/item/ibexa_location.html.twig"
+                match:
+                    item\value_type: ibexa_location

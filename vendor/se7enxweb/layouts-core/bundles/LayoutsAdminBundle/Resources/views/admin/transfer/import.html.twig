@@ -1,0 +1,69 @@
+{% extends nglayouts_admin.pageLayoutTemplate %}
+
+{% form_theme form '@NetgenLayoutsAdmin/form/theme/nglayouts.html.twig' %}
+
+{% trans_default_domain 'nglayouts_admin' %}
+
+{% block title %}
+    {{ 'transfer.import.title'|trans }} - {{ 'pagelayout.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="layouts-import">
+        <div class="layouts-header">
+            <h2 class="layouts-title">{{ 'transfer.import.title'|trans }}</h2>
+            <p>{{ 'transfer.import.notice'|trans }}</p>
+        </div>
+
+        <div class="layouts-form">
+            {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+                {{ form_row(form.file) }}
+                {{ form_row(form.import_mode) }}
+
+                <div class="form-actions">
+                    <button type="submit" class="nl-btn nl-btn-primary">{{ 'import.button.upload'|trans({}, 'nglayouts_forms') }}</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+
+        {% if results is not empty %}
+            <div class="results">
+                {% for result in results %}
+                    {% if result.entity is defined %}
+                        <div class="result result-success">
+                            <p>
+                                {{ 'transfer.import.result.success'|trans({
+                                    '%entityType%': result.entityType,
+                                    '%index%': loop.index,
+                                    '%uuid%': result.entity.id.toString
+                                }) }}
+                            </p>
+                        </div>
+                    {% elseif result.error is defined %}
+                        <div class="result result-danger">
+                            <p>
+                                {{ 'transfer.import.result.error'|trans({
+                                    '%entityType%': result.entityType,
+                                    '%index%': loop.index,
+                                    '%uuid%': result.entityId.toString
+                                }) }}
+                            </p>
+
+                            <p class="error-message">{{ result.error.message }}</p>
+                        </div>
+                    {% else %}
+                        <div class="result result-warning">
+                            <p>
+                                {{ 'transfer.import.result.skipped'|trans({
+                                    '%entityType%': result.entityType,
+                                    '%index%': loop.index,
+                                    '%uuid%': result.entityId.toString
+                                }) }}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

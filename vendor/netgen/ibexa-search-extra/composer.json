@@ -1,0 +1,59 @@
+{
+    "name": "netgen/ibexa-search-extra",
+    "description": "Netgen's extra search bits for Ibexa CMS",
+    "type": "ibexa-bundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Petar Španja",
+            "email": "petar@spanja.info"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "ext-curl": "*",
+        "ibexa/core": "^5.0",
+        "symfony/messenger": "^7.3",
+        "symfony/proxy-manager-bridge": "^6.4"
+    },
+    "require-dev": {
+        "ibexa/fieldtype-richtext": "^5.0",
+        "ibexa/solr": "^5.0",
+        "phpunit/phpunit": "^9.6",
+        "symfony/phpunit-bridge": "^8.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1",
+        "behat/behat": "^3.29",
+        "friends-of-behat/mink-extension": "^2.7"
+    },
+    "conflict": {
+        "symfony/cache": "5.0.11 || 5.1.3"
+    },
+    "suggest": {
+        "netgen/ibexa-site-api": "Boost your site-building productivity with Ibexa CMS",
+        "ibexa/solr": "Supports advanced capabilities with Ibexa search API",
+        "ibexa/elasticsearch": "Supports advanced capabilities with Ibexa search API"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\IbexaSearchExtra\\": "lib",
+            "Netgen\\Bundle\\IbexaSearchExtraBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\IbexaSearchExtra\\Tests\\": "tests/lib",
+            "Netgen\\IbexaSearchExtraBundle\\Tests\\": "tests/bundle"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-ibexa5": "4.0-dev"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always"
+    }
+}

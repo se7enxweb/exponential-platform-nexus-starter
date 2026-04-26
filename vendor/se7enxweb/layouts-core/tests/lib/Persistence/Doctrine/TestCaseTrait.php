@@ -1,0 +1,110 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Persistence\Doctrine;
+
+use Netgen\Layouts\Layout\Resolver\TargetHandler;
+use Netgen\Layouts\Persistence\Doctrine\Handler\BlockHandler;
+use Netgen\Layouts\Persistence\Doctrine\Handler\CollectionHandler;
+use Netgen\Layouts\Persistence\Doctrine\Handler\LayoutHandler;
+use Netgen\Layouts\Persistence\Doctrine\Handler\LayoutResolverHandler;
+use Netgen\Layouts\Persistence\Doctrine\Helper\ConnectionHelper;
+use Netgen\Layouts\Persistence\Doctrine\Helper\PositionHelper;
+use Netgen\Layouts\Persistence\Doctrine\Mapper\BlockMapper;
+use Netgen\Layouts\Persistence\Doctrine\Mapper\CollectionMapper;
+use Netgen\Layouts\Persistence\Doctrine\Mapper\LayoutMapper;
+use Netgen\Layouts\Persistence\Doctrine\Mapper\LayoutResolverMapper;
+use Netgen\Layouts\Persistence\Doctrine\QueryHandler\BlockQueryHandler;
+use Netgen\Layouts\Persistence\Doctrine\QueryHandler\CollectionQueryHandler;
+use Netgen\Layouts\Persistence\Doctrine\QueryHandler\LayoutQueryHandler;
+use Netgen\Layouts\Persistence\Doctrine\QueryHandler\LayoutResolverQueryHandler;
+use Netgen\Layouts\Persistence\Doctrine\TransactionHandler;
+use Netgen\Layouts\Persistence\Handler\BlockHandlerInterface;
+use Netgen\Layouts\Persistence\Handler\CollectionHandlerInterface;
+use Netgen\Layouts\Persistence\Handler\LayoutHandlerInterface;
+use Netgen\Layouts\Persistence\Handler\LayoutResolverHandlerInterface;
+use Netgen\Layouts\Persistence\TransactionHandlerInterface;
+use Netgen\Layouts\Tests\Stubs\Container;
+
+trait TestCaseTrait
+{
+    use DatabaseTrait;
+
+    final protected function tearDown(): void
+    {
+        $this->closeDatabase();
+    }
+
+    final protected function createTransactionHandler(): TransactionHandlerInterface
+    {
+        $this->createDatabase();
+
+        return new TransactionHandler($this->databaseConnection);
+    }
+
+    final protected function createCollectionHandler(): CollectionHandlerInterface
+    {
+        return new CollectionHandler(
+            new CollectionQueryHandler(
+                $this->databaseConnection,
+                new ConnectionHelper($this->databaseConnection),
+            ),
+            new CollectionMapper(),
+            new PositionHelper($this->databaseConnection),
+            $this->uuidFactory,
+        );
+    }
+
+    final protected function createBlockHandler(): BlockHandlerInterface
+    {
+        return new BlockHandler(
+            new BlockQueryHandler(
+                $this->databaseConnection,
+                new ConnectionHelper($this->databaseConnection),
+            ),
+            $this->collectionHandler,
+            new BlockMapper(),
+            new PositionHelper($this->databaseConnection),
+            $this->uuidFactory,
+        );
+    }
+
+    final protected function createLayoutHandler(): LayoutHandlerInterface
+    {
+        $connectionHelper = new ConnectionHelper($this->databaseConnection);
+
+        return new LayoutHandler(
+            new LayoutQueryHandler(
+                $this->databaseConnection,
+                $connectionHelper,
+            ),
+            $this->blockHandler,
+            new LayoutMapper(),
+            $this->uuidFactory,
+        );
+    }
+
+    final protected function createLayoutResolverHandler(): LayoutResolverHandlerInterface
+    {
+        return new LayoutResolverHandler(
+            $this->layoutHandler,
+            new LayoutResolverQueryHandler(
+                $this->databaseConnection,
+                new ConnectionHelper($this->databaseConnection),
+                new Container(
+                    [
+                        'route' => new TargetHandler\Doctrine\Route(),
+                        'route_prefix' => new TargetHandler\Doctrine\RoutePrefix($this->databaseConnection),
+                        'path_info' => new TargetHandler\Doctrine\Route(),
+                        'path_info_prefix' => new TargetHandler\Doctrine\RoutePrefix($this->databaseConnection),
+                        'request_uri' => new TargetHandler\Doctrine\Route(),
+                        'request_uri_prefix' => new TargetHandler\Doctrine\RoutePrefix($this->databaseConnection),
+                    ],
+                ),
+            ),
+            new LayoutResolverMapper(),
+            $this->uuidFactory,
+        );
+    }
+}

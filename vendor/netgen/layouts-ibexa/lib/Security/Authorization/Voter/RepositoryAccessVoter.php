@@ -1,0 +1,91 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Security\Authorization\Voter;
+
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+
+use function array_key_exists;
+use function is_string;
+use function str_starts_with;
+
+/**
+ * Votes on Netgen Layouts attributes (ROLE_NGLAYOUTS_*) by matching corresponding access
+ * rights in Ibexa CMS Repository.
+ *
+ * @extends \Symfony\Component\Security\Core\Authorization\Voter\Voter<string, \Netgen\Layouts\API\Values\Value|null>
+ */
+final class RepositoryAccessVoter extends Voter
+{
+    /**
+     * Identifier of the Ibexa CMS module used for creating Netgen Layouts permissions.
+     */
+    private const string MODULE = 'nglayouts';
+
+    /**
+     * Map of supported attributes to corresponding functions in the Ibexa CMS module.
+     */
+    private const array ATTRIBUTE_TO_POLICY_MAP = [
+        'ROLE_NGLAYOUTS_ADMIN' => 'admin',
+        'ROLE_NGLAYOUTS_EDITOR' => 'editor',
+        'ROLE_NGLAYOUTS_API' => 'api',
+    ];
+
+    public function __construct(
+        private RoleHierarchyInterface $roleHierarchy,
+        private AccessDecisionManagerInterface $accessDecisionManager,
+    ) {}
+
+    /**
+     * @param mixed[] $attributes
+     */
+    public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
+    {
+        // abstain vote by default in case none of the attributes are supported
+        $result = self::ACCESS_ABSTAIN;
+
+        foreach ($attributes as $attribute) {
+            if (!is_string($attribute) || !$this->supports($attribute, $subject)) {
+                continue;
+            }
+
+            $reachableAttributes = $this->roleHierarchy->getReachableRoleNames([$attribute]);
+
+            // rely on vote resolved by parent implementation
+            $result = parent::vote($token, $subject, $reachableAttributes);
+
+            // return only if granted
+            if ($result === self::ACCESS_GRANTED) {
+                return self::ACCESS_GRANTED;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function supports(string $attribute, mixed $subject): bool
+    {
+        return str_starts_with($attribute, 'ROLE_NGLAYOUTS_');
+    }
+
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
+    {
+        if (!array_key_exists($attribute, self::ATTRIBUTE_TO_POLICY_MAP)) {
+            return false;
+        }
+
+        $function = self::ATTRIBUTE_TO_POLICY_MAP[$attribute];
+
+        return $this->accessDecisionManager->decide(
+            $token,
+            [new Attribute(self::MODULE, $function)],
+            $subject,
+        );
+    }
+}

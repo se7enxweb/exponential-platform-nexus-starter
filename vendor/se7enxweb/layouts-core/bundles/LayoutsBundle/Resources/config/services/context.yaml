@@ -1,0 +1,8 @@
+services:
+    netgen_layouts.context:
+        class: Netgen\Layouts\Context\Context
+
+    netgen_layouts.context.builder:
+        class: Netgen\Layouts\Context\ContextBuilder
+        arguments:
+            - !tagged_iterator netgen_layouts.context_provider

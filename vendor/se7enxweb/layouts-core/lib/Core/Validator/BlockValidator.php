@@ -1,0 +1,73 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Core\Validator;
+
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\API\Values\Block\BlockCreateStruct;
+use Netgen\Layouts\API\Values\Block\BlockUpdateStruct;
+use Netgen\Layouts\Validator\Constraint\Structs\BlockCreateStruct as BlockCreateStructConstraint;
+use Netgen\Layouts\Validator\Constraint\Structs\BlockUpdateStruct as BlockUpdateStructConstraint;
+use Netgen\Layouts\Validator\Constraint\Structs\ConfigAwareStruct as ConfigAwareStructConstraint;
+use Netgen\Layouts\Validator\ValidatorTrait;
+
+final class BlockValidator
+{
+    use ValidatorTrait;
+
+    public function __construct(
+        private CollectionValidator $collectionValidator,
+    ) {}
+
+    /**
+     * Validates the provided block create struct.
+     *
+     * @throws \Netgen\Layouts\Exception\Validation\ValidationException If the validation failed
+     */
+    public function validateBlockCreateStruct(BlockCreateStruct $blockCreateStruct): void
+    {
+        $this->validate(
+            $blockCreateStruct,
+            [
+                new BlockCreateStructConstraint(),
+            ],
+        );
+
+        $this->validate(
+            $blockCreateStruct,
+            new ConfigAwareStructConstraint(
+                payload: $blockCreateStruct->definition,
+            ),
+        );
+
+        foreach ($blockCreateStruct->collectionCreateStructs as $collectionCreateStruct) {
+            $this->collectionValidator->validateCollectionCreateStruct($collectionCreateStruct);
+        }
+    }
+
+    /**
+     * Validates the provided block update struct.
+     *
+     * @throws \Netgen\Layouts\Exception\Validation\ValidationException If the validation failed
+     */
+    public function validateBlockUpdateStruct(Block $block, BlockUpdateStruct $blockUpdateStruct): void
+    {
+        $this->validate(
+            $blockUpdateStruct,
+            [
+                new BlockUpdateStructConstraint(
+                    payload: $block,
+                ),
+            ],
+        );
+
+        $this->validate(
+            $blockUpdateStruct,
+            new ConfigAwareStructConstraint(
+                allowMissingFields: true,
+                payload: $block->definition,
+            ),
+        );
+    }
+}

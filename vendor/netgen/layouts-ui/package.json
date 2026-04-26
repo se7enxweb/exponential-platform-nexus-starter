@@ -1,0 +1,60 @@
+{
+  "name": "@netgen/layouts-ui",
+  "description": "Netgen Layouts user interface",
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netgen-layouts/layouts-ui.git"
+  },
+  "main": "app/scripts/main.js",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^9.7.3",
+    "grunt": "~1.5.0",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-browserify": "^5.3.0",
+    "grunt-concurrent": "^3.0.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-handlebars": "^1.0.0",
+    "grunt-contrib-imagemin": "^3.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-notify": "^0.4.5",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^3.1.0",
+    "grunt-shell": "^3.0.1",
+    "grunt-svgmin": "^6.0.0",
+    "handlebars": "~4.0.14",
+    "matchdep": "^2.0.0",
+    "node-sass": "^4.13.0"
+  },
+  "dependencies": {
+    "@netgen/content-browser-ui": "link:vendor/netgen/content-browser-ui",
+    "ace-builds": "1.4.7",
+    "backbone": "^1.4.0",
+    "backbone.localstorage": "^2.0.2",
+    "bootstrap": "^3.4.1",
+    "bootstrap-sass": "3.4.1",
+    "ckeditor4": "4.13.1",
+    "eonasdan-bootstrap-datetimepicker": "4.17.47",
+    "handlebars": "~4.0.14",
+    "jquery": "^2.2.4",
+    "jquery-ui": "~1.10.5",
+    "moment": "^2.24.0",
+    "nprogress": "^0.2.0",
+    "striptags": "^2.2.1",
+    "underscore": "^1.9.1"
+  },
+  "resolutions": {
+    "minimatch": "^3.0.0"
+  },
+  "engines": {
+    "node": "^14"
+  }
+}

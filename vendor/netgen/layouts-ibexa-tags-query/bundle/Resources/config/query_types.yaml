@@ -1,0 +1,3 @@
+query_types:
+    ibexa_content_tags:
+        name: 'Ibexa tags'

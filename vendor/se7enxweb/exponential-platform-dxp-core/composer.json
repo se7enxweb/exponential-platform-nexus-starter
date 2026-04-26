@@ -1,0 +1,156 @@
+{
+    "name": "se7enxweb/exponential-platform-dxp-core",
+    "description": "7x Exponential Platform DXP (Stable; Open Source) core. Provides the Content Repository, its APIs, and the application's Symfony framework integration.",
+    "homepage": "https://se7enx.com",
+    "license": "(GPL-2.0-or-later or proprietary)",
+    "replace": {
+        "ibexa/core": "*"
+    },
+    "suggest": {
+        "php-64bit": "For support of more than 30 languages, a 64bit php installation on all involved prod/dev machines is required"
+    },
+    "require": {
+        "php": " >=8.3",
+        "ext-PDO": "*",
+        "ext-SPL": "*",
+        "ext-ctype": "*",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-xsl": "*",
+        "composer/package-versions-deprecated": "^1.11",
+        "doctrine/annotations": "^2.0",
+        "doctrine/dbal": "^3.7.0",
+        "doctrine/doctrine-bundle": "^2.11.0",
+        "doctrine/orm": "^2.7",
+        "doctrine/persistence": "^3.0",
+        "friendsofphp/proxy-manager-lts": "^1.0",
+        "friendsofsymfony/http-cache-bundle": "^3.0",
+        "friendsofsymfony/jsrouting-bundle": "^3.5",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/jms-translation-bundle": "^2.6.0",
+        "league/flysystem-memory": "^2.0.6",
+        "liip/imagine-bundle": "^2.3",
+        "nelmio/cors-bundle": "^2.0",
+        "oneup/flysystem-bundle": "^4.4.2",
+        "pagerfanta/pagerfanta": "^3.6.2",
+        "psr/event-dispatcher": "^1.0",
+        "symfony-cmf/routing": "^3.0",
+        "symfony/cache": "^7.4",
+        "symfony/console": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/expression-language": "^7.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/http-client": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/mime": "^7.4",
+        "symfony/polyfill-php80": "^1.27",
+        "symfony/process": "^7.4",
+        "symfony/security-bundle": "^7.4",
+        "symfony/security-core": "^7.4",
+        "symfony/security-http": "^7.4",
+        "symfony/serializer": "^7.4",
+        "symfony/templating": "^6.4.0",
+        "symfony/translation": "^7.4",
+        "symfony/validator": "^7.4",
+        "symfony/var-dumper": "^7.4",
+        "symfony/yaml": "^7.4",
+        "twig/extra-bundle": "^3.0",
+        "twig/twig": ">=3.0 <3.16 || ^3.19.0",
+        "ibexa/polyfill-php82": "^1.0"
+    },
+    "require-dev": {
+        "behat/behat": "^3.6.1",
+        "friends-of-behat/mink-extension": "^2.4",
+        "ibexa/code-style": "~2.1.0",
+        "ibexa/rector": "~5.0.x-dev",
+        "jenner/simple_fork": "^1.2",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.6",
+        "symfony/phpunit-bridge": "^7.4",
+        "symfony/runtime": "^7.4"
+    },
+    "conflict": {
+        "doctrine/dbal": "2.7.0",
+        "doctrine/orm": "2.20.7",
+        "ezsystems/ezplatform-kernel": "*",
+        "ezsystems/ezpublish-legacy": "*",
+        "friendsofphp/php-cs-fixer": "3.5.0",
+        "phpunit/phpunit": "8.4.0",
+        "symfony/dependency-injection": "5.3.7",
+        "symfony/security-core": "5.3.0",
+        "symfony/finder": "7.3.10 || 7.4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\Bundle\\Core\\": "src/bundle/Core",
+            "Ibexa\\Bundle\\Debug\\": "src/bundle/Debug",
+            "Ibexa\\Bundle\\IO\\": "src/bundle/IO",
+            "Ibexa\\Bundle\\RepositoryInstaller\\": "src/bundle/RepositoryInstaller",
+            "Ibexa\\Bundle\\LegacySearchEngine\\": "src/bundle/LegacySearchEngine",
+            "Ibexa\\Contracts\\Core\\": "src/contracts",
+            "Ibexa\\Core\\": "src/lib",
+            "Ibexa\\Tests\\Core\\": "tests/lib",
+            "Ibexa\\Tests\\Integration\\Core\\": "tests/integration/Core",
+            "Ibexa\\Tests\\Bundle\\Core\\": "tests/bundle/Core",
+            "Ibexa\\Tests\\Integration\\Stub\\": "tests/integration/Stub"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\Bundle\\Core\\": "tests/bundle/Core",
+            "Ibexa\\Tests\\Bundle\\Debug\\": "tests/bundle/Debug",
+            "Ibexa\\Tests\\Bundle\\IO\\": "tests/bundle/IO",
+            "Ibexa\\Tests\\Bundle\\RepositoryInstaller\\": "tests/bundle/RepositoryInstaller",
+            "Ibexa\\Tests\\Bundle\\LegacySearchEngine\\": "tests/bundle/LegacySearchEngine",
+            "Ibexa\\Tests\\Integration\\Core\\": "tests/integration/Core",
+            "Ibexa\\Tests\\Integration\\Debug\\": "tests/integration/Debug",
+            "Ibexa\\Tests\\Integration\\IO\\": "tests/integration/IO",
+            "Ibexa\\Tests\\Integration\\RepositoryInstaller\\": "tests/integration/RepositoryInstaller",
+            "Ibexa\\Tests\\Integration\\LegacySearchEngine\\": "tests/integration/LegacySearchEngine",
+            "Ibexa\\Tests\\Core\\": "tests/lib"
+        }
+    },
+    "config": {
+        "process-timeout": 3000,
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "*": false
+        }
+    },
+    "scripts": {
+        "check-cs": "@fix-cs --dry-run",
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "unit": "phpunit -c phpunit.xml",
+        "phpstan": "phpstan analyse",
+        "integration": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit -c phpunit-integration-legacy.xml"
+        ],
+        "test-integration-solr": "phpunit -c phpunit-integration-legacy-solr.xml",
+        "test": [
+            "@unit",
+            "@integration"
+        ]
+    },
+    "scripts-descriptions": {
+        "check-cs": "Run code style checker for all files",
+        "fix-cs": "Fix Coding standard issues in current checkout.",
+        "test": "Run all tests (unit & integration, not functional), might not work on Windows."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    }
+}

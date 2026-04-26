@@ -1,0 +1,7 @@
+{% set full = full ?? false %}
+
+{% if full %}
+    {{ include('@NetgenLayouts/google_maps.html.twig') }}
+{% endif %}
+
+<script src="{{ asset('app' ~ (full ? '-full' : '') ~ '.js', 'nglayouts_standard_js') }}"></script>

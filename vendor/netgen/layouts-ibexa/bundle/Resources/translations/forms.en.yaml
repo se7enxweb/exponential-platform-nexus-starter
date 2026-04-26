@@ -1,0 +1,5 @@
+role.policy.nglayouts: 'Netgen Layouts'
+role.policy.nglayouts.all_functions: 'All functions'
+role.policy.nglayouts.admin: 'Admin'
+role.policy.nglayouts.editor: 'Editor'
+role.policy.nglayouts.api: 'API'

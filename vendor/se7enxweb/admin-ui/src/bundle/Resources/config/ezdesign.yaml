@@ -1,0 +1,8 @@
+ibexa_design_engine:
+    design_list:
+        admin: [admin, standard]
+
+ibexa:
+    system:
+        admin_group:
+            design: admin

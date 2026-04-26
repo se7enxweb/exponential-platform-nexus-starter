@@ -1,0 +1,87 @@
+system:
+    default:
+        field_templates:
+            - template: '@IbexaFieldTypeRichText/RichText/content_fields.html.twig'
+              priority: 0
+
+        fielddefinition_settings_templates:
+            - template: '@IbexaFieldTypeRichText/RichText/fielddefinition_settings.html.twig'
+              priority: 0
+
+    admin_group:
+        fieldtypes:
+            ibexa_richtext:
+                custom_tags: [ezyoutube, eztwitter, ezfacebook]
+                toolbar:
+                    group1:
+                        priority: 60
+                        buttons:
+                            ibexaMoveUp:
+                                priority: 30
+                            ibexaMoveDown:
+                                priority: 20
+                            heading:
+                                priority: 10
+                    group2:
+                        priority: 50
+                        buttons:
+                            alignment:
+                                priority: 10
+                    group3:
+                        priority: 40
+                        buttons:
+                            bulletedList:
+                                priority: 30
+                            numberedList:
+                                priority: 20
+                            insertTable:
+                                priority: 10
+                    group4:
+                        priority: 30
+                        buttons:
+                            bold:
+                                priority: 120
+                            italic:
+                                priority: 110
+                            underline:
+                                priority: 100
+                            subscript:
+                                priority: 90
+                            superscript:
+                                priority: 80
+                            strikethrough:
+                                priority: 70
+                            blockQuote:
+                                priority: 60
+                            ibexaLink:
+                                priority: 50
+                            ibexaAnchor:
+                                priority: 40
+                            ibexaCustomStyleInline:
+                                priority: 30
+                            ibexaFormatted:
+                                priority: 20
+                            ibexaCustomAttributes:
+                                priority: 10
+                            specialCharacters:
+                                priority: 5
+                    group5:
+                        priority: 20
+                        buttons:
+                            ibexaEmbed:
+                                priority: 30
+                            ibexaEmbedImage:
+                                priority: 20
+                            ibexaUploadImage:
+                                priority: 15
+                            ibexaEmbedInline:
+                                priority: 10
+                    custom_tags_group:
+                        priority: 10
+                        buttons:
+                            ezyoutube:
+                                priority: 30
+                            eztwitter:
+                                priority: 20
+                            ezfacebook:
+                                priority: 10

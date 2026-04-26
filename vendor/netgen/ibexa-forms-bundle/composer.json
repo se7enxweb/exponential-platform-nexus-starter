@@ -1,0 +1,56 @@
+{
+    "name": "netgen/ibexa-forms-bundle",
+    "description": "Integration of Symfony's Form component with Ibexa Platform Public API",
+    "type": "ibexa-bundle",
+    "license": "GPL-2.0-only",
+    "keywords": [
+        "ibexa",
+        "forms",
+        "netgen",
+        "ibexa-forms",
+        "ibexa-forms-bundle"
+    ],
+    "homepage": "https://github.com/netgen/ibexa-forms-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "http://netgen.io"
+        }
+    ],
+    "require": {
+        "symfony/config": "^7.3",
+        "symfony/dependency-injection": "^7.3",
+        "symfony/form": "^7.3",
+        "symfony/http-foundation": "^7.3",
+        "symfony/http-kernel": "^7.3",
+        "symfony/options-resolver": "^7.3",
+        "symfony/property-access": "^7.3",
+        "symfony/validator": "^7.3",
+        "ibexa/core": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.0",
+        "matthiasnoback/symfony-config-test": "^6.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\IbexaFormsBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Bundle\\IbexaFormsBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.x-dev"
+        }
+    }
+}

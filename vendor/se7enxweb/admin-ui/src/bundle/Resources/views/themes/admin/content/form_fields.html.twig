@@ -1,0 +1,174 @@
+{% extends '@ibexadesign/ui/form_fields.html.twig' %}
+
+{# specific fieldtypes theming #}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_author.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_boolean.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_country.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_datetime.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_richtext.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_selection.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_time.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_date.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_media.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_image.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_image_asset.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_binaryfile.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_keyword.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_gmap_location.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_object_relation_list.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_object_relation.html.twig' %}
+{% use '@ibexadesign/ui/field_type/edit/ibexa_user.html.twig' %}
+
+{% trans_default_domain 'ibexa_content_edit' %}
+
+{# general content editing theming #}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <em class="ibexa-field-edit__error ibexa-form-error__row">
+                <svg class="ibexa-icon ibexa-icon--small-medium ibexa-form-error__icon">
+                    <use xlink:href="{{ ibexa_icon_path('notice') }}"></use>
+                </svg>
+                {{ error.message }}
+                </em>
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock -%}
+
+{% block form_row -%}
+    {% set is_fieldtype = form.parent.vars.value.fieldDefinition.fieldTypeIdentifier is defined %}
+
+    {% if is_fieldtype %}
+        {{ block('form_row_fieldtype') }}
+    {% else %}
+        {{ block('form_row_subfield') }}
+    {% endif %}
+{%- endblock %}
+
+{% block form_row_subfield -%}
+    {% set is_small = attr.is_small ?? true %}
+    {% set wrapper_class = 'ibexa-data-source__field ibexa-data-source__field--' ~ name ~ ' ibexa-data-form-field' %}
+    {% if required %}{% set wrapper_class = (wrapper_class ~ ' ibexa-data-source__field--required')|trim %}{% endif %}
+    {% if errors|length > 0 %}{% set wrapper_class = (wrapper_class|default('') ~ ' is-invalid')|trim %}{% endif %}
+
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' ibexa-label ibexa-data-source__label')|trim}) %}
+    {% set label_wrapper_attr = label_wrapper_attr|default({})|merge({'class': (label_wrapper_attr.class|default('') ~ ' ibexa-data-source__label-wrapper')|trim}) %}
+    {% set attr = attr|merge({
+        class: (attr.class|default('') ~ ' ibexa-data-source__input' ~ (is_small ? ' ibexa-input--small'))|trim,
+        is_small,
+    }) %}
+    {% set wrapper_attr = wrapper_attr|default({})|merge({class: (wrapper_attr.class|default('') ~ ' ' ~ wrapper_class)|trim}) %}
+    {% set widget_wrapper_attr = widget_wrapper_attr|default({})|merge({class: (widget_wrapper_attr.class|default('') ~ ' ibexa-data-source__input-wrapper')|trim}) %}
+
+    {% if required %}{% set label_attr = label_attr|merge({'class': label_attr.class ~ ' required' }) %}{% endif %}
+
+    <div{% with { attr: wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+        <div{% with { attr: label_wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{- block('form_label') }}
+        </div>
+        <div{% with { attr: widget_wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+            {{- form_widget(form, { attr }) -}}
+        </div>
+        <div class="ibexa-form-error">
+            {{- block('form_errors') -}}
+        </div>
+    </div>
+{%- endblock %}
+
+{% block form_row_fieldtype %}
+    {% set fieldtype = form.parent %}
+    {% set fieldtype_identifier = fieldtype.vars.value.fieldDefinition.fieldTypeIdentifier %}
+    {% set translation_mode = fieldtype.vars.mainLanguageCode != fieldtype.vars.languageCode %}
+    {% set fieldtype_is_not_translatable = translation_mode and not fieldtype.vars.value.fieldDefinition.isTranslatable %}
+    {% set has_distraction_free_mode = fieldtype_identifier == 'ibexa_richtext' %}
+
+    {% set widget_wrapper_attr = widget_wrapper_attr|default({})|merge({'class': (widget_wrapper_attr.class|default('') ~ ' ibexa-field-edit__data')|trim}) %}
+    {% set wrapper_class = 'ibexa-field-edit ibexa-form-field ibexa-field-edit--' ~ fieldtype_identifier ~ (has_distraction_free_mode ? ' ibexa-field-edit--has-distraction-free-mode') %}
+
+    {% if fieldtype.vars.disabled %}
+        {% set wrapper_class = wrapper_class ~ ' ibexa-field-edit--disabled' %}
+        {% set attr = attr|merge({'readonly': 'readonly'}) %}
+    {% endif %}
+
+    {# BC: to maintain BC we have to map errors which orginated from compound fieldtypes #}
+    {% for error in form.parent.parent.parent.vars.errors %}
+        {% if error.origin == form.vars.errors.form %}
+            {% set errors = errors|default([])|merge([error]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if required %}{% set wrapper_class = (wrapper_class|default('') ~ ' ibexa-field-edit--required')|trim %}{% endif %}
+    {% if errors|length > 0 %}{% set wrapper_class = (wrapper_class|default('') ~ ' is-invalid')|trim %}{% endif %}
+    {% if fieldtype_is_not_translatable %}
+        {% set wrapper_class = (wrapper_class|default('') ~ ' ibexa-field-edit--nontranslatable')|trim %}
+        {% set attr = attr|merge({'readonly': 'readonly'}) %}
+    {% endif %}
+    {% set label_wrapper_attr = label_wrapper_attr|default({})|merge({'class': (label_wrapper_attr.class|default('') ~ 'ibexa-field-edit__label-wrapper')|trim}) %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' ibexa-label ibexa-field-edit__label')|trim}) %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' ibexa-data-source__input')|trim}) %}
+    {% set wrapper_attr = wrapper_attr|default({})|merge({'class': (wrapper_attr.class|default('') ~ ' ' ~ wrapper_class)|trim}) %}
+
+    {% set field_type_descriptions = fieldtype.vars.value.fieldDefinition.descriptions %}
+
+    {% if required %}{% set label_attr = label_attr|merge({'class': label_attr.class ~ ' required' }) %}{% endif %}
+    {% if compound %}{% set widget_wrapper_attr = widget_wrapper_attr|merge({'class': widget_wrapper_attr.class ~ ' ibexa-field-edit__data--compound' }) %}{% endif %}
+
+    <div {% with { attr: wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+        <div{% with { attr: label_wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+            {% with { 'compound': false } %}{{ block('form_label') }}{% endwith %}
+        </div>
+
+        {% if has_distraction_free_mode %}
+            {{- block('distraction_free_mode') }}
+        {% endif %}
+
+        {% if widget_container_block is defined %}
+            {{ widget_container_block|raw }}
+        {% else %}
+            <div{% with { attr: widget_wrapper_attr } %}{{ block('attributes') }}{% endwith %}>
+                <div class="ibexa-data-source">
+                    {{- form_widget(form, {'attr': attr}) -}}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if fieldtype_is_not_translatable %}
+            <p class="ibexa-field-edit__nontranslatable text-secondary">{{ 'fieldtype.translation_is_disabled'|trans({'%fieldName%': label})|desc('Translating the %fieldName% Field is disabled. See content type definition for details.') }}</p>
+        {% endif %}
+
+        {% set description = field_type_descriptions[fieldtype.vars.languageCode]|default(field_type_descriptions|first) %}
+        {% if description is not null %}
+            {% with { help: description } %}
+                {{ block('form_help') }}
+            {% endwith %}
+        {% endif %}
+
+        <div class="ibexa-form-error">
+            {{- block('form_errors') -}}
+        </div>
+    </div>
+{% endblock %}
+
+{%- block form_widget_compound -%}
+    {%- if form.parent is empty -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {% with { attr: attr } %}
+        {{- block('form_rows') -}}
+    {% endwith %}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound -%}
+
+{%- block number_widget -%}
+    {%- set type = type|default('number') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock number_widget -%}
+
+{% block form_label_errors %}{% endblock %}
+
+{%- block form_rows -%}
+    {% for child in form|filter(child => not child.rendered) %}
+        {{- form_row(child, { attr: attr|default({}) }) -}}
+    {% endfor %}
+{%- endblock form_rows -%}

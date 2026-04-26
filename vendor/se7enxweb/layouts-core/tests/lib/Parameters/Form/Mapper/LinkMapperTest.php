@@ -1,0 +1,104 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Parameters\Form\Mapper;
+
+use Netgen\Layouts\Item\CmsItemLoaderInterface;
+use Netgen\Layouts\Item\Registry\ValueTypeRegistry;
+use Netgen\Layouts\Item\ValueType\ValueType;
+use Netgen\Layouts\Parameters\Form\Mapper\LinkMapper;
+use Netgen\Layouts\Parameters\Form\Type\DataMapper\LinkDataMapper;
+use Netgen\Layouts\Parameters\Form\Type\LinkType;
+use Netgen\Layouts\Parameters\ParameterDefinition;
+use Netgen\Layouts\Parameters\ParameterType\ItemLink\RemoteIdConverter;
+use Netgen\Layouts\Parameters\ParameterType\LinkType as LinkParameterType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormFactoryInterface;
+
+#[CoversClass(LinkMapper::class)]
+final class LinkMapperTest extends TestCase
+{
+    private LinkParameterType $type;
+
+    private LinkMapper $mapper;
+
+    protected function setUp(): void
+    {
+        $valueTypeRegistry = new ValueTypeRegistry(['default' => ValueType::fromArray(['isEnabled' => true])]);
+
+        $cmsItemLoaderStub = self::createStub(CmsItemLoaderInterface::class);
+
+        $this->type = new LinkParameterType(
+            $valueTypeRegistry,
+            new RemoteIdConverter($cmsItemLoaderStub),
+        );
+
+        $this->mapper = new LinkMapper();
+    }
+
+    public function testGetFormType(): void
+    {
+        self::assertSame(LinkType::class, $this->mapper->getFormType());
+    }
+
+    public function testMapOptions(): void
+    {
+        $parameterDefinition = ParameterDefinition::fromArray(
+            [
+                'type' => $this->type,
+                'options' => [
+                    'value_types' => ['value'],
+                ],
+            ],
+        );
+
+        self::assertSame(
+            [
+                'label' => false,
+                'value_types' => ['value'],
+            ],
+            $this->mapper->mapOptions($parameterDefinition),
+        );
+    }
+
+    public function testMapOptionsWithEmptyValueTypes(): void
+    {
+        $parameterDefinition = ParameterDefinition::fromArray(
+            [
+                'type' => $this->type,
+                'options' => [
+                    'value_types' => ['default'],
+                ],
+            ],
+        );
+
+        self::assertSame(
+            [
+                'label' => false,
+                'value_types' => ['default'],
+            ],
+            $this->mapper->mapOptions($parameterDefinition),
+        );
+    }
+
+    public function testHandleForm(): void
+    {
+        $parameterDefinition = ParameterDefinition::fromArray(
+            [
+                'type' => $this->type,
+            ],
+        );
+
+        $dispatcherStub = self::createStub(EventDispatcherInterface::class);
+        $factoryStub = self::createStub(FormFactoryInterface::class);
+        $formBuilder = new FormBuilder('name', null, $dispatcherStub, $factoryStub);
+
+        $this->mapper->handleForm($formBuilder, $parameterDefinition);
+
+        self::assertInstanceOf(LinkDataMapper::class, $formBuilder->getDataMapper());
+    }
+}

@@ -1,0 +1,29 @@
+{% macro component_params(block) %}
+{% apply spaceless %}
+    {% set content_id = null %}
+    {% set location_id = null %}
+
+    {% if
+        block.definition.identifier starts with 'ibexa_component'
+        and block.parameter('content').valueObject is not null
+    %}
+        {% set content_id = block.parameter('content').valueObject.id %}
+        {% set location_id = block.parameter('content').valueObject.mainLocationId %}
+        data-component="true"
+    {% endif %}
+
+    {% if content_id is not null %}
+        data-content-id="{{ content_id }}"
+    {% endif %}
+
+    {% if location_id is not null %}
+        data-location-id="{{ location_id }}"
+    {% endif %}
+{% endapply %}
+{% endmacro %}
+
+{% macro item_params(content, location) %}
+    data-item="true"
+    data-content-id="{{ content.id }}"
+    data-location-id="{{ location.id }}"
+{% endmacro %}

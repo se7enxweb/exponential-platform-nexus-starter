@@ -1,0 +1,66 @@
+imports:
+    - { resource: solr/criterion_visitors.yaml }
+    - { resource: solr/field_mappers.yaml }
+    - { resource: solr/sort_clause_visitors.yaml }
+    - { resource: solr/subdocument_mappers.yaml }
+
+services:
+    netgen.ibexa_search_extra.solr.document_mapper:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\DocumentMapper
+        decorates: ibexa.solr.document_mapper
+        arguments:
+            - '@netgen.ibexa_search_extra.solr.document_mapper.inner'
+            - '@netgen.ibexa_search_extra.solr.subdocument_mapper.content.aggregate'
+            - '@netgen.ibexa_search_extra.solr.subdocument_mapper.content_translation.aggregate'
+
+    netgen.ibexa_search_extra.solr.result_extractor.content:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\ResultExtractor\LoadingResultExtractor
+        decorates: ibexa.solr.result_extractor.content.native
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\Handler'
+            - '@Ibexa\Core\Persistence\Legacy\Content\Location\Handler'
+            - '@netgen.ibexa_search_extra.solr.result_extractor.content.inner'
+            - '@ibexa.solr.query.content.aggregation_result_extractor.dispatcher'
+            - '@Ibexa\Solr\Gateway\EndpointRegistry'
+
+    netgen.ibexa_search_extra.solr.result_extractor.location:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\ResultExtractor\LoadingResultExtractor
+        decorates: ibexa.solr.result_extractor.location.native
+        arguments:
+            - '@Ibexa\Core\Persistence\Legacy\Content\Handler'
+            - '@Ibexa\Core\Persistence\Legacy\Content\Location\Handler'
+            - '@netgen.ibexa_search_extra.solr.result_extractor.location.inner'
+            - '@ibexa.solr.query.location.aggregation_result_extractor.dispatcher'
+            - '@Ibexa\Solr\Gateway\EndpointRegistry'
+
+    netgen.ibexa_search_extra.solr.query.content.query_converter:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\QueryConverter
+        decorates: ibexa.solr.query_converter.content
+        arguments:
+            - '@ibexa.solr.query.content.criterion_visitor.aggregate'
+            - '@ibexa.solr.query.content.sort_clause_visitor.aggregate'
+            - '@ibexa.solr.query.content.aggregation_visitor.dispatcher'
+
+    netgen.ibexa_search_extra.solr.query.location.query_converter:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Common\QueryConverter
+        decorates: ibexa.solr.query_converter.location
+        arguments:
+            - '@ibexa.solr.query.location.criterion_visitor.aggregate'
+            - '@ibexa.solr.query.location.sort_clause_visitor.aggregate'
+            - '@ibexa.solr.query.location.aggregation_visitor.dispatcher'
+
+    netgen.ibexa_search_extra.solr.query.content.criterion_visitor.full_text_factory:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Content\CriterionVisitor\Factory\ContentFullTextFactory
+        arguments:
+            - '@ibexa.solr.query.query_translator.galach.tokenizer'
+            - '@ibexa.solr.query.query_translator.galach.parser'
+            - '@ibexa.solr.query.query_translator.galach.generator.edismax'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Type\Handler'
+
+    netgen.ibexa_search_extra.solr.query.location.criterion_visitor.full_text_factory:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\Query\Location\CriterionVisitor\Factory\LocationFullTextFactory
+        arguments:
+            - '@ibexa.solr.query.query_translator.galach.tokenizer'
+            - '@ibexa.solr.query.query_translator.galach.parser'
+            - '@ibexa.solr.query.query_translator.galach.generator.edismax'
+            - '@Ibexa\Contracts\Core\Persistence\Content\Type\Handler'

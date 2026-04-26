@@ -1,0 +1,53 @@
+{% trans_default_domain 'ibexa_search' %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{{ form_start(form) }}
+<div>
+    {{ form_widget(form.query) }}
+    <span>
+        <span {% if form.search_language.vars.choices|length == 1 %}hidden{% endif %}>
+            {{ form_widget(form.search_language, {'attr': {'class': 'ibexa-search-form__language-selector'}}) }}
+        </span>
+    </span>
+</div>
+
+<div>
+    <div>
+        <div>
+            <label>{{ 'search.content.type'|trans|desc('Content type') }}:</label>
+                <select hidden>
+                    <option data-default="{{ 'search.any.content.type'|trans|desc('Any content type') }}" value="">{{ 'search.any.content.type'|trans|desc('Any content type') }}</option>
+                </select>
+            {{ form_widget(form.content_types, {'attr': {'class': 'ibexa-filters__select'}}) }}
+        </div>
+    </div>
+    <div>
+        {% if form.section is defined %}
+            <div>
+                <label>{{ 'search.section'|trans|desc('Section') }}:</label>
+                {{ form_widget(form.section, {'attr': {'class': 'ibexa-filters__select'}}) }}
+            </div>
+        {% endif %}
+    </div>
+    <div>
+        <div>
+            <label>{{ 'search.last.modified'|trans|desc('Last modified') }}:</label>
+            {{ form_widget(form.last_modified) }}
+        </div>
+        <div>
+            <label>{{ 'search.created'|trans|desc('Created') }}:</label>
+            {{ form_widget(form.created) }}
+        </div>
+        <div>
+            <label>{{ 'search.creator'|trans|desc('Creator') }}:</label>
+            {{ form_widget(form.search_in_users) }}
+        </div>
+    </div>
+    <div>
+        <button type="submit">
+            {{ 'search.search'|trans|desc('Search') }}
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

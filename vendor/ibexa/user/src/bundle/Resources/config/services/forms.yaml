@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\User\Form\Type\:
+        resource: "../../../lib/Form/Type/*"
+
+    Ibexa\User\Form\Factory\FormFactory: ~
+
+    Ibexa\User\Form\ChoiceList\Loader\AvailableLocaleChoiceLoader:
+        arguments:
+            $availableTranslations: '%available_translations%'
+
+    Ibexa\User\Form\Type\UserSettings\FullDateTimeFormatType: ~
+
+    Ibexa\User\Form\Type\UserSettings\ShortDateTimeFormatType: ~

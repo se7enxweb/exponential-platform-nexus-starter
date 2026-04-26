@@ -1,0 +1,36 @@
+{% extends template_to_extend %}
+
+{% trans_default_domain 'ibexa_notifications' %}
+
+{% set wrapper_additional_classes = 'ibexa-notifications-modal__item' %}
+
+{% block icon %}
+    <span class="type__icon">
+        <svg class="ibexa-icon ibexa-icon--circle-close">
+            <use xlink:href="{{ ibexa_icon_path('circle-close') }}"></use>
+        </svg>
+    </span>
+{% endblock %}
+
+{% block notification_type %}
+    <span class="type__text">
+        {{ 'notification.permanently_deleted'|trans|desc('Deleted')}}
+    </span>
+{% endblock %}
+
+{% set btn_disabled = true %}
+{% block btn_show_content %}
+    {{ parent() }}
+{% endblock %}
+
+{% block message %}
+    {% block content %}
+        <p class="description__text{% if title|length > 40 %} description__text--ellipsis{% endif %}" title="{{ title }}">
+            {{ 'notification.title'|trans|desc('Title:') }}
+            <strong>{{ title }}</strong>
+        </p>
+        <p class="description__title description__title--permanently-deleted">
+            {{ 'notification.no_longer_available'|trans({}, 'ibexa_notifications')|desc('The Content item is no longer available') }}
+        </p>
+    {% endblock %}
+{% endblock %}

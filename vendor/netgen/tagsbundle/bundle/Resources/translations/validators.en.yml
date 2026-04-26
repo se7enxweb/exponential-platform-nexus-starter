@@ -1,0 +1,7 @@
+netgen_tags.tag.no_tag: 'Tag with ID %tagId% does not exist.'
+netgen_tags.tag.synonym: 'Selected tag can not be a synonym.'
+netgen_tags.tag.invalid_tag: 'Tag is invalid.'
+
+netgen_tags.language.no_language: 'Language code %languageCode% does not exist.'
+
+netgen_tags.remote_id.remote_id_exists: 'Tag with remote ID "%remoteId%" already exists.'

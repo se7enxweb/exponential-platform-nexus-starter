@@ -1,0 +1,33 @@
+{% trans_default_domain "content_type" %}
+
+{% block ngenhancedlink_field_definition_edit %}
+    {% set is_translation = is_translation ?? false %}
+    {% form_theme form.selectionRoot.location_type '@ibexadesign/content_type/relation_form_fields.html.twig' %}
+    <hr>
+    <div class="ngenhancedlink-settings selection-root ibexa-default-location">
+        <h2>{{ 'field_definition.ngenhancedlink.section.root'|trans }}</h2>
+        <hr>
+        {{- form_row(form.allowedLinkType, { disabled: is_translation, attr: { class: 'allowed-link-type' } }) -}}
+        <div class="internal-options">
+            <hr>
+            <h3>{{ 'field_definition.ngenhancedlink.section.internal_options'|trans({  }) }}</h3>
+            <hr>
+            {{- form_row(form.selectionRoot.location_type, { disabled: is_translation }) -}}
+            {{- form_row(form.selectionRoot.location, { disabled: is_translation }) -}}
+            {{- form_row(form.rootDefaultLocation, { disabled: is_translation }) -}}
+            {{- form_row(form.selectionContentTypes, { disabled: is_translation }) -}}
+            {{- form_row(form.enableSuffix, { disabled: is_translation }) -}}
+            {{- form_row(form.enableLabelInternal, { disabled: is_translation }) -}}
+            {{- form_row(form.allowedTargetsInternal, { disabled: is_translation, attr: { class: 'allowed-targets-internal' } }) -}}
+        </div>
+        <div class="external-options">
+            <hr>
+            <h3>{{ 'field_definition.ngenhancedlink.section.external_options'|trans }}</h3>
+            <hr>
+            {{- form_row(form.enableLabelExternal, { disabled: is_translation }) -}}
+            {{- form_row(form.allowedTargetsExternal, { disabled: is_translation, attr: { class: 'allowed-targets-external' } }) -}}
+
+        </div>
+    </div>
+    <hr>
+{% endblock %}

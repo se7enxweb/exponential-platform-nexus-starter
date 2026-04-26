@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
+
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\CriterionInterface;
+use Netgen\Layouts\Parameters\ParameterBuilderInterface;
+use Netgen\Layouts\Parameters\ParameterCollectionInterface;
+use Netgen\Layouts\Parameters\ParameterType;
+
+trait CurrentLocationFilterTrait
+{
+    /**
+     * Builds the parameters for filtering content by excluding the currently displayed location.
+     *
+     * @param string[] $groups
+     */
+    private function buildCurrentLocationParameters(ParameterBuilderInterface $builder, array $groups = []): void
+    {
+        $builder->add(
+            'exclude_current_location',
+            ParameterType\BooleanType::class,
+            [
+                'default_value' => true,
+                'groups' => $groups,
+            ],
+        );
+    }
+
+    /**
+     * Returns the criteria used to filter content by excluding the currently displayed location.
+     */
+    private function getCurrentLocationFilterCriteria(ParameterCollectionInterface $parameterCollection, Location $location): ?CriterionInterface
+    {
+        if ($parameterCollection->getParameter('exclude_current_location')->value !== true) {
+            return null;
+        }
+
+        return new Criterion\LogicalNot(
+            new Criterion\LocationId($location->id),
+        );
+    }
+}

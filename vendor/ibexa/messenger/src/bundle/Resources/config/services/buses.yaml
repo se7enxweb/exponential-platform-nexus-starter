@@ -1,0 +1,48 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ibexa.messenger.bus:
+        class: Symfony\Component\Messenger\MessageBus
+        tags:
+            - messenger.bus
+        arguments:
+            - !abstract defined in Symfony\Component\Messenger\DependencyInjection\MessengerPass
+
+    ibexa.messenger.transport:
+        class: Symfony\Component\Messenger\Transport\TransportInterface
+        factory: ['@messenger.transport_factory', createTransport]
+        arguments:
+            - '%ibexa.messenger.transport_dsn%'
+            - transport_name: ibexa.messenger.transport
+            - '@ibexa.messenger.serializer'
+        tags:
+            -   name: messenger.receiver
+                alias: ibexa.messenger.transport
+                is_failure_transport: false
+
+    Ibexa\Bundle\Messenger\Middleware\SudoMiddleware: ~
+
+    Ibexa\Bundle\Messenger\Middleware\DeduplicateMiddleware:
+        arguments:
+            - '@ibexa.messenger.lock_factory'
+
+    Ibexa\Bundle\Messenger\Transport\Sender\SendersLocator:
+        decorates: 'messenger.senders_locator'
+        decoration_on_invalid: null
+        arguments:
+            $sender: '@ibexa.messenger.transport'
+
+    Ibexa\Contracts\Messenger\Transport\MessageProviderInterface:
+        alias: Ibexa\Bundle\Messenger\Transport\MessageProviderRegistry
+
+    Ibexa\Bundle\Messenger\Transport\MessageProviderRegistry:
+        autoconfigure: false
+        arguments:
+            $providers: !tagged_iterator ibexa.messenger.sender_message_provider
+
+    Ibexa\Bundle\Messenger\Transport\ConnectionRegistry:
+        arguments:
+            $registry: '@doctrine'

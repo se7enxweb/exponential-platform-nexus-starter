@@ -1,0 +1,36 @@
+{
+    "name": "netgen/content-browser-ui",
+    "description": "Netgen Content Browser user interface",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\ContentBrowserUIBundle\\": "bundle/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

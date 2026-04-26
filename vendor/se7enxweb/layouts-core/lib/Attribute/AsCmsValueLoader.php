@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Attribute;
+
+use Attribute;
+
+/**
+ * Service tag to autoconfigure value loaders.
+ */
+#[Attribute(Attribute::TARGET_CLASS)]
+final class AsCmsValueLoader
+{
+    public function __construct(
+        public private(set) string $valueType,
+    ) {}
+}

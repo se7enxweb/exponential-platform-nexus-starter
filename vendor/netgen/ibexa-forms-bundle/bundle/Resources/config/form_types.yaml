@@ -1,0 +1,76 @@
+services:
+    netgen.ibexa_forms.form.data_mapper.create_content:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\DataMapper\CreateContentMapper
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+
+    netgen.ibexa_forms.form.type.create_content:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\CreateContentType
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.create_content"
+        tags:
+            - { name: form.type, alias: ibexa_forms_create_content }
+
+    netgen.ibexa_forms.form.data_mapper.create_user:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\DataMapper\CreateUserMapper
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+
+    netgen.ibexa_forms.form.type.create_user:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\CreateUserType
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.create_user"
+        tags:
+            - { name: form.type, alias: ibexa_forms_create_user }
+
+    netgen.ibexa_forms.form.data_mapper.update_content:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\DataMapper\UpdateContentMapper
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+
+    netgen.ibexa_forms.form.type.update_content:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\UpdateContentType
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.update_content"
+        tags:
+            - { name: form.type, alias: ibexa_forms_update_content }
+
+    netgen.ibexa_forms.form.data_mapper.update_user:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\DataMapper\UpdateUserMapper
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+
+    netgen.ibexa_forms.form.type.update_user:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\UpdateUserType
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.update_user"
+        tags:
+            - { name: form.type, alias: ibexa_forms_update_user }
+
+    netgen.ibexa_forms.form.url_type:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\UrlType
+        tags:
+            - { name: form.type, alias: ibexa_forms_url }
+
+    netgen.ibexa_forms.form.map_type:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\MapType
+        tags:
+            - { name: form.type, alias: ibexa_forms_map }
+
+    netgen.ibexa_forms.form.data_mapper.info_collection:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\DataMapper\InformationCollectionMapper
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+
+    netgen.ibexa_forms.form.type.info_collection:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\InformationCollectionType
+        arguments:
+            - "@netgen.ibexa_forms.form.fieldtype_handler_registry"
+            - "@netgen.ibexa_forms.form.data_mapper.info_collection"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: form.type, alias: ibexa_forms_information_collection }

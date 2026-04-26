@@ -1,0 +1,129 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-field-edit--with-preview {
+    &,
+    *,
+    *:after,
+    *:before {
+        box-sizing: border-box;
+    }
+
+    &.is-invalid {
+        .ibexa-field-edit__data {
+            border-color: $ibexa-color-danger;
+
+            .ibexa-data-source__message--filesize {
+                color: $ibexa-color-danger;
+            }
+        }
+    }
+
+    .ibexa-field-edit__data {
+        position: relative;
+        border: calculateRem(1px) dashed $ibexa-color-dark-300;
+        border-radius: $ibexa-border-radius;
+
+        .ibexa-data-source {
+            border-radius: $ibexa-border-radius;
+            padding: calculateRem(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &__actions {
+                margin: calculateRem(8px);
+            }
+
+            &__message {
+                &--main {
+                    color: $ibexa-color-dark-300;
+                    box-sizing: border-box;
+                    cursor: auto;
+                    font-weight: bold;
+                }
+
+                &--separator {
+                    color: $ibexa-color-dark-300;
+                }
+
+                &--image-extensions,
+                &--filesize {
+                    color: $ibexa-color-dark-300;
+                    font-size: $ibexa-text-font-size-small;
+                }
+            }
+
+            .form-check.form-check-inline {
+                display: none;
+            }
+        }
+    }
+
+    .ibexa-field-edit-preview {
+        &__visual {
+            display: grid;
+            grid-template-areas: 'media-preview details' 'image-alt .';
+            grid-template-columns: 65% auto;
+            grid-template-rows: calculateRem(300px) auto;
+            grid-column-gap: calculateRem(16px);
+
+            .ibexa-field-edit-preview {
+                &__media-wrapper {
+                    grid-area: media-preview;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: calculateRem(1px) dashed $ibexa-color-dark-300;
+                    border-radius: $ibexa-border-radius;
+                    padding: calculateRem(1px);
+                    position: relative;
+                }
+
+                &__image-alt {
+                    grid-area: image-alt;
+                }
+
+                &__details {
+                    grid-area: details;
+                }
+
+                &__media {
+                    max-height: calculateRem(298px);
+                    max-width: calc(100% - #{calculateRem(2px)});
+                    width: auto;
+                    height: auto;
+                    display: block;
+                }
+
+                &__actions {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    border-radius: $ibexa-border-radius;
+                    padding: calculateRem(4px);
+                    background-color: $ibexa-color-white;
+                    box-shadow: calculateRem(-4px) calculateRem(10px) calculateRem(20px) 0 rgba($ibexa-color-info, 0.15);
+                    z-index: 1;
+                }
+            }
+        }
+
+        &__file-name-wrapper {
+            overflow: hidden;
+
+            .ibexa-field-edit-preview__file-name {
+                word-break: break-all;
+            }
+        }
+    }
+
+    &.ibexa-field-edit--nontranslatable {
+        .ibexa-data-source__label-text,
+        p,
+        a {
+            color: $ibexa-color-dark-300;
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.m-sub-items {
+    margin-top: calculateRem(30px);
+    max-width: 100%;
+    background: $ibexa-color-white;
+    border-radius: $ibexa-border-radius;
+
+    .table .ibexa-table__header-cell {
+        border-top-width: 0;
+    }
+
+    .ibexa-table-header {
+        margin-bottom: 0;
+        padding-bottom: calculateRem(20px);
+        border-bottom: calculateRem(1px) solid $ibexa-color-dark-200;
+
+        &__headline {
+            overflow: initial;
+        }
+
+        &__actions {
+            &--adaptive {
+                overflow: hidden;
+                flex-grow: 1;
+                justify-content: flex-end;
+
+                .ibexa-adaptive-items__item--hidden {
+                    display: none;
+                }
+            }
+        }
+
+        .c-simple-dropdown {
+            &:hover {
+                .c-simple-dropdown__selected {
+                    color: $ibexa-color-primary;
+
+                    .ibexa-icon {
+                        fill: $ibexa-color-primary;
+                    }
+                }
+            }
+        }
+    }
+
+    &__list {
+        font-size: $ibexa-text-font-size;
+        line-height: calculateRem(40px);
+        text-align: left;
+        position: relative;
+        margin-bottom: calculateRem(16px);
+    }
+
+    &__list--processing:after {
+        content: '';
+        position: absolute;
+        z-index: 999;
+        background: rgba($ibexa-color-black, 0.35);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &__spinner-wrapper {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+    }
+
+    &__spinner {
+        display: block;
+        margin: calculateRem(20px);
+    }
+}

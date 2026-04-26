@@ -1,0 +1,48 @@
+services:
+    netgen_layouts.transfer.entity_handler.layout:
+        class: Netgen\Layouts\Transfer\EntityHandler\LayoutEntityHandler
+        arguments:
+            - "@netgen_layouts.api.service.block"
+            - "@netgen_layouts.api.service.collection"
+            - "@netgen_layouts.api.service.layout"
+            - "@netgen_layouts.block.registry.block_definition"
+            - "@netgen_layouts.layout.registry.layout_type"
+            - "@netgen_layouts.collection.registry.item_definition"
+            - "@netgen_layouts.collection.registry.query_type"
+            - "@netgen_layouts.item.item_loader"
+        tags:
+            - { name: netgen_layouts.transfer.entity_handler, entity_type: layout }
+
+    netgen_layouts.transfer.entity_handler.rule:
+        class: Netgen\Layouts\Transfer\EntityHandler\RuleEntityHandler
+        arguments:
+            - "@netgen_layouts.api.service.layout_resolver"
+            - "@netgen_layouts.layout.resolver.registry.target_type"
+            - "@netgen_layouts.layout.resolver.registry.condition_type"
+        tags:
+            - { name: netgen_layouts.transfer.entity_handler, entity_type: rule }
+
+    netgen_layouts.transfer.entity_handler.rule_group:
+        class: Netgen\Layouts\Transfer\EntityHandler\RuleGroupEntityHandler
+        arguments:
+            - "@netgen_layouts.api.service.layout_resolver"
+            - "@netgen_layouts.transfer.entity_handler.rule"
+            - "@netgen_layouts.layout.resolver.registry.condition_type"
+        tags:
+            - { name: netgen_layouts.transfer.entity_handler, entity_type: rule_group }
+
+    netgen_layouts.transfer.serializer:
+        class: Netgen\Layouts\Transfer\Output\Serializer
+        arguments:
+            - "@netgen_layouts.transfer.serializer.visitor"
+            - !tagged_locator { tag: netgen_layouts.transfer.entity_handler, index_by: entity_type }
+
+    netgen_layouts.transfer.input.json_validator:
+        class: Netgen\Layouts\Transfer\Input\JsonValidator
+
+    netgen_layouts.transfer.importer:
+        class: Netgen\Layouts\Transfer\Input\Importer
+        arguments:
+            - "@netgen_layouts.api.service.transaction"
+            - "@netgen_layouts.transfer.input.json_validator"
+            - !tagged_locator { tag: netgen_layouts.transfer.entity_handler, index_by: entity_type }

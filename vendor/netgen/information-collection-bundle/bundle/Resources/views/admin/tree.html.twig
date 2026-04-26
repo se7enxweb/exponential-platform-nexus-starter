@@ -1,0 +1,22 @@
+{% trans_default_domain 'netgen_information_collection_admin' %}
+
+{% set rootItemId = rootItemId|default(0) %}
+{% set showRootItem = showRootItem|default(true) %}
+{% set selectedItem = selectedItem|default(null) %}
+{% set disableSubtree = disableSubtree|default([]) %}
+{% if app.request.attributes.has('contentId') %}
+    {% set pathString = '/0/' ~ app.request.attributes.get('contentId') %}
+{% elseif app.request.query.has('contentId') %}
+    {% set pathString = '/0/' ~ app.request.query.get('contentId') %}
+{% endif %}
+
+{% block item_tree %}
+    <div
+        class="ng-ui-tree"
+        data-path="{{ path('netgen_information_collection.route.admin.tree_get_children', {'contentId': '_itemId_'}) }}"
+        data-rootItemId="{{ rootItemId }}"
+        data-showRootItem="{{ showRootItem ? 'true' : 'false' }}"
+        data-selectedItemPath="{% if pathString is defined %}{{ pathString }}{% else %}{{ '/0/' }}{% endif %}"
+        data-disableSubtree="{{ disableSubtree|join(',') }}"
+    ></div>
+{% endblock %}

@@ -1,0 +1,89 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsBundle\EventListener\BlockView;
+
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\Block\BlockDefinition\Handler\PagedCollectionsPlugin;
+use Netgen\Layouts\Collection\Result\Pagerfanta\PagerFactory;
+use Netgen\Layouts\Collection\Result\ResultSet;
+use Netgen\Layouts\Event\RenderViewEvent;
+use Netgen\Layouts\View\View\BlockViewInterface;
+use Netgen\Layouts\View\ViewInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+use function in_array;
+
+final class GetCollectionResultsListener implements EventSubscriberInterface
+{
+    /**
+     * @param string[] $enabledContexts
+     */
+    public function __construct(
+        private PagerFactory $pagerFactory,
+        private array $enabledContexts,
+    ) {}
+
+    public static function getSubscribedEvents(): array
+    {
+        return [RenderViewEvent::getEventName('block') => 'onRenderView'];
+    }
+
+    /**
+     * Adds a parameter to the view with results built from all block collections.
+     */
+    public function onRenderView(RenderViewEvent $event): void
+    {
+        $view = $event->view;
+        if (!$view instanceof BlockViewInterface) {
+            return;
+        }
+
+        if (!in_array($view->context, $this->enabledContexts, true)) {
+            return;
+        }
+
+        $flags = 0;
+        if ($view->context === ViewInterface::CONTEXT_APP) {
+            $flags = ResultSet::INCLUDE_UNKNOWN_ITEMS;
+        }
+
+        $collections = [];
+        $pagers = [];
+
+        foreach ($view->block->collections as $identifier => $collection) {
+            // In non AJAX scenarios, we're always rendering the first page of the collection
+            // as specified by offset and limit in the collection itself
+            $pager = $this->pagerFactory->getPager(
+                $collection,
+                1,
+                $this->getMaxPages($view->block),
+                $flags,
+            );
+
+            $collections[$identifier] = $pager->getCurrentPageResults();
+            $pagers[$identifier] = $pager;
+        }
+
+        $event->view->addParameter('collections', $collections);
+        $event->view->addParameter('pagers', $pagers);
+    }
+
+    /**
+     * Returns the maximum number of the pages for the provided block,
+     * if paging is enabled and maximum number of pages is set for a block.
+     */
+    private function getMaxPages(Block $block): ?int
+    {
+        if (!$block->definition->hasHandlerPlugin(PagedCollectionsPlugin::class)) {
+            return null;
+        }
+
+        if ($block->getParameter('paged_collections:enabled')->value !== true) {
+            return null;
+        }
+
+        return $block->getParameter('paged_collections:max_pages')->value;
+    }
+}

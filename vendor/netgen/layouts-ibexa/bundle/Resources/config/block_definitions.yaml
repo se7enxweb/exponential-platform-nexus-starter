@@ -1,0 +1,16 @@
+block_definitions:
+    ibexa_content_field:
+        name: 'Ibexa content field'
+        icon: '/bundles/netgenlayoutsibexa/images/blocks/icon-ibexa_content_field.svg'
+        view_types:
+            ibexa_content_field:
+                name: 'Ibexa content field'
+
+    ibexa_component:
+        name: 'Ibexa component'
+        icon: '/bundles/netgenlayoutsibexa/images/components/icon-component-generic.svg'
+        enabled: false
+        config_provider: ibexa
+        view_types:
+            standard:
+                name: 'Standard'

@@ -1,0 +1,56 @@
+services:
+    Ibexa\Bundle\Search\Form\Type\SearchType:
+        arguments:
+            $permissionResolver: '@Ibexa\Contracts\Core\Repository\PermissionResolver'
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\SearchType }
+
+    Ibexa\Bundle\Search\Form\ChoiceLoader\ConfiguredLanguagesChoiceLoader:
+        arguments:
+            $languageService: '@ibexa.api.service.language'
+            $configResolver: '@ibexa.config.resolver'
+
+    Ibexa\Bundle\Search\Form\Type\UserType:
+        arguments:
+            $userService: '@ibexa.api.service.user'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\UserType }
+
+    Ibexa\Bundle\Search\Form\Type\LanguageChoiceType:
+        arguments:
+            $languageChoiceLoader: '@Ibexa\Bundle\Search\Form\ChoiceLoader\ConfiguredLanguagesChoiceLoader'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\LanguageChoiceType }
+
+    Ibexa\Bundle\Search\Form\ChoiceLoader\ContentTypeChoiceLoader:
+        arguments:
+            $contentTypeService: '@ibexa.api.service.content_type'
+            $userLanguagePreferenceProvider: '@Ibexa\Core\MVC\Symfony\Locale\UserLanguagePreferenceProvider'
+
+    Ibexa\Bundle\Search\Form\Type\ContentTypeChoiceType:
+        arguments:
+            $contentTypeService: '@ibexa.api.service.content_type'
+            $contentTypeChoiceLoader: '@Ibexa\Bundle\Search\Form\ChoiceLoader\ContentTypeChoiceLoader'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\ContentTypeChoiceType }
+
+    Ibexa\Bundle\Search\Form\Type\SectionChoiceType:
+        arguments:
+            $sectionService: '@Ibexa\Core\Repository\SiteAccessAware\SectionService'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\SectionChoiceType }
+
+    Ibexa\Bundle\Search\Form\Type\SortingDefinitionChoiceType:
+        arguments:
+            $sortingDefinitionRegistry: '@Ibexa\Contracts\Search\SortingDefinition\SortingDefinitionRegistryInterface'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\SortingDefinitionChoiceType }
+
+    Ibexa\Bundle\Search\Form\Type\SearchUsersType:
+        arguments:
+            $repository: '@ibexa.api.repository'
+            $searchService: '@ibexa.api.service.search'
+            $userContentTypeIdentifier: '%ibexa.user.content_type_identifier%'
+        tags:
+            - { name: form.type, alias: Ibexa\Bundle\Search\Form\Type\SearchUsersType }

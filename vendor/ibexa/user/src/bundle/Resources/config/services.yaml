@@ -1,0 +1,76 @@
+imports:
+    - { resource: services/controllers.yaml }
+    - { resource: services/validators.yaml }
+    - { resource: services/user_settings.yaml }
+    - { resource: services/forms.yaml }
+    - { resource: services/profile_image.yaml }
+    - { resource: services/invitation.yaml }
+    - { resource: services/installer.yaml }
+    - { resource: services/twig.yaml }
+    - { resource: services/notifier.yaml }
+
+parameters:
+    ibexa.user.content_type_identifier: user
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\User\EventListener\:
+        resource: "../../../lib/EventListener/*"
+        exclude: '../../../lib/EventListener/{BuildSchemaSubscriber.php}'
+        public: true
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Bundle\User\Command\:
+        resource: "../../Command/*"
+        tags:
+            - { name: console.command }
+
+    Ibexa\Bundle\User\Command\AuditUserDatabaseCommand:
+        arguments:
+            $connection: '@ibexa.persistence.connection'
+
+    Ibexa\User\EventListener\ViewTemplatesListener:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\User\ConfigResolver\ConfigurableRegistrationGroupLoader: ~
+
+    Ibexa\User\ConfigResolver\ConfigurableRegistrationContentTypeLoader: ~
+
+    # Default implementations
+    Ibexa\User\ConfigResolver\RegistrationGroupLoader: '@Ibexa\User\ConfigResolver\ConfigurableRegistrationGroupLoader'
+    Ibexa\User\ConfigResolver\RegistrationContentTypeLoader: '@Ibexa\User\ConfigResolver\ConfigurableRegistrationContentTypeLoader'
+
+    Ibexa\User\Form\DataMapper\UserRegisterMapper:
+        calls:
+            - [setParam, ["language", "@=service('ibexa.config.resolver').getParameter('languages', null, null)[0]"]]
+
+    Ibexa\User\Form\Processor\UserRegisterFormProcessor:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\User\Templating\Twig\DateTimeExtension:
+        arguments:
+            $shortDateTimeFormatter: '@ibexa.user.settings.short_datetime_format.formatter'
+            $shortDateFormatter: '@ibexa.user.settings.short_date_format.formatter'
+            $shortTimeFormatter: '@ibexa.user.settings.short_time_format.formatter'
+            $fullDateTimeFormatter: '@ibexa.user.settings.full_datetime_format.formatter'
+            $fullDateFormatter: '@ibexa.user.settings.full_date_format.formatter'
+            $fullTimeFormatter: '@ibexa.user.settings.full_time_format.formatter'
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\User\Templating\Twig\InvitationExtension:
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\User\ExceptionHandler\NullActionResultHandler: ~
+    Ibexa\User\ExceptionHandler\ActionResultHandler: '@Ibexa\User\ExceptionHandler\NullActionResultHandler'
+
+    Ibexa\User\Form\BaseSubmitHandler: ~
+    Ibexa\User\Form\SubmitHandler: '@Ibexa\User\Form\BaseSubmitHandler'

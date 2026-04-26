@@ -1,0 +1,28 @@
+services:
+    netgen.ibexa_site_api.settings.symfony:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Core\Site\Settings
+        arguments:
+            - '@ibexa.config.resolver'
+
+    netgen.ibexa_site_api.settings:
+        alias: netgen.ibexa_site_api.settings.symfony
+
+    netgen.ibexa_site_api.language_resolver.symfony:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Core\Site\LanguageResolver
+        arguments:
+            - '@netgen.ibexa_site_api.settings'
+            - '@netgen.ibexa_site_api.siteaccess.resolver'
+            - '@ibexa.config.resolver'
+        calls:
+            - [ setSiteaccess, [ '@Ibexa\Core\MVC\Symfony\SiteAccess' ] ]
+
+    netgen.ibexa_site_api.language_resolver:
+        alias: netgen.ibexa_site_api.language_resolver.symfony
+
+    netgen.ibexa_site_api.url_generator.symfony:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Core\Site\Routing\UrlGenerator
+        arguments:
+            - '@router'
+
+    netgen.ibexa_site_api.url_generator:
+        alias: 'netgen.ibexa_site_api.url_generator.symfony'

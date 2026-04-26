@@ -1,0 +1,41 @@
+services:
+    Ibexa\Bundle\SystemInfo\Controller\SystemInfoController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        autoconfigure: true
+        arguments:
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\Registry\IdentifierBased'
+        tags:
+            - { name: controller.service_arguments }
+
+    ibexa.support_tools.view.controller:
+        alias: Ibexa\Bundle\SystemInfo\Controller\SystemInfoController
+        public: true
+
+    Ibexa\Bundle\SystemInfo\View\SystemInfoViewBuilder:
+        arguments:
+            - '@Ibexa\Core\MVC\Symfony\View\Configurator\ViewProvider'
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\Registry\IdentifierBased'
+        tags:
+            - { name: ibexa.view.builder }
+
+    ibexa.support_tools.view.system_info.provider:
+        class: Ibexa\Bundle\Core\View\Provider\Configured
+        arguments: ['@ibexa.support_tools.view.matcher_factory']
+        tags:
+            - {name: ibexa.view.provider, type: 'Ibexa\Bundle\SystemInfo\View\SystemInfoView', priority: 10}
+
+    ibexa.support_tools.view.matcher_factory:
+        class: Ibexa\Bundle\Core\Matcher\ServiceAwareMatcherFactory
+        arguments:
+            - '@Ibexa\Bundle\Core\Matcher\ViewMatcherRegistry'
+            - '@ibexa.api.repository'
+            - 'Ibexa\Bundle\SystemInfo\View\Matcher'
+
+    ibexa.support_tools.view.matcher_factory.dynamically_configured:
+        class: Ibexa\Core\MVC\Symfony\Matcher\DynamicallyConfiguredMatcherFactoryDecorator
+        decorates: ibexa.support_tools.view.matcher_factory
+        arguments:
+            $innerConfigurableMatcherFactory: '@ibexa.support_tools.view.matcher_factory.dynamically_configured.inner'
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: system_info_view

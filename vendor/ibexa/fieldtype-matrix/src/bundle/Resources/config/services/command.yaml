@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Ibexa\Bundle\FieldTypeMatrix\Command\MigrateLegacyMatrixCommand:
+        arguments:
+            - '@ibexa.persistence.connection'
+        tags:
+            - { name: console.command }

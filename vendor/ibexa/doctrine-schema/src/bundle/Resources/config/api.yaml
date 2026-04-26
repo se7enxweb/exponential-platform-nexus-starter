@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\Contracts\DoctrineSchema\SchemaExporterInterface: '@Ibexa\DoctrineSchema\Exporter\SchemaExporter'
+
+    Ibexa\Contracts\DoctrineSchema\SchemaImporterInterface: '@Ibexa\DoctrineSchema\Importer\SchemaImporter'
+
+    Ibexa\Contracts\DoctrineSchema\DbPlatformFactoryInterface: '@Ibexa\DoctrineSchema\Database\DbPlatformFactory'
+
+    Ibexa\Contracts\DoctrineSchema\Builder\SchemaBuilderInterface: '@Ibexa\DoctrineSchema\Builder\SchemaBuilder'

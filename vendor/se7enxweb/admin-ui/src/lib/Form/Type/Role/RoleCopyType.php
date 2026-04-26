@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\Type\Role;
+
+use Ibexa\AdminUi\Form\Data\Role\RoleCopyData;
+use JMS\TranslationBundle\Annotation\Desc;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * @extends \Symfony\Component\Form\AbstractType<\Ibexa\AdminUi\Form\Data\Role\RoleCopyData>
+ */
+final class RoleCopyType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add(
+                'new_identifier',
+                TextType::class,
+                ['label' => /** @Desc("Name of a new role") */ 'role_copy.name']
+            )
+            ->add(
+                'copy',
+                SubmitType::class,
+                ['label' => /** @Desc("Copy") */ 'role_copy.copy']
+            );
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => RoleCopyData::class,
+            'translation_domain' => 'forms',
+        ]);
+    }
+}

@@ -1,0 +1,3 @@
+parameters:
+    netgen_ibexa_search_extra.fulltext.meta_fields: []
+    netgen_ibexa_search_extra.fulltext.boost: []

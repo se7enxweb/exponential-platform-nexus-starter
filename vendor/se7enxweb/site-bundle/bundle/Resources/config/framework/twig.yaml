@@ -1,0 +1,2 @@
+globals:
+    ngsite: "@ngsite.templating.global_variable"

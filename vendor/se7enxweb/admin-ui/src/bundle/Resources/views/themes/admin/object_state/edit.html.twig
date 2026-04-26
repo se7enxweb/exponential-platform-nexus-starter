@@ -1,0 +1,34 @@
+{% extends "@ibexadesign/object_state/base.html.twig" %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_object_state' %}
+
+{% block header_admin %}
+    {% set object_state_edit_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.object_state_edit.sidebar_right', [],
+        {
+            group_id: object_state_group.id,
+            save_and_close_id: form.save_and_close.vars.id,
+        })
+    %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'object_state.editing'|trans|desc('Editing'),
+        title: 'object_state.breadcrumb.edit'|trans({ '%name%': object_state.name })|desc('Editing Object state \'%name%\''),
+        context_actions: knp_menu_render(object_state_edit_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <section>
+            <div class="card ibexa-card ibexa-card--light">
+                <div class="card-body ibexa-card__body ibexa-form-block">
+                    {{ form_row(form.name, { row_attr: { class: 'ibexa-form-field' } }) }}
+                    {{ form_row(form.identifier, { row_attr: { class: 'ibexa-form-field' } }) }}
+                </div>
+            </div>
+        </section>
+        {{ form_widget(form.save_and_close, { attr: { hidden: 'hidden' }}) }}
+    {{ form_end(form) }}
+{% endblock %}

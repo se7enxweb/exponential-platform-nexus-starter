@@ -1,0 +1,7 @@
+<div class="list-row">
+    {% for result in collection %}
+        <div class="list-item">
+            {{ nglayouts_render_result(result, null, block.itemViewType) }}
+        </div>
+    {% endfor %}
+</div>

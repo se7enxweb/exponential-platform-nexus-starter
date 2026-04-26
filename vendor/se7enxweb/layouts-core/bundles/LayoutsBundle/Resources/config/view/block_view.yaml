@@ -1,0 +1,12 @@
+view:
+    block_view:
+        default:
+            invalid:
+                template: "@NetgenLayouts/block/invalid_block.html.twig"
+                match:
+                    block\definition: "null"
+        ajax:
+            invalid:
+                template: "@NetgenLayouts/block/invalid_block.html.twig"
+                match:
+                    block\definition: "null"

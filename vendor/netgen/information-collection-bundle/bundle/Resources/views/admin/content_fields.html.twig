@@ -1,0 +1,25 @@
+{% trans_default_domain "netgen_information_collection_fields" %}
+
+{% block ezstring_field %}
+{% apply spaceless %}
+    {% set field_value = attribute.value %}
+    {{ field_value.dataText }}
+{% endapply %}
+{% endblock %}
+
+{% block ezboolean_field %}
+    {% apply spaceless %}
+        {% set field_value = attribute.value %}
+        {% if field_value.dataInt == 1 %}
+            {{ 'field_value.yes'|trans }}
+        {% else %}
+            {{ 'field_value.no'|trans }}
+        {% endif %}
+    {% endapply %}
+{% endblock %}
+
+{% block default_field %}
+    {% apply spaceless %}
+        {{ attribute.value }}
+    {% endapply %}
+{% endblock %}

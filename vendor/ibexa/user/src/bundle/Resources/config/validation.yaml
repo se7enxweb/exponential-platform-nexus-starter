@@ -1,0 +1,4 @@
+Ibexa\User\Form\Data\UserRegisterData:
+    properties:
+        fieldsData:
+            - Valid: ~

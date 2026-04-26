@@ -1,0 +1,7 @@
+services:
+    netgen_tags.installer.listener.build_schema:
+        class: Netgen\TagsBundle\Installer\BuildSchemaListener
+        arguments:
+            - '@=service("kernel").locateResource("@NetgenTagsBundle/Resources/schema/legacy.yaml")'
+        tags:
+            - { name: kernel.event_subscriber }

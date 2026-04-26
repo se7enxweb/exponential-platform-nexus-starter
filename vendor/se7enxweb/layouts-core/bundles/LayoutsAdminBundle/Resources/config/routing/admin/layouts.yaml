@@ -1,0 +1,21 @@
+nglayouts_admin_layouts_index:
+    path: /list
+    controller: netgen_layouts.controller.admin.layouts.index
+    methods: [GET]
+
+nglayouts_admin_layouts_layout_copy:
+    path: /{layoutId}/copy
+    controller: netgen_layouts.controller.admin.layouts.copy_layout_form
+    methods: [GET, POST]
+
+nglayouts_admin_layouts_layout_delete:
+    path: /{layoutId}/delete
+    controller: netgen_layouts.controller.admin.layouts.delete_layout
+    methods: [GET, DELETE]
+
+nglayouts_admin_layouts_cache:
+    path: /{layoutId}/cache
+    controller: netgen_layouts.controller.admin.layouts.clear_layout_cache
+    methods: [GET, POST]
+    defaults:
+        _nglayouts_status: published

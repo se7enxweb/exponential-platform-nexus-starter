@@ -1,0 +1,17 @@
+{% embed '@ibexadesign/ui/component/modal/modal.html.twig' with {
+    class: 'ibexa-modal--send-to-trash',
+    no_header: true,
+    id: 'delete-language-modal',
+} %}
+    {% trans_default_domain 'ibexa_language' %}
+
+    {% block body_content %}
+        <p>{{ 'language.modal.message'|trans|desc('Delete the languages?') }}</p>
+    {% endblock %}
+    {% block footer_content %}
+        {{ form_widget(deleteForm.delete, { 'attr': {'class': 'btn ibexa-btn ibexa-btn--primary'} }) }}
+        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-bs-dismiss="modal">
+            {{ 'language.form.cancel'|trans|desc('Cancel') }}
+        </button>
+    {% endblock %}
+{% endembed %}

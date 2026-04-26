@@ -1,0 +1,40 @@
+services:
+    netgen_information_collection.action.registry:
+        class: Netgen\InformationCollection\Core\Action\ActionRegistry
+        arguments:
+            - !tagged_iterator netgen_information_collection.action
+            - "@netgen_information_collection.action.config_utility"
+            - "@logger"
+            - "@event_dispatcher"
+        calls:
+            - [setDebug, ['%kernel.debug%']]
+
+    netgen_information_collection.action.config_utility:
+        class: Netgen\InformationCollection\Core\Action\ConfigurationUtility
+        arguments:
+            - "@ibexa.config.resolver"
+
+    netgen_information_collection.action.db:
+        class: Netgen\InformationCollection\Core\Action\DatabaseAction
+        arguments:
+            - '@netgen_information_collection.api.service'
+        tags:
+            - { name: netgen_information_collection.action, priority: 300 }
+
+    netgen_information_collection.action.email:
+        class: Netgen\InformationCollection\Core\Action\EmailAction
+        arguments:
+            - '@mailer.mailer'
+            - '@netgen_information_collection.factory.email_data'
+        tags:
+            - { name: netgen_information_collection.action }
+
+    netgen_information_collection.action.auto_responder:
+        class: Netgen\InformationCollection\Core\Action\AutoResponderAction
+        arguments:
+            - '@mailer.mailer'
+            - '@netgen_information_collection.factory.auto_responder_data'
+        tags:
+            - { name: netgen_information_collection.action, alias: auto_responder }
+
+    Netgen\InformationCollection\API\Factory\EmailContentFactoryInterface: '@netgen_information_collection.factory.email_data'

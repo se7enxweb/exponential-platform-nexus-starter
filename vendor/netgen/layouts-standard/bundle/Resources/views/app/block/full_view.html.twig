@@ -1,0 +1,9 @@
+{% extends '@nglayouts_admin/app/block/block.html.twig' %}
+
+{% import '@NetgenLayoutsAdmin/app/parts/macros.html.twig' as macros %}
+
+{% trans_default_domain 'nglayouts_app' %}
+
+{% block content %}
+    {{ macros.info('block.info.full_view'|trans, 'icon-full_view') }}
+{% endblock %}

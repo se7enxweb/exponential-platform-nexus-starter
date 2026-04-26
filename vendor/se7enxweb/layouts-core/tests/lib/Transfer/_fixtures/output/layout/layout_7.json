@@ -1,0 +1,22 @@
+{
+    "__type": "layout",
+    "id": "4b0202b3-5d06-5962-ae0c-bbeb25ee3503",
+    "type_identifier": "test_layout_2",
+    "name": "My seventh layout",
+    "description": "My seventh layout description",
+    "status": "published",
+    "main_locale": "en",
+    "available_locales": [
+        "en"
+    ],
+    "creation_date": "@integer@",
+    "modification_date": "@integer@",
+    "is_shared": false,
+    "zones": {
+        "bottom": {"visited_key": "visited_value"},
+        "center": {"visited_key": "visited_value"},
+        "left": {"visited_key": "visited_value"},
+        "right": {"visited_key": "visited_value"},
+        "top": {"visited_key": "visited_value"}
+    }
+}

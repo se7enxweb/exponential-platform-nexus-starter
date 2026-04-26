@@ -1,0 +1,7 @@
+queues:
+    title: "Queues"
+    list:
+        title: "List (%count%)"
+    column:
+        name: "Queue name"
+        count: "Message count"

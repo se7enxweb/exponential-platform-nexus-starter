@@ -1,0 +1,30 @@
+{% trans_default_domain 'ibexa_content_type' %}
+
+{% macro content_type_edit(content_type, content_type_group, class_name) %}
+    {% set edit_url = path('ibexa.content_type.edit', {
+    'contentTypeGroupId': content_type_group.id,
+    'contentTypeId': content_type.id
+    }) %}
+
+    <a title="{{ 'content_type.action.edit'|trans|desc('Edit') }}"
+       href="{{ edit_url }}"
+        {% if class_name %}class="{{ class_name }}"{% endif %}>
+        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--edit">
+            <use xlink:href="{{ ibexa_icon_path('edit') }}"></use>
+        </svg>
+    </a>
+{% endmacro %}
+
+{% macro content_type_copy(content_type, content_type_group, class_name) %}
+    <button
+        title="{{ 'content_type.action.copy'|trans|desc('Duplicate') }}"
+        type="button"
+        data-content-type-id="{{ content_type.id }}"
+        data-content-type-identifier="{{ content_type.identifier }}"
+        data-content-type-group-id="{{ content_type_group.id }}"
+        {% if class_name %}class="{{ class_name }}"{% endif %}>
+        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--copy">
+            <use xlink:href="{{ ibexa_icon_path('copy') }}"></use>
+        </svg>
+    </button>
+{% endmacro %}

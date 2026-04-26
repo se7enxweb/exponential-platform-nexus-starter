@@ -1,0 +1,23 @@
+.sckenhancedselection-settings .icon-close:before {
+    content: "\d7";
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.sckenhancedselection-settings .multientry_add {
+    margin-top: 8px;
+    padding: 8px;
+}
+
+.sckenhancedselection-settings .icon-close {
+    line-height: inherit;
+    margin-left: 8px;
+}
+
+.sckenhancedselection-settings .multientry-item {
+    margin-bottom: 8px;
+}
+
+.sckenhancedselection-settings .multientry-error {
+    border: 1px solid #db0032 !important;
+}

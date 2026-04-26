@@ -1,0 +1,59 @@
+{
+    "name": "league/uri-polyfill",
+    "description": "Polyfill backporting PHP 8.5+ native RFC3986/WHATWG URI features to lower PHP versions",
+    "keywords": [
+        "uri",
+        "url",
+        "rfc3986",
+        "whatwg",
+        "polyfill",
+        "parser",
+        "resolver",
+        "equivalence",
+        "compatibiliy",
+        "portable"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ignace Nyamagana Butera",
+            "email": "nyamsprod@gmail.com",
+            "homepage": "https://github.com/nyamsprod/",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "League\\Uri\\": ""
+        },
+        "classmap": [
+            "lib"
+        ]
+    },
+    "require": {
+        "php": ">=8.1",
+        "league/uri-interfaces": ">=7.8.1",
+        "rowbot/url": "^4.1.0"
+    },
+    "provide": {
+        "ext-uri": "*"
+    },
+    "suggest": {
+        "ext-intl": "to handle IDN host with the best performance",
+        "jeremykendall/php-domain-parser": "to further parse the URI host and resolve its Public Suffix and Top Level Domain",
+        "league/uri-components": "to provide additional tools to manipulate URI objects components",
+        "php-64bit": "to improve IPV4 host parsing",
+        "symfony/polyfill-intl-idn": "to handle IDN host via the Symfony polyfill if ext-intl is not present",
+        "symfony/polyfill-php82": "to use the SensitiveParameter polyfill in PHP8.1",
+        "league/uri-polyfill" : "to backport the PHP URI extension for older versions of PHP",
+        "rowbot/url": "to handle URLs using the WHATWG URL Living Standard specification"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "7.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

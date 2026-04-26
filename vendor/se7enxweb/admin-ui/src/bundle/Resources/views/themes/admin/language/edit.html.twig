@@ -1,0 +1,31 @@
+{% extends '@ibexadesign/language/base.html.twig' %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_language' %}
+
+{% block header_admin %}
+    {% set language_edit_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.language_edit.sidebar_right', [], {
+        save_and_close_id: form.save_and_close.vars.id,
+    }) %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'language.editing'|trans|desc('Editing'),
+        title: 'language.edit.identifier'|trans({ '%language%': language.name })|desc('Editing language \'%language%\''),
+        context_actions: knp_menu_render(language_edit_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form, {'action': actionUrl}) }}
+        <section>
+            <div class="card ibexa-card ibexa-card--light">
+                <div class="card-body ibexa-card__body ibexa-form-block">
+                    {{ form_row(form.name, { row_attr: { class: 'ibexa-form-field' } }) }}
+                    {{ form_row(form.enabled, { row_attr: { class: 'ibexa-form-field' }, label_attr: {'class': 'checkbox-inline'}}) }}
+                </div>
+            </div>
+        </section>
+        {{ form_widget(form.save_and_close, { attr: { hidden: 'hidden' }}) }}
+    {{ form_end(form) }}
+{% endblock %}

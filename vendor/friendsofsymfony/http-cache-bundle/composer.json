@@ -1,0 +1,98 @@
+{
+    "name": "friendsofsymfony/http-cache-bundle",
+    "type": "symfony-bundle",
+    "description": "Set path based HTTP cache headers and send invalidation requests to your HTTP cache",
+    "keywords": [
+        "http",
+        "caching",
+        "purge",
+        "invalidation",
+        "varnish",
+        "esi"
+    ],
+    "homepage": "https://github.com/FriendsOfSymfony/FOSHttpCacheBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Liip AG",
+            "homepage": "http://www.liip.ch/"
+        },
+        {
+            "name": "Driebit",
+            "homepage": "http://www.driebit.nl",
+            "email": "tech@driebit.nl"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "https://github.com/friendsofsymfony/FOSHttpCacheBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "friendsofsymfony/http-cache": "^3.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+        "symfony/expression-language": "^6.4 || ^7.0 || ^8.0",
+        "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
+        "symfony/http-foundation": "^6.4 || ^7.0 || ^8.0",
+        "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
+        "symfony/security-bundle": "^6.4 || ^7.0 || ^8.0"
+    },
+    "require-dev": {
+        "php-http/guzzle7-adapter": "^0.1.1",
+        "php-http/message": "^1.0 || ^2.0",
+        "php-http/httplug": "^2.2.0",
+        "php-http/discovery": "^1.13",
+        "guzzlehttp/guzzle": "^7.2",
+        "mockery/mockery": "^1.6.9",
+        "monolog/monolog": "*",
+        "symfony/browser-kit": "^6.4 || ^7.0 || ^8.0",
+        "symfony/console": "^6.4 || ^7.0 || ^8.0",
+        "symfony/finder": "^6.4 || ^7.0 || ^8.0",
+        "phpunit/phpunit": "^10.5",
+        "symfony/twig-bundle": "^6.4 || ^7.0 || ^8.0",
+        "twig/twig": "^v3.8",
+        "symfony/yaml": "^6.4 || ^7.0 || ^8.0",
+        "symfony/css-selector": "^6.4 || ^7.0 || ^8.0",
+        "symfony/monolog-bundle": "*",
+        "symfony/routing": "^6.4 || ^7.0 || ^8.0",
+        "matthiasnoback/symfony-config-test": "^5.2 || ^6.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1 || ^6.2",
+        "phpstan/phpstan": "^2",
+        "phpstan/phpstan-symfony": "^2",
+        "phpstan/extension-installer": "^1.4",
+        "jean-beru/fos-http-cache-cloudfront": "^1.1.1",
+        "friendsofphp/php-cs-fixer": "^3.54"
+    },
+    "suggest": {
+        "jean-beru/fos-http-cache-cloudfront": "To use CloudFront proxy",
+        "sensio/framework-extra-bundle": "For Tagged Cache Invalidation",
+        "symfony/expression-language": "For Tagged Cache Invalidation",
+        "symfony/console": "To send invalidation requests from the command line"
+    },
+    "conflict": {
+        "twig/twig": "<1.12.0",
+        "symfony/monolog-bridge": "<3.4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "FOS\\HttpCacheBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FOS\\HttpCacheBundle\\Tests\\": "tests/"
+        },
+        "classmap": [
+            "tests/Functional/Fixtures/app/AppKernel.php"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
+        },
+        "audit": {
+            "block-insecure": false
+        }
+    }
+}

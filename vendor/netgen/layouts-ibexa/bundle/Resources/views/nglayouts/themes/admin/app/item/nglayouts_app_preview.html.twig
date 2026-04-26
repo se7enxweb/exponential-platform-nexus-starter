@@ -1,0 +1,25 @@
+{% if content.fields.image is defined and not ibexa_field_is_empty(content, 'image') %}
+    {% set image_alias = ibexa_image_alias(ibexa_field(content, 'image'), content.versionInfo, 'nglayouts_app_preview') %}
+
+    {% if image_alias %}
+        <div class="image">
+            <img src="{{ asset(image_alias.uri) }}" alt="{{ content.field('image').value.alternativeText }}" />
+        </div>
+    {% endif %}
+{% endif %}
+
+<div class="name">
+    {% if nglayouts_item is defined %}
+        <p><a href="{{ nglayouts_item_admin_path(nglayouts_item) }}" target="_blank" rel="noopener noreferrer">{{ content.name }}</a></p>
+    {% else %}
+        <p><a href="{{ ibexa_path(content) }}" target="_blank" rel="noopener noreferrer">{{ content.name }}</a></p>
+    {% endif %}
+</div>
+
+<div class="value-type">
+    {% if nglayouts_item is defined %}
+        <p>{{ nglayouts_value_type_name(nglayouts_item) }} ({{ content.contentType.name }})</p>
+    {% else %}
+        <p>{{ content.contentType.name }}</p>
+    {% endif %}
+</div>

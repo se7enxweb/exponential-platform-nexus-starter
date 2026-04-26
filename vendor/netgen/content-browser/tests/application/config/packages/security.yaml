@@ -1,0 +1,16 @@
+security:
+    providers:
+        users_in_memory:
+            memory:
+                users:
+                    admin:
+                        password: admin
+                        roles: [ROLE_ADMIN]
+
+    password_hashers:
+        Symfony\Component\Security\Core\User\InMemoryUser: plaintext
+
+    firewalls:
+        main:
+            provider: users_in_memory
+            http_basic: ~

@@ -1,0 +1,183 @@
+imports:
+    - { resource: service_aliases.yaml }
+    - { resource: view.yaml }
+    - { resource: systeminfo.yaml }
+    - { resource: events.yaml }
+
+parameters:
+    ibexa.system_info.powered_by.name: ''
+    ibexa.system_info.ibexa_url_list:
+        contact: "https://www.ibexa.co/about-ibexa/contact-us"
+        license: "https://www.ibexa.co/software-information/licenses-and-agreements"
+        ttl: "https://www.ibexa.co/software-information/licenses-and-agreements/ibexa-trial-and-test-license-agreement-ibexa-ttl-v2.1"
+        service_life: "https://support.ibexa.co/Public/Service-Life"
+        support_service: "https://www.ibexa.co/services/support-maintenance"
+        training_service: "https://www.ibexa.co/services/training"
+        consulting_service: "https://www.ibexa.co/services/consulting-services"
+        ee_product: "https://ibexa.co/products"
+        install_ee: "https://doc.ibexa.co/en/{ibexa.release}/getting_started/install_ibexa_dxp/"
+        doc: "https://doc.ibexa.co"
+        update: "https://doc.ibexa.co/en/latest/updating/update_ibexa_dxp/"
+        gpl_faq: "https://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.en.html#GPLModuleLicense"
+        support: "https://support.ibexa.co"
+    ibexa.system_info.url_list: '%ibexa.system_info.ibexa_url_list%' # BC
+
+services:
+    # EventSubscriber
+    Ibexa\Bundle\SystemInfo\EventSubscriber\AddXPoweredByHeader:
+        arguments: ['%ibexa.system_info.powered_by.name%']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Console
+    Ibexa\Bundle\SystemInfo\Command\SystemInfoDumpCommand:
+        arguments:
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\Registry\IdentifierBased'
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\OutputFormatRegistry'
+        tags:
+            - { name: console.command }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Registry\IdentifierBased: ~
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\OutputFormatRegistry: ~
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\SystemInfoWrapper:
+        lazy: true
+
+    # SystemInfoCollectors
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\IbexaSystemInfoCollector:
+        arguments:
+            $collector: '@Ibexa\Bundle\SystemInfo\SystemInfo\Collector\JsonComposerLockSystemInfoCollector'
+        tags:
+            - { name: ibexa.system_info.collector, identifier: ibexa }
+
+    Ibexa\SystemInfo\VersionStability\ComposerVersionStabilityChecker: ~
+
+    Ibexa\SystemInfo\VersionStability\VersionStabilityChecker:
+        '@Ibexa\SystemInfo\VersionStability\ComposerVersionStabilityChecker'
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\JsonComposerLockSystemInfoCollector:
+        arguments:
+            $versionStabilityChecker: '@Ibexa\SystemInfo\VersionStability\VersionStabilityChecker'
+            $lockFile: "%kernel.project_dir%/composer.lock"
+            $jsonFile: "%kernel.project_dir%/composer.json"
+        tags:
+            - { name: ibexa.system_info.collector, identifier: composer }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\RepositorySystemInfoCollector:
+        lazy: true
+        autowire: true
+        arguments:
+            $connection: '@ibexa.persistence.connection'
+        tags:
+            - { name: ibexa.system_info.collector, identifier: repository }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\HardwareSystemInfoCollector:
+        arguments:
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\SystemInfoWrapper'
+        tags:
+            - { name: ibexa.system_info.collector, identifier: hardware }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\PhpSystemInfoCollector:
+        arguments:
+            - '@Ibexa\Bundle\SystemInfo\SystemInfo\SystemInfoWrapper'
+        tags:
+            - { name: ibexa.system_info.collector, identifier: php }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\ConfigurationSymfonyKernelSystemInfoCollector:
+        arguments:
+            - "@kernel"
+            - "%kernel.bundles%"
+        tags:
+            - { name: ibexa.system_info.collector, identifier: symfony_kernel }
+
+    Ibexa\Bundle\SystemInfo\SystemInfo\Collector\ServicesSystemInfoCollector:
+        autowire: true
+        tags:
+            - { name: ibexa.system_info.collector, identifier: services }
+
+    # SystemInfoOutputFormats
+    Ibexa\Bundle\SystemInfo\SystemInfo\OutputFormat\JsonOutputFormat:
+        tags:
+            - { name: ibexa.system_info.output.format, format: json }
+
+    # Gateways
+    Ibexa\SystemInfo\Storage\MetricsProvider:
+        alias: Ibexa\SystemInfo\Storage\AggregateMetricsProvider
+
+    Ibexa\SystemInfo\Storage\AggregateMetricsProvider:
+        arguments:
+            $metricsLocator: !tagged_locator
+                tag: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+                index_by: identifier
+
+    Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics:
+        abstract: true
+        arguments:
+            $connection: '@ibexa.persistence.connection'
+
+    Ibexa\SystemInfo\Storage\Metrics\PublishedContentObjectsCountMetrics:
+        parent: Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics
+        tags:
+            -
+              name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+              identifier: published
+
+    Ibexa\SystemInfo\Storage\Metrics\UsersCountMetrics:
+        parent: Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics
+        tags:
+            -
+              name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+              identifier: users
+
+    Ibexa\SystemInfo\Storage\Metrics\DraftsCountMetrics:
+        parent: Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics
+        tags:
+            -
+              name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+              identifier: drafts
+
+    Ibexa\SystemInfo\Storage\Metrics\VersionsCountMetrics:
+        parent: Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics
+        tags:
+            -
+              name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+              identifier: versions
+
+    Ibexa\SystemInfo\Storage\Metrics\ContentTypesCountMetrics:
+        parent: Ibexa\SystemInfo\Storage\Metrics\RepositoryConnectionAwareMetrics
+        tags:
+            -
+              name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::METRICS_TAG
+              identifier: content_types
+
+    # Services
+    Ibexa\SystemInfo\Service\ServiceProviderInterface:
+        alias: Ibexa\SystemInfo\Service\AggregateServiceProvider
+
+    Ibexa\SystemInfo\Service\AggregateServiceProvider:
+        arguments:
+            $serviceLocator: !tagged_locator
+                tag: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::SERVICE_TAG
+                index_by: identifier
+
+    Ibexa\SystemInfo\Service\SearchEngineServiceInfo:
+        arguments:
+            $repositoryConfigProvider: '@Ibexa\Bundle\Core\ApiLoader\RepositoryConfigurationProvider'
+        tags:
+            - name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::SERVICE_TAG
+              identifier: searchEngine
+
+    Ibexa\SystemInfo\Service\HttpCacheServiceInfo:
+        arguments:
+            $purgeType: '%purge_type%'
+        tags:
+            - name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::SERVICE_TAG
+              identifier: httpCacheProxy
+
+    Ibexa\SystemInfo\Service\PersistenceCacheServiceInfo:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - name: !php/const \Ibexa\Bundle\SystemInfo\DependencyInjection\IbexaSystemInfoExtension::SERVICE_TAG
+              identifier: persistenceCacheAdapter

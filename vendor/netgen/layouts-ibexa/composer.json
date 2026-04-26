@@ -1,0 +1,66 @@
+{
+    "name": "netgen/layouts-ibexa",
+    "description": "Netgen Layouts & Ibexa CMS integration",
+    "license": "GPL-2.0-only",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "netgen/layouts-core": "~2.0.0",
+        "netgen/content-browser-ibexa": "^2.0",
+        "ibexa/core": "^5.0",
+        "ibexa/admin-ui": "^5.0",
+        "ibexa/http-cache": "^5.0"
+    },
+    "require-dev": {
+        "netgen/layouts-standard": "~2.0.0",
+        "netgen/layouts-coding-standard": "^3.0",
+        "phpunit/phpunit": "^13.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.3",
+        "netgen/tagsbundle": "^6.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "suggest": {
+        "netgen/layouts-ibexa-site-api": "Integrate Netgen Layouts with Ibexa CMS Site API to boost your site-building productivity with Ibexa CMS"
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so -dxdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=coverage --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --ansi",
+        "phpstan-tests": "@php vendor/bin/phpstan analyse -c phpstan.tests.neon --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Layouts\\Ibexa\\": "lib/",
+            "Netgen\\Bundle\\LayoutsIbexaBundle\\": "bundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Layouts\\Ibexa\\Tests\\": "tests/lib/",
+            "Netgen\\Bundle\\LayoutsIbexaBundle\\Tests\\": "tests/bundle/",
+            "Netgen\\Layouts\\Tests\\": "vendor/netgen/layouts-core/tests/lib/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

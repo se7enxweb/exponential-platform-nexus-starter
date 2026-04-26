@@ -1,0 +1,33 @@
+{
+    "name": "netgen/site-installer-bundle",
+    "description": "This bundle installs various Netgen Site projects",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "ibexa/core": "^5.0",
+        "guzzlehttp/promises": "^2.3",
+        "nyholm/psr7": "^1.8"
+    },
+    "require-dev": {
+        "netgen/coding-standard": "^1.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0"
+    },
+    "autoload": {
+        "psr-4": { "Netgen\\Bundle\\SiteInstallerBundle\\": "bundle/" }
+    },
+    "scripts": {
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi bundle"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    }
+}

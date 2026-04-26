@@ -1,0 +1,15 @@
+<button class="button js-open" data-target="blocks"><span class="icon"></span></button>
+
+<div class="left-toolbar-panels">
+  <div class="left-panel left-panel-blocks">
+    <div class="panel-content">
+      <a class="js-close close-panel"><i class="material-icons">close</i></a>
+      {{#each groups}}
+        <div class="header">
+          <h2>{{name}}</h2>
+        </div>
+        <div class="block-items {{identifier}}"></div>
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+{% trans_default_domain "ibexa_systeminfo" %}
+
+<!-- Tab name: {{ 'tab.name.php'|trans|desc('PHP') }} -->
+
+<section class="ibexa-fieldgroup">
+    <h2 class="ibexa-fieldgroup__name">{{ 'php'|trans|desc('PHP') }}</h2>
+    <div class="ibexa-fieldgroup__content">
+        <table class="table ibexa-table--list ibexa-table--to-left">
+            <tbody>
+            <tr class="ibexa-table__row">
+                <td class="ibexa-table__cell">{{ 'php'|trans|desc('PHP') }}</td>
+                <td class="ibexa-table__cell">
+                    {{ info.version }}
+                    (<a href="{{ path( 'ibexa.systeminfo.php' ) }}"
+                        target="_blank">{{ 'php.info'|trans|desc('PHP Info') }}</a>)
+                </td>
+            </tr>
+            <tr class="ibexa-table__row">
+                <td class="ibexa-table__cell">{{ 'php.accelerator'|trans|desc('Accelerator') }}</td>
+                <td class="ibexa-table__cell">
+                    {% if not info.acceleratorEnabled %}
+                        <strong>{{ 'disabled'|trans|desc('Disabled') }}</strong>
+                    {% endif %}
+                    <a href="{{ info.acceleratorURL }}" target="_blank">{{ info.acceleratorName }}
+                        ({{ info.acceleratorVersion }})</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,18 @@
+netgen.ibexa_admin_ui_extra.content.update_always_available:
+    path: /content/{id}/update-always-available
+    methods: ['POST']
+    controller: 'Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Content\UpdateAlwaysAvailable'
+    requirements:
+        id: \d+
+
+netgen.ibexa_admin_ui_extra.queues.list:
+    path: /queues/list
+    methods: [ 'GET' ]
+    controller: 'Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Queues'
+
+netgen.ibexa_admin_ui_extra.content.visibility.locations:
+    path: /content/{contentId}/locations/visibility_info
+    methods: ['GET']
+    controller: 'Netgen\Bundle\IbexaAdminUIExtraBundle\Controller\Content\VisibilityInfo'
+    requirements:
+        contentId: \d+

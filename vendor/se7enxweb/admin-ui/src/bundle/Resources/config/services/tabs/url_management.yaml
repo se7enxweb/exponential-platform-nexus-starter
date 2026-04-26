@@ -1,0 +1,20 @@
+services:
+    app.my_tabs.custom_group:
+        parent: Ibexa\AdminUi\Component\TabsComponent
+        arguments:
+            $template: '@@ibexadesign/ui/tab/url_management.html.twig'
+            $groupIdentifier: 'link-manager'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-link-manager-block' }
+
+    Ibexa\AdminUi\Tab\URLManagement\URLWildcardsTab:
+        class: Ibexa\AdminUi\Tab\URLManagement\URLWildcardsTab
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        tags:
+            - { name: ibexa.admin_ui.tab, group: 'link-manager' }
+
+    Ibexa\AdminUi\Tab\URLManagement\LinkManagerTab:
+        class: Ibexa\AdminUi\Tab\URLManagement\LinkManagerTab
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        tags:
+            - { name: ibexa.admin_ui.tab, group: 'link-manager' }

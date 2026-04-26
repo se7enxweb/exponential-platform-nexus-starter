@@ -1,0 +1,26 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/spinner' as *;
+
+@use 'sass:list';
+
+.c-spinner {
+    $color-variants: (
+        '--primary': $ibexa-color-primary,
+        '--light': $ibexa-color-white,
+    );
+
+    $size-variants: (
+        '--small': calculateRem(16px) calculateRem(2px),
+        '--medium': calculateRem(26px) calculateRem(3px),
+        '--large': calculateRem(86px) calculateRem(6px),
+    );
+
+    @each $size-modifier, $sizes in $size-variants {
+        @each $color-modifier, $color in $color-variants {
+            &#{$size-modifier}.c-spinner#{$color-modifier} {
+                @include spinner(list.nth($sizes, 1), list.nth($sizes, 2), $color);
+            }
+        }
+    }
+}

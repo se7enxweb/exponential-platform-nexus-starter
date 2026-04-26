@@ -1,0 +1,7 @@
+ngtoolbar.toolbar: 'Toolbar'
+ngtoolbar.admin_interface: 'Ibexa Admin UI'
+ngtoolbar.logout: 'Logout'
+ngtoolbar.view_components: 'Edit components'
+ngtoolbar.hide_components: 'Hide components'
+ngtoolbar.view_items: 'Edit items'
+ngtoolbar.hide_items: 'Hide items'

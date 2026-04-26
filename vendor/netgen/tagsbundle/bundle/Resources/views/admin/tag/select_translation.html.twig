@@ -1,0 +1,19 @@
+{% extends netgen_tags_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% form_theme form '@NetgenTags/form/tags.html.twig' %}
+
+{% block content %}
+    {% if tag is defined %}
+        <h2 class="tag-title">{{ 'tag.edit.title'|trans }}: {{ tag.keyword }} [{{ tag.id }}]</h2>
+    {% else %}
+        <h2 class="tag-title">{{ 'tag.add.title'|trans }}</h2>
+    {% endif %}
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="tags-btn tags-btn-primary" type="submit">{{ 'tag.button.continue'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}

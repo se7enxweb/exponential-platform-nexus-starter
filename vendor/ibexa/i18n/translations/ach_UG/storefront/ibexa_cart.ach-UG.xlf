@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:jms="urn:jms:translation" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ach" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="a637796d7192e567e8b0a93bb68f48ff650966e2" resname="add_to_cart.quantity.label">
+        <source>Items</source>
+        <target>crwdns250729:0crwdne250729:0</target>
+        <note>key: add_to_cart.quantity.label</note>
+      </trans-unit>
+      <trans-unit id="173e34e53ec57db1dd81b698a0bd1f9ff5411d00" resname="cart_view.empty.continue_shopping_link.label">
+        <source>Continue shopping</source>
+        <target>crwdns250731:0crwdne250731:0</target>
+        <note>key: cart_view.empty.continue_shopping_link.label</note>
+      </trans-unit>
+      <trans-unit id="f7abacc4ff5dae93e1de71e1fcb569e1d162f4d9" resname="cart_view.empty.headline">
+        <source>Your shopping cart is empty</source>
+        <target>crwdns250733:0crwdne250733:0</target>
+        <note>key: cart_view.empty.headline</note>
+      </trans-unit>
+      <trans-unit id="ba8758b61e00dea1ac02cd53ba037672ddd6100c" resname="ibexa_storefront.maincart.clear_cart_btn.label">
+        <source>Clear cart</source>
+        <target>crwdns250735:0crwdne250735:0</target>
+        <note>key: ibexa_storefront.maincart.clear_cart_btn.label</note>
+      </trans-unit>
+      <trans-unit id="e6c713463dfb507d2a4246a0bf040c3ae3da284f" resname="ibexa_storefront.maincart.header.counter.label">
+        <source>Items</source>
+        <target>crwdns250737:0crwdne250737:0</target>
+        <note>key: ibexa_storefront.maincart.header.counter.label</note>
+      </trans-unit>
+      <trans-unit id="4adf9dcec18efbbf7b2e67eb691eb6ae00b72634" resname="ibexa_storefront.maincart.header.headline">
+        <source>Cart</source>
+        <target>crwdns250739:0crwdne250739:0</target>
+        <note>key: ibexa_storefront.maincart.header.headline</note>
+      </trans-unit>
+      <trans-unit id="c4cd51a269bd45b301825781f13d37f7833cb4f7" resname="ibexa_storefront.maincart.item.product_code.label">
+        <source>Code</source>
+        <target>crwdns250741:0crwdne250741:0</target>
+        <note>key: ibexa_storefront.maincart.item.product_code.label</note>
+      </trans-unit>
+      <trans-unit id="a3ec8eb5946ddf43ed59d57254f47163fbb9bf8d" resname="ibexa_storefront.maincart.item.quantity_input.label">
+        <source>Items</source>
+        <target>crwdns250743:0crwdne250743:0</target>
+        <note>key: ibexa_storefront.maincart.item.quantity_input.label</note>
+      </trans-unit>
+      <trans-unit id="5e2d0da0d5a52fc4ad0866018f65d7c0f5c171c6" resname="ibexa_storefront.maincart.item.subtotal_price_net.label">
+        <source>Subtotal</source>
+        <target>crwdns250745:0crwdne250745:0</target>
+        <note>key: ibexa_storefront.maincart.item.subtotal_price_net.label</note>
+      </trans-unit>
+      <trans-unit id="6d01c584013f2b05ce3279dc0cbea892b197cae6" resname="maincart.summary.apply_coupon_btn.label">
+        <source>Apply</source>
+        <target>crwdns267459:0crwdne267459:0</target>
+        <note>key: maincart.summary.apply_coupon_btn.label</note>
+      </trans-unit>
+      <trans-unit id="aa454c07b57da03495cc2796472a7cab0719d1ca" resname="maincart.summary.continue_shopping_btn.label">
+        <source>Continue shopping</source>
+        <target>crwdns250747:0crwdne250747:0</target>
+        <note>key: maincart.summary.continue_shopping_btn.label</note>
+      </trans-unit>
+      <trans-unit id="3fa1b0b7f9a2ee01c9fd711d1dda91e063c79894" resname="maincart.summary.coupon.error.coupon_not_found.info">
+        <source>This code is invalid</source>
+        <target>crwdns267461:0crwdne267461:0</target>
+        <note>key: maincart.summary.coupon.error.coupon_not_found.info</note>
+      </trans-unit>
+      <trans-unit id="49c6f5fc72ea5e9c424b3dce403079dcbb9a54ca" resname="maincart.summary.coupon.error.general_error.info">
+        <source>An internal error occurred.</source>
+        <target>crwdns267463:0crwdne267463:0</target>
+        <note>key: maincart.summary.coupon.error.general_error.info</note>
+      </trans-unit>
+      <trans-unit id="e17d06c128f5da183a7425c52a4fb9429827b8c0" resname="maincart.summary.coupon.input.placeholder">
+        <source>Promo code</source>
+        <target>crwdns268022:0crwdne268022:0</target>
+        <note>key: maincart.summary.coupon.input.placeholder</note>
+      </trans-unit>
+      <trans-unit id="7d0e0ff9998cbf0be7eb6eb615e60093b7fcd88a" resname="maincart.summary.coupon_label_template">
+        <source>Code: %coupon_code%</source>
+        <target>crwdns268324:0%coupon_code%crwdne268324:0</target>
+        <note>key: maincart.summary.coupon_label_template</note>
+      </trans-unit>
+      <trans-unit id="bac084866bb91074db9eaee95e6d97d5668b2e80" resname="maincart.summary.discounts_info.toggler.show_less.label">
+        <source>Show less</source>
+        <target>crwdns268024:0crwdne268024:0</target>
+        <note>key: maincart.summary.discounts_info.toggler.show_less.label</note>
+      </trans-unit>
+      <trans-unit id="fb764970dd4ee1dc9a368bad23ac6828b9206127" resname="maincart.summary.discounts_info.toggler.show_more.label">
+        <source>Show more</source>
+        <target>crwdns268026:0crwdne268026:0</target>
+        <note>key: maincart.summary.discounts_info.toggler.show_more.label</note>
+      </trans-unit>
+      <trans-unit id="6713f8164032ceb741f0505616b72aefc9db1f3f" resname="maincart.summary.go_to_checkout_btn.label">
+        <source>Go to checkout</source>
+        <target>crwdns250749:0crwdne250749:0</target>
+        <note>key: maincart.summary.go_to_checkout_btn.label</note>
+      </trans-unit>
+      <trans-unit id="8fad19f56d7a611d59f8ca8252c287256e14dcc4" resname="maincart.summary.remove_coupon_btn.label">
+        <source>Remove</source>
+        <target>crwdns267467:0crwdne267467:0</target>
+        <note>key: maincart.summary.remove_coupon_btn.label</note>
+      </trans-unit>
+      <trans-unit id="5c943dada72f62f4b1a87f7d482f33bb344c5110" resname="minicart.icon.alt">
+        <source>Cart</source>
+        <target>crwdns250751:0crwdne250751:0</target>
+        <note>key: minicart.icon.alt</note>
+      </trans-unit>
+      <trans-unit id="feb50f7008e30668b4eee22019c666cf862041d2" resname="minicart.label">
+        <source>cart</source>
+        <target>crwdns250753:0crwdne250753:0</target>
+        <note>key: minicart.label</note>
+      </trans-unit>
+      <trans-unit id="9bf551c71e76f1adaef5e8870e587850ae545fc6" resname="summary.item.discount.label">
+        <source>Discount</source>
+        <target>crwdns267469:0crwdne267469:0</target>
+        <note>key: summary.item.discount.label</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

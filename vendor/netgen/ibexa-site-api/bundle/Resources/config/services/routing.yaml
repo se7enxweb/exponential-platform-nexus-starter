@@ -1,0 +1,16 @@
+services:
+    netgen.ibexa_site_api.routing.generator_router:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Routing\GeneratorRouter
+        arguments:
+            - '@ibexa.api.repository'
+            - '@Ibexa\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator'
+            - '@netgen.ibexa_site_api.siteaccess.resolver'
+            - '@ibexa.config.resolver'
+            - '@router.request_context'
+            - '@?logger'
+        calls:
+            - [ setSiteaccess, [ '@Ibexa\Core\MVC\Symfony\SiteAccess' ] ]
+        tags:
+            - { name: router, priority: 300 }
+            - { name: monolog.logger, channel: ngsiteapi }
+        lazy: true

@@ -1,0 +1,27 @@
+{
+    "id": "@uuid@",
+    "layout_id": "71cbe281-430c-51d5-8e21-c3cc4e656dac",
+    "definition_identifier": "title",
+    "name": "My fourth block",
+    "parent_position": 1,
+    "parameters": {
+        "tag": "h3",
+        "title": "Title",
+        "use_link": null,
+        "link": null,
+        "css_class": null,
+        "css_id": null,
+        "set_container": null
+    },
+    "view_type": "title",
+    "item_view_type": "standard",
+    "published": false,
+    "has_published_state": false,
+    "is_translatable": false,
+    "locale": "en",
+    "always_available": true,
+    "is_container": false,
+    "placeholders": [],
+    "collections": [],
+    "config": []
+}

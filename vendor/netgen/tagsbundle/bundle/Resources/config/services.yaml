@@ -1,0 +1,33 @@
+services:
+    netgen_tags.controller.tag_view:
+        class: Netgen\TagsBundle\Controller\TagViewController
+        calls:
+            - setContainer: ["@Psr\\Container\\ContainerInterface"]
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.routing.tag_url_generator:
+        class: Netgen\TagsBundle\Routing\Generator\TagUrlGenerator
+        parent: Ibexa\Core\MVC\Symfony\Routing\Generator
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@router.default"
+            - "@ibexa.config.resolver"
+
+    netgen_tags.routing.tag_router:
+        class: Netgen\TagsBundle\Routing\TagRouter
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@netgen_tags.routing.tag_url_generator"
+            - "@ibexa.config.resolver"
+            - "@?router.request_context"
+            - "@?logger"
+        tags:
+            - { name: router, priority: 200 }
+
+    netgen_tags.repository.related_content_facets_loader:
+        class: Netgen\TagsBundle\Core\Repository\RelatedContentFacetsLoader
+        arguments:
+            - "@netgen_tags.api.service.tags.inner"
+            - "@ibexa.api.service.search"

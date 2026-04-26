@@ -1,0 +1,27 @@
+services:
+    _instanceof:
+        Ibexa\Contracts\Core\Repository\Values\Notification\CriterionHandlerInterface:
+            tags: [ 'ibexa.notification.criterion_handler' ]
+
+    Ibexa\Core\Persistence\Legacy\Notification\Gateway\DoctrineDatabase:
+        arguments:
+            $connection: '@ibexa.persistence.connection'
+            $criterionHandlers: !tagged_iterator 'ibexa.notification.criterion_handler'
+
+    Ibexa\Core\Persistence\Legacy\Notification\Gateway\ExceptionConversion:
+        arguments:
+            $innerGateway: '@Ibexa\Core\Persistence\Legacy\Notification\Gateway\DoctrineDatabase'
+
+    Ibexa\Core\Persistence\Legacy\Notification\Mapper: ~
+
+    Ibexa\Core\Persistence\Legacy\Notification\Handler:
+        arguments:
+            $gateway: '@Ibexa\Core\Persistence\Legacy\Notification\Gateway\ExceptionConversion'
+            $mapper: '@Ibexa\Core\Persistence\Legacy\Notification\Mapper'
+        lazy: true
+
+    ibexa.spi.persistence.legacy.notification.handler:
+        alias: 'Ibexa\Core\Persistence\Legacy\Notification\Handler'
+
+    Ibexa\Core\Persistence\Legacy\Notification\Gateway\CriterionHandler\:
+        resource: '../../../../Persistence/Legacy/Notification/Gateway/CriterionHandler/*'

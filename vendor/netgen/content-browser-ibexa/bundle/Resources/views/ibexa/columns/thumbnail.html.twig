@@ -1,0 +1,8 @@
+{% set content = item.content %}
+{% set image_field = content.field('image') %}
+
+{% if image_field is not null and not ibexa_field_is_empty(content, 'image') %}
+    {% set image_alias = ibexa_image_alias(image_field, content.versionInfo, 'ngcb_thumbnail') %}
+
+    <img src="{{ asset(image_alias.uri) }}" alt="{{ image_field.value.alternativeText }}" />
+{% endif %}

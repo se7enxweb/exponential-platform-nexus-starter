@@ -1,0 +1,15 @@
+{% set tabs_to_show = tabs|map((tab, index) => {
+    id: group ~ '-' ~ tab.identifier,
+    label: tab.name,
+    content: tab.view,
+    active: index == 0
+}) %}
+{% embed '@ibexadesign/ui/component/tab/tabs.html.twig' with {
+    tabs: tabs_to_show,
+    hide_toggler: true,
+    include_tab_more: true,
+} %}
+    {% block tabs_list_after %}
+        {{ ibexa_twig_component_group('admin-ui-location-view-tabs-after') }}
+    {% endblock %}
+{% endembed %}

@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+
+namespace Ibexa\Bundle\Core\DependencyInjection\Configuration\SiteAccessAware;
+
+/**
+ * Interface of ConfigurationMapper objects that need to trigger actions before and/or after looping over
+ * available scopes for mapping.
+ */
+interface HookableConfigurationMapperInterface extends ConfigurationMapperInterface
+{
+    /**
+     * This method is called by the ConfigurationProcessor before looping over available scopes.
+     * You may here use $contextualizer->mapConfigArray().
+     *
+     * @see ConfigurationProcessor::mapConfig()
+     * @see ContextualizerInterface::mapConfigArray()
+     *
+     * @param array<string, mixed> $config Complete parsed semantic configuration
+     */
+    public function preMap(array $config, ContextualizerInterface $contextualizer);
+
+    /**
+     * This method is called by the ConfigurationProcessor after looping over available scopes.
+     * You may here use $contextualizer->mapConfigArray().
+     *
+     * @see ConfigurationProcessor::mapConfig()
+     * @see ContextualizerInterface::mapConfigArray()
+     *
+     * @param array<string, mixed> $config Complete parsed semantic configuration
+     */
+    public function postMap(array $config, ContextualizerInterface $contextualizer);
+}

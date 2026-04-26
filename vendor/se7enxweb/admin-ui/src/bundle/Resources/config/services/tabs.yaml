@@ -1,0 +1,50 @@
+imports:
+    - { resource: tabs/locationview.yaml }
+    - { resource: tabs/content_type.yaml }
+    - { resource: tabs/url_management.yaml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Tab\TabRegistry:
+        lazy: true
+
+    Ibexa\AdminUi\Tab\Event\Subscriber\:
+        resource: "../../../../lib/Tab/Event/Subscriber/*"
+        public: true
+        tags: ['kernel.event_subscriber']
+
+    Ibexa\Contracts\AdminUi\Tab\AbstractTab:
+        abstract: true
+        lazy: true
+
+    Ibexa\Contracts\AdminUi\Tab\AbstractEventDispatchingTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        abstract: true
+        autowire: true
+        autoconfigure: false
+        public: false
+        lazy: true
+
+    Ibexa\Contracts\AdminUi\Tab\AbstractRouteBasedTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        abstract: true
+        autowire: true
+        autoconfigure: false
+        public: false
+        lazy: true
+        arguments:
+            $httpKernelRuntime: '@twig.runtime.httpkernel'
+
+    Ibexa\Contracts\AdminUi\Tab\AbstractControllerBasedTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        abstract: true
+        autowire: true
+        autoconfigure: false
+        public: false
+        lazy: true
+        arguments:
+            $httpKernelRuntime: '@twig.runtime.httpkernel'

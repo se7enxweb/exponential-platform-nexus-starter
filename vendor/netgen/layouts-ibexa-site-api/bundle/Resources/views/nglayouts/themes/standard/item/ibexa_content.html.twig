@@ -1,0 +1,9 @@
+{{ ng_view_content(
+    item.object.content,
+    view_type, {
+        'layout': false,
+        'params': {
+            'nglayouts_item': item,
+        }|merge(ibexa_params|default({}))
+    }
+) }}

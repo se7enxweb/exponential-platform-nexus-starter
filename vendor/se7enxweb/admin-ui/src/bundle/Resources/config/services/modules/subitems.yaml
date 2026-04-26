@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Ibexa\AdminUi\UI\Module\Subitems\ValueObjectVisitor\SubitemsRow:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        autowire: true
+        autoconfigure: false
+        public: true
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\AdminUi\UI\Module\Subitems\Values\SubitemsRow }
+
+    Ibexa\AdminUi\UI\Module\Subitems\ValueObjectVisitor\SubitemsList:
+        parent: Ibexa\Contracts\Rest\Output\ValueObjectVisitor
+        autowire: true
+        autoconfigure: false
+        public: true
+        tags:
+            - { name: ibexa.rest.output.value_object.visitor, type: Ibexa\AdminUi\UI\Module\Subitems\Values\SubitemsList }
+
+    Ibexa\AdminUi\UI\Module\Subitems\ContentViewParameterSupplier:
+        $outputVisitor: '@ibexa.rest.output.visitor.json'
+        $outputGenerator: '@Ibexa\Rest\Output\Generator\Json'
+        $contentTypeInfoListValueObjectVisitor: '@Ibexa\Rest\Server\Output\ValueObjectVisitor\ContentTypeInfoList'

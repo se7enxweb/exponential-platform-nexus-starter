@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Behat\Component\Fields;
+
+use Behat\Mink\Session;
+use Ibexa\AdminUi\Behat\Component\Table\TableBuilder;
+use Ibexa\AdminUi\Behat\Component\Table\TableInterface;
+use Ibexa\AdminUi\Behat\Component\UniversalDiscoveryWidget;
+use Ibexa\Behat\Browser\Element\Action\MouseOverAndClick;
+use Ibexa\Behat\Browser\Locator\CSSLocatorBuilder;
+use Ibexa\Behat\Browser\Locator\VisibleCSSLocator;
+use PHPUnit\Framework\Assert;
+
+final class ContentRelationSingle extends FieldTypeComponent
+{
+    private TableInterface $table;
+
+    public function __construct(
+        readonly Session $session,
+        private readonly UniversalDiscoveryWidget $universalDiscoveryWidget,
+        private readonly TableBuilder $tableBuilder
+    ) {
+        parent::__construct($session);
+    }
+
+    public function specifyLocators(): array
+    {
+        return [
+            new VisibleCSSLocator('selectContent', '.ibexa-relations__cta-btn'),
+            new VisibleCSSLocator('buttonRemove', '.ibexa-relations__table-action--remove-item'),
+            new VisibleCSSLocator('relationRow', '.ibexa-relations__list tr'),
+            new VisibleCSSLocator('columnHeader', 'tr:not(.ibexa-relations__table-header) th'),
+        ];
+    }
+
+    public function setValue(array $parameters): void
+    {
+        if (!$this->isRelationEmpty()) {
+            $this->getHTMLPage()
+                ->find($this->getLocator('buttonRemove'))
+                ->execute(new MouseOverAndClick());
+        }
+
+        $buttonLocator = CSSLocatorBuilder::base($this->parentLocator)
+            ->withDescendant($this->getLocator('selectContent'))
+            ->build();
+
+        $this->getHTMLPage()
+            ->setTimeout(5)
+            ->find($buttonLocator)
+            ->execute(new MouseOverAndClick());
+
+        $this->universalDiscoveryWidget->verifyIsLoaded();
+        $this->universalDiscoveryWidget->selectContent($parameters['value']);
+        $this->universalDiscoveryWidget->confirm();
+    }
+
+    public function getValue(): array
+    {
+        /** @var \Ibexa\AdminUi\Behat\Component\Table\Table $table */
+        $table = $this->table;
+        $names = $table->getColumnValues(['Name']);
+
+        return [$names[0]['Name']];
+    }
+
+    public function setParentLocator(VisibleCSSLocator $locator): void
+    {
+        parent::setParentLocator($locator);
+
+        $this->table = $this->tableBuilder
+            ->newTable()
+            ->withParentLocator($this->parentLocator)
+            ->withRowLocator($this->getLocator('relationRow'))
+            ->withColumnLocator($this->getLocator('columnHeader'))
+            ->build();
+    }
+
+    public function verifyValueInItemView(array $values): void
+    {
+        $explodedValue = explode('/', $values['value']);
+        $value = $explodedValue[count($explodedValue) - 1];
+
+        $viewPatternRegex = '/Single relation[\w\/,: ]* %s [\w \/,:]*/';
+
+        Assert::assertMatchesRegularExpression(
+            sprintf($viewPatternRegex, $value),
+            $this->getHTMLPage()->find($this->parentLocator)->getText(),
+            'Field has wrong value'
+        );
+    }
+
+    public function isRelationEmpty(): bool
+    {
+        $selectLocator = CSSLocatorBuilder::base($this->parentLocator)
+            ->withDescendant($this->getLocator('selectContent'))
+            ->build();
+
+        return $this->getHTMLPage()->findAll($selectLocator)->any();
+    }
+
+    public function getFieldTypeIdentifier(): string
+    {
+        return 'ibexa_object_relation';
+    }
+}

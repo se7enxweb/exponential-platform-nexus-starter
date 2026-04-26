@@ -1,0 +1,16 @@
+services:
+    netgen_layouts.configuration:
+        class: Netgen\Bundle\LayoutsBundle\Configuration\Configuration
+        arguments:
+            - "@service_container"
+            -
+                block_definitions: "@=service('netgen_layouts.block.registry.block_definition').getBlockDefinitions()"
+                block_types: "@=service('netgen_layouts.block.registry.block_type').getBlockTypes()"
+                block_type_groups: "@=service('netgen_layouts.block.registry.block_type_group').getBlockTypeGroups()"
+                layout_types: "@=service('netgen_layouts.layout.registry.layout_type').getLayoutTypes()"
+                query_types: "@=service('netgen_layouts.collection.registry.query_type').getQueryTypes()"
+                value_types: "@=service('netgen_layouts.item.registry.value_type').getValueTypes()"
+                target_types: "@=service('netgen_layouts.layout.resolver.registry.target_type').getTargetTypes()"
+                condition_types: "@=service('netgen_layouts.layout.resolver.registry.condition_type').getConditionTypes()"
+                parameter_types: "@=service('netgen_layouts.parameters.registry.parameter_type').getParameterTypes()"
+        public: true

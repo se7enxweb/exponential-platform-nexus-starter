@@ -1,0 +1,11 @@
+framework:
+    test: ~
+    secret: test
+    router:
+        resource: "%kernel.project_dir%/Resources/config/routing.xml"
+    profiler:
+        enabled: false
+    assets:
+        enabled: false
+
+overblog_graphiql: ~

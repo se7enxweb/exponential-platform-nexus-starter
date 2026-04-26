@@ -1,0 +1,80 @@
+services:
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\EventListener\ScheduledVisibilityListener:
+        arguments:
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\ScheduledVisibilityService'
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Configuration'
+            - '@?logger'
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: ngscheduledvisibility }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Configuration:
+        arguments:
+            - '%netgen_ibexa_scheduled_visibility.handler%'
+            - '%netgen_ibexa_scheduled_visibility.enabled%'
+            - '%netgen_ibexa_scheduled_visibility.content_types.all%'
+            - '%netgen_ibexa_scheduled_visibility.content_types.allowed%'
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\ScheduledVisibilityService:
+        arguments:
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Configuration'
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Registry'
+            - '@?logger'
+        tags:
+            - { name: monolog.logger, channel: ngscheduledvisibility }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Registry:
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\Content:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@ibexa.api.service.content'
+        tags:
+            - { name: netgen.ibexa_scheduled_visibility.handler, identifier: content }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\Location:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@ibexa.api.service.location'
+        tags:
+            - { name: netgen.ibexa_scheduled_visibility.handler, identifier: location }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\ContentAndLocation:
+        arguments:
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\Content'
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\Location'
+        tags:
+            - { name: netgen.ibexa_scheduled_visibility.handler, identifier: content_location }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\Section:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@ibexa.api.service.section'
+            - '%netgen_ibexa_scheduled_visibility.sections.hidden.section_id%'
+            - '%netgen_ibexa_scheduled_visibility.sections.visible.section_id%'
+        tags:
+            - { name: netgen.ibexa_scheduled_visibility.handler, identifier: section }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\VisibilityHandler\ObjectState:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@ibexa.api.service.object_state'
+            - '%netgen_ibexa_scheduled_visibility.object_states.object_state_group_id%'
+            - '%netgen_ibexa_scheduled_visibility.object_states.hidden.object_state_id%'
+            - '%netgen_ibexa_scheduled_visibility.object_states.visible.object_state_id%'
+        tags:
+            - { name: netgen.ibexa_scheduled_visibility.handler, identifier: object_state }
+
+    Netgen\Bundle\IbexaScheduledVisibilityBundle\Command\ScheduledVisibilityUpdateCommand:
+        arguments:
+            - '@ibexa.api.repository'
+            - '@ibexa.api.service.content'
+            - '@ibexa.api.service.content_type'
+            - '@ibexa.api.service.language'
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\ScheduledVisibilityService'
+            - '@Netgen\Bundle\IbexaScheduledVisibilityBundle\Core\Configuration'
+            - '@ibexa.persistence.connection'
+            - '@?logger'
+        tags:
+            - { name: console.command, command: 'ngscheduledvisibility:update' }
+            - { name: monolog.logger, channel: ngscheduledvisibility }

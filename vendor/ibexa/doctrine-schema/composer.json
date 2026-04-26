@@ -1,0 +1,52 @@
+{
+    "name": "ibexa/doctrine-schema",
+    "description": "Abstraction layer, on top of Doctrine, for cross-DBMS schema import",
+    "type": "ibexa-bundle",
+    "license": "(GPL-2.0-only or proprietary)",
+    "replace": {
+        "ezsystems/doctrine-dbal-schema": "*"
+    },
+    "require": {
+        "php": " >=8.3",
+        "doctrine/dbal": "^3.7.0",
+        "symfony/config": "^7.4",
+        "symfony/console": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/rector": "~5.0.x-dev",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\DoctrineSchema\\": "src/lib/",
+            "Ibexa\\Bundle\\DoctrineSchema\\": "src/bundle/",
+            "Ibexa\\Contracts\\DoctrineSchema\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\DoctrineSchema\\": "tests/lib/"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "check-cs": "@fix-cs --diff --dry-run",
+        "test": "phpunit -vc phpunit.xml",
+        "phpstan": "phpstan analyse -c phpstan.neon"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

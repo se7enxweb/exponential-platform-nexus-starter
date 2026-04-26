@@ -1,0 +1,48 @@
+{% extends netgen_tags_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% set filter_applied = filter_applied|default(false) %}
+
+{% block content %}
+    <h2 class="tag-title">
+        {{ 'tag.related_content.title'|trans }}: <a href="{{ path('netgen_tags_admin_tag_show', {tagId: tag.id}) }}">{{ tag.keyword }}</a>
+    </h2>
+
+    {% if related_content|length > 0 or filter_applied %}
+        <div class="ng-tags-content-type-filter">
+            {{ form_start(filter_form) }}
+                {{ form_widget(filter_form) }}
+
+                <input type="submit" class="tags-btn tags-btn-primary" value="{{ 'tag.related_content.filter.button.submit'|trans }}" />
+            {{ form_end(filter_form) }}
+        </div>
+    {% endif %}
+
+    {% if related_content|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'tag.content.content_id'|trans }}</th>
+                    <th>{{ 'tag.content.name'|trans }}</th>
+                    <th>{{ 'tag.content.modified'|trans }}</th>
+                    <th>{{ 'tag.content.content_type'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for content in related_content %}
+                    <tr>
+                        <td>{{ content.id }}</td>
+                        <td><a href="{{ path('ibexa.url.alias', {'contentId': content.id}) }}" target="_blank">{{ content.name }}</a></td>
+                        <td>{{ content.modificationDate|date }}</td>
+                        <td>{{ netgen_tags_content_type_name(content.contentTypeId) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if related_content.haveToPaginate() %}
+            {{ pagerfanta(related_content, 'netgen_tags_admin') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

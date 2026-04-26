@@ -1,0 +1,16 @@
+services:
+    netgen_open_graph.templating.twig.extension:
+        class: Netgen\Bundle\OpenGraphBundle\Templating\Twig\Extension\NetgenOpenGraphExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen_open_graph.templating.twig.runtime:
+        class: Netgen\Bundle\OpenGraphBundle\Templating\Twig\Extension\NetgenOpenGraphRuntime
+        arguments:
+            - "@netgen_open_graph.meta_tag_collector"
+            - "@netgen_open_graph.meta_tag_renderer"
+            - "@?logger"
+        calls:
+            - [setThrowExceptions, ["%kernel.debug%"]]
+        tags:
+            - { name: twig.runtime }

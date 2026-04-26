@@ -1,0 +1,65 @@
+{
+    "name": "netgen/information-collection-bundle",
+    "description": "Information collection alike feature for Ibexa CMS",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "ibexa",
+        "information collection",
+        "netgen",
+        "information-collection-bundle"
+    ],
+    "homepage": "https://github.com/netgen/NetgenInformationCollectionBundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "http://www.netgenlabs.com"
+        },
+        {
+            "name": "Mario Blažek",
+            "email": "mario.b@netgen.hr",
+            "homepage": "https://marioblazek.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-pdo": "*",
+        "doctrine/orm": "^2.20",
+        "ibexa/admin-ui": "^5.0",
+        "ibexa/content-forms": "^5.0",
+        "ibexa/core": "^5.0",
+        "twig/twig": "^3.22",
+        "google/recaptcha": "^1.3",
+        "doctrine/doctrine-migrations-bundle": "^3.7 || ^4.0",
+        "symfony/mailer": "^7.3",
+        "phpoffice/phpspreadsheet": "^5.3",
+        "symfony/string": "^7.3",
+        "symfony/polyfill-php84": "^1.33"
+    },
+    "require-dev": {
+        "netgen/coding-standard": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\InformationCollectionBundle\\": "bundle",
+            "Netgen\\InformationCollection\\": "lib"
+        }
+    },
+    "scripts": {
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=7 --ansi lib bundle"
+    },
+    "suggest": {
+        "phpoffice/phpspreadsheet": "To enable the XLS and XLSX export functionalities",
+        "league/csv": "To enable the CSV export functionality"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": false
+    }
+}

@@ -1,0 +1,19 @@
+<div class="modal-dialog new_layout">
+  <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title">{{title}}</h1>
+    </div>
+    <div class="modal-body">
+
+       <div><strong>Name:</strong> <span>{{model.name}}</span></div>
+       <div><strong>Updated at:</strong> <span>{{date model.updated_at format="LLLL"}}</span></div>
+
+    </div>
+
+   <div class="modal-footer">
+     <button type="button" class="btn btn-default action_apply">New draft</button>
+     <button type="button" class="btn btn-primary action_cancel" data-dismiss="modal">Edit existing</button>
+   </div>
+
+  </div>
+</div>

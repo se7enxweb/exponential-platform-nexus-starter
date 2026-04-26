@@ -1,0 +1,45 @@
+name: Static analysis
+
+on:
+  push:
+    branches:
+      - "*.x"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  phpstan-src:
+    name: PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Pull in optional dependencies
+        run: composer require --no-update phpunit/phpunit toflar/psr6-symfony-http-cache-store:^4.2 symfony/process mockery/mockery phpstan/phpstan-mockery guzzlehttp/guzzle php-http/mock-client
+
+      - name: Cache Vendor
+        id: cache-vendor
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-vendor
+
+      - name: PHPStan
+        uses: docker://oskarstark/phpstan-ga
+        with:
+          args: analyze --no-progress
+
+  php-cs-fixer:
+    name: PHP-CS-Fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: PHP-CS-Fixer
+        uses: docker://oskarstark/php-cs-fixer-ga
+        with:
+          args: --dry-run --diff

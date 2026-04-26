@@ -1,0 +1,44 @@
+services:
+    Ibexa\AdminUi\Tab\LocationView\:
+        resource: "../../../../../lib/Tab/LocationView/*"
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractTab
+        public: true
+        tags:
+            - { name: ibexa.admin_ui.tab, group: location-view }
+
+    Ibexa\AdminUi\Tab\LocationView\RolesTab:
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: location-view }
+
+    Ibexa\AdminUi\Tab\LocationView\PoliciesTab:
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: location-view }
+
+    Ibexa\AdminUi\Tab\LocationView\ContentTab:
+        public: true
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: location-view }
+
+    ibexa.adminui.location_view.tab_groups:
+        parent: Ibexa\AdminUi\Component\TabsComponent
+        arguments:
+            $template: '@@ibexadesign/ui/tab/location_view.html.twig'
+            $groupIdentifier: 'location-view'
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-location-view-tab-groups' }
+
+    Ibexa\AdminUi\Tab\LocationView\UrlsTab:
+        parent: Ibexa\Contracts\AdminUi\Tab\AbstractEventDispatchingTab
+        arguments:
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+        tags:
+            - { name: ibexa.admin_ui.tab, group: location-view }

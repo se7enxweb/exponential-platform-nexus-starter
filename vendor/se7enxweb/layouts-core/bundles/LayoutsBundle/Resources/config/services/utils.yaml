@@ -1,0 +1,8 @@
+services:
+    netgen_layouts.utils.html_sanitizer:
+        class: Symfony\Component\HtmlSanitizer\HtmlSanitizer
+        arguments:
+            - !service
+                class: Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig
+                calls:
+                    - allowSafeElements: !returns_clone []

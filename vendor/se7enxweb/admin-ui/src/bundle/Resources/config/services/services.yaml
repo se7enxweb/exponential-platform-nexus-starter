@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Service\MetaFieldType\MetaFieldDefinitionService: ~
+
+    Ibexa\AdminUi\Service\MetaFieldType\MetaFieldDefinitionServiceInterface:
+        '@Ibexa\AdminUi\Service\MetaFieldType\MetaFieldDefinitionService'
+
+    Ibexa\AdminUi\ContentType\ContentTypeFieldsByExpressionService: ~
+
+    Ibexa\Contracts\AdminUi\ContentType\ContentTypeFieldsByExpressionServiceInterface:
+        '@Ibexa\AdminUi\ContentType\ContentTypeFieldsByExpressionService'

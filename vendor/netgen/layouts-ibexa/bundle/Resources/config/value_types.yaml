@@ -1,0 +1,6 @@
+value_types:
+    ibexa_location:
+        name: 'Ibexa location'
+    ibexa_content:
+        enabled: false
+        name: 'Ibexa content'

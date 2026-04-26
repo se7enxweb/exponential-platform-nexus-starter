@@ -1,0 +1,12 @@
+{
+  "domain": "http://example.com",
+  "start_path": "nglayouts/dev/app",
+  "test_domain": "http://example.com",
+  "test_start_path": "nglayouts/dev/app",
+  "db": {
+    "name": "testdb",
+    "host": "localhost",
+    "user": "root",
+    "password": "root"
+  }
+}

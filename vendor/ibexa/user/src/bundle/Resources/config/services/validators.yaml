@@ -1,0 +1,24 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\User\Validator\Constraints\:
+        resource: "../../../lib/Validator/Constraints"
+
+    Ibexa\User\Validator\Constraints\UserPasswordValidator:
+        tags:
+            - { name: validator.constraint_validator }
+
+    Ibexa\User\Validator\Constraints\PasswordValidator:
+        arguments:
+            $userService: '@ibexa.api.service.user'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Ibexa\User\Validator\Constraints\EmailInvitationValidator:
+        arguments:
+            $userService: '@ibexa.api.service.user'
+        tags:
+            - { name: validator.constraint_validator }

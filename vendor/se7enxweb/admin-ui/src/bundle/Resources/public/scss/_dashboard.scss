@@ -1,0 +1,10 @@
+.ibexa-dashboard {
+    &__create {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .table:not(.ibexa-table--draft-conflict) {
+        margin-bottom: 0;
+    }
+}

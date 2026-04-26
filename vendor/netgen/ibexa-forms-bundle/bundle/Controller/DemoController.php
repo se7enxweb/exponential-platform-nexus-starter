@@ -1,0 +1,339 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\IbexaFormsBundle\Controller;
+
+use Exception;
+use Ibexa\Bundle\Core\Controller;
+use Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException;
+use Ibexa\Core\MVC\Symfony\Routing\UrlAliasRouter;
+use Netgen\Bundle\IbexaFormsBundle\Form\DataWrapper;
+use Netgen\Bundle\IbexaFormsBundle\Form\Payload\InformationCollectionStruct;
+use Netgen\Bundle\IbexaFormsBundle\Form\Type\CreateContentType;
+use Netgen\Bundle\IbexaFormsBundle\Form\Type\CreateUserType;
+use Netgen\Bundle\IbexaFormsBundle\Form\Type\InformationCollectionType;
+use Netgen\Bundle\IbexaFormsBundle\Form\Type\UpdateContentType;
+use Netgen\Bundle\IbexaFormsBundle\Form\Type\UpdateUserType;
+use RuntimeException;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+final class DemoController extends Controller
+{
+    public function demoCreateContentAction(Request $request): Response
+    {
+        $repository = $this->getRepository();
+        $contentService = $repository->getContentService();
+        $locationService = $repository->getLocationService();
+        // @todo for demo purpose, user should have necessary permissions by itself
+        $repository->getPermissionResolver()->setCurrentUserReference(
+            $repository->getUserService()->loadUserByLogin('admin')
+        );
+        $contentType = $repository->getContentTypeService()->loadContentTypeByIdentifier('test_type');
+        $contentCreateStruct = $contentService->newContentCreateStruct($contentType, 'eng-GB');
+
+        $data = new DataWrapper($contentCreateStruct, $contentCreateStruct->contentType);
+
+        // No method to create named builder in framework controller
+        /** @var \Symfony\Component\Form\FormBuilderInterface $formBuilder */
+        $formBuilder = $this->container->get('form.factory')->createBuilder(CreateContentType::class, $data);
+        // Adding controls as Ibexa Forms Bundle does not do that by itself
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Publish']);
+
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rootLocation = $locationService->loadLocation(2);
+
+            try {
+                $repository->beginTransaction();
+
+                $contentDraft = $contentService->createContent(
+                    $data->payload,
+                    [
+                        $locationService->newLocationCreateStruct($rootLocation->id),
+                    ]
+                );
+
+                $content = $contentService->publishVersion($contentDraft->versionInfo);
+
+                $repository->commit();
+            } catch (Exception $e) {
+                $repository->rollback();
+
+                // @todo do something else if needed
+                throw $e;
+            }
+
+            return $this->redirect(
+                $this->generateUrl(
+                    UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
+                    [
+                        'location' => $locationService->loadLocation(
+                            $content->contentInfo->mainLocationId
+                        ),
+                    ]
+                )
+            );
+        }
+
+        return $this->render(
+            '@NetgenIbexaForms/demo_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    public function demoUpdateContentAction(Request $request): Response
+    {
+        $repository = $this->getRepository();
+        $contentService = $repository->getContentService();
+        $repository->getPermissionResolver()->setCurrentUserReference(
+            $repository->getUserService()->loadUserByLogin('admin')
+        );
+        $content = $contentService->loadContent(137);
+        $contentType = $repository->getContentTypeService()->loadContentType($content->contentInfo->contentTypeId);
+        $contentUpdateStruct = $contentService->newContentUpdateStruct();
+        $contentUpdateStruct->initialLanguageCode = 'eng-GB';
+
+        $data = new DataWrapper($contentUpdateStruct, $contentType, $content);
+
+        // No method to create named builder in framework controller
+        /** @var \Symfony\Component\Form\FormBuilderInterface $formBuilder */
+        $formBuilder = $this->container->get('form.factory')->createBuilder(UpdateContentType::class, $data);
+        // Adding controls as Ibexa Forms Bundle does not do that by itself
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Update']);
+
+        $form = $formBuilder->getForm();
+        // $form = $this->createForm(UpdateContentType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->beginTransaction();
+
+                $contentDraft = $contentService->createContentDraft($content->contentInfo);
+                $contentDraft = $contentService->updateContent(
+                    $contentDraft->versionInfo,
+                    $data->payload
+                );
+                $content = $contentService->publishVersion($contentDraft->versionInfo);
+
+                $repository->commit();
+            } catch (Exception $e) {
+                $repository->rollback();
+
+                // @todo do something else if needed
+                throw $e;
+            }
+
+            return $this->redirect(
+                $this->generateUrl(
+                    UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
+                    [
+                        'location' => $this->getRepository()->getLocationService()->loadLocation(
+                            $content->contentInfo->mainLocationId
+                        ),
+                    ]
+                )
+            );
+        }
+
+        return $this->render(
+            '@NetgenIbexaForms/demo_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    public function demoCreateUserAction(Request $request): Response
+    {
+        /** @todo check that user really is anonymous, otherwise it does not make sense to allow registration */
+        $repository = $this->getRepository();
+        $userService = $repository->getUserService();
+        $repository->getPermissionResolver()->setCurrentUserReference(
+            // @todo anonymous requires additional permissions to create new user
+            $userService->loadUserByLogin('admin')
+        );
+
+        $contentType = $repository->getContentTypeService()->loadContentTypeByIdentifier('user');
+        $userCreateStruct = $userService->newUserCreateStruct(
+            'login',
+            'email@example.com',
+            'password',
+            'eng-GB',
+            $contentType
+        );
+        // Setting manually as it is not controlled through form
+        $userCreateStruct->enabled = false;
+
+        $data = new DataWrapper($userCreateStruct, $userCreateStruct->contentType);
+
+        // No method to create named builder in framework controller
+        /** @var \Symfony\Component\Form\FormBuilderInterface $formBuilder */
+        $formBuilder = $this->container->get('form.factory')->createBuilder(CreateUserType::class, $data);
+        // Adding controls as Ibexa Forms Bundle does not do that by itself
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Publish']);
+
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @todo ensure that user can create 'user' type under required UserGroup Location */
+            $userGroup = $userService->loadUserGroup(13);
+
+            try {
+                $user = $userService->createUser(
+                    $data->payload,
+                    [$userGroup]
+                );
+
+                // @todo send confirmation email and redirect to proper location (enter confirmation code or something)
+
+                return $this->redirect(
+                    $this->generateUrl(
+                        UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
+                        [
+                            'location' => $this->getRepository()->getLocationService()->loadLocation(
+                                $user->contentInfo->mainLocationId
+                            ),
+                        ]
+                    )
+                );
+            } catch (InvalidArgumentException $e) {
+                // There is no better way to do this ATM...
+                $existingUsernameMessage = "Argument 'userCreateStruct' is invalid: User with provided login already exists";
+                if ($e->getMessage() === $existingUsernameMessage) {
+                    // Search for the first ibexa_user field type in content type
+                    foreach ($userCreateStruct->contentType->getFieldDefinitions() as $fieldDefinition) {
+                        if ($fieldDefinition->fieldTypeIdentifier === 'ibexa_user') {
+                            $userFieldDefinition = $fieldDefinition;
+
+                            break;
+                        }
+                    }
+
+                    // UserService validates for this, but it happens AFTER existing username validation
+                    if (!isset($userFieldDefinition)) {
+                        throw new RuntimeException("Could not find 'ibexa_user' field.");
+                    }
+
+                    $form->get($userFieldDefinition->identifier)->addError(
+                        new FormError('User with provided username already exists.')
+                    );
+                } else {
+                    // @todo do something else if needed
+                    throw $e;
+                }
+            }
+        }
+
+        return $this->render(
+            '@NetgenIbexaForms/demo_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    public function demoUpdateUserAction(Request $request): Response
+    {
+        $repository = $this->getRepository();
+        $userService = $repository->getUserService();
+        $contentService = $repository->getContentService();
+
+        // @todo check that user is really logged in, it should have permissions to self edit
+        $repository->getPermissionResolver()->setCurrentUserReference(
+            $repository->getUserService()->loadUserByLogin('admin')
+        );
+
+        /** @todo load current user */
+        $user = $userService->loadUser(142);
+        $contentType = $repository->getContentTypeService()->loadContentTypeByIdentifier('user');
+        $contentUpdateStruct = $contentService->newContentUpdateStruct();
+        $contentUpdateStruct->initialLanguageCode = 'eng-GB';
+        $userUpdateStruct = $userService->newUserUpdateStruct();
+        $userUpdateStruct->contentUpdateStruct = $contentUpdateStruct;
+
+        $data = new DataWrapper($userUpdateStruct, $contentType, $user);
+
+        // No method to create named builder in framework controller
+        /** @var \Symfony\Component\Form\FormBuilderInterface $formBuilder */
+        $formBuilder = $this->container->get('form.factory')->createBuilder(UpdateUserType::class, $data);
+        // Adding controls as Ibexa Forms Bundle does not do that by itself
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Update']);
+
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $userService->updateUser($user, $userUpdateStruct);
+
+            return $this->redirect(
+                $this->generateUrl(
+                    UrlAliasRouter::URL_ALIAS_ROUTE_NAME,
+                    [
+                        'location' => $this->getRepository()->getLocationService()->loadLocation(
+                            $user->contentInfo->mainLocationId
+                        ),
+                    ]
+                )
+            );
+        }
+
+        return $this->render(
+            '@NetgenIbexaForms/demo_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    public function demoInformationCollectionAction(Request $request): Response
+    {
+        $repository = $this->getRepository();
+        $contentService = $repository->getContentService();
+        // @todo for demo purpose, user should have necessary permissions by itself
+        $repository->getPermissionResolver()->setCurrentUserReference(
+            $repository->getUserService()->loadUserByLogin('admin')
+        );
+
+        $content = $contentService->loadContent(126);
+        $contentTypeId = $content->versionInfo->contentInfo->contentTypeId;
+        $contentType = $repository->getContentTypeService()->loadContentType($contentTypeId);
+
+        $informationCollection = new InformationCollectionStruct();
+
+        $data = new DataWrapper($informationCollection, $contentType);
+
+        // No method to create named builder in framework controller
+        /** @var \Symfony\Component\Form\FormBuilderInterface $formBuilder */
+        $formBuilder = $this->container->get('form.factory')->createBuilder(InformationCollectionType::class, $data);
+        // Adding controls as Ibexa Forms Bundle does not do that by itself
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Publish']);
+
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var InformationCollectionStruct $data */
+            $data = $form->getData()->payload;
+            // save data to database
+            // or something else
+            // this is left for end developer
+        }
+
+        return $this->render(
+            '@NetgenIbexaForms/demo_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+}

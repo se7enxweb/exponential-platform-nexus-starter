@@ -1,0 +1,64 @@
+{% trans_default_domain "ibexa_systeminfo" %}
+
+<!-- Tab name: {{ 'tab.name.repository'|trans|desc('Repository') }} -->
+
+<section class="ibexa-fieldgroup">
+    <h2 class="ibexa-fieldgroup__name">{{ 'repository'|trans|desc('Repository') }}</h2>
+    <div class="ibexa-fieldgroup__content">
+        <table class="table ibexa-table--list">
+            <tbody>
+            <tr class="ibexa-table__row">
+                <th class="ibexa-table__cell">{{ 'repository.header.label.element'|trans|desc('Element') }}</th>
+                <th class="ibexa-table__cell">{{ 'repository.header.label.number'|trans|desc('Number') }}</th>
+            </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">
+                        {{ 'repository.published_content_objects_count'|trans|desc('Published content object') }}
+                    </td>
+                    <td class="ibexa-table__cell">{{ info.repositoryMetrics.publishedCount }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.users_count'|trans|desc('User') }}</td>
+                    <td class="ibexa-table__cell">{{ info.repositoryMetrics.usersCount }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.drafts_count'|trans|desc('Draft') }}</td>
+                    <td class="ibexa-table__cell">{{ info.repositoryMetrics.draftsCount }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.versions_count'|trans|desc('Version') }}</td>
+                    <td class="ibexa-table__cell">{{ info.repositoryMetrics.versionsCount }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.content_types_count'|trans|desc('Content type') }}</td>
+                    <td class="ibexa-table__cell">{{ info.repositoryMetrics.contentTypesCount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="ibexa-fieldgroup">
+    <h2 class="ibexa-fieldgroup__name">{{ 'database'|trans|desc('Database') }}</h2>
+    <div class="ibexa-fieldgroup__content">
+        <table class="table ibexa-table--list">
+            <tbody>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.type'|trans|desc('Type') }}</td>
+                    <td class="ibexa-table__cell">{{ info.type }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.name'|trans|desc('Name') }}</td>
+                    <td class="ibexa-table__cell">{{ info.name }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.host'|trans|desc('Host') }}</td>
+                    <td class="ibexa-table__cell">{{ info.host }}</td>
+                </tr>
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__cell">{{ 'repository.username'|trans|desc('Username') }}</td>
+                    <td class="ibexa-table__cell">{{ info.username }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,7 @@
+sphinx
+sphinx-rtd-theme
+sphinx-tabs
+sphinxcontrib-phpdomain
+sphinxcontrib-spelling
+pyenchant
+

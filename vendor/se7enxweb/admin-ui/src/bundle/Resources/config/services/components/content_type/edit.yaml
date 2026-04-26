@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Ibexa\AdminUi\Component\ContentType\ContentTypeEditMetaFieldsComponent:
+        tags:
+            - { name: ibexa.twig.component, group: 'admin-ui-content-type-edit-sections' }

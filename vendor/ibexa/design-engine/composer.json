@@ -1,0 +1,73 @@
+{
+    "name": "ibexa/design-engine",
+    "description": "Design fallback mechanism for Ibexa",
+    "license": "(GPL-2.0-only or proprietary)",
+    "type": "ibexa-bundle",
+    "replace": {
+        "ezsystems/ezplatform-design-engine": "*"
+    },
+    "authors": [
+        {
+            "name": "Jerome Vieilledent",
+            "email": "jerome@vieilledent.fr"
+        },
+        {
+            "name": "Ibexa Engineering & Community",
+            "homepage": "https://www.ibexa.co/products"
+        }
+    ],
+    "require": {
+        "php": " >=8.3",
+        "ibexa/core": "~5.0.x-dev",
+        "symfony/asset": "^7.4",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/filesystem": "^7.4",
+        "symfony/finder": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/templating": "^6.4",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/rector": "~5.0.x-dev",
+        "mikey179/vfsstream": "^1.6",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\DesignEngine\\": "src/lib/",
+            "Ibexa\\Bundle\\DesignEngine\\": "src/bundle/",
+            "Ibexa\\Contracts\\DesignEngine\\": "src/contracts/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\Bundle\\DesignEngine\\": "tests/bundle/",
+            "Ibexa\\Tests\\DesignEngine\\": "tests/lib/"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php -v --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "test": "phpunit",
+        "phpstan": "phpstan analyse"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "conflict": {
+        "lolautruche/ez-core-extra-bundle": "<2.0"
+    },
+    "config": {
+        "allow-plugins": false,
+        "sort-packages": true
+    }
+}

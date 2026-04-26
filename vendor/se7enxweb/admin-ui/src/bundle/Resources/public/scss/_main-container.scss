@@ -1,0 +1,97 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-main-container {
+    $edit-container-padding: calculateRem(16px);
+
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    height: calc(100vh - #{calculateRem(72px)});
+
+    &__content-column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+        overflow-y: auto;
+        box-shadow: $ibexa-edit-content-box-shadow;
+
+        & > .container {
+            padding: 0 calculateRem(32px);
+            margin-left: 0;
+
+            @media (min-width: 1921px) {
+                max-width: calculateRem(2000px);
+            }
+        }
+    }
+
+    &--edit-container {
+        height: 100vh;
+        padding: $edit-container-padding;
+        background-color: $ibexa-color-dark;
+
+        &::before,
+        &::after {
+            content: '';
+            height: $edit-container-padding;
+            position: absolute;
+            width: 100%;
+            background-color: $ibexa-color-dark;
+            z-index: 1050;
+        }
+
+        &::before {
+            top: 0;
+        }
+
+        &::after {
+            bottom: 0;
+        }
+
+        .ibexa-main-container {
+            &__content-column {
+                border-radius: $ibexa-border-radius;
+                background-color: $ibexa-color-light-100;
+            }
+        }
+
+        &.ibexa-main-container {
+            &--no-border {
+                padding: 0;
+
+                .ibexa-main-container {
+                    &__content-column {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                }
+
+                &::before,
+                &::after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &--full-width {
+        .container {
+            @media (min-width: 1200px) {
+                max-width: calculateRem(2000px);
+            }
+        }
+    }
+
+    .ibexa-content-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 80%;
+    }
+
+    ~ .ibexa-notifications-container {
+        right: calculateRem(48px);
+        bottom: calculateRem(16px);
+    }
+}

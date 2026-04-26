@@ -1,0 +1,103 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Controller\API\Block;
+
+use Netgen\Bundle\LayoutsAdminBundle\Controller\API\Block\Utils\CreateStructBuilder;
+use Netgen\Bundle\LayoutsAdminBundle\Serializer\Values\View;
+use Netgen\Bundle\LayoutsBundle\Controller\AbstractController;
+use Netgen\Layouts\API\Service\BlockService;
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\Block\Registry\BlockTypeRegistry;
+use Netgen\Layouts\Exception\BadStateException;
+use Netgen\Layouts\Exception\Block\BlockTypeException;
+use Netgen\Layouts\Validator\ValidatorTrait;
+use Symfony\Component\HttpFoundation\InputBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints;
+
+final class Create extends AbstractController
+{
+    use ValidatorTrait;
+
+    public function __construct(
+        private BlockService $blockService,
+        private CreateStructBuilder $createStructBuilder,
+        private BlockTypeRegistry $blockTypeRegistry,
+    ) {}
+
+    /**
+     * Creates the block in specified block.
+     *
+     * @throws \Netgen\Layouts\Exception\BadStateException If block type does not exist
+     */
+    public function __invoke(Block $block, Request $request): View
+    {
+        $requestData = $request->attributes->get('data');
+        $this->validateRequestData($requestData);
+
+        try {
+            $blockType = $this->blockTypeRegistry->getBlockType($requestData->getString('block_type'));
+        } catch (BlockTypeException $e) {
+            throw new BadStateException('block_type', 'Block type does not exist.', $e);
+        }
+
+        $this->denyAccessUnlessGranted(
+            'nglayouts:block:add',
+            [
+                'block_definition' => $blockType->definition,
+                'layout' => $block->layoutId->toString(),
+            ],
+        );
+
+        $blockCreateStruct = $this->createStructBuilder->buildCreateStruct($blockType);
+
+        $createdBlock = $this->blockService->createBlock(
+            $blockCreateStruct,
+            $block,
+            $requestData->getString('parent_placeholder'),
+            $requestData->get('parent_position'),
+        );
+
+        return new View($createdBlock, Response::HTTP_CREATED);
+    }
+
+    /**
+     * Validates the provided input bag.
+     *
+     * @param \Symfony\Component\HttpFoundation\InputBag<int|string> $data
+     */
+    private function validateRequestData(InputBag $data): void
+    {
+        $this->validate(
+            $data->get('block_type'),
+            [
+                new Constraints\NotBlank(),
+                new Constraints\Type(type: 'string'),
+            ],
+            'block_type',
+        );
+
+        $this->validate(
+            $data->get('parent_placeholder'),
+            [
+                new Constraints\NotBlank(),
+                new Constraints\Type(type: 'string'),
+            ],
+            'parent_placeholder',
+        );
+
+        if ($data->has('parent_position')) {
+            $this->validate(
+                $data->get('parent_position'),
+                [
+                    new Constraints\NotNull(),
+                    new Constraints\Type(type: 'int'),
+                ],
+                'parent_position',
+            );
+        }
+    }
+}

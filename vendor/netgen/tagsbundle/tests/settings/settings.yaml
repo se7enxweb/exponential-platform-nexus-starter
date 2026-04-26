@@ -1,0 +1,35 @@
+parameters:
+    storage_dir: vendor/ibexa/core/var/ezdemo_site/storage
+    ibexa.api.storage_engine.default: legacy
+    ibexa.site_access.config.default.user_content_type_identifier: ['user']
+
+    ibexa.api.role.policy_map:
+        tags:
+            add: { Tag: true }
+            read: ~
+            editsynonym: ~
+            addsynonym: ~
+            makesynonym: ~
+            merge: ~
+            edit: ~
+            delete: ~
+
+        content:
+            read: ~
+            create: ~
+            edit: ~
+            publish: ~
+            manage_locations: ~
+            remove: ~
+            versionread: ~
+            versionremove: ~
+
+        class:
+            update: ~
+            create: ~
+
+        role:
+            assign: ~
+            update: ~
+            create: ~
+            read: ~

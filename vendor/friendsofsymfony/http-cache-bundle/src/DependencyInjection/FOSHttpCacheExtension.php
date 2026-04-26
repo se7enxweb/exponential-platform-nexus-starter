@@ -1,0 +1,758 @@
+<?php
+
+/*
+ * This file is part of the FOSHttpCacheBundle package.
+ *
+ * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FOS\HttpCacheBundle\DependencyInjection;
+
+use AsyncAws\CloudFront\CloudFrontClient;
+use FOS\HttpCache\ProxyClient\HttpDispatcher;
+use FOS\HttpCache\ProxyClient\ProxyClient;
+use FOS\HttpCache\SymfonyCache\KernelDispatcher;
+use FOS\HttpCache\TagHeaderFormatter\MaxHeaderValueLengthFormatter;
+use FOS\HttpCacheBundle\DependencyInjection\Compiler\HashGeneratorPass;
+use FOS\HttpCacheBundle\EventListener\CacheControlListener;
+use FOS\HttpCacheBundle\Http\ResponseMatcher\ExpressionResponseMatcher;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Application;
+use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\TwigFunction;
+
+final class FOSHttpCacheExtension extends Extension
+{
+    public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
+    {
+        return new Configuration($container->getParameter('kernel.debug'));
+    }
+
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $configuration = $this->getConfiguration($configs, $container);
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('matcher.php');
+
+        if ($config['debug']['enabled'] || (!empty($config['cache_control']))) {
+            $debugHeader = $config['debug']['enabled'] ? $config['debug']['header'] : false;
+            $ttlHeader = $config['cache_control']['ttl_header'] ?? CacheControlListener::DEFAULT_TTL_HEADER_NAME;
+            $container->setParameter('fos_http_cache.debug_header', $debugHeader);
+            $container->setParameter('fos_http_cache.ttl_header', $ttlHeader);
+            $loader->load('cache_control_listener.php');
+        }
+
+        $this->loadCacheable($container, $config['cacheable']);
+
+        if (!empty($config['cache_control'])) {
+            $this->loadCacheControl($container, $config['cache_control']);
+        }
+
+        if (isset($config['proxy_client'])) {
+            $this->loadProxyClient($container, $loader, $config['proxy_client']);
+        }
+
+        if (isset($config['test'])) {
+            $this->loadTest($container, $loader, $config['test']);
+        }
+
+        if ($config['cache_manager']['enabled']) {
+            if (array_key_exists('custom_proxy_client', $config['cache_manager'])) {
+                // overwrite the previously set alias, if a proxy client was also configured
+                $container->setAlias(
+                    'fos_http_cache.default_proxy_client',
+                    $config['cache_manager']['custom_proxy_client']
+                );
+                $container->setAlias(
+                    ProxyClient::class,
+                    'fos_http_cache.default_proxy_client'
+                );
+            }
+            $generateUrlType = (array_key_exists('generate_url_type', $config)) ? $config['generate_url_type'] : $config['cache_manager']['generate_url_type'];
+            if ('auto' === $generateUrlType) {
+                $generateUrlType = $this->determineGenerateUrlType($config);
+            }
+            $container->setParameter('fos_http_cache.cache_manager.generate_url_type', $generateUrlType);
+            $loader->load('cache_manager.php');
+            if (class_exists(Application::class)) {
+                $loader->load('cache_manager_commands.php');
+            }
+        }
+
+        if ($config['tags']['enabled']) {
+            $this->loadCacheTagging(
+                $container,
+                $loader,
+                $config['tags'],
+                array_key_exists('proxy_client', $config)
+                    ? $this->getDefaultProxyClient($config['proxy_client'])
+                    : 'custom'
+            );
+        }
+
+        if ($config['invalidation']['enabled']) {
+            $loader->load('invalidation_listener.php');
+
+            if (!empty($config['invalidation']['expression_language'])) {
+                $container->setAlias(
+                    'fos_http_cache.invalidation.expression_language',
+                    $config['invalidation']['expression_language']
+                );
+            }
+
+            if (!empty($config['invalidation']['rules'])) {
+                $this->loadInvalidatorRules($container, $config['invalidation']['rules']);
+            }
+            $generateUrlType = (array_key_exists('generate_url_type', $config)) ? $config['generate_url_type'] : UrlGeneratorInterface::ABSOLUTE_PATH;
+            if ('auto' === $generateUrlType) {
+                $generateUrlType = $this->determineGenerateUrlType($config);
+            }
+            $container->setParameter('fos_http_cache.invalidation.generate_url_type', $generateUrlType);
+        }
+
+        if ($config['user_context']['enabled']) {
+            $this->loadUserContext($container, $loader, $config['user_context']);
+        }
+
+        if (!empty($config['flash_message']) && $config['flash_message']['enabled']) {
+            unset($config['flash_message']['enabled']);
+            $container->setParameter('fos_http_cache.event_listener.flash_message.options', $config['flash_message']);
+
+            $loader->load('flash_message.php');
+        }
+
+        $loader->load('attributes.php');
+    }
+
+    private function loadCacheable(ContainerBuilder $container, array $config): void
+    {
+        $definition = $container->getDefinition('fos_http_cache.response_matcher.cacheable');
+
+        // Change CacheableResponseMatcher to ExpressionResponseMatcher
+        if ($config['response']['expression']) {
+            $definition->setClass(ExpressionResponseMatcher::class)
+                ->setArguments([$config['response']['expression']]);
+        } else {
+            $container->setParameter(
+                'fos_http_cache.cacheable.response.additional_status',
+                $config['response']['additional_status']
+            );
+        }
+    }
+
+    /**
+     * @throws InvalidConfigurationException
+     */
+    private function loadCacheControl(ContainerBuilder $container, array $config): void
+    {
+        $controlDefinition = $container->getDefinition('fos_http_cache.event_listener.cache_control');
+
+        foreach ($config['rules'] as $rule) {
+            $ruleMatcher = $this->parseRuleMatcher($container, $rule['match']);
+
+            if ('default' === $rule['headers']['overwrite']) {
+                $rule['headers']['overwrite'] = $config['defaults']['overwrite'];
+            }
+
+            $controlDefinition->addMethodCall('addRule', [$ruleMatcher, $rule['headers']]);
+        }
+    }
+
+    /**
+     * Parse one cache control rule match configuration.
+     *
+     * @param array $match Request and response match criteria
+     *
+     * @return Reference pointing to a rule matcher service
+     */
+    private function parseRuleMatcher(ContainerBuilder $container, array $match): Reference
+    {
+        $requestMatcher = $this->parseRequestMatcher($container, $match);
+        $responseMatcher = $this->parseResponseMatcher($container, $match);
+
+        $signature = serialize([(string) $requestMatcher, (string) $responseMatcher]);
+        $id = 'fos_http_cache.cache_control.rule_matcher.'.md5($signature);
+
+        if ($container->hasDefinition($id)) {
+            throw new InvalidConfigurationException('Duplicate match criteria. Would be hidden by a previous rule. match: '.json_encode($match));
+        }
+
+        $container
+            ->setDefinition($id, new ChildDefinition('fos_http_cache.rule_matcher'))
+            ->replaceArgument(0, $requestMatcher)
+            ->replaceArgument(1, $responseMatcher)
+        ;
+
+        return new Reference($id);
+    }
+
+    /**
+     * Used for cache control, tag and invalidation rules.
+     */
+    private function parseRequestMatcher(ContainerBuilder $container, array $match): Reference
+    {
+        $chainId = 'fos_http_cache.request_matcher'.md5(serialize($match));
+        if ($container->hasDefinition($chainId)) {
+            return new Reference($chainId);
+        }
+
+        $matchers = [];
+        foreach (['path', 'host', 'methods', 'ips', 'attributes', 'query_string'] as $criteriaType) {
+            if (empty($match[$criteriaType])) {
+                continue;
+            }
+
+            $id = "fos_http_cache.request_matcher.$criteriaType.".md5(serialize($match[$criteriaType]));
+            if (!$container->hasDefinition($id)) {
+                $container
+                    ->setDefinition($id, new ChildDefinition("fos_http_cache.request_matcher.$criteriaType"))
+                    ->setArguments([$match[$criteriaType]])
+                ;
+            }
+            $matchers[] = new Reference($id);
+        }
+
+        $container
+            ->setDefinition($chainId, new ChildDefinition('fos_http_cache.request_matcher'))
+            ->setArgument(0, $matchers)
+        ;
+
+        return new Reference($chainId);
+    }
+
+    /**
+     * Used only for cache control rules.
+     *
+     * @return Reference to the correct response matcher service
+     */
+    private function parseResponseMatcher(ContainerBuilder $container, array $config): Reference
+    {
+        if (!empty($config['additional_response_status'])) {
+            $id = 'fos_http_cache.cache_control.match_response.'.md5(serialize($config['additional_response_status']));
+            if (!$container->hasDefinition($id)) {
+                $container
+                    ->setDefinition($id, new ChildDefinition('fos_http_cache.response_matcher.cache_control.cacheable_response'))
+                    ->setArguments([$config['additional_response_status']])
+                ;
+            }
+
+            return new Reference($id);
+        }
+        if (!empty($config['match_response'])) {
+            $id = 'fos_http_cache.cache_control.expression.'.md5($config['match_response']);
+            if (!$container->hasDefinition($id)) {
+                $childDefinition = (new ChildDefinition('fos_http_cache.response_matcher.cache_control.expression'))
+                    ->setArgument(0, $config['match_response'])
+                ;
+                if (!empty($config['expression_language'])) {
+                    $childDefinition->setArgument(1, new Reference($config['expression_language']));
+                }
+                $container
+                    ->setDefinition($id, $childDefinition)
+                ;
+            }
+
+            return new Reference($id);
+        }
+
+        return new Reference('fos_http_cache.response_matcher.cacheable');
+    }
+
+    private function loadUserContext(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $configuredUserIdentifierHeaders = array_map('strtolower', $config['user_identifier_headers']);
+        $completeUserIdentifierHeaders = $configuredUserIdentifierHeaders;
+        if (false !== $config['session_name_prefix'] && !in_array('cookie', $completeUserIdentifierHeaders)) {
+            $completeUserIdentifierHeaders[] = 'cookie';
+        }
+
+        $loader->load('user_context.php');
+
+        $container->getDefinition('fos_http_cache.user_context.request_matcher')
+            ->replaceArgument(0, $config['match']['accept'])
+            ->replaceArgument(1, $config['match']['method']);
+
+        $container->setParameter('fos_http_cache.event_listener.user_context.options', [
+            'user_identifier_headers' => $completeUserIdentifierHeaders,
+            'user_hash_header' => $config['user_hash_header'],
+            'ttl' => $config['hash_cache_ttl'],
+            'add_vary_on_hash' => $config['always_vary_on_context_hash'],
+        ]);
+
+        $container->getDefinition('fos_http_cache.event_listener.user_context')
+            ->replaceArgument(0, new Reference($config['match']['matcher_service']))
+        ;
+
+        $options = [
+            'user_identifier_headers' => $configuredUserIdentifierHeaders,
+            'session_name_prefix' => $config['session_name_prefix'],
+        ];
+        $container->getDefinition('fos_http_cache.user_context.anonymous_request_matcher')
+            ->replaceArgument(0, $options);
+
+        if ($config['logout_handler']['enabled']) {
+            $container->setAlias('security.logout.handler.session', 'fos_http_cache.user_context.session_logout_handler');
+        } else {
+            $container->removeDefinition('fos_http_cache.user_context.logout_handler');
+            $container->removeDefinition('fos_http_cache.user_context.session_logout_handler');
+            $container->removeDefinition('fos_http_cache.user_context_invalidator');
+        }
+
+        if ($config['role_provider']) {
+            $container->getDefinition('fos_http_cache.user_context.role_provider')
+                ->addTag(HashGeneratorPass::TAG_NAME)
+                ->setAbstract(false);
+        }
+    }
+
+    private function loadProxyClient(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        if (isset($config['varnish'])) {
+            $this->loadVarnish($container, $loader, $config['varnish']);
+        }
+        if (isset($config['nginx'])) {
+            $this->loadNginx($container, $loader, $config['nginx']);
+        }
+        if (isset($config['symfony'])) {
+            $this->loadSymfony($container, $loader, $config['symfony']);
+        }
+        if (isset($config['cloudflare'])) {
+            $this->loadCloudflare($container, $loader, $config['cloudflare']);
+        }
+        if (isset($config['cloudfront'])) {
+            $this->loadCloudfront($container, $loader, $config['cloudfront']);
+        }
+        if (isset($config['fastly'])) {
+            $this->loadFastly($container, $loader, $config['fastly']);
+        }
+        if (isset($config['noop'])) {
+            $loader->load('noop.php');
+        }
+
+        $container->setAlias(
+            'fos_http_cache.default_proxy_client',
+            'fos_http_cache.proxy_client.'.$this->getDefaultProxyClient($config)
+        );
+        $container->setAlias(
+            ProxyClient::class,
+            'fos_http_cache.default_proxy_client'
+        );
+    }
+
+    /**
+     * Define the http dispatcher service for the proxy client $name.
+     */
+    private function createHttpDispatcherDefinition(ContainerBuilder $container, array $config, string $serviceName): void
+    {
+        if (array_key_exists('servers', $config)) {
+            foreach ($config['servers'] as $url) {
+                $usedEnvs = [];
+                $container->resolveEnvPlaceholders($url, null, $usedEnvs);
+                if (0 === \count($usedEnvs)) {
+                    $this->validateUrl($url, 'Not a valid Varnish server address: "%s"');
+                }
+            }
+        }
+        if (array_key_exists('servers_from_jsonenv', $config) && is_string($config['servers_from_jsonenv'])) {
+            // check that the config contains an env var
+            $usedEnvs = [];
+            $container->resolveEnvPlaceholders($config['servers_from_jsonenv'], null, $usedEnvs);
+            if (0 === \count($usedEnvs)) {
+                throw new InvalidConfigurationException('Not a valid Varnish servers_from_jsonenv configuration: '.$config['servers_from_jsonenv']);
+            }
+            $config['servers'] = $config['servers_from_jsonenv'];
+        }
+
+        if (!empty($config['base_url'])) {
+            $baseUrl = $config['base_url'];
+            $usedEnvs = [];
+            $container->resolveEnvPlaceholders($baseUrl, null, $usedEnvs);
+            if (0 === \count($usedEnvs)) {
+                $baseUrl = $this->prefixSchema($baseUrl);
+                $this->validateUrl($baseUrl, 'Not a valid base path: "%s"');
+            }
+        } else {
+            $baseUrl = '';
+        }
+
+        $httpClient = null;
+        if ($config['http_client']) {
+            $httpClient = new Reference($config['http_client']);
+        }
+
+        $definition = new Definition(HttpDispatcher::class, [
+            $config['servers'],
+            $baseUrl,
+            $httpClient,
+        ]);
+
+        $container->setDefinition($serviceName, $definition);
+    }
+
+    private function loadVarnish(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $this->createHttpDispatcherDefinition($container, $config['http'], 'fos_http_cache.proxy_client.varnish.http_dispatcher');
+        $options = [
+            'tag_mode' => $config['tag_mode'],
+            'tags_header' => $config['tags_header'],
+        ];
+
+        if (!empty($config['header_length'])) {
+            $options['header_length'] = $config['header_length'];
+        }
+        if (!empty($config['default_ban_headers'])) {
+            $options['default_ban_headers'] = $config['default_ban_headers'];
+        }
+        $container->setParameter('fos_http_cache.proxy_client.varnish.options', $options);
+
+        $loader->load('varnish.php');
+
+        $requestFactory = isset($config['http']['request_factory'])
+            ? new Reference($config['http']['request_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.varnish')
+            ->replaceArgument(2, $requestFactory);
+
+        $streamFactory = isset($config['http']['stream_factory'])
+            ? new Reference($config['http']['stream_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.varnish')
+            ->replaceArgument(3, $streamFactory);
+    }
+
+    private function loadNginx(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $this->createHttpDispatcherDefinition($container, $config['http'], 'fos_http_cache.proxy_client.nginx.http_dispatcher');
+        $container->setParameter('fos_http_cache.proxy_client.nginx.options', [
+            'purge_location' => $config['purge_location'],
+        ]);
+        $loader->load('nginx.php');
+
+        $requestFactory = isset($config['http']['request_factory'])
+            ? new Reference($config['http']['request_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.nginx')
+            ->replaceArgument(2, $requestFactory);
+
+        $streamFactory = isset($config['http']['stream_factory'])
+            ? new Reference($config['http']['stream_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.nginx')
+            ->replaceArgument(3, $streamFactory);
+    }
+
+    private function loadSymfony(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $serviceName = 'fos_http_cache.proxy_client.symfony.http_dispatcher';
+
+        if ($config['use_kernel_dispatcher']) {
+            $definition = new Definition(KernelDispatcher::class, [
+                new Reference('kernel'),
+            ]);
+            $container->setDefinition($serviceName, $definition);
+        } else {
+            $this->createHttpDispatcherDefinition($container, $config['http'], $serviceName);
+        }
+
+        $options = [
+            'tags_header' => $config['tags_header'],
+            'tags_method' => $config['tags_method'],
+            'purge_method' => $config['purge_method'],
+        ];
+        if (!empty($config['header_length'])) {
+            $options['header_length'] = $config['header_length'];
+        }
+        $container->setParameter('fos_http_cache.proxy_client.symfony.options', $options);
+
+        $loader->load('symfony.php');
+
+        $requestFactory = isset($config['http']['request_factory'])
+            ? new Reference($config['http']['request_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.symfony')
+            ->replaceArgument(2, $requestFactory);
+
+        $streamFactory = isset($config['http']['stream_factory'])
+            ? new Reference($config['http']['stream_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.symfony')
+            ->replaceArgument(3, $streamFactory);
+    }
+
+    private function loadCloudflare(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $this->createHttpDispatcherDefinition($container, $config['http'], 'fos_http_cache.proxy_client.cloudflare.http_dispatcher');
+        $options = [
+            'authentication_token' => $config['authentication_token'],
+            'zone_identifier' => $config['zone_identifier'],
+        ];
+
+        $container->setParameter('fos_http_cache.proxy_client.cloudflare.options', $options);
+
+        $loader->load('cloudflare.php');
+
+        $requestFactory = isset($config['http']['request_factory'])
+            ? new Reference($config['http']['request_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.cloudflare')
+            ->replaceArgument(2, $requestFactory);
+
+        $streamFactory = isset($config['http']['stream_factory'])
+            ? new Reference($config['http']['stream_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.cloudflare')
+            ->replaceArgument(3, $streamFactory);
+    }
+
+    private function loadCloudfront(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        if (null !== $config['client']) {
+            $container->setAlias(
+                'fos_http_cache.proxy_client.cloudfront.cloudfront_client',
+                $config['client']
+            );
+        } else {
+            $container->setDefinition(
+                'fos_http_cache.proxy_client.cloudfront.cloudfront_client',
+                new Definition(CloudFrontClient::class, [$config['configuration']])
+            );
+        }
+
+        $container->setParameter('fos_http_cache.proxy_client.cloudfront.options', [
+            'distribution_id' => $config['distribution_id'],
+        ]);
+
+        $loader->load('cloudfront.php');
+    }
+
+    private function loadFastly(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $this->createHttpDispatcherDefinition($container, $config['http'], 'fos_http_cache.proxy_client.fastly.http_dispatcher');
+
+        $options = [
+            'service_identifier' => $config['service_identifier'],
+            'authentication_token' => $config['authentication_token'],
+            'soft_purge' => $config['soft_purge'],
+        ];
+
+        $container->setParameter('fos_http_cache.proxy_client.fastly.options', $options);
+
+        $loader->load('fastly.php');
+
+        $requestFactory = isset($config['http']['request_factory'])
+            ? new Reference($config['http']['request_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.fastly')
+            ->replaceArgument(2, $requestFactory);
+
+        $streamFactory = isset($config['http']['stream_factory'])
+            ? new Reference($config['http']['stream_factory'])
+            : null;
+        $container->getDefinition('fos_http_cache.proxy_client.fastly')
+            ->replaceArgument(3, $streamFactory);
+    }
+
+    /**
+     * @param array  $config Configuration section for the tags node
+     * @param string $client Name of the client used with the cache manager,
+     *                       "custom" when a custom client is used
+     */
+    private function loadCacheTagging(ContainerBuilder $container, PhpFileLoader $loader, array $config, string $client): void
+    {
+        if ('auto' === $config['enabled'] && !in_array($client, ['varnish', 'symfony', 'cloudflare', 'fastly'])) {
+            return;
+        }
+        if (!in_array($client, ['varnish', 'symfony', 'cloudflare', 'custom', 'fastly', 'noop'])) {
+            throw new InvalidConfigurationException(sprintf('You can not enable cache tagging with the %s client', $client));
+        }
+
+        $container->setParameter('fos_http_cache.tag_handler.response_header', $config['response_header']);
+        $container->setParameter('fos_http_cache.tag_handler.separator', $config['separator']);
+        $container->setParameter('fos_http_cache.tag_handler.strict', $config['strict']);
+
+        $loader->load('cache_tagging.php');
+        if (class_exists(TwigFunction::class)) {
+            $loader->load('cache_tagging_twig.php');
+        }
+        if (class_exists(Application::class)) {
+            $loader->load('cache_tagging_commands.php');
+        }
+
+        if (!empty($config['expression_language'])) {
+            $container->setAlias(
+                'fos_http_cache.tag_handler.expression_language',
+                $config['expression_language']
+            );
+        }
+
+        if (!empty($config['rules'])) {
+            $this->loadTagRules($container, $config['rules']);
+        }
+
+        if (null !== $config['max_header_value_length']) {
+            $container->register('fos_http_cache.tag_handler.max_header_value_length_header_formatter', MaxHeaderValueLengthFormatter::class)
+                ->setDecoratedService('fos_http_cache.tag_handler.header_formatter')
+                ->addArgument(new Reference('fos_http_cache.tag_handler.max_header_value_length_header_formatter.inner'))
+                ->addArgument((int) $config['max_header_value_length']);
+        }
+    }
+
+    private function loadTest(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $container->setParameter('fos_http_cache.test.cache_header', $config['cache_header']);
+
+        if ($config['proxy_server']) {
+            $this->loadProxyServer($container, $loader, $config['proxy_server']);
+        }
+    }
+
+    private function loadProxyServer(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        if (isset($config['varnish'])) {
+            $this->loadVarnishProxyServer($container, $loader, $config['varnish']);
+        }
+
+        if (isset($config['nginx'])) {
+            $this->loadNginxProxyServer($container, $loader, $config['nginx']);
+        }
+
+        $container->setAlias(
+            'fos_http_cache.test.default_proxy_server',
+            'fos_http_cache.test.proxy_server.'.$this->getDefaultProxyClient($config)
+        );
+    }
+
+    private function loadVarnishProxyServer(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $loader->load('varnish_proxy.php');
+        foreach ($config as $key => $value) {
+            $container->setParameter(
+                'fos_http_cache.test.proxy_server.varnish.'.$key,
+                $value
+            );
+        }
+    }
+
+    private function loadNginxProxyServer(ContainerBuilder $container, PhpFileLoader $loader, array $config): void
+    {
+        $loader->load('nginx_proxy.php');
+        foreach ($config as $key => $value) {
+            $container->setParameter(
+                'fos_http_cache.test.proxy_server.nginx.'.$key,
+                $value
+            );
+        }
+    }
+
+    private function loadTagRules(ContainerBuilder $container, array $config): void
+    {
+        $tagDefinition = $container->getDefinition('fos_http_cache.event_listener.tag');
+
+        foreach ($config as $rule) {
+            $ruleMatcher = $this->parseRequestMatcher($container, $rule['match']);
+
+            $tags = [
+                'tags' => $rule['tags'],
+                'expressions' => $rule['tag_expressions'],
+            ];
+
+            $tagDefinition->addMethodCall('addRule', [$ruleMatcher, $tags]);
+        }
+    }
+
+    private function loadInvalidatorRules(ContainerBuilder $container, array $config): void
+    {
+        $tagDefinition = $container->getDefinition('fos_http_cache.event_listener.invalidation');
+
+        foreach ($config as $rule) {
+            $ruleMatcher = $this->parseRequestMatcher($container, $rule['match']);
+            $tagDefinition->addMethodCall('addRule', [$ruleMatcher, $rule['routes']]);
+        }
+    }
+
+    private function validateUrl(string $url, string $msg): void
+    {
+        $prefixed = $this->prefixSchema($url);
+
+        if (!parse_url($prefixed)) {
+            throw new InvalidConfigurationException(sprintf($msg, $url));
+        }
+    }
+
+    private function prefixSchema(string $url): string
+    {
+        if (!str_contains($url, '://')) {
+            $url = sprintf('%s://%s', 'http', $url);
+        }
+
+        return $url;
+    }
+
+    private function getDefaultProxyClient(array $config): string
+    {
+        if (isset($config['default'])) {
+            return $config['default'];
+        }
+
+        if (isset($config['varnish'])) {
+            return 'varnish';
+        }
+
+        if (isset($config['nginx'])) {
+            return 'nginx';
+        }
+
+        if (isset($config['symfony'])) {
+            return 'symfony';
+        }
+
+        if (isset($config['cloudflare'])) {
+            return 'cloudflare';
+        }
+
+        if (isset($config['cloudfront'])) {
+            return 'cloudfront';
+        }
+
+        if (isset($config['fastly'])) {
+            return 'fastly';
+        }
+
+        if (isset($config['noop'])) {
+            return 'noop';
+        }
+
+        throw new InvalidConfigurationException('No proxy client configured');
+    }
+
+    private function determineGenerateUrlType(array $config): int
+    {
+        if (array_key_exists('cache_manager', $config) && array_key_exists('custom_proxy_client', $config['cache_manager'])) {
+            return UrlGeneratorInterface::ABSOLUTE_URL;
+        }
+
+        $defaultClient = $this->getDefaultProxyClient($config['proxy_client']);
+        if ('noop' !== $defaultClient
+            && array_key_exists('base_url', $config['proxy_client'][$defaultClient])) {
+            return UrlGeneratorInterface::ABSOLUTE_PATH;
+        }
+        if ('cloudfront' === $defaultClient) {
+            return UrlGeneratorInterface::ABSOLUTE_PATH;
+        }
+
+        return UrlGeneratorInterface::ABSOLUTE_URL;
+    }
+}

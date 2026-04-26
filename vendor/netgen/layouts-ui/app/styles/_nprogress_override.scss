@@ -1,0 +1,19 @@
+#nprogress {
+  .bar {
+    z-index: 9999;
+    height: .25rem;
+    background: $highlightColor;
+  }
+  .spinner {
+    left: 50%;
+    margin-left: -.5625rem;
+    display: none;
+  }
+  .peg {
+    box-shadow: 0 0 .625rem $highlightColor, 0 0 .3125rem $highlightColor;
+  }
+  .spinner-icon {
+    border-top-color: $highlightColor;
+    border-left-color: $highlightColor;
+  }
+}

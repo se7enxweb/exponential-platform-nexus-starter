@@ -1,0 +1,117 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Validator\Parameters;
+
+use Netgen\Layouts\Item\CmsItem;
+use Netgen\Layouts\Item\CmsItemLoaderInterface;
+use Netgen\Layouts\Item\NullCmsItem;
+use Netgen\Layouts\Tests\TestCase\ValidatorTestCase;
+use Netgen\Layouts\Validator\Constraint\Parameters\ItemLink;
+use Netgen\Layouts\Validator\Parameters\ItemLinkValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Stub;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+#[CoversClass(ItemLinkValidator::class)]
+final class ItemLinkValidatorTest extends ValidatorTestCase
+{
+    private Stub&CmsItemLoaderInterface $cmsItemLoaderStub;
+
+    protected function setUp(): void
+    {
+        $this->constraint = new ItemLink();
+
+        parent::setUp();
+    }
+
+    /**
+     * @param mixed[] $valueTypes
+     */
+    #[DataProvider('validateDataProvider')]
+    public function testValidate(?string $value, array $valueTypes, bool $isValid): void
+    {
+        $this->constraint->valueTypes = $valueTypes;
+
+        if ($value !== null && $value !== '' && $isValid) {
+            $this->cmsItemLoaderStub
+                ->method('load')
+                ->willReturn(new CmsItem());
+        }
+
+        $this->assertValid($isValid, $value);
+    }
+
+    public function testValidateWithInvalidItem(): void
+    {
+        $this->cmsItemLoaderStub
+            ->method('load')
+            ->willReturn(new NullCmsItem('value'));
+
+        $this->assertValid(false, 'value://42');
+    }
+
+    public function testValidateThrowsUnexpectedTypeExceptionWithInvalidConstraint(): void
+    {
+        $this->expectException(UnexpectedTypeException::class);
+        $this->expectExceptionMessage('Expected argument of type "Netgen\Layouts\Validator\Constraint\Parameters\ItemLink", "Symfony\Component\Validator\Constraints\NotBlank" given');
+
+        $this->constraint = new NotBlank();
+        $this->assertValid(true, 'value://42');
+    }
+
+    public function testValidateThrowsUnexpectedTypeExceptionWithInvalidValue(): void
+    {
+        $this->expectException(UnexpectedTypeException::class);
+        $this->expectExceptionMessage('Expected argument of type "string", "int" given');
+
+        $this->assertValid(true, 42);
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public static function validateDataProvider(): iterable
+    {
+        return [
+            ['', [], true],
+            ['value', [], false],
+            ['other', [], false],
+            ['value:', [], false],
+            ['other:', [], false],
+            ['value:/', [], false],
+            ['other:/', [], false],
+            ['value://', [], false],
+            ['other://', [], false],
+            ['value://42', [], true],
+            ['other://42', [], false],
+            ['value://null', [], true],
+            ['other://null', [], false],
+            ['value://0', [], true],
+            ['other://0', [], false],
+            ['value://42', [], true],
+            ['other://42', [], false],
+            ['value://42', ['value'], true],
+            ['other://42', ['value'], false],
+            ['value://42', ['other'], false],
+            ['other://42', ['other'], false],
+            ['42', [], false],
+            ['42', ['value'], false],
+            ['42', ['other'], false],
+            [null, [], true],
+            [null, ['value'], true],
+            [null, ['other'], true],
+        ];
+    }
+
+    protected function getConstraintValidator(): ConstraintValidatorInterface
+    {
+        $this->cmsItemLoaderStub = self::createStub(CmsItemLoaderInterface::class);
+
+        return new ItemLinkValidator($this->cmsItemLoaderStub);
+    }
+}

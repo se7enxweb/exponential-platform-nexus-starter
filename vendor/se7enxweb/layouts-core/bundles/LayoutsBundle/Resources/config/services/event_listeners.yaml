@@ -1,0 +1,65 @@
+services:
+    netgen_layouts.event_listener.view:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\ViewListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.view_renderer:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\ViewRendererListener
+        arguments:
+            - "@netgen_layouts.view.view_renderer"
+            - "@netgen_layouts.error.handler"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.block_view.get_collection_results:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\BlockView\GetCollectionResultsListener
+        arguments:
+            - "@netgen_layouts.collection.result.pagerfanta.factory"
+            - "%netgen_layouts.block_view.collection_results_contexts%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.block_view.get_collection_pager:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\BlockView\GetCollectionPagerListener
+        arguments:
+            - "@netgen_layouts.collection.result.pagerfanta.factory"
+            - "@request_stack"
+            - "%netgen_layouts.block_view.collection_pager_contexts%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.block_view.get_twig_block_content:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\BlockView\GetTwigBlockContentListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.http_cache.invalidation:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\HttpCache\InvalidationListener
+        arguments:
+            - "@netgen_layouts.http_cache.invalidator"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.http_cache.layout_response:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\HttpCache\LayoutResponseListener
+        arguments:
+            - "@netgen_layouts.http_cache.tagger"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.http_cache.block_response:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\HttpCache\BlockResponseListener
+        arguments:
+            - "@netgen_layouts.http_cache.tagger"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_layouts.event_listener.context:
+        class: Netgen\Bundle\LayoutsBundle\EventListener\ContextListener
+        arguments:
+            - "@netgen_layouts.context"
+            - "@netgen_layouts.context.builder"
+            - "@uri_signer"
+        tags:
+            - { name: kernel.event_subscriber }

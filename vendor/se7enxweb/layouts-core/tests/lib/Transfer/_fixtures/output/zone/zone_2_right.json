@@ -1,0 +1,7 @@
+{
+    "identifier": "right",
+    "linked_zone": null,
+    "blocks": [
+        {"visited_key": "visited_value"}
+    ]
+}

@@ -1,0 +1,12 @@
+services:
+    netgen.enhanced_selection.templating.twig.extension:
+        class: Netgen\Bundle\EnhancedSelectionBundle\Templating\Twig\NetgenEnhancedSelectionExtension
+        tags:
+            - { name: twig.extension }
+
+    netgen.enhanced_selection.templating.twig.runtime:
+        class: Netgen\Bundle\EnhancedSelectionBundle\Templating\Twig\NetgenEnhancedSelectionRuntime
+        arguments:
+            - "@ibexa.api.service.content_type"
+        tags:
+            - { name: twig.runtime }

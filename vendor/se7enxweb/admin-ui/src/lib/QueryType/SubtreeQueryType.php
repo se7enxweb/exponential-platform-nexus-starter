@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\QueryType;
+
+use Ibexa\Contracts\Core\Repository\PermissionResolver;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\QueryType\OptionsResolverBasedQueryType;
+use Ibexa\Core\QueryType\QueryType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+abstract class SubtreeQueryType extends OptionsResolverBasedQueryType implements QueryType
+{
+    protected const string OWNED_OPTION_NAME = 'owned';
+    protected const string SUBTREE_OPTION_NAME = 'subtree';
+
+    public function __construct(
+        protected readonly ConfigResolverInterface $configResolver,
+        private readonly PermissionResolver $permissionResolver
+    ) {
+    }
+
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    public function doGetQuery(array $parameters): Query
+    {
+        $subtreeCriterion = new Query\Criterion\Subtree($parameters[SubtreeQueryType::SUBTREE_OPTION_NAME]);
+
+        $ownerId = $parameters[SubtreeQueryType::OWNED_OPTION_NAME]
+            ? $this->permissionResolver->getCurrentUserReference()->getUserId()
+            : null;
+
+        $filter = null;
+
+        if (null !== $ownerId) {
+            $filter = new Query\Criterion\LogicalAnd([
+                $subtreeCriterion,
+                new Query\Criterion\UserMetadata(
+                    Query\Criterion\UserMetadata::OWNER,
+                    Query\Criterion\Operator::EQ,
+                    $ownerId
+                ),
+            ]);
+        } else {
+            $filter = $subtreeCriterion;
+        }
+
+        return new Query([
+            'filter' => $filter,
+            'sortClauses' => [new Query\SortClause\DateModified(Query::SORT_DESC)],
+        ]);
+    }
+
+    protected function configureOptions(OptionsResolver $optionsResolver): void
+    {
+        $optionsResolver->setDefined([self::SUBTREE_OPTION_NAME, self::OWNED_OPTION_NAME]);
+        $optionsResolver->setAllowedTypes(self::SUBTREE_OPTION_NAME, 'string');
+        $optionsResolver->setAllowedTypes(self::OWNED_OPTION_NAME, 'bool');
+        $optionsResolver->setDefault(self::SUBTREE_OPTION_NAME, $this->getSubtreePathFromConfiguration());
+        $optionsResolver->setDefault(self::OWNED_OPTION_NAME, false);
+    }
+
+    abstract protected function getSubtreePathFromConfiguration(): string;
+}

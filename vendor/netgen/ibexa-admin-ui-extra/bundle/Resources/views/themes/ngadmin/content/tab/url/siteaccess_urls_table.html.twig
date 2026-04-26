@@ -1,0 +1,38 @@
+{% trans_default_domain 'ibexa_content_url' %}
+
+{% set body_rows = [] %}
+{% if siteaccess_urls|length > 0 %}
+    {% for siteaccess, siteaccess_url in siteaccess_urls %}
+        {% set body_row_cols = [] %}
+
+        {% set col_raw %}
+            <a href="{{ siteaccess_url }}">{{ siteaccess_url }}</a>
+        {% endset %}
+
+        {% set body_row_cols = body_row_cols|merge([{
+            content: col_raw,
+            raw: true,
+        }]) %}
+
+        {% set col_raw %}
+                {{ siteaccess }}
+        {% endset %}
+
+        {% set body_row_cols = body_row_cols|merge([{
+            content: col_raw,
+            raw: true,
+        }]) %}
+
+        {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+    {% endfor %}
+{% endif %}
+
+{% include '@ibexadesign/ui/component/table/table.html.twig' with {
+    headline: headline,
+    head_cols: [
+        { content: 'tab.urls.url'|trans|desc('URL') },
+        { content: 'tab.urls.siteaccess'|trans|desc('Siteaccess') },
+    ],
+    body_rows,
+    empty_table_info_text: 'tab.urls.no_siteaccess_urls'|trans|desc('This item has no siteacess URLs.'),
+} %}

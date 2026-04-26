@@ -1,0 +1,104 @@
+parameters:
+    netgen.ibexa_site_api.use_always_available: true
+    netgen.ibexa_site_api.prioritized_languages:
+        - 'eng-GB'
+    netgen.ibexa_site_api.root_location_id: 2
+    netgen.ibexa_site_api.show_hidden_items: false
+    netgen.ibexa_site_api.fail_on_missing_field: false
+
+services:
+    netgen.ibexa_site_api.repository.inner:
+        class: Ibexa\Core\Repository\Repository
+        factory:
+            - '@Ibexa\Core\Base\Container\ApiLoader\RepositoryFactory'
+            - buildRepository
+        arguments:
+            - '@ibexa.api.persistence_handler'
+            - '@Ibexa\Core\Search\Legacy\Content\Handler'
+            - '@Ibexa\Bundle\Core\EventListener\BackgroundIndexingTerminateListener'
+            - '@Ibexa\Core\Repository\Helper\RelationProcessor'
+            - '@Ibexa\Core\FieldType\FieldTypeRegistry'
+            - '@Ibexa\Core\Repository\User\PasswordHashService'
+            - '@Ibexa\Core\Repository\ProxyFactory\ProxyDomainMapperFactory'
+            - '@Ibexa\Core\Repository\Mapper\ContentDomainMapper'
+            - '@Ibexa\Core\Repository\Mapper\ContentTypeDomainMapper'
+            - '@Ibexa\Core\Repository\Mapper\RoleDomainMapper'
+            - '@Ibexa\Core\Repository\Mapper\ContentMapper'
+            - '@Ibexa\Contracts\Core\Repository\Validator\ContentValidator'
+            - '@Ibexa\Core\Repository\Permission\LimitationService'
+            - '@Ibexa\Contracts\Core\Repository\PermissionService'
+            - '@Ibexa\Core\Persistence\Legacy\Filter\Handler\ContentFilteringHandler'
+            - '@Ibexa\Core\Persistence\Legacy\Filter\Handler\LocationFilteringHandler'
+            - '@Ibexa\Core\Repository\User\PasswordValidatorInterface'
+            - '@Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface'
+            - '@Ibexa\Contracts\Core\Repository\NameSchema\NameSchemaServiceInterface'
+            - '@ibexa.repository.transaction_handler'
+            - '@Ibexa\Core\Repository\Collector\ContentCollector'
+            - '@validator'
+        lazy: true
+
+    netgen.ibexa_site_api.repository.filtering_search_service:
+        class: Ibexa\Core\Repository\SearchService
+        factory:
+            - '@netgen.ibexa_site_api.repository.inner'
+            - getSearchService
+        lazy: true
+
+    netgen.ibexa_site_api.settings.core:
+        class: Netgen\IbexaSiteApi\Core\Site\Settings
+        arguments:
+            - '%netgen.ibexa_site_api.prioritized_languages%'
+            - '%netgen.ibexa_site_api.use_always_available%'
+            - '%netgen.ibexa_site_api.root_location_id%'
+            - '%netgen.ibexa_site_api.show_hidden_items%'
+            - '%netgen.ibexa_site_api.fail_on_missing_field%'
+
+    netgen.ibexa_site_api.core.site:
+        class: Netgen\IbexaSiteApi\Core\Site\Site
+        arguments:
+            - '@netgen.ibexa_site_api.settings'
+            - '@netgen.ibexa_site_api.language_resolver'
+            - '@ibexa.api.repository'
+            - '@netgen.ibexa_site_api.repository.filtering_search_service'
+            - '@netgen.ibexa_site_api.plugins.field_type.relation_resolver.registry'
+            - '@netgen.ibexa_site_api.url_generator'
+            - '@?logger'
+        lazy: true
+        tags:
+            - { name: monolog.logger, channel: ngsiteapi }
+
+    netgen.ibexa_site_api.core.filter_service:
+        class: Netgen\IbexaSiteApi\Core\Site\FilterService
+        factory:
+            - '@netgen.ibexa_site_api.core.site'
+            - getFilterService
+        lazy: true
+
+    netgen.ibexa_site_api.core.find_service:
+        class: Netgen\IbexaSiteApi\Core\Site\FindService
+        factory:
+            - '@netgen.ibexa_site_api.core.site'
+            - getFindService
+        lazy: true
+
+    netgen.ibexa_site_api.core.load_service:
+        class: Netgen\IbexaSiteApi\Core\Site\LoadService
+        factory:
+            - '@netgen.ibexa_site_api.core.site'
+            - getLoadService
+        lazy: true
+
+    netgen.ibexa_site_api.core.relation_service:
+        class: Netgen\IbexaSiteApi\Core\Site\RelationService
+        factory:
+            - '@netgen.ibexa_site_api.core.site'
+            - getRelationService
+        lazy: true
+
+    netgen.ibexa_site_api.language_resolver.core:
+        class: Netgen\IbexaSiteApi\Core\Site\LanguageResolver
+        arguments:
+            - '@netgen.ibexa_site_api.settings'
+
+    netgen.ibexa_site_api.core.url_generator:
+        class: Netgen\IbexaSiteApi\Core\Site\Routing\UrlGenerator

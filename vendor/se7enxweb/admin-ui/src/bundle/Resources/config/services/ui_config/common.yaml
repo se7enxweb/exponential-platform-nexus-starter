@@ -1,0 +1,173 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\UiConfigExtension:
+        public: true
+
+    Ibexa\AdminUi\UI\Config\Aggregator:
+        lazy: true
+        public: true
+
+    Ibexa\AdminUi\UI\Config\Provider\ContentTypeMappings:
+        arguments:
+            $locationMappings: '%ibexa.multifile_upload.location.mappings%'
+            $defaultMappings: '%ibexa.multifile_upload.location.default_mappings%'
+            $fallbackContentType: '%ibexa.multifile_upload.fallback_content_type%'
+            $maxFileSize: '%ibexa.io.multifile_upload.max_file_size%'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'multiFileUpload' }
+
+    Ibexa\AdminUi\UI\Config\Provider\SortFieldMappings:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'sortFieldMappings' }
+
+    Ibexa\AdminUi\UI\Config\Provider\SortOrderMappings:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'sortOrderMappings' }
+
+    ibexa.adminui.ui.config.provider.image_variations:
+        class: Ibexa\AdminUi\UI\Config\Provider\ScopeParameterBasedValue
+        lazy: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: 'image_variations'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'imageVariations' }
+
+    ibexa.adminui.ui.config.provider.content_edit_form_templates:
+        class: Ibexa\AdminUi\UI\Config\Provider\ScopeParameterBasedValue
+        lazy: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: 'admin_ui_forms.content_edit_form_templates'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'contentEditFormTemplates' }
+
+    Ibexa\AdminUi\UI\Config\Provider\User:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'user' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Languages:
+        arguments:
+            $siteAccesses: '%ibexa.site_access.list%'
+            $siteAccessService: '@Ibexa\Core\MVC\Symfony\SiteAccess\SiteAccessService'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'languages' }
+
+    Ibexa\AdminUi\UI\Config\Provider\ContentTypes:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'contentTypes' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Module\UniversalDiscoveryWidget:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'universalDiscoveryWidget' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Module\SubItemsList:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'subItems' }
+
+    Ibexa\AdminUi\UI\Config\Provider\FieldType\ImageAsset\Mapping:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'imageAssetMapping' }
+
+    # Notifications
+    Ibexa\AdminUi\UI\Config\Provider\Notifications:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'notifications' }
+
+    # Date related configuration
+    Ibexa\AdminUi\UI\Config\Provider\Timezone:
+        class: Ibexa\AdminUi\UI\Config\Provider\Timezone
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'timezone' }
+
+    Ibexa\AdminUi\UI\Config\Provider\DateFormat:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'dateFormat' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Autosave:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'autosave' }
+
+    Ibexa\AdminUi\UI\Config\Provider\FocusMode:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'focusMode' }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\PathStringExtension: ~
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\ContentTypeIconExtension: ~
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\ContentTypeGroupIconExtension: ~
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\EmbeddedItemEditFormExtension: ~
+
+    Ibexa\AdminUi\UI\Config\Provider\UserContentTypes:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'userContentTypes' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Sections:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'sections' }
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\TimeDiffExtension: ~
+
+    Ibexa\AdminUi\UI\Config\Provider\Locations:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'locations' }
+
+    Ibexa\AdminUi\UI\Config\Provider\IconPaths:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'iconPaths' }
+
+    Ibexa\AdminUi\UI\Config\Provider\BackOfficeLanguage:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'backOfficeLanguage' }
+
+    Ibexa\AdminUi\UI\Config\Provider\CurrentBackOfficePath:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'backOfficePath' }
+
+    Ibexa\AdminUi\UI\Config\Provider\SuggestionSetting:
+        arguments:
+            $minQueryLength: '%ibexa.site_access.config.default.search.suggestion.min_query_length%'
+            $resultLimit: '%ibexa.site_access.config.default.search.suggestion.result_limit%'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'suggestions' }
+
+    Ibexa\AdminUi\UI\Config\Provider\UserProfile:
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'userProfile' }
+
+    Ibexa\AdminUi\UI\Config\Provider\Module\DamWidget:
+        arguments:
+            $config:
+                image:
+                    mappings: '%ibexa.dam_widget.image.mappings%'
+                    aggregations: '%ibexa.dam_widget.image.aggregations%'
+                folder:
+                    contentTypeIdentifier: '%ibexa.dam_widget.folder.content_type_identifier%'
+        tags:
+            - { name: ibexa.admin_ui.config.provider, key: 'damWidget' }
+
+    # Resolvers
+    Ibexa\AdminUi\REST\Generator\ApplicationConfigRestGeneratorRegistry:
+        arguments:
+            $generators: !tagged_iterator { tag: ibexa.admin_ui.config.provider.rest.generator }
+
+    Ibexa\Contracts\AdminUi\REST\ApplicationConfigRestGeneratorRegistryInterface:
+        alias: Ibexa\AdminUi\REST\Generator\ApplicationConfigRestGeneratorRegistry
+
+    Ibexa\AdminUi\REST\Generator\UserConfigRestGenerator:
+        tags:
+            - { name: ibexa.admin_ui.config.provider.rest.generator, priority: -10 }
+
+    Ibexa\AdminUi\REST\Generator\ProfilePictureFieldConfigRestGenerator:
+        tags:
+            - { name: ibexa.admin_ui.config.provider.rest.generator, priority: -10 }

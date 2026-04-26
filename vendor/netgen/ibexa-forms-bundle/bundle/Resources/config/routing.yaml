@@ -1,0 +1,19 @@
+_createcontent_route:
+    path: /democreatecontent
+    controller: Netgen\Bundle\IbexaFormsBundle\Controller\DemoController::demoCreateContentAction
+
+_createuser_route:
+    path: /democreateuser
+    controller: Netgen\Bundle\IbexaFormsBundle\Controller\DemoController::demoCreateUserAction
+
+_updatecontent_route:
+    path: /demoupdatecontent
+    controller: Netgen\Bundle\IbexaFormsBundle\Controller\DemoController::demoUpdateContentAction
+
+_updateuser_route:
+    path: /demoupdateuser
+    controller: Netgen\Bundle\IbexaFormsBundle\Controller\DemoController::demoUpdateUserAction
+
+_informationcollection_route:
+    path: /demoinformationcollection
+    controller: Netgen\Bundle\IbexaFormsBundle\Controller\DemoController::demoInformationCollectionAction

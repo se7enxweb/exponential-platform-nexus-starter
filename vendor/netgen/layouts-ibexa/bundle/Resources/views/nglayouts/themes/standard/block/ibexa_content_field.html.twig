@@ -1,0 +1,19 @@
+{% extends '@nglayouts/block/block.html.twig' %}
+
+{% set field_identifier = block.parameter('field_identifier').value %}
+
+{% if field_identifier is not empty %}
+    {% set css_class = 'field-' ~ field_identifier ~ ' ' ~ block.parameter('css_class').value %}
+{% endif %}
+
+{% block content %}
+    {% set content = block.dynamicParameter('content') %}
+
+    {% if field_identifier is not empty and content.fields[field_identifier] is defined %}
+        {% block ibexa_content_field %}
+            {% if not ibexa_field_is_empty(content, field_identifier) %}
+                {{ ibexa_render_field(content, field_identifier) }}
+            {% endif %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

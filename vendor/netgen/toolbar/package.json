@@ -1,0 +1,19 @@
+{
+    "name": "toolbar",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite build --watch",
+        "prod": "vite build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "sass": "^1.74.1",
+        "typescript": "^5.4.4",
+        "vite": "^5.2.8",
+        "vite-plugin-symfony": "^6.4.3"
+    }
+}

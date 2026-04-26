@@ -1,0 +1,105 @@
+{% trans_default_domain 'ibexa_notifications' %}
+
+{% if wrapper_class_list is not defined %}
+    {% set wrapper_class_list = 'ibexa-notifications-modal__item ibexa-notifications-modal__item--wrapper' ~ (notification.isPending == 0 ? ' ibexa-notifications-modal__item--read') %}
+{% endif %}
+
+{% set icon %}
+    {% block icon %}
+        <span class="type__icon">
+            <svg class="ibexa-icon">
+                <use xlink:href="{{ ibexa_icon_path('warning') }}"></use>
+            </svg>
+        </span>
+    {% endblock %}
+{% endset %}
+
+{% set notification_type %}
+    {% block notification_type %}
+        <span class="type__text">
+        </span>
+    {% endblock %}
+{% endset %}
+
+{% set message %}
+    {% block message %}
+        <p class="description__text">{{ message }}</p>
+    {% endblock %}
+{% endset %}
+
+{% set date %}
+    {% block date %}
+        {% include '@ibexadesign/ui/component/table/table_body_cell.html.twig' with {
+            class: 'ibexa-notifications-modal__description',
+            content: notification.created|ibexa_full_datetime,
+        } %}
+    {% endblock %}
+{% endset %}
+
+{% set popup_items = additional_popup|default([]) %}
+
+{% set popup_items = popup_items|merge([{
+    label: notification.isPending == 0 ? 'notification.mark_as_unread'|trans|desc('Mark as unread') : 'notification.mark_as_read'|trans|desc('Mark as read'),
+    action_attr: { 
+        class: 'ibexa-notifications-modal--mark-as ibexa-notifications-modal--mark-as-' ~ (notification.isPending == 0 ? 'unread' : 'read'), 
+        'data-notification-id': notification.id },
+}]) %}
+
+{% set popup_items = popup_items|merge([{
+    label: 'notification.delete'|trans|desc('Delete'),
+    action_attr: { class: 'ibexa-notifications-modal--delete', 'data-notification-id': notification.id },
+}]) %}
+
+{% embed '@ibexadesign/ui/component/table/table_body_row.html.twig' with {
+    class: wrapper_class_list ~ (wrapper_additional_classes is defined ? ' ' ~ wrapper_additional_classes),
+    attr: {
+        'data-notification-id': notification.id,
+        'data-notification-read': path('ibexa.notifications.mark_as_read', { 'notificationId': notification.id }),
+    }
+} %}
+    {% block body_row_cells %}
+        {% embed '@ibexadesign/ui/component/table/table_body_cell.html.twig' with { class: '' } %}
+            {% block content %}
+                <div>
+                    <span class="ibexa-notifications-modal__notice-dot"></span>
+                    <div class="ibexa-notifications-modal__type">{{ icon }}</div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+        {% embed '@ibexadesign/ui/component/table/table_body_cell.html.twig' with { class: 'ibexa-notifications-modal__type-content' } %}
+            {% block content %}
+                <strong>{{ notification_type }}</strong>
+                <div class="ibexa-notifications-modal__description">{{ message }}</div>
+                <div class="ibexa-notifications-modal__item--date">
+                    {{ notification.created|ibexa_short_datetime }} 
+                </div>
+            {% endblock %}
+        {% endembed %}
+        {% embed '@ibexadesign/ui/component/table/table_body_cell.html.twig' with { class: '' } %}
+            {% block content %}
+                <div class="ibexa-notifications-modal__actions">
+                    <button class="btn ibexa-btn ibexa-btn--ghost" id="ibexa-notifications-modal-popup-trigger-{{ notification.id }}">
+                        <svg class="ibexa-icon ibexa-icon--small">
+                            <use xlink:href="{{ ibexa_icon_path('options') }}"></use>
+                        </svg>
+                    </button>
+                    {{ include('@ibexadesign/ui/component/multilevel_popup_menu/multilevel_popup_menu.html.twig', {
+                        groups: [
+                            {
+                                id: "notification-popup-menu-" ~ notification.id,
+                                items: popup_items,
+                            },
+                        ],
+                        attr: {
+                            'data-trigger-element-selector': '#ibexa-notifications-modal-popup-trigger-' ~ notification.id,
+                            'data-initial-branch-placement': 'bottom-end',
+                        },
+                        branch_attr: {
+                            'class': 'ibexa-notification-actions-popup-menu',
+                        }
+                    }) }}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endembed %}

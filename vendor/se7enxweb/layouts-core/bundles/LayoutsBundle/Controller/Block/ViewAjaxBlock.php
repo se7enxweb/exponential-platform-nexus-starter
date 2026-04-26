@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsBundle\Controller\Block;
+
+use Netgen\Bundle\LayoutsBundle\Controller\AbstractController;
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\Error\ErrorHandlerInterface;
+use Netgen\Layouts\View\ViewInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
+
+use function sprintf;
+
+final class ViewAjaxBlock extends AbstractController
+{
+    public function __construct(
+        private ErrorHandlerInterface $errorHandler,
+    ) {}
+
+    /**
+     * Renders the provided block with the AJAX view.
+     *
+     * Block rendered with AJAX view is always rendered with a collection
+     * which is injected into a block at a certain page.
+     *
+     * Paging itself of the collection is not handled here, but rather in
+     * an event listener triggering when the block is rendered.
+     */
+    public function __invoke(Block $block, string $collectionIdentifier, string $viewContext = ViewInterface::CONTEXT_AJAX): ViewInterface|Response
+    {
+        try {
+            return $this->buildView(
+                $block,
+                $viewContext,
+                [
+                    'collection_identifier' => $collectionIdentifier,
+                ],
+            );
+        } catch (Throwable $t) {
+            $message = sprintf(
+                'Error rendering an AJAX block with UUID %s and collection %s',
+                $block->id->toString(),
+                $collectionIdentifier,
+            );
+
+            $this->errorHandler->handleError($t, $message);
+        }
+
+        return new Response();
+    }
+}

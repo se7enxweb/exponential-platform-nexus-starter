@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Layout\Resolver\ValueObjectProvider;
+
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Netgen\Layouts\Layout\Resolver\ValueObjectProviderInterface;
+
+final class ContentProvider implements ValueObjectProviderInterface
+{
+    public function __construct(
+        private Repository $repository,
+    ) {}
+
+    public function getValueObject(int|string $value): ?Content
+    {
+        try {
+            $content = $this->repository->sudo(
+                static fn (Repository $repository): Content => $repository->getContentService()->loadContent((int) $value),
+            );
+
+            return $content->contentInfo->mainLocationId !== null ? $content : null;
+        } catch (NotFoundException) {
+            return null;
+        }
+    }
+}

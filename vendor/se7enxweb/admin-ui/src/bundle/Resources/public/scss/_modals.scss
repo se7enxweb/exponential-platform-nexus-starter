@@ -1,0 +1,144 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/modals' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/spinner' as *;
+
+.ibexa-modal {
+    .modal-dialog {
+        @include modal-main();
+    }
+
+    .modal-content {
+        @include modal-content();
+    }
+
+    .modal-header {
+        @include modal-header();
+
+        .modal-title {
+            @include modal-title();
+        }
+
+        .close {
+            @include close-button();
+
+            & {
+                padding: calculateRem(2px);
+            }
+        }
+    }
+
+    .modal-body {
+        @include modal-body();
+
+        .ibexa-modal__trash-option {
+            .ibexa-modal__option-label {
+                margin-bottom: 0;
+                margin-top: calculateRem(18px);
+            }
+
+            .ibexa-label {
+                font-size: calculateRem(16px);
+            }
+
+            .ibexa-modal__option-description {
+                font-size: calculateRem(14px);
+            }
+        }
+    }
+
+    .modal-footer {
+        @include modal-footer();
+    }
+
+    &__loader {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        display: none;
+        backdrop-filter: blur(8px);
+        pointer-events: none;
+        border-radius: 0 0 $ibexa-border-radius $ibexa-border-radius;
+    }
+
+    &__loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__loader-header-text:not(:empty) {
+        margin-top: calculateRem(24px);
+        font-weight: bold;
+    }
+
+    &__loader-description-text:not(:empty) {
+        margin-top: calculateRem(8px);
+        width: calculateRem(240px);
+        text-wrap: wrap;
+        text-align: center;
+    }
+
+    &__loader-spinner {
+        @include spinner(calculateRem(48px), calculateRem(6px), $ibexa-color-primary);
+    }
+
+    &--no-header {
+        .close {
+            @include close-button();
+
+            & {
+                top: calculateRem(22px);
+                right: calculateRem(18px);
+            }
+        }
+
+        .modal-body {
+            padding-bottom: 0;
+            margin-right: calculateRem(36px);
+        }
+    }
+
+    &--has-subtitle {
+        .modal-header {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .ibexa-modal__subheader {
+            border-bottom: calculateRem(1px) solid $ibexa-color-light-500;
+            padding-bottom: calculateRem(16px);
+            color: $ibexa-color-dark-400;
+        }
+    }
+
+    &--no-header-border {
+        &:not(.ibexa-modal--has-subtitle) {
+            .modal-header {
+                border-width: 0;
+            }
+
+            .modal-body {
+                padding-top: 0;
+            }
+        }
+
+        &.ibexa-modal--has-subtitle {
+            .ibexa-modal__subheader {
+                border-width: 0;
+            }
+
+            .modal-body {
+                padding-top: 0;
+            }
+        }
+    }
+
+    &--with-blurred-loader {
+        .ibexa-modal__loader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

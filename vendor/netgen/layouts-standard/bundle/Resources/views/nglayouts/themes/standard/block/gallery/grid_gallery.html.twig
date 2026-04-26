@@ -1,0 +1,15 @@
+{% extends '@nglayouts/block/block.html.twig' %}
+
+{% import '@NetgenLayouts/parts/macros.html.twig' as macros %}
+
+{% block content %}
+    {% if collections.default is defined and collections.default is not empty %}
+        {% set number_of_thumbnails = block.parameter('number_of_thumbnails').value %}
+
+        <div class="row flex-row nglayouts-flex-row {% if block.parameter('enable_lightbox').value %}js-lightbox-enabled{% endif %}">
+            {% for result in collections.default %}
+                <div class="nglayouts-as-flex" style="width:{{ 100 / number_of_thumbnails }}%">{{ nglayouts_render_result(result, null, block.itemViewType) }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsIbexaBundle\Configuration;
+
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Netgen\Bundle\LayoutsBundle\Configuration\ConfigurationInterface;
+use Netgen\Bundle\LayoutsBundle\Exception\ConfigurationException;
+
+/**
+ * Implementation of ConfigurationInterface that uses Ibexa CMS
+ * config resolver to retrieve parameters from the container.
+ *
+ * This means that the returned values will be the ones defined
+ * in the current Ibexa CMS scope of the request.
+ */
+final class ConfigResolverConfiguration implements ConfigurationInterface
+{
+    public function __construct(
+        private ConfigResolverInterface $configResolver,
+        private ConfigurationInterface $innerConfiguration,
+    ) {}
+
+    public function hasParameter(string $parameterName): bool
+    {
+        $hasParam = $this->configResolver->hasParameter(
+            $parameterName,
+            self::PARAMETER_NAMESPACE,
+        );
+
+        if (!$hasParam) {
+            $hasParam = $this->innerConfiguration->hasParameter($parameterName);
+        }
+
+        return $hasParam;
+    }
+
+    public function getParameter(string $parameterName): mixed
+    {
+        if (!$this->hasParameter($parameterName)) {
+            throw ConfigurationException::noParameter($parameterName);
+        }
+
+        if (
+            $this->configResolver->hasParameter(
+                $parameterName,
+                self::PARAMETER_NAMESPACE,
+            )
+        ) {
+            return $this->configResolver->getParameter(
+                $parameterName,
+                self::PARAMETER_NAMESPACE,
+            );
+        }
+
+        return $this->innerConfiguration->getParameter($parameterName);
+    }
+}

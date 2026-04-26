@@ -1,0 +1,43 @@
+services:
+    netgen_layouts.ibexa.form.content_type:
+        class: Netgen\Layouts\Ibexa\Form\ContentTypeType
+        arguments:
+            - "@ibexa.api.service.content_type"
+        tags:
+            - { name: form.type }
+
+    netgen_layouts.ibexa.form.section:
+        class: Netgen\Layouts\Ibexa\Form\SectionType
+        arguments:
+            - "@ibexa.api.service.section"
+        tags:
+            - { name: form.type }
+
+    netgen_layouts.ibexa.form.object_state:
+        class: Netgen\Layouts\Ibexa\Form\ObjectStateType
+        arguments:
+            - "@ibexa.api.service.object_state"
+        tags:
+            - { name: form.type }
+
+    netgen_layouts.ibexa.form.extension.component_content:
+        class: Netgen\Layouts\Ibexa\Form\Extension\ComponentContentExtension
+        tags:
+            - { name: form.type_extension }
+
+    netgen_layouts.ibexa.form.admin.layout_wizard:
+        class: Netgen\Bundle\LayoutsIbexaBundle\Form\Admin\Type\LayoutWizardType
+        arguments:
+            - "@netgen_layouts.api.service.layout"
+            - "@netgen_layouts.layout.registry.layout_type"
+            - "%netgen_layouts.ibexa.is_enterprise%"
+        tags:
+            - { name: form.type }
+
+    netgen_layouts.ibexa.form.component_filter:
+        class: Netgen\Layouts\Ibexa\Form\ComponentFilterType
+        arguments:
+            - "@ibexa.config.resolver"
+            - "@ibexa.api.service.content_type"
+        tags:
+            - { name: form.type }

@@ -1,0 +1,65 @@
+services:
+    netgen_tags.admin.controller.base:
+        class: Netgen\TagsBundle\Controller\Admin\Controller
+        calls:
+            - setContainer: ["@Psr\\Container\\ContainerInterface"]
+
+    netgen_tags.admin.controller.tag:
+        class: Netgen\TagsBundle\Controller\Admin\TagController
+        parent: netgen_tags.admin.controller.base
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@ibexa.api.service.content_type"
+            - "@netgen_tags.pagerfanta.children_tags_adapter"
+            - "@netgen_tags.pagerfanta.search_tags_adapter"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.admin.controller.related_content:
+        class: Netgen\TagsBundle\Controller\Admin\RelatedContentController
+        parent: netgen_tags.admin.controller.base
+        arguments:
+            - "@netgen_tags.pagerfanta.related_content_adapter"
+            - "@netgen_tags.search.related_content.sort_service"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.admin.controller.synonym:
+        class: Netgen\TagsBundle\Controller\Admin\SynonymController
+        parent: netgen_tags.admin.controller.base
+        arguments:
+            - "@netgen_tags.api.service.tags"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.admin.controller.tree:
+        class: Netgen\TagsBundle\Controller\Admin\TreeController
+        parent: netgen_tags.admin.controller.base
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@translator"
+            - "@router"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.admin.controller.field:
+        class: Netgen\TagsBundle\Controller\Admin\FieldController
+        parent: netgen_tags.admin.controller.base
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }
+
+    netgen_tags.admin.controller.access:
+        class: Netgen\TagsBundle\Controller\Admin\AccessController
+        parent: netgen_tags.admin.controller.base
+        tags:
+            - { name: container.service_subscriber }
+            - { name: controller.service_arguments }

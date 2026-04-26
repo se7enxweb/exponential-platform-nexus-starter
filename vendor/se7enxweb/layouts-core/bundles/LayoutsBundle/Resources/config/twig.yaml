@@ -1,0 +1,2 @@
+globals:
+    nglayouts: "@netgen_layouts.templating.global_variable"

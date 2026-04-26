@@ -1,0 +1,5 @@
+services:
+    netgen_layouts.config.config_definition_factory:
+        class: Netgen\Layouts\Config\ConfigDefinitionFactory
+        arguments:
+            - "@netgen_layouts.parameters.parameter_builder_factory"

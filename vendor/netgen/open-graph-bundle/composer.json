@@ -1,0 +1,55 @@
+{
+    "name": "netgen/open-graph-bundle",
+    "description": "Netgen Open Graph Bundle is an Ibexa Platform bundle that allows simple integration with Open Graph protocol.",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "netgen",
+        "ibexa",
+        "open-graph-bundle",
+        "open-graph",
+        "open graph"
+    ],
+    "homepage": "https://github.com/netgen/NetgenOpenGraphBundle",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ibexa/core": "^5.0",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "ibexa/fieldtype-richtext": "^5.0",
+        "phpunit/phpunit": "^10.0",
+        "matthiasnoback/symfony-config-test": "^6.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\OpenGraphBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Bundle\\OpenGraphBundle\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so vendor/bin/phpunit --colors=always"
+    },
+    "config": {
+        "allow-plugins": false
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    }
+}

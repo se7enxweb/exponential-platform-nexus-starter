@@ -1,0 +1,9 @@
+* :doc:`/reference/installation_instructions`
+* :doc:`/reference/asynchronous_indexing`
+* :doc:`/reference/location_query`
+* :doc:`/reference/subdocuments`
+* :doc:`/reference/spellcheck_suggestions`
+* :doc:`/reference/extra_fields`
+* :doc:`/reference/document_factory`
+* :doc:`/reference/fulltext_search_boosting`
+* :doc:`/reference/page_indexing`

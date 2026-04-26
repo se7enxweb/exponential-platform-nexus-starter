@@ -1,0 +1,78 @@
+{
+    "name": "ibexa/messenger",
+    "license": "proprietary",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "ibexa-dxp"
+    ],
+    "require": {
+        "php": ">=8.3",
+        "ibexa/core": "~5.0.x-dev",
+        "ibexa/core-persistence": "~5.0.x-dev",
+        "symfony/config": "^7.4",
+        "symfony/dependency-injection": "^7.4",
+        "symfony/doctrine-messenger": "^7.4",
+        "symfony/event-dispatcher": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
+        "symfony/messenger": "^7.4",
+        "symfony/yaml": "^7.4"
+    },
+    "require-dev": {
+        "dama/doctrine-test-bundle": "^8",
+        "ibexa/behat": "~5.0.x-dev",
+        "ibexa/code-style": "~2.0.0",
+        "ibexa/doctrine-schema": "~5.0.x-dev",
+        "ibexa/phpstan": "~5.0.x-dev",
+        "ibexa/test-core": "~5.0.x-dev",
+        "matthiasnoback/symfony-dependency-injection-test": "^5.1.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^9",
+        "qossmic/deptrac-shim": "^0.24.0 || ^1.0.2",
+        "symfony/amazon-sqs-messenger": "^7.4",
+        "symfony/beanstalkd-messenger": "^7.4",
+        "symfony/phpunit-bridge": "^7.4",
+        "symfony/redis-messenger": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibexa\\Bundle\\Messenger\\": "src/bundle/",
+            "Ibexa\\Contracts\\Messenger\\": "src/contracts/",
+            "Ibexa\\Messenger\\": "src/lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ibexa\\Tests\\Bundle\\Messenger\\": "tests/bundle/",
+            "Ibexa\\Tests\\Integration\\Messenger\\": "tests/integration/",
+            "Ibexa\\Tests\\Messenger\\": "tests/lib/"
+        }
+    },
+    "scripts": {
+        "fix-cs": "php-cs-fixer fix --config=.php-cs-fixer.php --show-progress=dots",
+        "check-cs": "@fix-cs --dry-run",
+        "test": "phpunit -c phpunit.xml.dist",
+        "test-integration": "phpunit -c phpunit.integration.xml",
+        "phpstan": "phpstan analyse -c phpstan.neon",
+        "deptrac": "php vendor/bin/deptrac analyse"
+    },
+    "scripts-descriptions": {
+        "fix-cs": "Automatically fixes code style in all files",
+        "check-cs": "Run code style checker for all files",
+        "test": "Run automatic tests",
+        "phpstan": "Run static code analysis",
+        "deptrac": "Run Deptrac architecture testing"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": false
+    }
+}

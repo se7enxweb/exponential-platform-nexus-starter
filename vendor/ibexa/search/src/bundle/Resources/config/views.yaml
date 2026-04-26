@@ -1,0 +1,41 @@
+services:
+    Ibexa\Search\View\SearchViewProvider:
+        arguments:
+            $matcherFactory: '@ibexa.user.view.search.matcher_factory.dynamically_configured'
+        tags:
+            - { name: ibexa.view.provider, type: Ibexa\Search\View\SearchView, priority: 10 }
+
+    ibexa.view.search.matcher_factory:
+        class: Ibexa\Bundle\Core\Matcher\ServiceAwareMatcherFactory
+        arguments:
+            $viewMatcherRegistry: '@Ibexa\Bundle\Core\Matcher\ViewMatcherRegistry'
+            $repository: '@ibexa.api.repository'
+            $relativeNamespace: Ibexa\Search\View
+
+    ibexa.user.view.search.matcher_factory.dynamically_configured:
+        class: Ibexa\Core\MVC\Symfony\Matcher\DynamicallyConfiguredMatcherFactoryDecorator
+        decorates: ibexa.view.search.matcher_factory
+        arguments:
+            $innerConfigurableMatcherFactory: '@ibexa.user.view.search.matcher_factory.dynamically_configured.inner'
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: search_view
+
+    Ibexa\Search\View\SearchViewFilter:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+            $formFactory: '@Symfony\Component\Form\FormFactoryInterface'
+            $sectionService: '@ibexa.api.service.section'
+            $contentTypeService: '@ibexa.api.service.content_type'
+            $urlGenerator: '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Search\View\SearchViewBuilder:
+        arguments:
+            $viewConfigurator: '@Ibexa\Core\MVC\Symfony\View\Configurator\ViewProvider'
+            $viewParametersInjector: '@Ibexa\Core\MVC\Symfony\View\ParametersInjector\EventDispatcherInjector'
+            $searchService: '@ibexa.api.service.search'
+            $pagerSearchContentToDataMapper: '@Ibexa\Contracts\Search\Mapper\PagerSearchDataMapper'
+            $searchQueryType: '@Ibexa\Search\QueryType\SearchQueryType'
+        tags:
+            - { name: ibexa.view.builder }

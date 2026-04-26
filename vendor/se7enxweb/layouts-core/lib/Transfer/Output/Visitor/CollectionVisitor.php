@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Transfer\Output\Visitor;
+
+use Netgen\Layouts\API\Values\Collection\Collection;
+use Netgen\Layouts\API\Values\Collection\ItemList;
+use Netgen\Layouts\API\Values\Collection\SlotList;
+use Netgen\Layouts\Transfer\Output\OutputVisitor;
+use Netgen\Layouts\Transfer\Output\VisitorInterface;
+
+/**
+ * Collection value visitor.
+ *
+ * @see \Netgen\Layouts\API\Values\Collection\Collection
+ *
+ * @implements \Netgen\Layouts\Transfer\Output\VisitorInterface<\Netgen\Layouts\API\Values\Collection\Collection>
+ */
+final class CollectionVisitor implements VisitorInterface
+{
+    public function accept(object $value): bool
+    {
+        return $value instanceof Collection;
+    }
+
+    public function visit(object $value, OutputVisitor $outputVisitor): array
+    {
+        return [
+            'id' => $value->id->toString(),
+            'offset' => $value->offset,
+            'limit' => $value->limit,
+            'is_translatable' => $value->isTranslatable,
+            'is_always_available' => $value->isAlwaysAvailable,
+            'main_locale' => $value->mainLocale,
+            'available_locales' => $value->availableLocales,
+            'items' => [...$this->visitItems($value->items, $outputVisitor)],
+            'slots' => [...$this->visitSlots($value->slots, $outputVisitor)],
+            'query' => $this->visitQuery($value, $outputVisitor),
+        ];
+    }
+
+    /**
+     * Visit the given collection $items into hash representation.
+     *
+     * @return iterable<array<string, mixed>>
+     */
+    private function visitItems(ItemList $items, OutputVisitor $outputVisitor): iterable
+    {
+        foreach ($items as $item) {
+            yield $outputVisitor->visit($item);
+        }
+    }
+
+    /**
+     * Visit the given collection $slots into hash representation.
+     *
+     * @return iterable<array<string, mixed>>
+     */
+    private function visitSlots(SlotList $slots, OutputVisitor $outputVisitor): iterable
+    {
+        foreach ($slots as $slot) {
+            yield $outputVisitor->visit($slot);
+        }
+    }
+
+    /**
+     * Visit the given $collection query into hash representation.
+     *
+     * @return array<string, mixed>|null
+     */
+    private function visitQuery(Collection $collection, OutputVisitor $outputVisitor): ?array
+    {
+        $query = $collection->query;
+        if ($query === null) {
+            return null;
+        }
+
+        return $outputVisitor->visit($query);
+    }
+}

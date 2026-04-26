@@ -1,0 +1,26 @@
+{% extends '@ibexadesign/ui/edit_base.html.twig' %}
+
+{% trans_default_domain 'ibexa_role' %}
+
+{% set anchor_params = {
+    items: [
+        {
+            label: 'role.users_and_groups'|trans|desc('Users and Groups'), 
+            target_id: 'users-and-groups',
+        },
+        {
+            label: 'role.limitations'|trans|desc('Limitations'), 
+            target_id: 'limitations',
+        }
+    ]
+} %}
+
+{% block header %}
+    {% block header_admin %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="ibexa-edit-content__container">
+        {% block form %}{% endblock %}
+    </div>
+{% endblock %}

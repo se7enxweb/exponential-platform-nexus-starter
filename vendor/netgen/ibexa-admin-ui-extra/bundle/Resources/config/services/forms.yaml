@@ -1,0 +1,6 @@
+services:
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Form\Type\Content\Translation\AlwaysAvailableUpdateType: ~
+
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Form\FormFactory:
+        arguments:
+            - '@form.factory'

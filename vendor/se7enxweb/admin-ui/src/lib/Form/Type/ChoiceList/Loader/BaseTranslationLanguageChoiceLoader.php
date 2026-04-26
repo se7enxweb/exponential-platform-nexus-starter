@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\Type\ChoiceList\Loader;
+
+use Ibexa\Contracts\Core\Repository\LanguageService;
+use Ibexa\Contracts\Core\Repository\Values\Content\Language;
+
+class BaseTranslationLanguageChoiceLoader extends BaseChoiceLoader
+{
+    /**
+     * @param string[] $languageCodes
+     */
+    public function __construct(
+        protected LanguageService $languageService,
+        protected array $languageCodes
+    ) {
+    }
+
+    /**
+     * \Ibexa\Contracts\Core\Repository\Values\Content\Language[].
+     */
+    public function getChoiceList(): array
+    {
+        return array_filter(
+            iterator_to_array($this->languageService->loadLanguages()),
+            function (Language $language): bool {
+                return $language->isEnabled()
+                    && in_array($language->getLanguageCode(), $this->languageCodes, true);
+            }
+        );
+    }
+}

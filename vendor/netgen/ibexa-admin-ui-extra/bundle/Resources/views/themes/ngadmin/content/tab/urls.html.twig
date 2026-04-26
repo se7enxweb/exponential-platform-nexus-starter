@@ -1,0 +1,22 @@
+{% trans_default_domain 'ibexa_content_url' %}
+
+{% if siteaccess_urls|default([]) is not empty %}
+    {% include '@ibexadesign/content/tab/url/siteaccess_urls_table.html.twig' with {
+        headline:'tab.urls.siteaccess.headline.siteaccess_urls'|trans|desc
+            ('Siteaccess URLs'),
+        siteaccess_urls: siteaccess_urls,
+    } only %}
+{% endif %}
+
+{% if show_siteaccess_urls_outside_configured_content_tree_root|default(false) == true
+    and siteaccess_urls_outside_configured_content_tree_root|default([]) is not empty
+%}
+    {% include '@ibexadesign/content/tab/url/siteaccess_urls_table.html.twig' with {
+        headline:
+        'tab.urls.siteaccess.headline.siteaccess_urls.outside_configured_content_tree_root'|trans|desc
+            ('Siteaccess URLs outside the configured Content tree root'),
+        siteaccess_urls: siteaccess_urls_outside_configured_content_tree_root,
+    } only %}
+{% endif %}
+
+{% include '@admin/content/tab/urls.html.twig' %}

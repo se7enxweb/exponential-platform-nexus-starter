@@ -1,0 +1,22 @@
+{% extends '@ibexadesign/ui/layout.html.twig' %}
+
+{% block breadcrumbs %}
+    {% block breadcrumbs_admin %}{% endblock %}
+{% endblock %}
+
+{% block context_menu %}
+    {% block context_menu_admin %}{% endblock %}
+{% endblock %}
+
+{% block header %}
+    {% block header_admin %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="row align-items-stretch ibexa-main-row">
+        <div class="px-0 pb-4 ibexa-content-container">
+            {% block form %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

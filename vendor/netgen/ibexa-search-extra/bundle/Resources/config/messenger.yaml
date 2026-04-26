@@ -1,0 +1,48 @@
+messenger:
+    transports:
+        netgen_ibexa_search_extra_asynchronous_indexing:
+            dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            failure_transport: netgen_ibexa_search_extra_asynchronous_indexing_failed
+            retry_strategy:
+                max_retries: 5
+                delay: 1000
+                multiplier: 3
+                max_delay: 600000
+            options:
+                redeliver_timeout: 300
+                queue_name: netgen_ibexa_search_extra_asynchronous_indexing
+        netgen_ibexa_search_extra_asynchronous_indexing_failed: "doctrine://default?queue_name=netgen_ibexa_search_extra_asynchronous_indexing_failed"
+    routing:
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\CopyContent': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\DeleteContent': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\DeleteTranslation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\HideContent': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\PublishVersion': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\RevealContent': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Content\UpdateContentMetadata': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\AssignSectionToSubtree': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\CopySubtree': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\CreateLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\DeleteLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\HideLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\MoveSubtree': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\SwapLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\UnhideLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Location\UpdateLocation': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\ObjectState\SetContentState': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Section\AssignSection': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Trash\Recover': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\Trash\Trash': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\AssignUserToUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\BeforeUnAssignUserFromUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\CreateUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\CreateUser': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\DeleteUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\DeleteUser': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\MoveUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\UnAssignUserFromUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\UpdateUserGroup': netgen_ibexa_search_extra_asynchronous_indexing
+        'Netgen\IbexaSearchExtra\Core\Search\Common\Messenger\Message\Search\User\UpdateUser': netgen_ibexa_search_extra_asynchronous_indexing
+    default_bus: messenger.bus.default
+    buses:
+        messenger.bus.default: ~

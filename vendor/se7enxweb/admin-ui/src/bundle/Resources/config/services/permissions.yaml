@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Permission\PermissionChecker: ~
+
+    Ibexa\Contracts\AdminUi\Permission\PermissionCheckerInterface:
+        alias: Ibexa\AdminUi\Permission\PermissionChecker
+
+    Ibexa\AdminUi\Permission\LookupLimitationsTransformer: ~
+
+    Ibexa\AdminUi\Permission\LimitationResolver: ~
+
+    Ibexa\AdminUi\Permission\LimitationResolverInterface:
+        alias: Ibexa\AdminUi\Permission\LimitationResolver

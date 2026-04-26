@@ -1,0 +1,274 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\AssetController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\BookmarkController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\BulkOperation\BulkOperationController:
+        parent: Ibexa\Rest\Server\Controller
+        tags: [ 'controller.service_arguments' ]
+        autowire: true
+
+    Ibexa\Bundle\AdminUi\Controller\Content\ContentTreeController:
+        parent: Ibexa\Rest\Server\Controller
+        tags: [ 'controller.service_arguments' ]
+        autowire: true
+
+    Ibexa\Bundle\AdminUi\Controller\Content\VersionDraftConflictController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\ContentController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $siteaccessResolver: '@Ibexa\AdminUi\Siteaccess\NonAdminSiteaccessResolver'
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+            $configResolver: '@ibexa.config.resolver'
+            $siteAccessNameGenerator: '@Ibexa\AdminUi\Siteaccess\SiteAccessNameGenerator'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ContentDraftController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ContentEditController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\ContentOnTheFlyController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+            $contentActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ContentTypeController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $contentTypeActionDispatcher: '@Ibexa\AdminUi\Form\ActionDispatcher\ContentTypeDispatcher'
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ContentViewController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+
+    Ibexa\Bundle\AdminUi\Controller\DashboardController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+
+    Ibexa\Bundle\AdminUi\Controller\LanguageController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\LinkManagerController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\LocationController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        arguments:
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+
+    Ibexa\Bundle\AdminUi\Controller\NotificationController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ObjectStateController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\PolicyController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\RoleAssignmentController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\RoleController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\SectionController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\TranslationController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        arguments:
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+
+    Ibexa\Bundle\AdminUi\Controller\TrashController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\URLManagementController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\URLWildcardController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\UniversalDiscoveryController:
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\UrlAliasController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\User\UserDeleteController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\User\FocusModeController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $redirectStrategies: !tagged_iterator 'ibexa.admin_ui.focus_mode.redirect_strategy'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\UserOnTheFlyController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\User\ProfileViewController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\User\ProfileEditController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+        arguments:
+            $userActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\UserDispatcher'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\Version\VersionConflictController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\VersionController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        arguments:
+            $translationHelper: '@Ibexa\Core\Helper\TranslationHelper'
+
+    Ibexa\Bundle\AdminUi\Controller\FieldDefinitionController:
+        parent: Ibexa\Rest\Server\Controller
+        tags: ['controller.service_arguments']
+        autowire: true
+
+    Ibexa\Bundle\AdminUi\Controller\User\InvitationController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\Permission\LanguageLimitationController:
+        parent: Ibexa\Contracts\AdminUi\Controller\Controller
+        autowire: true
+
+    Ibexa\Bundle\AdminUi\Controller\ApplicationConfigController:
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\DownloadImageController:
+        arguments:
+            $downloadLimit: '%ibexa.dam_widget.image.download_limit%'
+            $formatter: '@ibexa.user.settings.full_datetime_format.formatter'
+            $imageMappings: '%ibexa.dam_widget.image.mappings%'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\Location\LoadSubItemsController: ~
+
+    Ibexa\Bundle\AdminUi\Controller\ContentTypeFieldsByExpressionController:
+        parent: Ibexa\Rest\Server\Controller
+        arguments:
+            $fieldsByExpressionService: '@Ibexa\Contracts\AdminUi\ContentType\ContentTypeFieldsByExpressionServiceInterface'
+        tags:
+            - controller.service_arguments
+
+    Ibexa\Bundle\AdminUi\Controller\SiteAccess\SiteAccessController:
+        parent: Ibexa\Rest\Server\Controller
+        autowire: true
+        arguments:
+            $siteAccessResolvers: !tagged_locator
+                tag: 'ibexa.site_access.resolver'
+                index_by: type
+        tags:
+            - controller.service_arguments

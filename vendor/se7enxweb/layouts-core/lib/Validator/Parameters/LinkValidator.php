@@ -1,0 +1,78 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Validator\Parameters;
+
+use Netgen\Layouts\Parameters\Value\LinkType;
+use Netgen\Layouts\Parameters\Value\LinkValue;
+use Netgen\Layouts\Validator\Constraint\Parameters\ItemLink;
+use Netgen\Layouts\Validator\Constraint\Parameters\Link;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+/**
+ * Validates if the provided value is a valid instance of
+ * \Netgen\Layouts\Parameters\Value\LinkValue object.
+ */
+final class LinkValidator extends ConstraintValidator
+{
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if ($value === null) {
+            return;
+        }
+
+        if (!$constraint instanceof Link) {
+            throw new UnexpectedTypeException($constraint, Link::class);
+        }
+
+        if (!$value instanceof LinkValue) {
+            throw new UnexpectedTypeException($value, LinkValue::class);
+        }
+
+        $validator = $this->context->getValidator()->inContext($this->context);
+
+        $linkConstraints = [];
+        if ($value->linkType === null) {
+            $linkConstraints[] = new Constraints\IdenticalTo('');
+        } elseif ($constraint->isRequired) {
+            $linkConstraints[] = new Constraints\NotBlank();
+        }
+
+        if ($value->linkType !== null) {
+            $linkConstraints[] = new Constraints\NotNull();
+
+            $linkConstraints[] = match ($value->linkType) {
+                LinkType::Url => new Constraints\Url(requireTld: false),
+                LinkType::RelativeUrl => new Constraints\Type(type: 'string'),
+                LinkType::Email => new Constraints\Email(mode: Constraints\Email::VALIDATION_MODE_STRICT),
+                LinkType::Phone => new Constraints\Type(type: 'string'),
+                LinkType::Internal => new ItemLink(
+                    valueTypes: $constraint->valueTypes,
+                    allowInvalid: $constraint->allowInvalidInternal,
+                ),
+            };
+        }
+
+        $validator->atPath('link')->validate($value->link, $linkConstraints);
+
+        $validator->atPath('linkSuffix')->validate(
+            $value->linkSuffix,
+            [
+                new Constraints\NotNull(),
+                new Constraints\Type(type: 'string'),
+            ],
+        );
+
+        $validator->atPath('newWindow')->validate(
+            $value->newWindow,
+            [
+                new Constraints\NotNull(),
+                new Constraints\Type(type: 'bool'),
+            ],
+        );
+    }
+}

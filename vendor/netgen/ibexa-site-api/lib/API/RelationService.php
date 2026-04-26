@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\IbexaSiteApi\API;
+
+use Netgen\IbexaSiteApi\API\Values\Content;
+use Netgen\IbexaSiteApi\API\Values\Location;
+
+/**
+ * Relation service provides methods for loading relations.
+ */
+interface RelationService
+{
+    /**
+     * Load single related Content from $fieldDefinitionIdentifier field in the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers.
+     */
+    public function loadFieldRelation(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+    ): ?Content;
+
+    /**
+     * Load all related Content from $fieldDefinitionIdentifier field in the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers and $limit.
+     *
+     * @return \Netgen\IbexaSiteApi\API\Values\Content[]
+     */
+    public function loadFieldRelations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null,
+    ): array;
+
+    /**
+     * Load a single related Location from $fieldDefinitionIdentifier field in $content,
+     * optionally limited by a list of $contentTypeIdentifiers.
+     *
+     * Note: only visible main Location of the related Content will be used.
+     */
+    public function loadFieldRelationLocation(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+    ): ?Location;
+
+    /**
+     * Load all related Locations from $fieldDefinitionIdentifier field in $content,
+     * optionally limited by a list of $contentTypeIdentifiers and $limit.
+     *
+     * Note: only visible main Locations of the related Content will be used.
+     *
+     * @return \Netgen\IbexaSiteApi\API\Values\Location[]
+     */
+    public function loadFieldRelationLocations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null,
+    ): array;
+
+    /**
+     * Load all reverse-related Content from $fieldDefinitionIdentifier field to the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers and $limit.
+     *
+     * @return \Netgen\IbexaSiteApi\API\Values\Content[]
+     */
+    public function loadReverseFieldRelations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null,
+    ): array;
+
+    /**
+     * Load all reverse-related Locations from $fieldDefinitionIdentifier field to the given
+     * $content, optionally limited by a list of $contentTypeIdentifiers and $limit.
+     *
+     * Note: only visible main Locations of the reverse related Content will be used.
+     *
+     * @return \Netgen\IbexaSiteApi\API\Values\Location[]
+     */
+    public function loadReverseFieldRelationLocations(
+        Content $content,
+        string $fieldDefinitionIdentifier,
+        array $contentTypeIdentifiers = [],
+        ?int $limit = null,
+    ): array;
+}

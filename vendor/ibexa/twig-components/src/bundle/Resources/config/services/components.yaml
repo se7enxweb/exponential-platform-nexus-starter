@@ -1,0 +1,52 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+    Ibexa\TwigComponents\Component\Registry:
+
+    Ibexa\TwigComponents\Component\TemplateComponent:
+        abstract: true
+        lazy: true
+
+    Ibexa\TwigComponents\Component\ScriptComponent:
+        abstract: true
+        lazy: true
+
+    Ibexa\TwigComponents\Component\LinkComponent:
+        abstract: true
+        lazy: true
+    
+    Ibexa\TwigComponents\Component\ControllerComponent:
+        abstract: true
+        lazy: true
+        
+    Ibexa\TwigComponents\Component\HtmlComponent:
+        abstract: true
+        lazy: true
+ 
+    Ibexa\TwigComponents\Component\MenuComponent:
+        abstract: true
+        lazy: true
+
+    Ibexa\Bundle\TwigComponents\Templating\Twig\ComponentExtension:
+        tags:
+            - { name: twig.extension }
+    
+    Ibexa\TwigComponents\DataCollector\TwigComponentCollector:
+        tags:
+            -   name: ibexa.debug.data_collector
+                id: 'ibexa.twig_components'
+                panelTemplate: '@IbexaTwigComponents/profiler/panel.html.twig'
+                priority: 150
+    
+    Ibexa\TwigComponents\Component\EventSubscriber\TwigComponentCollectorSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    Ibexa\TwigComponents\Component\Renderer\DefaultRenderer:
+
+    Ibexa\Bundle\TwigComponents\Templating\Twig\Components\Table: ~
+
+    Ibexa\Contracts\TwigComponents\Renderer\RendererInterface: '@Ibexa\TwigComponents\Component\Renderer\DefaultRenderer'

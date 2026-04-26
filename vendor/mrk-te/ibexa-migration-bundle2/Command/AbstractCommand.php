@@ -1,0 +1,112 @@
+<?php
+
+namespace Kaliop\IbexaMigrationBundle\Command;
+
+use Kaliop\IbexaMigrationBundle\Core\MigrationService;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+
+/**
+ * Base command class that all migration commands extend from.
+ */
+abstract class AbstractCommand extends Command
+{
+    /**
+     * @var MigrationService
+     */
+    private MigrationService $migrationService;
+
+    protected KernelInterface $kernel;
+    protected OutputInterface $output;
+    protected OutputInterface $errOutput;
+    protected int $verbosity = OutputInterface::VERBOSITY_NORMAL;
+
+    public function __construct(MigrationService $migrationService, KernelInterface $kernel)
+    {
+        $this->migrationService = $migrationService;
+        $this->kernel = $kernel;
+
+        parent::__construct();
+    }
+
+    public function getMigrationService(): MigrationService
+    {
+        return $this->migrationService;
+    }
+
+    protected function setOutput(OutputInterface $output): void
+    {
+        $this->output = $output;
+        $this->errOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
+    }
+
+    protected function setVerbosity($verbosity)
+    {
+        $this->verbosity = $verbosity;
+    }
+
+    /**
+     * Small trick to allow us to:
+     * - lower verbosity between NORMAL and QUIET
+     * - have a decent writeln API, even with old SF versions
+     * @param string|array $message The message as an array of lines or a single string
+     * @param int $verbosity
+     * @param int $type
+     */
+    protected function writeln($message, int $verbosity = OutputInterface::VERBOSITY_NORMAL, int $type = OutputInterface::OUTPUT_NORMAL): void
+    {
+        if ($this->verbosity >= $verbosity) {
+            $this->output->writeln($message, $type);
+        }
+    }
+
+    /**
+     * @param string|array $message The message as an array of lines or a single string
+     * @param int $verbosity
+     * @param int $type
+     */
+    protected function writeErrorln($message, int $verbosity = OutputInterface::VERBOSITY_QUIET, int $type = OutputInterface::OUTPUT_NORMAL): void
+    {
+        if ($this->verbosity >= $verbosity) {
+
+            // When verbosity is set to quiet, SF swallows the error message in the writeln call
+            // (unlike for other verbosity levels, which are left for us to handle...)
+            // We resort to a hackish workaround to _always_ print errors to stdout, even in quiet mode.
+            // If the end user does not want any error echoed, he can just 2>/dev/null
+            if ($this->errOutput->getVerbosity() == OutputInterface::VERBOSITY_QUIET) {
+                $this->errOutput->setVerbosity(OutputInterface::VERBOSITY_NORMAL);
+                $this->errOutput->writeln($message, $type);
+                $this->errOutput->setVerbosity(OutputInterface::VERBOSITY_QUIET);
+            }
+            else
+            {
+                $this->errOutput->writeln($message, $type);
+            }
+        }
+    }
+
+    /**
+     * "Canonicalizes" the paths which are subpaths of the application's root dir
+     * @param string[] $paths
+     * @return string[]
+     */
+    protected function normalizePaths(array $paths): array
+    {
+        $rootDir = realpath($this->kernel->getProjectDir()) . '/';
+        foreach ($paths as $i => $path) {
+            if ($path === $rootDir || $path === './') {
+                $paths[$i] = './';
+            } else if (strpos($path, './') === 0) {
+                $paths[$i] = substr($path, 2);
+                // q: should we also call realpath on $path? what if there are symlinks at play?
+            } elseif (strpos($path, $rootDir) === 0) {
+                $paths[$i] = substr($path, strlen($rootDir));
+            } elseif ($path === '') {
+                unset($paths[$i]);
+            }
+        }
+        return $paths;
+    }
+}

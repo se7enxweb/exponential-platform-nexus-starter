@@ -1,0 +1,114 @@
+{
+    "__version": 2,
+    "layouts": [
+        {
+            "__type": "layout",
+            "id": "1be69a4d-e6cc-46c7-a9dd-45fba806625e",
+            "type_identifier": "test_layout_1",
+            "name": "My layout",
+            "description": "My layout description",
+            "status": "published",
+            "main_locale": "en",
+            "available_locales": [
+                "en",
+                "hr"
+            ],
+            "creation_date": 1528371500,
+            "modification_date": 1528372000,
+            "is_shared": false,
+            "zones": {
+                "bottom": {
+                    "identifier": "bottom",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "left": {
+                    "identifier": "left",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "right": {
+                    "identifier": "right",
+                    "linked_zone": null,
+                    "blocks": [
+                        {
+                            "id": "47f342fa-f68e-44cc-82d7-8d594e189cbc",
+                            "definition_identifier": "list",
+                            "is_translatable": true,
+                            "is_always_available": true,
+                            "main_locale": "en",
+                            "available_locales": [
+                                "en",
+                                "hr"
+                            ],
+                            "view_type": "grid",
+                            "item_view_type": "standard_with_intro",
+                            "name": "My published block",
+                            "placeholders": [],
+                            "parameters": {
+                                "hr": {
+                                    "number_of_columns": 3,
+                                    "paged_collections:enabled": null,
+                                    "paged_collections:type": null,
+                                    "paged_collections:max_pages": null,
+                                    "paged_collections:ajax_first": null,
+                                    "css_class": null,
+                                    "css_id": null,
+                                    "set_container": null
+                                }
+                            },
+                            "configuration": {
+                                "key": {
+                                    "param1": false,
+                                    "param2": null
+                                }
+                            },
+                            "collections": {
+                                "default": {
+                                    "id": "4c9cb9bb-5aa0-428b-ba8d-0d050ec87371",
+                                    "offset": 0,
+                                    "limit": null,
+                                    "is_translatable": true,
+                                    "is_always_available": true,
+                                    "main_locale": "en",
+                                    "available_locales": [
+                                        "en",
+                                        "hr"
+                                    ],
+                                    "items": [],
+                                    "slots": [],
+                                    "query": {
+                                        "id": "7a13a9e5-e508-4791-9c12-14d3e1aac481",
+                                        "is_translatable": false,
+                                        "is_always_available": true,
+                                        "main_locale": "en",
+                                        "available_locales": [
+                                            "en",
+                                            "hr"
+                                        ],
+                                        "parameters": {
+                                            "en": {
+                                                "param": "abc3",
+                                                "param2" :"def3"
+                                            },
+                                            "hr": {
+                                                "param": "abc3",
+                                                "param2" :"zxy3"
+                                            }
+                                        },
+                                        "query_type": "test_query_type"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "top": {
+                    "identifier": "top",
+                    "linked_zone": null,
+                    "blocks": []
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
+    <php>
+        <env name="setupFactory" value="Netgen\IbexaScheduledVisibility\Tests\Integration\SetupFactory\Legacy"/>
+        <ini name="error_reporting" value="-1"/>
+    </php>
+    <testsuites>
+        <testsuite name="Legacy Search Engine tests">
+            <directory suffix="Test.php">./tests/bundle/Integration/</directory>
+            <exclude>./tests/bundle/Integration/BaseTest.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

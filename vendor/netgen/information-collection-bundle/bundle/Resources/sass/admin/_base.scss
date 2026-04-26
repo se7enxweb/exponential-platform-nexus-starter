@@ -1,0 +1,16 @@
+#{$namespace} {
+  .list-object-divider {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    margin: 0 0 20px;
+  }
+  input[type='checkbox'] + label,
+  input[type='radio'] + label {
+    font-weight: normal;
+    .attribute-name {
+        font-weight: bold;
+    }
+  }
+  .ic-content {
+      padding-left: 15px;
+  }
+}

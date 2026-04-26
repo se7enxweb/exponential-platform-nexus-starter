@@ -1,0 +1,15 @@
+parameters:
+    netgen_layouts.ibexa.context.provider.allowed_routes:
+        - !php/const Ibexa\Core\MVC\Symfony\Routing\UrlAliasRouter::URL_ALIAS_ROUTE_NAME
+        # For Ibexa CMS content preview support
+        - ibexa.version.preview
+
+services:
+    netgen_layouts.ibexa.context.provider:
+        class: Netgen\Layouts\Ibexa\Context\ContextProvider
+        arguments:
+            - "@request_stack"
+            - "@ibexa.api.service.content"
+            - "%netgen_layouts.ibexa.context.provider.allowed_routes%"
+        tags:
+            - { name: netgen_layouts.context_provider }

@@ -1,0 +1,47 @@
+{% trans_default_domain 'ibexa_admin_ui' %}
+
+<div class="ibexa-scrollable-wrapper">
+    <table class="ibexa-table table ibexa-table--last-column-sticky">
+        <thead>
+            <tr class="ibexa-table__row ibexa-table__row--header">
+                {% for column in columns %}
+                    <th class="ibexa-table__header-cell {{ loop.last ? 'ibexa-table__header-cell--no-min-width' }}">
+                        <span class="ibexa-table__header-cell-content">
+                            {{ this.renderLabel(column)|raw }}
+                        </span>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="ibexa-table__body">
+            {% for item in data %}
+                <tr class="ibexa-table__row">
+                    {% for column in columns %}
+                        <td class="ibexa-table__cell {{ loop.last ? 'ibexa-table__cell--has-action-btns' }}">
+                            {{ this.renderCell(column, item)|raw }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% else %}
+                {% block empty_state_row %}
+                <tr class="ibexa-table__row">
+                    <td class="ibexa-table__empty-table-cell">
+                        {% block empty_state_content %}
+                            {% block empty_state_image %}
+                                <img class="ibexa-table__empty_table-image" src="{{ asset('/bundles/ibexaadminui/img/ibexa-empty-table.svg') }}" alt="">
+                            {% endblock empty_state_image %}
+                            {% block empty_state_text %}
+                                <div class="ibexa-table__empty-table-text">
+                                    {% block empty_state_title %}{% endblock empty_state_title %}
+                                    {% block empty_state_description %}{% endblock empty_state_description %}
+                                    {% block empty_state_extra_actions %}{% endblock empty_state_extra_actions %}
+                                </div>
+                            {% endblock empty_state_text %}
+                        {% endblock empty_state_content %}
+                    </td>
+                </tr>
+                {% endblock empty_state_row %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

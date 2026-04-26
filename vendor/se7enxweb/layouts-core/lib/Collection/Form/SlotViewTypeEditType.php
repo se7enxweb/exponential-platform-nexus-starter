@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Collection\Form;
+
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\API\Values\Collection\Slot;
+use Netgen\Layouts\API\Values\Collection\SlotUpdateStruct;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+final class SlotViewTypeEditType extends AbstractType
+{
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefault('translation_domain', 'nglayouts_forms');
+
+        $resolver->setAllowedTypes('data', SlotUpdateStruct::class);
+
+        $resolver
+            ->define('slot')
+            ->required()
+            ->allowedTypes(Slot::class);
+
+        $resolver
+            ->define('block')
+            ->required()
+            ->allowedTypes(Block::class);
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->add(
+            'view_type',
+            ChoiceType::class,
+            [
+                'required' => false,
+                'label' => 'collection_slot.view_type',
+                'property_path' => 'viewType',
+                'choices' => (static function () use ($options): iterable {
+                    yield '<No override>' => '';
+
+                    /** @var \Netgen\Layouts\API\Values\Block\Block $block */
+                    $block = $options['block'];
+
+                    foreach ($block->definition->getViewType($block->viewType, $block)->itemViewTypes as $itemViewType) {
+                        yield $itemViewType->name => $itemViewType->identifier;
+                    }
+                })(),
+            ],
+        );
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $view->vars['slot'] = $options['slot'];
+        $view->vars['block'] = $options['block'];
+    }
+}

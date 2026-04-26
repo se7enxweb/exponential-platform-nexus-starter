@@ -1,0 +1,4 @@
+nglayouts_dev_app:
+    path: /dev/app
+    controller: netgen_layouts.controller.app.index
+    methods: [GET]

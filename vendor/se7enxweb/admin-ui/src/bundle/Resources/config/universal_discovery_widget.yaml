@@ -1,0 +1,82 @@
+system:
+    default:
+        universal_discovery_widget_module:
+            configuration:
+                # Default UDW Configuration
+                _default:
+                    multiple: false
+                    multiple_items_limit: 0
+                    root_location_id: 1
+                    starting_location_id: 1
+                    containers_only: false
+                    allowed_content_types: null
+                    active_sort_clause: 'DatePublished'
+                    active_sort_order: 'ascending'
+                    active_tab: 'browse'
+                    active_view: 'finder'
+                    allow_redirects: false
+                    allow_confirmation: true
+                    content_on_the_fly:
+                        allowed_languages: null
+                        allowed_locations: null
+                        preselected_language: null
+                        preselected_content_type: null
+                        hidden: false
+                        auto_confirm_after_publish: true
+                    tabs_config:
+                        search:
+                            items_per_page: 50
+                            priority: 10
+                            hidden: false
+                        bookmarks:
+                            items_per_page: 50
+                            priority: 20
+                            hidden: false
+                        browse:
+                            items_per_page: 50
+                            priority: 30
+
+                # These inherit _default configuration
+                create:
+                    tabs:
+                        search:
+                            hidden: true
+                        bookmarks:
+                            hidden: true
+                    multiple: false
+                    allow_confirmation: false
+                browse:
+                    allow_redirects: true
+                    allow_confirmation: false
+                single:
+                    multiple: false
+                multiple:
+                    multiple: true
+                single_container:
+                    multiple: false
+                    containers_only: true
+                richtext_embed:
+                    multiple: false
+                richtext_embed_image:
+                    multiple: false
+                    allowed_content_types: ['image']
+                    root_location_id: 43
+                    starting_location_id: 43
+                image_asset:
+                    multiple: false
+                single_user:
+                    multiple: false
+                multiple_user:
+                    multiple: true
+                single_user_group:
+                    multiple: false
+                    allowed_content_types: ['user_group']
+                multiple_user_group:
+                    multiple: true
+                    allowed_content_types: ['user_group']
+                add_location:
+                    multiple: false
+                subtree_search:
+                    multiple: false
+                image_picker:
+                    active_tab: 'browse'

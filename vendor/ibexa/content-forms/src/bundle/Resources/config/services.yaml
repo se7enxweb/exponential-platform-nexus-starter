@@ -1,0 +1,125 @@
+imports:
+    - {resource: fieldtypes.yaml}
+    - {resource: form_types.yaml}
+    - {resource: views.yaml}
+
+parameters:
+
+    ibexa.content_forms.user_content_type_identifier: "user"
+
+services:
+    Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcher:
+        arguments:
+            $fieldTypeAliasResolver: '@Ibexa\Core\FieldType\FieldTypeAliasResolverInterface'
+
+    Ibexa\ContentForms\Form\Type\Content\ContentFieldType:
+        arguments: ['@Ibexa\ContentForms\FieldType\FieldTypeFormMapperDispatcher']
+        tags:
+            - { name: form.type, alias: ezplatform_content_forms_content_field }
+
+    # Validators
+    Ibexa\ContentForms\Validator\Constraints\FieldTypeValidator:
+        arguments: ['@ibexa.api.service.field_type']
+        abstract: true
+
+    Ibexa\ContentForms\Validator\Constraints\PasswordValidator:
+        arguments:
+            $userService: '@ibexa.api.service.user'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Ibexa\ContentForms\Validator\Constraints\UserAccountPasswordValidator:
+        arguments:
+            $userService: '@ibexa.api.service.user'
+        tags:
+            - { name: validator.constraint_validator }
+
+    Ibexa\ContentForms\Validator\Constraints\FieldValueValidator:
+        parent: Ibexa\ContentForms\Validator\Constraints\FieldTypeValidator
+        class: Ibexa\ContentForms\Validator\Constraints\FieldValueValidator
+        tags:
+            - { name: validator.constraint_validator }
+
+    # Action dispatchers
+    Ibexa\ContentForms\Form\ActionDispatcher\AbstractActionDispatcher:
+        abstract: true
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
+
+    Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher:
+        parent: Ibexa\ContentForms\Form\ActionDispatcher\AbstractActionDispatcher
+
+    Ibexa\ContentForms\Form\ActionDispatcher\UserDispatcher:
+        parent: Ibexa\ContentForms\Form\ActionDispatcher\AbstractActionDispatcher
+
+    # Form processors
+    Ibexa\ContentForms\Form\Processor\ContentFormProcessor:
+        arguments:
+            - '@ibexa.api.service.content'
+            - '@ibexa.api.service.location'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\ContentForms\Form\Processor\User\UserCreateFormProcessor:
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\ContentForms\Form\Processor\User\UserUpdateFormProcessor:
+        arguments:
+            - '@ibexa.api.service.user'
+            - '@ibexa.api.service.content'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\ContentForms\Form\Processor\User\UserCancelFormProcessor:
+        arguments:
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\ContentForms\Form\Processor\SystemUrlRedirectProcessor:
+        autowire: true
+        autoconfigure: true
+
+    # Controllers
+    Ibexa\Bundle\ContentForms\Controller\ContentEditController:
+        public: true
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $contentActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher'
+
+    Ibexa\Bundle\ContentForms\Controller\UserController:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $userActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\UserDispatcher'
+            $groupedContentFormFieldsProvider: '@Ibexa\ContentForms\Content\Form\Provider\GroupedContentFormFieldsProvider'
+
+    ibexa_content_edit:
+        alias: Ibexa\Bundle\ContentForms\Controller\ContentEditController
+        public: true
+
+    Ibexa\ContentForms\EventListener\ViewTemplatesListener:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\ContentForms\ConfigResolver\MaxUploadSize: ~
+
+    Ibexa\Contracts\ContentForms\Content\Form\Provider\GroupedContentFormFieldsProviderInterface:
+        '@Ibexa\ContentForms\Content\Form\Provider\GroupedContentFormFieldsProvider'
+
+    Ibexa\ContentForms\Content\Form\Provider\GroupedContentFormFieldsProvider:
+        arguments:
+            $fieldsGroupsList: '@Ibexa\Core\Helper\FieldsGroups\FieldsGroupsList'
+
+    Ibexa\ContentForms\Content\Form\Provider\IdentifiedGroupedContentFormFieldsProvider:
+        arguments:
+            $fieldsGroupsList: '@Ibexa\Core\Helper\FieldsGroups\FieldsGroupsList'

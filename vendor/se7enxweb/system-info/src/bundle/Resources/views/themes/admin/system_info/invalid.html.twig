@@ -1,0 +1,16 @@
+{% trans_default_domain "ibexa_systeminfo" %}
+
+<section class="ibexa-fieldgroup">
+    <h2 class="ibexa-fieldgroup__name">{{ 'invalid.system_unable_to_fetch'|trans|desc('System was unable to fetch corresponding data') }}</h2>
+    <div class="ibexa-fieldgroup__content">
+        <table class="table ibexa-table--list">
+            <tbody>
+            <tr class="ibexa-table__row">
+                <td class="ibexa-table__cell">
+                    {{ info.errorMessage }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,83 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Form;
+
+use Ibexa\Contracts\Core\Repository\ObjectStateService;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function in_array;
+use function is_array;
+
+final class ObjectStateType extends AbstractType
+{
+    public function __construct(
+        private ObjectStateService $objectStateService,
+    ) {}
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefault('translation_domain', 'nglayouts_forms');
+
+        $resolver->setDefault(
+            'choices',
+            fn (Options $options): array => $this->getObjectStates($options['states']),
+        );
+
+        $resolver->setDefault('choice_translation_domain', false);
+
+        $resolver
+            ->define('states')
+            ->required()
+            ->default([])
+            ->allowedTypes('array');
+    }
+
+    public function getParent(): string
+    {
+        return ChoiceType::class;
+    }
+
+    /**
+     * Returns the allowed content states from Ibexa CMS.
+     *
+     * @param array<string, string[]|bool> $configuredGroups
+     *
+     * @return array<string, string[]>
+     */
+    private function getObjectStates(array $configuredGroups): array
+    {
+        $allObjectStates = [];
+
+        $groups = $this->objectStateService->loadObjectStateGroups();
+
+        foreach ($groups as $group) {
+            $configuredGroups += [$group->identifier => true];
+            if ($configuredGroups[$group->identifier] === false) {
+                continue;
+            }
+
+            $objectStates = $this->objectStateService->loadObjectStates($group);
+
+            foreach ($objectStates as $objectState) {
+                if (
+                    is_array($configuredGroups[$group->identifier])
+                    && !in_array($objectState->identifier, $configuredGroups[$group->identifier], true)
+                ) {
+                    continue;
+                }
+
+                $groupName = $group->getName() ?? $group->identifier;
+                $stateName = $objectState->getName() ?? $objectState->identifier;
+
+                $allObjectStates[$groupName][$stateName] = $group->identifier . '|' . $objectState->identifier;
+            }
+        }
+
+        return $allObjectStates;
+    }
+}

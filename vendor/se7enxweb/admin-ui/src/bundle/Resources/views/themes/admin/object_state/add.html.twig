@@ -1,0 +1,33 @@
+{% extends "@ibexadesign/object_state/base.html.twig" %}
+
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_object_state' %}
+
+{% block header_admin %}
+    {% set object_state_create_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.object_state_create.sidebar_right', [],
+        {
+            group_id: object_state_group.id,
+        })
+    %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'object_state.creating'|trans|desc('Creating'),
+        title: 'object_state.add'|trans|desc('Creating a new Object state'),
+        context_actions: knp_menu_render(object_state_create_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+        <section>
+            <div class="card ibexa-card ibexa-card--light">
+                <div class="card-body ibexa-card__body ibexa-form-block">
+                    {{ form_row(form.name, { row_attr: { class: 'ibexa-form-field' } , attr: {'autofocus': 'autofocus'}}) }}
+                    {{ form_row(form.identifier, { row_attr: { class: 'ibexa-form-field' } }) }}
+                </div>
+            </div>
+        </section>
+        {{ form_widget(form.create, { 'attr': { 'hidden': 'hidden' } }) }}
+    {{ form_end(form) }}
+{% endblock %}

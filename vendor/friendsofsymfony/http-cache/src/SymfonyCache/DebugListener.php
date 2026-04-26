@@ -1,0 +1,55 @@
+<?php
+
+/*
+ * This file is part of the FOSHttpCache package.
+ *
+ * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace FOS\HttpCache\SymfonyCache;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+/**
+ * Debug handler for the symfony built-in HttpCache.
+ *
+ * Add debug information to the response for use in cache tests.
+ *
+ * @author David Buchmann <mail@davidbu.ch>
+ */
+class DebugListener implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            Events::POST_HANDLE => 'handleDebug',
+        ];
+    }
+
+    /**
+     * Extract the cache HIT/MISS information from the X-Symfony-Cache header.
+     *
+     * For this header to be present, the HttpCache must be created with the
+     * debug option set to true.
+     */
+    public function handleDebug(CacheEvent $event): void
+    {
+        $response = $event->getResponse();
+        if (!$response) {
+            return;
+        }
+        if ($response->headers->has('X-Symfony-Cache')) {
+            if (str_contains($response->headers->get('X-Symfony-Cache'), 'miss')) {
+                $state = 'MISS';
+            } elseif (str_contains($response->headers->get('X-Symfony-Cache'), 'fresh')) {
+                $state = 'HIT';
+            } else {
+                $state = 'UNDETERMINED';
+            }
+            $response->headers->set('X-Cache', $state);
+        }
+    }
+}

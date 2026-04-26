@@ -1,0 +1,119 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Tests\Serializer\Normalizer;
+
+use Netgen\Bundle\LayoutsAdminBundle\Serializer\Normalizer\CollectionQueryNormalizer;
+use Netgen\Bundle\LayoutsAdminBundle\Serializer\Values\Value;
+use Netgen\Layouts\API\Values\Collection\Query;
+use Netgen\Layouts\Parameters\Parameter;
+use Netgen\Layouts\Parameters\ParameterList;
+use Netgen\Layouts\Tests\API\Stubs\Value as APIValue;
+use Netgen\Layouts\Tests\Collection\Stubs\QueryType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Uid\Uuid;
+
+#[CoversClass(CollectionQueryNormalizer::class)]
+final class CollectionQueryNormalizerTest extends TestCase
+{
+    private Stub&NormalizerInterface $normalizerStub;
+
+    private CollectionQueryNormalizer $normalizer;
+
+    protected function setUp(): void
+    {
+        $this->normalizerStub = self::createStub(NormalizerInterface::class);
+
+        $this->normalizer = new CollectionQueryNormalizer();
+        $this->normalizer->setNormalizer($this->normalizerStub);
+    }
+
+    public function testNormalize(): void
+    {
+        $query = Query::fromArray(
+            [
+                'id' => Uuid::v7(),
+                'collectionId' => Uuid::v7(),
+                'queryType' => new QueryType('test_query_type'),
+                'isTranslatable' => true,
+                'isAlwaysAvailable' => true,
+                'availableLocales' => ['en'],
+                'mainLocale' => 'en',
+                'locale' => 'en',
+                'parameters' => new ParameterList(
+                    [
+                        'param' => Parameter::fromArray(
+                            [
+                                'name' => 'param',
+                                'value' => 'value',
+                            ],
+                        ),
+                        'param2' => Parameter::fromArray(
+                            [
+                                'name' => 'param2',
+                                'value' => [
+                                    'param3' => 'value3',
+                                ],
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $serializedParams = [
+            'param' => 'value',
+            'param2' => [
+                'param3' => 'value3',
+            ],
+        ];
+
+        $this->normalizerStub
+            ->method('normalize')
+            ->willReturn($serializedParams);
+
+        self::assertSame(
+            [
+                'id' => $query->id->toString(),
+                'collection_id' => $query->collectionId->toString(),
+                'type' => $query->queryType->type,
+                'locale' => $query->locale,
+                'is_translatable' => $query->isTranslatable,
+                'always_available' => $query->isAlwaysAvailable,
+                'parameters' => $serializedParams,
+            ],
+            $this->normalizer->normalize(new Value($query)),
+        );
+    }
+
+    #[DataProvider('supportsNormalizationDataProvider')]
+    public function testSupportsNormalization(mixed $data, bool $expected): void
+    {
+        self::assertSame($expected, $this->normalizer->supportsNormalization($data));
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public static function supportsNormalizationDataProvider(): iterable
+    {
+        return [
+            [null, false],
+            [true, false],
+            [false, false],
+            ['block', false],
+            [[], false],
+            [42, false],
+            [42.12, false],
+            [new APIValue(), false],
+            [new Query(), false],
+            [new Value(new APIValue()), false],
+            [new Value(new Query()), true],
+        ];
+    }
+}

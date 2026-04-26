@@ -1,0 +1,70 @@
+schemas:
+    BookmarkList:
+        description: List of bookmarked Locations.
+        type: object
+        required:
+            - count
+            - items
+        properties:
+            count:
+                description: The total number of bookmarks.
+                type: integer
+            items:
+                description: List of bookmarked Locations.
+                type: array
+                items:
+                    type: object
+                    required:
+                        - Location
+                        - _media-type
+                        - __href
+                    properties:
+                        Location:
+                            $ref: "#/components/schemas/Location"
+                        _media-type:
+                            type: string
+                        __href:
+                            type: string
+    BookmarkListWrapper:
+        type: object
+        required:
+            - BookmarkList
+        properties:
+            BookmarkList:
+                $ref: "#/components/schemas/BookmarkList"
+    SummaryEntry:
+        type: object
+        required:
+            - identifier
+            - id
+            - names
+            - quantity
+            - Price
+            - PriceInclVat
+            - SubtotalPrice
+            - SubtotalPriceInclVat
+            - VatCategory
+            - Product
+        properties:
+            identifier:
+                type: string
+            id:
+                type: integer
+            names:
+                $ref: "#/components/schemas/SummaryEntryNames"
+            quantity:
+                type: integer
+            Price:
+                $ref: "#/components/schemas/RestPriceWrapper"
+            PriceInclVat:
+                $ref: "#/components/schemas/RestPriceWrapper"
+            SubtotalPrice:
+                $ref: "#/components/schemas/RestPriceWrapper"
+            SubtotalPriceInclVat:
+                $ref: "#/components/schemas/RestPriceWrapper"
+            VatCategory:
+                $ref: "#/components/schemas/VatCategory"
+            Product:
+                $ref: "#/components/schemas/Product"
+    SummaryEntryNames:
+        $ref: "#/components/schemas/ValueObject"

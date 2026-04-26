@@ -1,0 +1,7 @@
+item_types.layout: 'Layout'
+
+columns.layout.layout_id: 'Layout ID'
+columns.layout.type: 'Type'
+columns.layout.created: 'Created'
+columns.layout.modified: 'Modified'
+columns.layout.shared: 'Shared'

@@ -1,0 +1,169 @@
+{% trans_default_domain 'ibexa_locationview' %}
+
+{% form_theme form_location_update '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% set content_details_translations %}
+    {% for translation in translations %}
+        {{ translation.name }}<br>
+    {% endfor %}
+{% endset %}
+
+{% set content_details_items = [
+    {
+        label: 'tab.details.published_version'|trans()|desc('Published version'),
+        content: version_info.versionNo,
+    },
+    {
+        label: 'tab.details.translations'|trans()|desc('Translations'),
+        content: content_details_translations,
+    },
+] %}
+
+{% include '@ibexadesign/ui/component/details/details.html.twig' with {
+    headline: 'tab.details.content_details'|trans()|desc('Content details'),
+    items: content_details_items,
+} only %}
+
+{% set technical_details_items = [
+    {
+        label: 'tab.details.content_id'|trans()|desc('Content ID'),
+        content: content_info.id,
+    },
+    {
+        label: 'tab.details.location_id'|trans()|desc('Location ID'),
+        content: location.id,
+    },
+    {
+        label: 'tab.details.content_remote_id'|trans()|desc('Content remote ID'),
+        content: content_info.remoteId,
+    },
+    {
+        label: 'tab.details.location_remote_id'|trans()|desc('Location remote ID'),
+        content: location.remoteId
+    },
+] %}
+
+{% include '@ibexadesign/ui/component/details/details.html.twig' with {
+    headline: 'tab.details.technical_details'|trans()|desc('Technical details'),
+    items: technical_details_items,
+} only %}
+
+{% if can_see_section %}
+    {% set section_details_change %}
+        {% if form_assign_section %}
+            {% form_theme form_assign_section '@ibexadesign/ui/form_fields.html.twig' %}
+
+            {{ form_start(form_assign_section, {
+                'action': path('ibexa.location.assign_section'),
+                'attr': {
+                    'class': 'form-inline ibexa-form-inline ibexa-form-inline--align-left'
+                }
+            }) }}
+            {{ form_row(form_assign_section.section, { 'attr': {'is_small': true, 'class': 'ibexa-form-autosubmit'} }) }}
+
+            {% do form_assign_section.assign.setRendered() %}
+            {{ form_end(form_assign_section) }}
+        {% endif %}
+    {% endset %}
+    {% set section_details_items = [
+        {
+            label: 'tab.details.section_name'|trans()|desc('Section name'),
+            content: section.name,
+        },
+        {
+            label: 'tab.details.change_section '|trans()|desc('Change section'),
+            content: section_details_change
+        },
+    ] %}
+
+    {% include '@ibexadesign/ui/component/details/details.html.twig' with {
+        headline: 'tab.details.section_details'|trans()|desc('Section details'),
+        items: section_details_items,
+    } only %}
+{% endif %}
+
+{% set body_rows = [] %}
+{% for object_state in object_states %}
+    {% set body_row_cols = [] %}
+
+    {% set body_row_cols = body_row_cols|merge([
+        { content: object_state.objectStateGroup.name },
+        { content: object_state.name },
+    ]) %}
+
+    {% set col_raw %}
+        {% if can_assign and form_state_update[object_state.objectStateGroup.id].objectState.vars.choices|length != 0 %}
+            {% form_theme form_state_update[object_state.objectStateGroup.id] '@ibexadesign/ui/form_fields.html.twig' %}
+            {{ form_start(form_state_update[object_state.objectStateGroup.id], {
+                'method': 'POST',
+                'action': path('ibexa.object_state.content_state.update', {
+                    'contentInfoId': content_info.id,
+                    'objectStateGroupId': object_state.objectStateGroup.id
+                }),
+                'attr': {'class': 'form-inline ibexa-form-inline ibexa-form-inline--align-left'}
+            }) }}
+                {{ form_row(form_state_update[object_state.objectStateGroup.id].contentInfo) }}
+                {{ form_row(form_state_update[object_state.objectStateGroup.id].objectStateGroup) }}
+                {{ form_row(form_state_update[object_state.objectStateGroup.id].objectState, { 'attr': {'is_small': true, 'class': 'ibexa-form-autosubmit'} }) }}
+                {% do form_state_update[object_state.objectStateGroup.id].set.setRendered %}
+            {{ form_end(form_state_update[object_state.objectStateGroup.id]) }}
+        {% endif %}
+    {% endset %}
+    {% set body_row_cols = body_row_cols|merge([{
+        content: col_raw,
+        raw: true,
+    }]) %}
+
+    {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+{% endfor %}
+
+{% include '@ibexadesign/ui/component/table/table.html.twig' with {
+    headline: 'tab.details.state_details'|trans()|desc('Object state details'),
+    head_cols: [
+        { content: 'tab.details.state_group_name'|trans()|desc('Group name') },
+        { content: 'tab.details.state_name'|trans()|desc('Current Object state') },
+        { content: 'tab.details.change_state'|trans()|desc('Change Object state') },
+    ],
+    body_rows,
+} %}
+
+{%  if show_sorting ?? true %}
+    {% include '@ibexadesign/ui/component/table/table_header.html.twig' with {
+        headline: 'tab.details.sub_items_sorting_order'|trans|desc('Sub-item sorting order'),
+    } only %}
+
+    <div class="bg-white ml-4">
+        {{ form_start(form_location_update, {
+            'method': 'POST',
+            'action': path('ibexa.location.update'),
+            'attr': {'class': 'form-inline ibexa-form-inline justify-content-start'}
+        }) }}
+
+        <div class="form-group">
+            {{ form_label(
+                form_location_update.sort_field,
+                'tab.details.sub_items_listing_by.order_by'|trans|desc('Order by'),
+                { label_attr: { class: 'mb-0 mt-3' } },
+            ) }}
+            {{ form_widget(
+                form_location_update.sort_field,
+                { attr: { class: 'ibexa-form-autosubmit', dropdown_class: 'ms-0', is_small: true }}
+            ) }}
+        </div>
+
+        <div class="form-group ms-2">
+            {{ form_label(
+                form_location_update.sort_order,
+                'tab.details.sub_items_listing_by.in'|trans|desc('in'),
+                { label_attr: { class: 'mb-0 mt-3' } },
+            ) }}
+            {{ form_widget(
+                form_location_update.sort_order,
+                { attr: { class: ' ibexa-form-autosubmit', dropdown_class: 'ms-0', is_small: true } }
+            ) }}
+        </div>
+
+        {% do form_location_update.update.setRendered() %}
+        {{ form_end(form_location_update) }}
+    </div>
+{% endif %}

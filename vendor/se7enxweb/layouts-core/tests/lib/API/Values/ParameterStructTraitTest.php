@@ -1,0 +1,278 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\API\Values;
+
+use Netgen\Layouts\API\Values\ParameterStructTrait;
+use Netgen\Layouts\Parameters\Parameter;
+use Netgen\Layouts\Parameters\ParameterDefinition;
+use Netgen\Layouts\Parameters\ParameterDefinitionCollectionInterface;
+use Netgen\Layouts\Parameters\ParameterList;
+use Netgen\Layouts\Parameters\ParameterType;
+use Netgen\Layouts\Tests\API\Stubs\ParameterStruct;
+use Netgen\Layouts\Tests\Parameters\Stubs\ParameterCollection;
+use Netgen\Layouts\Tests\Parameters\Stubs\ParameterDefinitionCollection;
+use PHPUnit\Framework\Attributes\CoversTrait;
+use PHPUnit\Framework\TestCase;
+
+#[CoversTrait(ParameterStructTrait::class)]
+final class ParameterStructTraitTest extends TestCase
+{
+    private ParameterStruct $struct;
+
+    protected function setUp(): void
+    {
+        $this->struct = new ParameterStruct();
+    }
+
+    public function testDefaultProperties(): void
+    {
+        self::assertSame([], $this->struct->parameterValues);
+    }
+
+    public function testSetParameterValue(): void
+    {
+        $this->struct->setParameterValue('some_param', 'some_value');
+        $this->struct->setParameterValue('some_other_param', 'some_other_value');
+
+        self::assertSame(
+            [
+                'some_param' => 'some_value',
+                'some_other_param' => 'some_other_value',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testOverwriteParameterValues(): void
+    {
+        $this->struct->setParameterValue('some_param', 'some_value');
+        $this->struct->setParameterValue('some_param', 'new_value');
+
+        self::assertSame(['some_param' => 'new_value'], $this->struct->parameterValues);
+    }
+
+    public function testGetParameterValue(): void
+    {
+        $this->struct->setParameterValue('some_param', 'some_value');
+
+        self::assertSame('some_value', $this->struct->getParameterValue('some_param'));
+    }
+
+    public function testGetParameterValueWithNonExistingParameter(): void
+    {
+        self::assertNull($this->struct->getParameterValue('some_other_param'));
+    }
+
+    public function testHasParameterValue(): void
+    {
+        $this->struct->setParameterValue('some_param', 'some_value');
+
+        self::assertTrue($this->struct->hasParameterValue('some_param'));
+    }
+
+    public function testHasParameterValueWithNoValue(): void
+    {
+        $this->struct->setParameterValue('some_param', 'some_value');
+
+        self::assertFalse($this->struct->hasParameterValue('some_other_param'));
+    }
+
+    public function testFillDefault(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $this->struct->fillDefaultParameters($parameterDefinitions);
+
+        self::assertSame(
+            [
+                'css_class' => 'css_default',
+                'css_id' => 'id_default',
+                'compound' => true,
+                'inner' => 'inner_default',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillFromCollection(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $compoundDefinition = $parameterDefinitions->getParameterDefinition('compound');
+
+        $parameters = ParameterCollection::fromArray(
+            [
+                'parameters' => new ParameterList(
+                    [
+                        'css_class' => Parameter::fromArray(
+                            [
+                                'value' => 'css',
+                                'parameterDefinition' => $parameterDefinitions->getParameterDefinition('css_class'),
+                            ],
+                        ),
+                        'inner' => Parameter::fromArray(
+                            [
+                                'value' => 'inner',
+                                'parameterDefinition' => $compoundDefinition->getParameterDefinition('inner'),
+                            ],
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $this->struct->fillParametersFromCollection($parameterDefinitions, $parameters);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => null,
+                'compound' => null,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillFromHash(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'css_id' => 'id',
+            'compound' => false,
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($parameterDefinitions, $initialValues);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id',
+                'compound' => false,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillFromHashWithMissingValues(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($parameterDefinitions, $initialValues);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id_default',
+                'compound' => true,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillFromHashWithImport(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'css_id' => 'id',
+            'compound' => false,
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($parameterDefinitions, $initialValues, true);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id',
+                'compound' => false,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    public function testFillFromHashWithImportAndMissingValues(): void
+    {
+        $parameterDefinitions = $this->buildParameterDefinitionCollection();
+
+        $initialValues = [
+            'css_class' => 'css',
+            'inner' => 'inner',
+        ];
+
+        $this->struct->fillParametersFromHash($parameterDefinitions, $initialValues, true);
+
+        self::assertSame(
+            [
+                'css_class' => 'css',
+                'css_id' => 'id_default',
+                'compound' => true,
+                'inner' => 'inner',
+            ],
+            $this->struct->parameterValues,
+        );
+    }
+
+    private function buildParameterDefinitionCollection(): ParameterDefinitionCollectionInterface
+    {
+        $compoundDefinition = ParameterDefinition::fromArray(
+            [
+                'name' => 'compound',
+                'type' => new ParameterType\Compound\BooleanType(),
+                'isRequired' => false,
+                'defaultValue' => true,
+                'parameterDefinitions' => [
+                    'inner' => ParameterDefinition::fromArray(
+                        [
+                            'name' => 'inner',
+                            'type' => new ParameterType\TextLineType(),
+                            'isRequired' => false,
+                            'defaultValue' => 'inner_default',
+                        ],
+                    ),
+                ],
+            ],
+        );
+
+        $parameterDefinitions = [
+            'css_class' => ParameterDefinition::fromArray(
+                [
+                    'name' => 'css_class',
+                    'type' => new ParameterType\TextLineType(),
+                    'isRequired' => false,
+                    'defaultValue' => 'css_default',
+                ],
+            ),
+            'css_id' => ParameterDefinition::fromArray(
+                [
+                    'name' => 'css_id',
+                    'type' => new ParameterType\TextLineType(),
+                    'isRequired' => false,
+                    'defaultValue' => 'id_default',
+                ],
+            ),
+            'compound' => $compoundDefinition,
+        ];
+
+        return ParameterDefinitionCollection::fromArray(
+            [
+                'parameterDefinitions' => $parameterDefinitions,
+            ],
+        );
+    }
+}

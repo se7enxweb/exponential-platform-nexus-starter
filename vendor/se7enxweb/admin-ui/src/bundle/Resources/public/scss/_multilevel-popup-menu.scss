@@ -1,0 +1,22 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-multilevel-popup-menu {
+    &__search {
+        margin-bottom: calculateRem(4px);
+        padding: 0 calculateRem(8px);
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__search-input {
+        border-radius: $ibexa-border-radius;
+    }
+
+    &__groups {
+        max-height: calculateRem(390px);
+        overflow-y: auto;
+    }
+}

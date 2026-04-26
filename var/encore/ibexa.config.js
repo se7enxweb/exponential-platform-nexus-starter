@@ -1,0 +1,1 @@
+module.exports = [".\/vendor\/se7enxweb\/system-info\/src\/bundle\/Resources\/encore\/ibexa.config.js",".\/vendor\/se7enxweb\/admin-ui\/src\/bundle\/Resources\/encore\/ibexa.config.js"];

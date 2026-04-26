@@ -1,0 +1,23 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\FieldTypeRichText\Form\Type\RichTextFieldType:
+        arguments:
+            $docbookToXhtml5EditConverter: '@Ibexa\FieldTypeRichText\RichText\Converter\Html5Edit'
+            $fieldTypeService: '@ibexa.api.service.field_type'
+
+    Ibexa\FieldTypeRichText\Form\Type\RichTextType:
+        arguments:
+            $docbookToXhtml5EditConverter: '@Ibexa\FieldTypeRichText\RichText\Converter\Html5Edit'
+
+    Ibexa\FieldTypeRichText\Validator\Constraints\RichTextValidator:
+        tags:
+            - { name: validator.constraint_validator }
+
+    Ibexa\FieldTypeRichText\Form\Mapper\RichTextFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.value, fieldType: ibexa_richtext }
+

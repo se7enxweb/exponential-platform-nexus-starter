@@ -1,0 +1,34 @@
+item_types:
+    layout:
+        name: item_types.layout
+        tree:
+            enabled: false
+        search:
+            enabled: false
+        preview:
+            template: '@NetgenLayouts/browser/layout.html.twig'
+        columns:
+            name:
+                name: columns.name
+                value_provider: name
+            layout_id:
+                name: columns.layout.layout_id
+                value_provider: layout\layout_id
+            type:
+                name: columns.layout.type
+                value_provider: layout\type
+            created:
+                name: columns.layout.created
+                value_provider: layout\created
+            modified:
+                name: columns.layout.modified
+                value_provider: layout\modified
+            shared:
+                name: columns.layout.shared
+                value_provider: layout\shared
+        default_columns:
+            - name
+            - type
+            - created
+            - modified
+            - shared

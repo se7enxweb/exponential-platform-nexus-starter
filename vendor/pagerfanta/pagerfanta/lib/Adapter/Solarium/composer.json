@@ -1,0 +1,24 @@
+{
+    "name": "pagerfanta/solarium-adapter",
+    "type": "library",
+    "description": "Pagerfanta adapter for Solarium",
+    "keywords": ["pagerfanta", "solarium"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "pagerfanta/core": "^3.0",
+        "solarium/solarium": "^5.0 || ^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6 || ^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagerfanta\\Solarium\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,9 @@
+services:
+    netgen.ibexa_search_extra.page_indexing.url_resolver.site:
+        class: Netgen\Bundle\IbexaSearchExtraBundle\Core\Search\Common\PageIndexing\UrlResolver\SiteUrlResolver
+        arguments:
+            - '@Ibexa\Bundle\Core\Routing\UrlAliasRouter'
+            - '@netgen.ibexa_search_extra.page_indexing.config_resolver'
+
+    netgen.ibexa_search_extra.page_indexing.url_resolver:
+        alias: netgen.ibexa_search_extra.page_indexing.url_resolver.site

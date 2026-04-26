@@ -1,0 +1,29 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-add-to-bookmarks {
+    position: relative;
+    width: calculateRem(36px);
+    height: calculateRem(36px);
+    margin-top: calculateRem(-4px);
+
+    &__icon-wrapper {
+        &--add,
+        &--remove {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: calculateRem(36px);
+            height: calculateRem(36px);
+            padding: calculateRem(5px);
+            transition: $ibexa-admin-widget-open-transition;
+        }
+    }
+
+    &--checked .ibexa-add-to-bookmarks__icon-wrapper--add,
+    &:not(.ibexa-add-to-bookmarks--checked) .ibexa-add-to-bookmarks__icon-wrapper--remove {
+        opacity: 0;
+        transform: scale(0);
+    }
+}

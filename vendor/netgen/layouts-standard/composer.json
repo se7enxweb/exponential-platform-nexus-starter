@@ -1,0 +1,58 @@
+{
+    "name": "netgen/layouts-standard",
+    "description": "Netgen Layouts enables you to build and manage complex web pages in a simpler way and with less coding. This package provides a set of most used blocks and layouts for Netgen Layouts for building rich content websites.",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "netgen/layouts-core": "~2.0.0",
+        "league/commonmark": "^2.7",
+        "twig/extra-bundle": "^3.23",
+        "twig/markdown-extra": "^3.23"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0",
+        "phpunit/phpunit": "^13.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit -c phpunit.xml --colors=always",
+        "coverage": "@php -dzend_extension=xdebug.so -dxdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml --coverage-html=coverage --colors=always",
+        "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --ansi",
+        "phpstan-tests": "@php vendor/bin/phpstan analyse -c phpstan.tests.neon --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Layouts\\Standard\\": "lib/",
+            "Netgen\\Bundle\\LayoutsStandardBundle\\": "bundle/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\Layouts\\Standard\\Tests\\": "tests/lib/",
+            "Netgen\\Layouts\\Tests\\": "vendor/netgen/layouts-core/tests/lib/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

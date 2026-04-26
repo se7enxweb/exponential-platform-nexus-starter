@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://over-blog.com/schema/dic/overblog_graphiql"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://over-blog.com/schema/dic/overblog_graphiql"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="javaScriptLibraries">
+        <xsd:attribute name="graphiql" type="xsd:token"/>
+        <xsd:attribute name="react" type="xsd:token"/>
+        <xsd:attribute name="fetch" type="xsd:token"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="config">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="template" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="javascript_libraries" type="javaScriptLibraries" minOccurs="0" maxOccurs="1" />
+        </xsd:choice>
+    </xsd:complexType>
+</xsd:schema>

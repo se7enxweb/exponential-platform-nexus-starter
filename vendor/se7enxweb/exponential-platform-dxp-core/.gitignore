@@ -1,0 +1,10 @@
+doc/apidoc/
+docblox.xml
+composer.phar
+/vendor/
+var/
+composer.lock
+.php-cs-fixer.cache
+.phpunit.result.cache
+phpstan.neon
+.rules/

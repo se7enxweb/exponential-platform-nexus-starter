@@ -1,0 +1,24 @@
+{
+    "name": "pagerfanta/elastica-adapter",
+    "type": "library",
+    "description": "Pagerfanta adapter for Elastica",
+    "keywords": ["pagerfanta", "elastica"],
+    "license": "MIT",
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "pagerfanta/core": "^3.0",
+        "ruflin/elastica": "^6.0 || ^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6 || ^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagerfanta\\Elastica\\": "./"
+        },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "minimum-stability": "dev"
+}

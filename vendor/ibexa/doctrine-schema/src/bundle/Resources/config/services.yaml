@@ -1,0 +1,32 @@
+parameters:
+    ibexa.schema.default_table_options: []
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    _instanceof:
+        Ibexa\DoctrineSchema\Database\DbPlatform\DbPlatformInterface:
+            tags: [ ibexa.doctrine.db.platform ]
+
+    Ibexa\DoctrineSchema\Exporter\:
+        resource: '../../../lib/Exporter/*'
+
+    Ibexa\DoctrineSchema\Importer\:
+        resource: '../../../lib/Importer/*'
+
+    Ibexa\DoctrineSchema\Database\DbPlatformFactory:
+        arguments:
+            $dbPlatforms: !tagged_iterator ibexa.doctrine.db.platform
+
+    Ibexa\DoctrineSchema\Database\DbPlatform\:
+        resource: '../../../lib/Database/DbPlatform/*'
+
+    Ibexa\DoctrineSchema\Builder\SchemaBuilder:
+        arguments:
+            $defaultTableOptions: '%ibexa.schema.default_table_options%'
+
+    Doctrine\Common\EventManager: ~
+
+    Ibexa\Bundle\DoctrineSchema\Command\DumpSqlCommand: ~

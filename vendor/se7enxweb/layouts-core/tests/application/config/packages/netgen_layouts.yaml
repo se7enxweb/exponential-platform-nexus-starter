@@ -1,0 +1,38 @@
+netgen_layouts:
+    layout_types:
+        test_layout_1:
+            name: 'Test layout 1'
+            enabled: false
+            zones:
+                top:
+                    name: 'Top'
+                    allowed_block_definitions: [title]
+                left:
+                    name: 'Left'
+                right:
+                    name: 'Right'
+                bottom:
+                    name: 'Bottom'
+
+        test_layout_2:
+            name: 'Test layout 2'
+            enabled: false
+            zones:
+                top:
+                    name: 'Top'
+                left:
+                    name: 'Left'
+                right:
+                    name: 'Right'
+                bottom:
+                    name: 'Bottom'
+
+    query_types:
+        test_query_type:
+            name: 'Test query type'
+            enabled: false
+
+    value_types:
+        test_value_type:
+            name: 'Test value type'
+            enabled: false

@@ -1,0 +1,97 @@
+.nl-tooltip {
+    display:none;
+    position:fixed;
+    width:300px;
+    z-index:1010;
+    .nl-tooltip-inner {
+        background:hsla(0, 0, 20, 0.9);
+        color:#fff;
+        text-align:center;
+        font-size:10px;
+        padding:0.5em 1em;
+        font-weight:200;
+        position:absolute;
+        border-radius:2px;
+        &::before {
+            content:"";
+            width:0;
+            height:0;
+            position:absolute;
+            display:block;
+        }
+    }
+    &.nl-tooltip-top,
+    &.nl-tooltip-bottom {
+        .nl-tooltip-inner {
+            left:0;
+            transform:translateX(-50%);
+            &::before {
+                left:50%;
+                transform:translateX(-50%);
+                border-left:4px solid transparent;
+                border-right:4px solid transparent;
+            }
+        }
+    }
+    &.nl-tooltip-top {
+        .nl-tooltip-inner {
+            bottom:10px;
+            &::before {
+                top:100%;
+                border-top:6px solid hsla(0, 0, 20, 0.9);
+            }
+        }
+    }
+    &.nl-tooltip-bottom {
+        .nl-tooltip-inner {
+            top:10px;
+            &::before {
+                bottom:100%;
+                border-bottom:6px solid hsla(0, 0, 20, 0.9);
+            }
+        }
+    }
+    &.nl-tooltip-left,
+    &.nl-tooltip-right {
+        .nl-tooltip-inner {
+            top:0;
+            transform:translateY(-50%);
+            &::before {
+                top:50%;
+                transform:translateY(-50%);
+                border-top:4px solid transparent;
+                border-bottom:4px solid transparent;
+            }
+        }
+    }
+    &.nl-tooltip-left {
+        .nl-tooltip-inner {
+            right:10px;
+            &::before {
+                left:100%;
+                border-left:6px solid hsla(0, 0, 20, 0.9);
+            }
+        }
+    }
+    &.nl-tooltip-right {
+        .nl-tooltip-inner {
+            left:10px;
+            &::before {
+                right:100%;
+                border-right:6px solid hsla(0, 0, 20, 0.9);
+            }
+        }
+    }
+    &.nl-tooltip-active {
+        display:block;
+        animation:showTT 200ms ease-out;
+    }
+}
+@keyframes showTT {
+    from {
+        opacity:0;
+    }
+    top {
+        opacity:1;
+    }
+}

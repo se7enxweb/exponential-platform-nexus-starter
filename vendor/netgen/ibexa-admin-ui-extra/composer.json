@@ -1,0 +1,42 @@
+{
+    "name": "netgen/ibexa-admin-ui-extra",
+    "description": "Netgen's extra Admin UI bits for Ibexa CMS",
+    "type": "ezplatform-bundle",
+    "homepage": "https://github.com/netgen/ibexa-admin-ui-extra",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "ibexa/admin-ui": "^5.0.2"
+    },
+    "require-dev": {
+        "ibexa/graphql": "^5.0.2",
+        "phpunit/phpunit": "^10",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\IbexaAdminUIExtraBundle\\": "bundle"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netgen\\IbexaAdminUIExtra\\Tests\\": "tests/bundle"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": false
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit --colors=always"
+    }
+}

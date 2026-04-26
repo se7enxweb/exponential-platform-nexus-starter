@@ -1,0 +1,36 @@
+{
+    "id": "@uuid@",
+    "layout_id": "71cbe281-430c-51d5-8e21-c3cc4e656dac",
+    "definition_identifier": "list",
+    "name": "",
+    "parent_position": 1,
+    "parameters": {
+        "number_of_columns": 2,
+        "paged_collections:enabled": null,
+        "paged_collections:type": null,
+        "paged_collections:max_pages": null,
+        "paged_collections:ajax_first": null,
+        "css_class": null,
+        "css_id": null,
+        "set_container": null
+    },
+    "view_type": "list",
+    "item_view_type": "standard",
+    "published": false,
+    "has_published_state": false,
+    "locale": "en",
+    "is_translatable": false,
+    "always_available": true,
+    "is_container": false,
+    "placeholders": [],
+    "collections": [
+        {
+            "identifier": "default",
+            "collection_id": "@uuid@",
+            "collection_type": "manual",
+            "offset": 0,
+            "limit": null
+        }
+    ],
+    "config": []
+}

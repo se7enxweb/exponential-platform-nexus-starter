@@ -1,0 +1,56 @@
+User:
+    type: object
+    config:
+        description: "An Ibexa repository User."
+        fields:
+            id:
+                type: "Int"
+                description: "The Content item's id. Shortcut to ContentInfo {id}."
+            name:
+                type: "String"
+                resolve: "@=value.contentInfo.name"
+            content:
+                type: "UserItem"
+                resolve: "@=query('Item', {id: value.id})"
+            version:
+                type: "Version"
+                description: "Current version metadata"
+                resolve: "@=value.versionInfo"
+            enabled:
+                type: "Boolean"
+            maxLogin:
+                type: "Int"
+            groups:
+                type: "[UserGroup]"
+                resolve: "@=query('UserGroupsByUserId', value.id)"
+            thumbnail:
+                type: Thumbnail
+                resolve: "@=query('Thumbnail', value.getThumbnail())"
+
+UserGroup:
+    type: object
+    config:
+        fields:
+            id:
+                type: "Int"
+                description: "The Content item's id. Shortcut to ContentInfo {id}."
+            name:
+                type: "String"
+                resolve: "@=value.contentInfo.name"
+            content:
+                description: "The User Group content item"
+                type: "UserGroupItem"
+                resolve: "@=query('Item', {id: value.id})"
+            version:
+                type: "Version"
+                description: "Current version"
+                resolve: "@=value.versionInfo"
+            parentGroup:
+                type: "UserGroup"
+                resolve: "@=query('UserGroupById', value.parentId)"
+            subGroups:
+                type: "[UserGroup]"
+                resolve: "@=query('UserGroupSubGroups', value)"
+            users:
+                type: "[User]"
+                resolve: "@=query('UsersOfGroup', value)"

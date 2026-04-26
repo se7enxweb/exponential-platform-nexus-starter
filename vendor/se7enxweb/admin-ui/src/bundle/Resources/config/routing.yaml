@@ -1,0 +1,1027 @@
+#
+# Dashboard
+#
+
+ibexa.dashboard:
+    path: /dashboard
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\DashboardController::dashboardAction'
+
+#
+# Section
+#
+
+ibexa.section.list:
+    path: /section/list
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::listAction'
+
+ibexa.section.create:
+    path: /section/create
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::createAction'
+
+ibexa.section.view:
+    path: /section/view/{sectionId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::viewAction'
+
+ibexa.section.update:
+    path: /section/update/{sectionId}
+    defaults:
+        sectionId: null
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::updateAction'
+
+ibexa.section.delete:
+    path: /section/delete/{sectionId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::deleteAction'
+
+ibexa.section.bulk_delete:
+    path: /section/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::bulkDeleteAction'
+
+ibexa.section.assign_content:
+    path: /section/assign-content/{sectionId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\SectionController::assignContentAction'
+
+#
+# Language
+#
+
+ibexa.language.list:
+    path: /language/list
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::listAction'
+
+ibexa.language.view:
+    path: /language/view/{languageId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::viewAction'
+
+ibexa.language.create:
+    path: /language/create
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::createAction'
+
+ibexa.language.edit:
+    path: /language/edit/{languageId}
+    defaults:
+        languageId: null
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::editAction'
+
+ibexa.language.delete:
+    path: /language/delete/{languageId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::deleteAction'
+
+ibexa.language.bulk_delete:
+    path: /language/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LanguageController::bulkDeleteAction'
+
+#
+# Role
+#
+
+ibexa.role.list:
+    path: /role/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::listAction'
+
+ibexa.role.view:
+    path: /role/{roleId}/{policyPage}/{assignmentPage}
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::viewAction'
+        policyPage: 1
+        assignmentPage: 1
+    requirements:
+        roleId: \d+
+        policyPage: \d+
+        assignmentPage: \d+
+
+ibexa.role.create:
+    path: /role/create
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::createAction'
+
+ibexa.role.copy:
+    path: /role/{roleId}/copy
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::copyAction'
+    requirements:
+        roleId: \d+
+
+ibexa.role.update:
+    path: /role/{roleId}/update
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::updateAction'
+    requirements:
+        roleId: \d+
+
+ibexa.role.delete:
+    path: /role/{roleId}/delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::deleteAction'
+    requirements:
+        roleId: \d+
+
+ibexa.role.bulk_delete:
+    path: /role/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleController::bulkDeleteAction'
+
+#
+# Policy
+#
+
+ibexa.policy.list:
+    path: /role/{roleId}/policy/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::listAction'
+    requirements:
+        roleId: \d+
+
+ibexa.policy.create:
+    path: /role/{roleId}/policy/create
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::createAction'
+    requirements:
+        roleId: \d+
+
+ibexa.policy.update:
+    path: /role/{roleId}/policy/{policyId}/update
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::updateAction'
+    requirements:
+        roleId: \d+
+        policyId: \d+
+
+ibexa.policy.create_with_limitation:
+    path: /role/{roleId}/policy/create/{policyModule}/{policyFunction}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::createWithLimitationAction'
+    requirements:
+        roleId: \d+
+        policyModule: \w+
+        policyFunction: \w+
+
+ibexa.policy.delete:
+    path: /role/{roleId}/policy/{policyId}
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::deleteAction'
+    requirements:
+        roleId: \d+
+        policyId: \d+
+
+ibexa.policy.bulk_delete:
+    path: /role/{roleId}/policy/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\PolicyController::bulkDeleteAction'
+    requirements:
+        roleId: \d+
+
+#
+# Role Assignment
+#
+
+ibexa.role_assignment.list:
+    path: /role/{roleId}/assignment
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleAssignmentController::listAction'
+
+ibexa.role_assignment.create:
+    path: /role/{roleId}/assignment/create
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleAssignmentController::createAction'
+    requirements:
+        roleId: \d+
+
+ibexa.role_assignment.delete:
+    path: /role/{roleId}/assignment/{assignmentId}/delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleAssignmentController::deleteAction'
+
+ibexa.role_assignment.bulk_delete:
+    path: /role/{roleId}/assignment/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\RoleAssignmentController::bulkDeleteAction'
+    requirements:
+        roleId: \d+
+
+#
+# Content type group
+#
+
+ibexa.content_type_group.list:
+    path: /contenttypegroup/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::listAction'
+
+ibexa.content_type_group.view:
+    path: /contenttypegroup/{contentTypeGroupId}/{page}
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::viewAction'
+        page: 1
+    requirements:
+        contentTypeGroupId: \d+
+        page: \d+
+
+ibexa.content_type_group.create:
+    path: /contenttypegroup/create
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::createAction'
+
+ibexa.content_type_group.update:
+    path: /contenttypegroup/{contentTypeGroupId}/update
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::updateAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type_group.delete:
+    path: /contenttypegroup/{contentTypeGroupId}/delete
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::deleteAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type_group.bulk_delete:
+    path: /contenttypegroup/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeGroupController::bulkDeleteAction'
+
+#
+# Trash
+#
+
+ibexa.trash.list:
+    path: /trash/list
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TrashController::listAction'
+
+ibexa.trash.empty:
+    path: /trash/empty
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TrashController::emptyAction'
+
+ibexa.trash.restore:
+    path: /trash/restore
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TrashController::restoreAction'
+
+ibexa.trash.delete:
+    path: /trash/delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TrashController::deleteAction'
+
+#
+# Content type
+#
+
+ibexa.content_type.list:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::listAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.add:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/add
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::addAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.edit:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}/edit
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::editAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.copy:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}/copy
+    methods: ['GET', 'POST']
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::copyAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.update:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}/update/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::updateAction'
+        toLanguageCode: ~
+        fromLanguageCode: ~
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.delete:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}
+    methods: ['DELETE']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::deleteAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.bulk_delete:
+    path: /content_type/{contentTypeGroupId}/bulk-delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::bulkDeleteAction'
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.view:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}/{languageCode}
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::viewAction'
+        languageCode: null
+    requirements:
+        contentTypeGroupId: \d+
+
+ibexa.content_type.add_translation:
+    path: /content-type/translation/add
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::addTranslationAction'
+
+ibexa.content_type.remove_translation:
+    path: /content-type/translation/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::removeTranslationAction'
+
+ibexa.content_type.field_definition_form:
+    path: /contenttypegroup/{contentTypeGroupId}/contenttype/{contentTypeId}/field_definition_form/{fieldDefinitionIdentifier}/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET']
+    options:
+        expose: true
+    controller: 'Ibexa\Bundle\AdminUi\Controller\ContentTypeController::addFieldDefinitionFormAction'
+    defaults:
+        toLanguageCode: ~
+        fromLanguageCode: ~
+    requirements:
+        contentTypeGroupId: \d+
+
+#
+# Location View
+#
+
+ibexa.location.move:
+    path: /location/move
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::moveAction'
+
+ibexa.location.copy:
+    path: /location/copy
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::copyAction'
+
+ibexa.location.trash:
+    path: /location/trash
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::trashAction'
+
+ibexa.location.update:
+    path: /location/update
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::updateAction'
+
+ibexa.location.copy_subtree:
+    path: /location/copy-subtree
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::copySubtreeAction'
+
+# RelationView
+
+ibexa.relation:
+    path: /relation/{contentId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::relationViewAction'
+
+# LocationView / Translation tab
+
+ibexa.translation.add:
+    path: /translation/add
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TranslationController::addAction'
+
+ibexa.translation.remove:
+    path: /translation/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\TranslationController::removeAction'
+
+ibexa.content.update_main_translation:
+    path: /content/update-main-translation
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::updateMainTranslationAction'
+
+ibexa.content.update_visibility:
+    path: /content/update-visibility
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::updateVisibilityAction'
+
+# LocationView / Versions tab
+
+ibexa.version.remove:
+    path: /version/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\VersionController::removeAction'
+
+ibexa.version.has_no_conflict:
+    path: /version/has-no-conflict/{contentId}/{versionNo}/{languageCode}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\Version\VersionConflictController::versionHasNoConflictAction'
+        languageCode: ~
+
+ibexa.version_draft.has_no_conflict:
+    path: /version-draft/has-no-conflict/{contentId}/{languageCode}/{locationId}
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\Content\VersionDraftConflictController::draftHasNoConflictAction'
+        locationId: ~
+
+# LocationView / Locations tab
+
+ibexa.location.add:
+    path: /location/add
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::addAction'
+
+ibexa.location.remove:
+    path: /location/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::removeAction'
+
+ibexa.location.swap:
+    path: /location/swap
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::swapAction'
+
+ibexa.location.update_visibility:
+    path: /location/update-visibility
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::updateVisibilityAction'
+
+ibexa.location.assign_section:
+    path: /location/assign-section
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LocationController::assignSectionAction'
+
+ibexa.content.update_main_location:
+    path: /content/update-main-location
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::updateMainLocationAction'
+
+#
+# Content Edit
+#
+
+ibexa.content.edit:
+    path: /content/edit
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::editAction'
+
+ibexa.content.create:
+    path: /content/create
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::createAction'
+
+ibexa.content.create.proxy:
+    path: /content/create/proxy/{contentTypeIdentifier}/{languageCode}/{parentLocationId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::proxyCreateAction'
+    options:
+        expose: true
+
+ibexa.content.preview:
+    path: /content/{contentId}/preview/{versionNo}/{languageCode}/{locationId}
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::previewAction'
+        languageCode: ~
+        locationId: ~
+    options:
+        expose: true
+
+# IBX-1079: Translate routes with proxy suffix have to be prioritized to avoid issues with URL generations
+ibexa.content.translate.proxy:
+    path: /content/{contentId}/translate/proxy/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::proxyTranslateAction'
+        fromLanguageCode: ~
+
+ibexa.content.translate_with_location.proxy:
+    path: /content/{contentId}/location/{locationId}/translate/proxy/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::proxyTranslateAction'
+        fromLanguageCode: ~
+
+ibexa.content.translate:
+    path: /content/{contentId}/translate/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::translateAction'
+        fromLanguageCode: ~
+
+ibexa.content.translate_with_location:
+    path: /content/{contentId}/location/{locationId}/translate/{toLanguageCode}/{fromLanguageCode}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::translateAction'
+        fromLanguageCode: ~
+
+ibexa.content.check_edit_permission:
+    path: /content/{contentId}/check-edit-permission/{languageCode}
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentController::checkEditPermissionAction'
+        languageCode: ~
+
+ibexa.content.create_no_draft:
+    path: /content/create/nodraft/{contentTypeIdentifier}/{language}/{parentLocationId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::createWithoutDraftAction'
+    options:
+        expose: true
+    # @todo rename language to languageCode in 3.0
+
+ibexa.content.draft.edit:
+    path: /content/edit/draft/{contentId}/{versionNo}/{language}/{locationId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::editVersionDraftAction'
+        language: ~ # @todo rename to languageCode in 3.0
+        locationId: ~
+    options:
+        expose: true
+
+ibexa.content.draft.edit.cancel:
+    path: /content/edit/draft/{contentId}/{versionNo}/{languageCode}/{referrerLocationId}/cancel
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::cancelEditVersionDraftAction'
+
+ibexa.content.draft.create:
+    path: /content/create/draft/{contentId}/{fromVersionNo}/{fromLanguage}/{toLanguage}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentEditController::createContentDraftAction'
+        contentId: null
+        fromVersionNo: null
+        fromLanguage: null
+        toLanguage: null
+    options:
+        expose: true
+
+#
+# Link manager
+#
+ibexa.link_manager.edit:
+    path: /linkmanagement/edit/{urlId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LinkManagerController::editAction'
+    requirements:
+        urlId: \d+
+
+ibexa.link_manager.view:
+    path: /linkmanagement/view/{urlId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\LinkManagerController::viewAction'
+    requirements:
+        urlId: \d+
+
+#
+# User
+#
+
+ibexa.user.delete:
+    path: /user/delete
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\User\UserDeleteController::userDeleteAction'
+
+ibexa.user.create:
+    path: /user/create/{contentTypeIdentifier}/{language}/{parentLocationId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\User\UserController::createAction'
+
+ibexa.user.update:
+    path: /user/update/{contentId}/{versionNo}/{language}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\User\UserController::editAction'
+    options:
+        expose: true
+
+ibexa.user.invite.to_group:
+    path: /user/invite/to-group/{userGroupId}
+    controller: Ibexa\Bundle\AdminUi\Controller\User\InvitationController::sendInvitationsAction
+    methods: ['POST']
+
+ibexa.user.profile.view:
+    path: /user/profile/{userId}/view
+    controller: Ibexa\Bundle\AdminUi\Controller\User\ProfileViewController::viewAction
+    methods: ['GET']
+    options:
+        expose: true
+
+ibexa.user.profile.edit:
+    path: /user/profile/edit
+    controller: Ibexa\Bundle\AdminUi\Controller\User\ProfileEditController::editAction
+    methods: ['GET', 'POST']
+
+#
+# Custom URL alias
+#
+
+ibexa.custom_url.add:
+    path: /url-alias/add
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\UrlAliasController::addAction'
+
+ibexa.custom_url.remove:
+    path: /url-alias/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\UrlAliasController::removeAction'
+
+#
+# URL wildcards
+#
+ibexa.url_wildcard.add:
+    path: /url-wildcard/add
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\URLWildcardController::addAction'
+
+ibexa.url_wildcard.update:
+    path: /url-wildcard/update/{urlWildcardId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\URLWildcardController::updateAction'
+    requirements:
+        URLWildcardId: \d+
+
+ibexa.url_wildcard.bulk_delete:
+    path: /url-wildcard/bulk-delete
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\URLWildcardController::bulkDeleteAction'
+
+#
+# URL Management
+#
+ibexa.url_management:
+    path: /url-management
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\URLManagementController::urlManagementAction'
+
+#
+# Content on the Fly
+#
+
+ibexa.content.on_the_fly.create:
+    path: /content/create/on-the-fly/{contentTypeIdentifier}/{languageCode}/{locationId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentOnTheFlyController::createContentAction'
+    options:
+        expose: true
+
+ibexa.content.on_the_fly.edit:
+    path: /content/edit/on-the-fly/{contentId}/{versionNo}/{languageCode}/{locationId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentOnTheFlyController::editContentAction'
+        locationId: ~
+    options:
+        expose: true
+
+ibexa.content.on_the_fly.has_access:
+    path: /content/create/on-the-fly/{contentTypeIdentifier}/{languageCode}/{locationId}/has-access
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentOnTheFlyController::hasCreateAccessAction'
+    options:
+        expose: true
+
+#
+# User on the Fly
+#
+
+ibexa.user.on_the_fly.create:
+    path: /user/create/on-the-fly/{contentTypeIdentifier}/{languageCode}/{locationId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\UserOnTheFlyController::createUserAction'
+    options:
+        expose: true
+
+ibexa.user.on_the_fly.edit:
+    path: /user/edit/on-the-fly/{contentId}/{versionNo}/{languageCode}/{locationId}
+    methods: ['GET', 'POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\UserOnTheFlyController::editUserAction'
+    options:
+        expose: true
+
+ibexa.user.on_the_fly.has_access:
+    path: /user/create/on-the-fly/{contentTypeIdentifier}/{languageCode}/{locationId}/has-access
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\UserOnTheFlyController::hasCreateAccessAction'
+    options:
+        expose: true
+
+#
+# Object States
+#
+
+ibexa.object_state.groups.list:
+    path: /state/groups
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::listAction'
+
+ibexa.object_state.group.add:
+    path: /state/group/create
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::addAction'
+
+ibexa.object_state.group.update:
+    path: /state/group/update/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::updateAction'
+
+ibexa.object_state.group.delete:
+    path: /state/group/delete/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::deleteAction'
+
+ibexa.object_state.group.bulk_delete:
+    path: /state/group/bulk-delete
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::bulkDeleteAction'
+
+ibexa.object_state.group.view:
+    path: /state/group/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateGroupController::viewAction'
+
+ibexa.object_state.state.add:
+    path: /state/state/create/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::addAction'
+
+ibexa.object_state.state.view:
+    path: /state/state/{objectStateId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::viewAction'
+
+ibexa.object_state.state.update:
+    path: /state/state/update/{objectStateId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::updateAction'
+
+ibexa.object_state.state.delete:
+    path: /state/state/delete/{objectStateId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::deleteAction'
+
+ibexa.object_state.state.bulk_delete:
+    path: /state/state/bulk-delete/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::bulkDeleteAction'
+
+ibexa.object_state.content_state.update:
+    path: /state/contentstate/update/{contentInfoId}/group/{objectStateGroupId}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ObjectStateController::updateContentStateAction'
+
+#
+# Bookmark manager
+#
+
+ibexa.bookmark.list:
+    path: /bookmark/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\BookmarkController::listAction'
+
+ibexa.bookmark.remove:
+    path: /bookmark/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\BookmarkController::removeAction'
+
+#
+# Drafts
+#
+
+ibexa.content_draft.list:
+    path: /contentdraft/list
+    methods: ['GET']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentDraftController::listAction'
+
+ibexa.content_draft.remove:
+    path: /contentdraft/remove
+    methods: ['POST']
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\ContentDraftController::removeAction'
+
+#
+# Notifications
+#
+
+ibexa.notifications.get:
+    path: /notifications/{offset}/{limit}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::getNotificationsAction'
+        offset: 0
+        limit: 10
+    methods: [GET]
+    requirements:
+        offset: '\d+'
+        limit: '\d+'
+
+ibexa.notifications.render.page:
+    path: /notifications/render/page/{page}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::renderNotificationsPageAction'
+        page: 1
+    methods: [GET]
+    requirements:
+        page: '\d+'
+
+ibexa.notifications.render.all:
+    path: /notifications/render/all/{page}
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::renderNotificationsPageAction'
+        page: 1
+        template: '@ibexadesign/account/notifications/list_all.html.twig'
+        render_all: true
+    methods: [ GET, POST ]
+    requirements:
+        page: '\d+'
+
+ibexa.notifications.count:
+    path: /notifications/count
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::countNotificationsAction'
+    methods: [GET]
+
+ibexa.notifications.mark_as_read:
+    path: /notification/read/{notificationId}
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::markNotificationAsReadAction'
+    methods: [GET]
+    requirements:
+        notificationId: '\d+'
+
+ibexa.notifications.mark_multiple_as_read:
+    path: /notifications/read
+    options:
+        expose: true
+    controller:
+        'Ibexa\Bundle\AdminUi\Controller\NotificationController::markNotificationsAsReadAction'
+    methods: [POST]
+
+ibexa.notifications.mark_all_as_read:
+    path: /notifications/read-all
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::markAllNotificationsAsReadAction'
+    methods: [GET]
+
+ibexa.notifications.mark_as_unread:
+    path: /notification/unread/{notificationId}
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::markNotificationAsUnreadAction'
+    methods: [GET]
+    requirements:
+        notificationId: '\d+'
+
+ibexa.notifications.delete:
+    path: /notification/delete/{notificationId}
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::deleteNotificationAction'
+    methods: [POST]
+    requirements:
+        notificationId: '\d+'
+
+ibexa.asset.upload_image:
+    path: /asset/image
+    options:
+        expose: true
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\AssetController::uploadImageAction'
+    methods: [POST]
+
+ibexa.notifications.delete_multiple:
+    path: /notification/delete-multiple
+    defaults:
+        _controller: 'Ibexa\Bundle\AdminUi\Controller\NotificationController::deleteNotificationsAction'
+    methods: [POST]
+
+#
+# Permissions
+#
+ibexa.permission.limitation.language.content_create:
+    path: /permission/limitation/language/content-create/{locationId}
+    options:
+        expose: true
+    controller: 'Ibexa\Bundle\AdminUi\Controller\Permission\LanguageLimitationController::loadLanguageLimitationsForContentCreateAction'
+    methods: [GET]
+    requirements:
+        locationId: \d+
+
+ibexa.permission.limitation.language.content_edit:
+    path: /permission/limitation/language/content-edit/{contentInfoId}
+    options:
+        expose: true
+    controller: 'Ibexa\Bundle\AdminUi\Controller\Permission\LanguageLimitationController::loadLanguageLimitationsForContentEditAction'
+    methods: [GET]
+    requirements:
+        contentInfoId: \d+
+
+ibexa.permission.limitation.language.content_read:
+    path: /permission/limitation/language/content-read/{contentInfoId}
+    options:
+        expose: true
+    controller: 'Ibexa\Bundle\AdminUi\Controller\Permission\LanguageLimitationController::loadLanguageLimitationsForContentReadAction'
+    methods: [GET]
+    requirements:
+        contentInfoId: \d+
+
+### Focus Mode
+
+ibexa.focus_mode.change:
+    path: /user/focus-mode
+    controller: 'Ibexa\Bundle\AdminUi\Controller\User\FocusModeController::changeAction'
+    methods: [GET, POST]

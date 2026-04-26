@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    requireCoverageMetadata="true"
+    beStrictAboutOutputDuringTests="true"
+    displayDetailsOnPhpunitDeprecations="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    colors="true"
+>
+    <php>
+        <server name="KERNEL_CLASS" value="Netgen\Layouts\Tests\App\Kernel" />
+        <server name="KERNEL_BROWSER_CLASS" value="Netgen\Bundle\LayoutsAdminBundle\Tests\Controller\API\KernelBrowser" />
+        <env name="SHELL_VERBOSITY" value="1" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Netgen\Bundle\LayoutsAdminBundle\Controller\API">
+            <directory>tests/bundles/LayoutsAdminBundle/Controller/API</directory>
+        </testsuite>
+    </testsuites>
+
+    <source ignoreSuppressionOfDeprecations="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory>bundles/LayoutsAdminBundle/Controller/API</directory>
+        </include>
+    </source>
+</phpunit>

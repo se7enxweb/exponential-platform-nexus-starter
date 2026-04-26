@@ -1,0 +1,40 @@
+{
+    "name": "netgen/toolbar",
+    "description": "Netgen Toolbar Bundle is an Ibexa bundle that implements a handy toolbar on your site with functions most used by the editors.",
+    "license": "GPL-2.0-only",
+    "type": "ibexa-bundle",
+    "keywords": [
+        "ibexa",
+        "netgen",
+        "toolbar"
+    ],
+    "homepage": "https://github.com/netgen/toolbar",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "ibexa/core": "^5.0"
+    },
+    "require-dev": {
+        "netgen/coding-standard": "^1.0"
+    },
+    "config": {
+        "allow-plugins": false
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\ToolbarBundle\\": "bundle/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

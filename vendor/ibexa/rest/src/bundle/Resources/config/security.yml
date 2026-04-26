@@ -1,0 +1,30 @@
+parameters:
+    ibexa.rest.authorization_header_name: ~
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: false
+        public: false
+
+    Ibexa\Rest\Security\AuthorizationHeaderRESTRequestMatcher:
+        arguments:
+            $headerName: '%ibexa.rest.authorization_header_name%'
+
+    Ibexa\Rest\Security\JWTTokenCreationRESTRequestMatcher: ~
+
+    Ibexa\Rest\Server\Security\CsrfTokenManager:
+        arguments:
+            - '@?security.csrf.token_generator'
+            - '@?security.csrf.token_storage'
+            - '@?request_stack'
+
+    Ibexa\Rest\Security\EventListener\JWT\AuthenticationSuccessSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Rest\Security\EventListener\JWT\JsonLoginHeaderReplacingSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Rest\Security\Authenticator\RestAuthenticator: ~

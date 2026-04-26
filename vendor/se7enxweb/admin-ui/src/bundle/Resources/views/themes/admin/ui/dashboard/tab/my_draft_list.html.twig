@@ -1,0 +1,82 @@
+{% trans_default_domain 'ibexa_dashboard' %}
+{% from '@ibexadesign/ui/component/macros.html.twig' import results_headline %}
+
+{% set empty_content_name_placeholder = 'dashboard.table.content.empty_name_placeholder'|trans|desc('[Untitled]') %}
+{% set body_rows = [] %}
+{% for row in data %}
+    {% set body_row_cols = [] %}
+    {% set content_draft_edit_url = content_is_user|default(false) ? 'ibexa.user.update' : 'ibexa.content.draft.edit' %}
+
+    {% if row.isAccessible %}
+        {% set col_raw %}
+            <svg class="ibexa-icon ibexa-icon--small-medium">
+                <use xlink:href="{{ ibexa_content_type_icon(row.contentType.identifier) }}"></use>
+            </svg>
+        {% endset %}
+        {% set body_row_cols = body_row_cols|merge([{
+            has_icon: true,
+            content: col_raw,
+            raw: true,
+        }]) %}
+
+        {% set body_row_cols = body_row_cols|merge([
+            { content: row.versionInfo.name|default(empty_content_name_placeholder)},
+            { content: row.contentType.name },
+            { content: ibexa_admin_ui_config.languages.mappings[row.versionInfo.initialLanguageCode].name },
+            { content: row.versionInfo.versionNo },
+            { content: row.versionInfo.modificationDate|ibexa_full_datetime },
+        ]) %}
+
+        {% set col_raw %}
+            {% set draft_action_list = knp_menu_get(
+                'ibexa.admin_ui.action.draft_list',
+                [],
+                { versionInfo: row.versionInfo}) %}
+            {{ knp_menu_render(draft_action_list, {
+                template: '@ibexadesign/ui/action_list.html.twig',
+            }) }}
+        {% endset %}
+        {% set body_row_cols = body_row_cols|merge([{
+            has_action_btns: true,
+            content: col_raw,
+            raw: true,
+        }]) %}
+    {% else %}
+        {% set body_row_cols = body_row_cols|merge([{
+            attr: { colspan: 8 },
+            content: 'dashboard.table.draft.unauthorized'|trans({
+                '%module%': row.unauthorizedContentDraft.module,
+                '%function%': row.unauthorizedContentDraft.function,
+                '%contentId%': row.unauthorizedContentDraft.payload.contentId,
+            })|desc('You do not have the \'%function%\' \'%module%\' permission for content ID: %contentId%'),
+        }]) %}
+    {% endif %}
+
+    {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+{% endfor %}
+
+{% include '@ibexadesign/ui/component/table/table.html.twig' with {
+    headline: results_headline(pager.getNbResults()),
+    head_cols: [
+        { has_icon: true },
+        { content: 'dashboard.table.name'|trans|desc('Name') },
+        { content: 'dashboard.table.content_type'|trans|desc('Content type') },
+        { content: 'dashboard.table.modified_language'|trans|desc('Modified language') },
+        { content: 'dashboard.table.version'|trans|desc('Version') },
+        { content: 'dashboard.table.last_saved'|trans|desc('Modified') },
+        { },
+    ],
+    body_rows,
+    empty_table_info_text: 'dashboard.tab.my_drafts.empty'|trans|desc('You have no drafts yet. Your drafts will show up here.'),
+} %}
+
+{% if pager.haveToPaginate %}
+    {% include '@ibexadesign/ui/pagination.html.twig' with {
+        'pager': pager,
+        'paginaton_params' : pager_options|merge({
+            'routeParams': {
+                '_fragment': 'ibexa-tab-dashboard-my-my-drafts'
+            }
+        })
+    } %}
+{% endif %}

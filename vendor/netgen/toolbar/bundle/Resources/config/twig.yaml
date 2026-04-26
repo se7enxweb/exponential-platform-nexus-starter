@@ -1,0 +1,2 @@
+globals:
+    ngtoolbar: "@netgen_toolbar.twig.global_variable"

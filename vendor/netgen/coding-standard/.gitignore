@@ -1,0 +1,6 @@
+.idea/
+vendor/
+.php-cs-fixer.cache
+composer.lock
+composer.phar
+studio.json

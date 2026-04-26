@@ -1,0 +1,52 @@
+name: Browser tests
+
+on:
+    push:
+        branches:
+            - main
+            - '[0-9]+.[0-9]+'
+    pull_request: ~
+
+jobs:
+    admin-ui-oss:
+        name: "AdminUI-OSS"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'oss'
+            test-suite: '--profile=browser --suite=admin-ui-full --tags=@IbexaOSS'
+            test-setup-phase-1: '--profile=setup --suite=personas --mode=standard'
+            test-setup-phase-2: '--profile=setup --suite=content-translation --mode=standard'
+            job-count: 2
+            timeout: 40
+        secrets: inherit
+    admin-ui-headless:
+        name: "AdminUI-Headless"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'headless'
+            test-suite: '--profile=browser --suite=admin-ui-full --tags=@IbexaHeadless'
+            test-setup-phase-1: '--profile=setup --suite=personas --mode=standard'
+            test-setup-phase-2: '--profile=setup --suite=content-translation --mode=standard'
+            job-count: 2
+            timeout: 40
+        secrets: inherit
+    admin-ui-experience-commerce:
+        name: "AdminUI-Experience/Commerce"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'experience'
+            test-suite: '--profile=browser --suite=admin-ui-full --tags=@IbexaExperience,@IbexaCommerce'
+            test-setup-phase-1: '--profile=setup --suite=personas --mode=standard'
+            test-setup-phase-2: '--profile=setup --suite=content-translation --mode=standard'
+            job-count: 2
+            timeout: 40
+        secrets: inherit
+    page-builder:
+        name: "Basic Page Builder tests"
+        uses: ibexa/gh-workflows/.github/workflows/browser-tests.yml@main
+        with:
+            project-edition: 'experience'
+            test-suite:  '--profile=browser --suite=personas'
+            test-setup-phase-1: '--profile=setup --suite=personas --tags=@setup --mode=standard'
+            timeout: 40
+        secrets: inherit

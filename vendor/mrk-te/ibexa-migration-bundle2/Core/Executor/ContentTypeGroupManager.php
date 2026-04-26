@@ -1,0 +1,255 @@
+<?php
+
+namespace Kaliop\IbexaMigrationBundle\Core\Executor;
+
+use Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup;
+use Kaliop\IbexaMigrationBundle\API\Collection\ContentTypeGroupCollection;
+use Kaliop\IbexaMigrationBundle\API\Exception\InvalidStepDefinitionException;
+use Kaliop\IbexaMigrationBundle\API\Exception\MigrationBundleException;
+use Kaliop\IbexaMigrationBundle\API\MigrationGeneratorInterface;
+use Kaliop\IbexaMigrationBundle\API\EnumerableMatcherInterface;
+use Kaliop\IbexaMigrationBundle\Core\Matcher\ContentTypeGroupMatcher;
+
+/**
+ * Handles content type groups migrations.
+ */
+class ContentTypeGroupManager extends RepositoryExecutor implements MigrationGeneratorInterface, EnumerableMatcherInterface
+{
+    protected $supportedActions = array('create', 'load', 'update', 'delete');
+    protected $supportedStepTypes = array('content_type_group');
+
+    /** @var ContentTypeGroupMatcher $contentTypeGroupMatcher */
+    protected $contentTypeGroupMatcher;
+
+    /**
+     * @param ContentTypeGroupMatcher $contentTypeGroupMatcher
+     */
+    public function __construct(ContentTypeGroupMatcher $contentTypeGroupMatcher)
+    {
+        $this->contentTypeGroupMatcher = $contentTypeGroupMatcher;
+    }
+
+    /**
+     * @return \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup
+     * @throws \Exception
+     * @todo add support for setting creator id
+     */
+    protected function create($step)
+    {
+        if (!isset($step->dsl['identifier'])) {
+            throw new InvalidStepDefinitionException("The 'identifier' key is required to create a new content type group.");
+        }
+
+        $contentTypeService = $this->repository->getContentTypeService();
+
+        $contentTypeGroupIdentifier = $this->resolveReference($step->dsl['identifier']);
+        $createStruct = $contentTypeService->newContentTypeGroupCreateStruct($contentTypeGroupIdentifier);
+
+        if (isset($step->dsl['creation_date'])) {
+            $createStruct->creationDate = $this->toDateTime($step->dsl['creation_date']);
+        }
+
+        $group = $contentTypeService->createContentTypeGroup($createStruct);
+
+        $this->setReferences($group, $step);
+
+        return $group;
+    }
+
+    protected function load($step)
+    {
+        $groupsCollection = $this->matchContentTypeGroups('load', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        $this->setReferences($groupsCollection, $step);
+
+        return $groupsCollection;
+    }
+
+    protected function update($step)
+    {
+        $groupsCollection = $this->matchContentTypeGroups('update', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        $contentTypeService = $this->repository->getContentTypeService();
+
+        foreach ($groupsCollection as $key => $contentTypeGroup) {
+            $updateStruct = $contentTypeService->newContentTypeGroupUpdateStruct();
+
+            if (isset($step->dsl['identifier'])) {
+                $updateStruct->identifier = $this->resolveReference($step->dsl['identifier']);
+            }
+            if (isset($step->dsl['modification_date'])) {
+                $updateStruct->modificationDate = $this->toDateTime($step->dsl['modification_date']);
+            }
+
+            $contentTypeService->updateContentTypeGroup($contentTypeGroup, $updateStruct);
+            // reload the group
+            $group = $contentTypeService->loadContentTypeGroup($contentTypeGroup->id);
+            $groupsCollection[$key] = $group;
+        }
+
+        $this->setReferences($groupsCollection, $step);
+
+        return $groupsCollection;
+    }
+
+    protected function delete($step)
+    {
+        $groupsCollection = $this->matchContentTypeGroups('delete', $step);
+
+        $this->validateResultsCount($groupsCollection, $step);
+
+        $this->setReferences($groupsCollection, $step);
+
+        $contentTypeService = $this->repository->getContentTypeService();
+
+        foreach ($groupsCollection as $contentTypeGroup) {
+            $contentTypeService->deleteContentTypeGroup($contentTypeGroup);
+        }
+
+        return $groupsCollection;
+    }
+
+    /**
+     * @param string $action
+     * @return ContentTypeGroupCollection
+     * @throws \Exception
+     */
+    protected function matchContentTypeGroups($action, $step)
+    {
+        if (!isset($step->dsl['match'])) {
+            throw new InvalidStepDefinitionException("A match condition is required to $action an object state group");
+        }
+
+        // convert the references passed in the match
+        $match = $this->resolveReferencesRecursively($step->dsl['match']);
+
+        $tolerateMisses = isset($step->dsl['match_tolerate_misses']) ? $this->resolveReference($step->dsl['match_tolerate_misses']) : false;
+
+        return $this->contentTypeGroupMatcher->match($match, $tolerateMisses);
+    }
+
+    /**
+     * @param ContentTypeGroup $object
+     * @param array $references the definitions of the references to set
+     * @throws InvalidStepDefinitionException
+     * @return array key: the reference names, values: the reference values
+     */
+    protected function getReferencesValues($object, array $references, $step)
+    {
+        $refs = array();
+
+        foreach ($references as $key => $reference) {
+
+            $reference = $this->parseReferenceDefinition($key, $reference);
+
+            switch ($reference['attribute']) {
+                case 'content_type_group_id':
+                case 'id':
+                    $value = $object->id;
+                    break;
+                case 'content_type_group_identifier':
+                case 'identifier':
+                    $value = $object->identifier;
+                    break;
+                default:
+                    throw new InvalidStepDefinitionException('Content Type Group Manager does not support setting references for attribute ' . $reference['attribute']);
+            }
+
+            $refs[$reference['identifier']] = $value;
+        }
+
+        return $refs;
+    }
+
+    /**
+     * @param array $matchCondition
+     * @param string $mode
+     * @param array $context
+     * @throws \Exception
+     * @return array
+     */
+    public function generateMigration(array $matchConditions, $mode, array $context = array())
+    {
+        $data = array();
+        $currentUser = $this->authenticateUserByContext($context);
+        try {
+            $contentTypeGroupCollection = $this->contentTypeGroupMatcher->match($matchConditions);
+
+            /** @var \Ibexa\Contracts\Core\Repository\Values\ContentType\ContentTypeGroup $contentTypeGroup */
+            foreach ($contentTypeGroupCollection as $contentTypeGroup) {
+
+                $contentTypeGroupData = array(
+                    'type' => reset($this->supportedStepTypes),
+                    'mode' => $mode,
+                );
+
+                switch ($mode) {
+                    case 'create':
+                        $contentTypeGroupData = array_merge(
+                            $contentTypeGroupData,
+                            array(
+                                'identifier' => $contentTypeGroup->identifier,
+                                'creation_date' => $contentTypeGroup->creationDate->getTimestamp()
+                            )
+                        );
+                        break;
+                    case 'update':
+                        $contentTypeGroupData = array_merge(
+                            $contentTypeGroupData,
+                            array(
+                                'match' => array(
+                                    ContentTypeGroupMatcher::MATCH_CONTENTTYPEGROUP_IDENTIFIER => $contentTypeGroup->identifier
+                                ),
+                                'identifier' => $contentTypeGroup->identifier,
+                                'modification_date' => $contentTypeGroup->modificationDate->getTimestamp()
+                            )
+                        );
+                        break;
+                    case 'delete':
+                        $contentTypeGroupData = array_merge(
+                            $contentTypeGroupData,
+                            array(
+                                'match' => array(
+                                    ContentTypeGroupMatcher::MATCH_CONTENTTYPEGROUP_IDENTIFIER => $contentTypeGroup->identifier
+                                )
+                            )
+                        );
+                        break;
+                    default:
+                        throw new InvalidStepDefinitionException("Executor 'content_type_group' doesn't support mode '$mode'");
+                }
+
+                $data[] = $contentTypeGroupData;
+            }
+        } finally {
+            $this->authenticateUserByReference($currentUser);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function listAllowedConditions()
+    {
+        return $this->contentTypeGroupMatcher->listAllowedConditions();
+    }
+
+    /**
+     * @param int|string $date if integer, we assume a timestamp
+     * @return \DateTime
+     */
+    protected function toDateTime($date)
+    {
+        if (is_int($date)) {
+            return new \DateTime("@" . $date);
+        } else {
+            return new \DateTime($date);
+        }
+    }
+}

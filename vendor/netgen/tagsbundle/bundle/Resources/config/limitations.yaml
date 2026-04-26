@@ -1,0 +1,8 @@
+services:
+    netgen_tags.role.limitation_type.tag:
+        class: Netgen\TagsBundle\Core\Limitation\TagLimitationType
+        arguments:
+            - "@ibexa.api.persistence_handler"
+            - "@netgen_tags.api.persistence_handler.tags"
+        tags:
+            - { name: ibexa.permissions.limitation_type, alias: Tag }

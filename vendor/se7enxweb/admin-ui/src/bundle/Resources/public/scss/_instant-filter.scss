@@ -1,0 +1,99 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-instant-filter {
+    &__input-wrapper {
+        margin-top: calculateRem(16px);
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__input {
+        display: block;
+        width: 100%;
+    }
+}
+
+.ibexa-extra-actions {
+    &--create {
+        .ibexa-instant-filter {
+            &__desc {
+                color: $ibexa-color-dark-400;
+                font-size: $ibexa-text-font-size-small;
+                padding-top: calculateRem(14px);
+            }
+
+            &__group {
+                display: flex;
+                flex-wrap: wrap;
+                padding-bottom: calculateRem(16px);
+
+                &:not(:last-of-type) {
+                    border-bottom: calculateRem(1px) solid $ibexa-color-light;
+                }
+            }
+
+            &__group-name {
+                margin: calculateRem(16px) 0 calculateRem(8px);
+                color: $ibexa-color-dark;
+                flex-basis: 100%;
+                font-size: $ibexa-text-font-size-small;
+            }
+
+            &__group-item {
+                position: relative;
+                flex-basis: 50%;
+                padding: calculateRem(4px);
+                display: flex;
+                align-items: center;
+
+                label {
+                    cursor: pointer;
+                }
+
+                .form-check {
+                    width: 100%;
+                }
+
+                .ibexa-icon {
+                    fill: $ibexa-color-black;
+                    position: absolute;
+                    left: calculateRem(20px);
+                }
+
+                &:hover {
+                    .ibexa-label--checkbox-radio {
+                        color: $ibexa-color-primary;
+                    }
+
+                    .ibexa-icon {
+                        fill: $ibexa-color-primary;
+                    }
+                }
+
+                &--selected {
+                    background: $ibexa-color-light-300;
+                    border-radius: $ibexa-border-radius;
+                }
+            }
+
+            &__group-item-label-icon {
+                height: calculateRem(20px);
+            }
+        }
+    }
+
+    &--edit,
+    &--edit-user {
+        .ibexa-instant-filter {
+            &__desc {
+                color: $ibexa-color-dark-400;
+                font-size: $ibexa-text-font-size-small;
+                margin-bottom: calculateRem(20px);
+                padding: 0;
+            }
+        }
+    }
+}

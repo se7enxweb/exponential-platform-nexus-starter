@@ -1,0 +1,62 @@
+system:
+    admin_group:
+        user:
+            login_template: '@ibexadesign/account/login/index.html.twig'
+
+        content_view:
+            full:
+                default:
+                    controller: 'Ibexa\Bundle\AdminUi\Controller\ContentViewController::locationViewAction'
+                    template: '@ibexadesign/content/location_view.html.twig'
+                    match: true
+            preview_ibexa_object_relation_list_row:
+                default:
+                    controller: 'Ibexa\Bundle\AdminUi\Controller\ContentViewController::locationViewAction'
+                    template: '@ibexadesign/ui/field_type/preview/ibexa_object_relation_list_row.html.twig'
+                    match: true
+            preview_ibexa_image_asset:
+                default:
+                    controller: 'Ibexa\Bundle\AdminUi\Controller\ContentViewController::locationViewAction'
+                    template: '@ibexadesign/ui/field_type/preview/ibexa_image_asset.html.twig'
+                    match: true
+
+        content_edit_view:
+            full:
+                ezplatform_admin_ui:
+                    template: '@ibexadesign/content/edit/edit.html.twig'
+                    match: true
+                    params:
+                        view_base_layout: '@ibexadesign/ui/layout.html.twig'
+
+        content_create_view:
+            full:
+                ezplatform_admin_ui:
+                    template: '@ibexadesign/content/create/create.html.twig'
+                    match: true
+                    params:
+                        view_base_layout: '@ibexadesign/ui/layout.html.twig'
+
+        content_translate_view:
+            full:
+                ezplatform_admin_ui:
+                    template: '@ibexadesign/content/edit/edit.html.twig'
+                    match: true
+                    params:
+                        view_base_layout: '@ibexadesign/ui/layout.html.twig'
+
+        user_settings_update_view:
+            full:
+                ezplatform_admin_ui_datetime_format:
+                    template: '@ibexadesign/account/settings/update_datetime_format.html.twig'
+                    match:
+                        Identifier: [full_datetime_format, short_datetime_format]
+
+        search_view:
+            full:
+                ezplatform_admin_ui:
+                    template: '@ibexadesign/ui/search/index.html.twig'
+                    match: true
+
+    default:
+        fielddefinition_edit_templates:
+            - { template: '@ibexadesign/content_type/field_types.html.twig', priority: 0 }

@@ -1,0 +1,16 @@
+<td>
+    <a {% if not content.contentInfo.trashed %}
+        href="{{ path('ibexa.content.view', { 'contentId': content.id, 'locationId': locationId } ) }}"
+    {% endif %}>
+        {{ content.getName() }}
+        {% if content.contentInfo.trashed %}
+            <em>({{ 'content.in_trash'|trans(domain='ibexa_content')|desc('In Trash') }})</em>
+        {% endif %}
+    </a>
+</td>
+<td>
+    {{ content_type.getName() }}
+</td>
+<td>
+    {{ content.versionInfo.creationDate|ibexa_short_datetime }}
+</td>

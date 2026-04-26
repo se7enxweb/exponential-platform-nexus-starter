@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsIbexaBundle\Controller\Admin;
+
+use Ibexa\Contracts\Core\Repository\ContentTypeService;
+use Ibexa\Contracts\Core\Repository\LocationService;
+use Netgen\Layouts\API\Values\Block\Block;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+final class CreateContent extends Controller
+{
+    public function __construct(
+        private LocationService $locationService,
+        private ContentTypeService $contentTypeService,
+    ) {}
+
+    /**
+     * Creates a content and redirects to route that edits the content.
+     */
+    public function __invoke(Block $block, string $contentTypeIdentifier, string $languageCode, int $parentLocationId): RedirectResponse
+    {
+        $location = $this->locationService->loadLocation($parentLocationId);
+        $contentType = $this->contentTypeService->loadContentTypeByIdentifier($contentTypeIdentifier);
+
+        return $this->redirectToRoute(
+            'ibexa.content.create.proxy',
+            [
+                'contentTypeIdentifier' => $contentType->identifier,
+                'languageCode' => $languageCode,
+                'parentLocationId' => $location->id,
+                '_fragment' => 'ngl-component/' . $block->id->toString() . '/' . $block->locale,
+            ],
+        );
+    }
+
+    public function checkPermissions(): void
+    {
+        if ($this->isGranted('ROLE_NGLAYOUTS_EDITOR')) {
+            return;
+        }
+
+        if ($this->isGranted('nglayouts:ui:access')) {
+            return;
+        }
+
+        $exception = $this->createAccessDeniedException();
+        $exception->setAttributes('nglayouts:ui:access');
+
+        throw $exception;
+    }
+}

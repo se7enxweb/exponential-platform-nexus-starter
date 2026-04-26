@@ -1,0 +1,24 @@
+services:
+    netgen_tags.forms.tree:
+        class: Netgen\TagsBundle\Form\Type\TagTreeType
+        arguments:
+            - "@netgen_tags.api.service.tags"
+        tags:
+            - { name: form.type }
+
+    netgen_tags.forms.translation_list:
+        class: Netgen\TagsBundle\Form\Type\TranslationListType
+        arguments:
+            - "@ibexa.api.service.language"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: form.type }
+
+    netgen_tags.forms.content_type_filter:
+        class: Netgen\TagsBundle\Form\Type\RelatedContentFilterType
+        arguments:
+            - "@netgen_tags.repository.related_content_facets_loader"
+            - "@ibexa.api.service.content_type"
+            - "@netgen_tags.search.related_content.sort_service"
+        tags:
+            - { name: form.type }

@@ -1,0 +1,140 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsBundle\Command;
+
+use Netgen\Layouts\Exception\RuntimeException;
+use Netgen\Layouts\Transfer\Input\ImporterInterface;
+use Netgen\Layouts\Transfer\Input\ImportMode;
+use Netgen\Layouts\Transfer\Input\ImportOptions;
+use Netgen\Layouts\Transfer\Input\Result\ErrorResult;
+use Netgen\Layouts\Transfer\Input\Result\SkippedResult;
+use Netgen\Layouts\Transfer\Input\Result\SuccessResult;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Throwable;
+
+use function file_exists;
+use function file_get_contents;
+use function is_string;
+use function sprintf;
+
+/**
+ * Command to import Netgen Layouts entities.
+ */
+final class ImportCommand extends Command
+{
+    private SymfonyStyle $io;
+
+    public function __construct(
+        private ImporterInterface $importer,
+    ) {
+        // Parent constructor call is mandatory in commands registered as services
+        parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->setDescription('Imports Netgen Layouts entities')
+            ->addArgument('file', InputArgument::REQUIRED, 'JSON file to import')
+            ->addOption('mode', 'm', InputOption::VALUE_REQUIRED, 'Defines how to handle existing entities when importing', 'copy')
+            ->setHelp('The command <info>%command.name%</info> imports Netgen Layouts entities.');
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output): void
+    {
+        $this->io = new SymfonyStyle($input, $output);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $file = $input->getArgument('file');
+        if (!is_string($file) || !file_exists($file)) {
+            throw new RuntimeException('Provided file does not exist.');
+        }
+
+        $importMode = $input->getOption('mode');
+        if (!is_string($importMode)) {
+            $importMode = ImportMode::Copy->value;
+        }
+
+        $errorCount = $this->importData(
+            (string) file_get_contents($file),
+            ImportMode::from($importMode),
+        );
+
+        $errorCount > 0 ?
+            $this->io->caution('Import completed with errors.') :
+            $this->io->success('Import completed successfully.');
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * Import new entities from the given data and returns the error count.
+     */
+    private function importData(string $data, ImportMode $mode): int
+    {
+        $errorCount = 0;
+        $importOptions = new ImportOptions()
+            ->setMode($mode);
+
+        foreach ($this->importer->importData($data, $importOptions) as $index => $result) {
+            if ($result instanceof SkippedResult) {
+                $this->io->note(
+                    sprintf(
+                        'Skipped importing %1$s #%2$d with UUID %3$s',
+                        $result->entityType,
+                        $index + 1,
+                        $result->entityId->toString(),
+                    ),
+                );
+
+                continue;
+            }
+
+            if ($result instanceof SuccessResult) {
+                $this->io->note(
+                    sprintf(
+                        'Imported %1$s #%2$d into %1$s UUID %3$s',
+                        $result->entityType,
+                        $index + 1,
+                        $result->entityId->toString(),
+                    ),
+                );
+
+                continue;
+            }
+
+            if ($result instanceof ErrorResult) {
+                $this->io->error(sprintf('Could not import %s #%d with UUID %s', $result->entityType, $index + 1, $result->entityId->toString()));
+                $this->renderError($result->error);
+                $this->io->newLine();
+
+                ++$errorCount;
+            }
+        }
+
+        return $errorCount;
+    }
+
+    /**
+     * Renders the error to console output. It uses a verbose level to render it, to display as much info as possible.
+     */
+    private function renderError(Throwable $t): void
+    {
+        $previousVerbosity = $this->io->getVerbosity();
+        $this->io->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+
+        new Application()->renderThrowable($t, $this->io);
+
+        $this->io->setVerbosity($previousVerbosity);
+    }
+}

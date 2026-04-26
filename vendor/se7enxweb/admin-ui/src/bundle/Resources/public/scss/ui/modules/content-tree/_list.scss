@@ -1,0 +1,14 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.c-list {
+    margin: 0;
+    padding: 0 0 0 calculateRem(12px);
+    list-style: none;
+
+    &__no-items-message {
+        padding: calculateRem(10px);
+        font-size: $ibexa-text-font-size-small;
+        color: $ibexa-color-dark-400;
+    }
+}

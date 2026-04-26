@@ -1,0 +1,193 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Ibexa\GraphQL\Resolver\LocationResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "Location", method: "resolveLocation" }
+            - { name: overblog_graphql.query, alias: "LocationById", method: "resolveLocationById" }
+            - { name: overblog_graphql.query, alias: "LocationChildren", method: "resolveLocationChildren" }
+            - { name: overblog_graphql.query, alias: "LocationsByContentId", method: "resolveLocationsByContentId" }
+        arguments:
+            $locationService: '@ibexa.siteaccessaware.service.location'
+            $contentService: '@ibexa.siteaccessaware.service.content'
+
+    Ibexa\GraphQL\Resolver\ContentResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "Content", method: "resolveContent" }
+            - { name: overblog_graphql.query, alias: "ContentById", method: "resolveContentById" }
+            - { name: overblog_graphql.query, alias: "ContentByIdList", method: "resolveContentByIdList" }
+            - { name: overblog_graphql.query, alias: "ContentVersions", method: "resolveContentVersions" }
+            - { name: overblog_graphql.query, alias: "ContentByType", method: "findContentByType" }
+            - { name: overblog_graphql.query, alias: "ContentRelations", method: "findContentRelations" }
+            - { name: overblog_graphql.query, alias: "ContentReverseRelations", method: "findContentReverseRelations" }
+            - { name: overblog_graphql.query, alias: "CurrentVersion", method: "resolveCurrentVersion" }
+        arguments:
+            $contentService: '@ibexa.siteaccessaware.service.content'
+            $searchService: '@ibexa.siteaccessaware.service.search'
+
+    Ibexa\GraphQL\Resolver\DomainContentResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "DomainContentItemsByTypeIdentifier", method: "resolveDomainContentItems" }
+            - { name: overblog_graphql.query, alias: "DomainContentType", method: "resolveDomainContentType" }
+            - { name: overblog_graphql.query, alias: "DomainContentItem", method: "resolveDomainContentItem" }
+            - { name: overblog_graphql.query, alias: "DomainRelationFieldValue", method: "resolveDomainRelationFieldValue" }
+            - { name: overblog_graphql.query, alias: "MainUrlAlias", method: "resolveMainUrlAlias" }
+        arguments:
+            $repository: '@ibexa.siteaccessaware.repository'
+
+    Ibexa\GraphQL\Resolver\ItemResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "Item", method: "resolveItem" }
+            - { name: overblog_graphql.query, alias: "ItemOfType", method: "resolveItemOfType" }
+            - { name: overblog_graphql.query, alias: "ItemFieldValue", method: "resolveItemFieldValue" }
+            - { name: overblog_graphql.query, alias: "ItemType", method: "resolveItemType" }
+            - { name: overblog_graphql.query, alias: "ItemsOfTypeAsConnection", method: "resolveItemsOfTypeAsConnection" }
+
+    Ibexa\GraphQL\Resolver\RelationFieldResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "RelationFieldValue", method: "resolveRelationFieldValue" }
+
+    Ibexa\GraphQL\Resolver\ContentThumbnailResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "ContentThumbnail", method: "resolveContentThumbnail" }
+        arguments:
+            $thumbnailStrategy: '@Ibexa\Core\Repository\Strategy\ContentThumbnail\ThumbnailChainStrategy'
+
+    Ibexa\GraphQL\Resolver\ThumbnailResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "Thumbnail", method: "resolveThumbnail" }
+
+    Ibexa\GraphQL\Mutation\AuthenticationMutation:
+        tags:
+            - { name: overblog_graphql.mutation, alias: "CreateToken", method: "createToken" }
+
+    Ibexa\GraphQL\Mutation\UploadFiles:
+        arguments:
+            $repository: '@ibexa.siteaccessaware.repository'
+        tags:
+            - { name: overblog_graphql.mutation, alias: "UploadFiles", method: "uploadFiles" }
+
+    Ibexa\GraphQL\Resolver\UserResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "User", method: "resolveUser" }
+            - { name: overblog_graphql.query, alias: "UserGroups", method: "resolveUserGroups" }
+            - { name: overblog_graphql.query, alias: "UserById", method: "resolveUserById" }
+            - { name: overblog_graphql.query, alias: "UserGroupsByUserId", method: "resolveUserGroupsByUserId" }
+            - { name: overblog_graphql.query, alias: "UserGroupById", method: "resolveUserGroupById" }
+            - { name: overblog_graphql.query, alias: "UserGroupSubGroups", method: "resolveUserGroupSubGroups" }
+            - { name: overblog_graphql.query, alias: "UsersOfGroup", method: "resolveUsersOfGroup" }
+
+    Ibexa\GraphQL\Resolver\ContentTypeResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "ContentTypeById", method: "resolveContentTypeById" }
+            - { name: overblog_graphql.query, alias: "ContentType", method: "resolveContentType" }
+            - { name: overblog_graphql.query, alias: "ContentTypesFromGroup", method: "resolveContentTypesFromGroup" }
+            - { name: overblog_graphql.query, alias: "ContentTypeGroupByIdentifier", method: "resolveContentTypeGroupByIdentifier" }
+        arguments:
+            $contentTypeService: '@ibexa.siteaccessaware.service.content_type'
+
+    Ibexa\GraphQL\Resolver\FieldDefinitionResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "FieldDefinitionName", method: "resolveFieldDefinitionName" }
+            - { name: overblog_graphql.query, alias: "FieldDefinitionDescription", method: "resolveFieldDefinitionDescription" }
+            - { name: overblog_graphql.query, alias: "SelectionFieldDefinitionOptions", method: "resolveSelectionFieldDefinitionOptions" }
+
+    Ibexa\GraphQL\Resolver\SectionResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "SectionById", method: "resolveSectionById" }
+        arguments:
+            $sectionService: '@ibexa.siteaccessaware.service.section'
+
+    Ibexa\GraphQL\Resolver\UrlAliasResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "UrlAliasType", method: "resolveUrlAliasType" }
+            - { name: overblog_graphql.query, alias: "LocationUrlAliases", method: "resolveLocationUrlAliases" }
+            - { name: overblog_graphql.query, alias: "LocationUrlAlias", method: "resolveLocationUrlAlias" }
+            - { name: overblog_graphql.query, alias: "ItemUrlAlias", method: "resolveItemUrlAlias" }
+        arguments:
+            $urlAliasService: '@ibexa.siteaccessaware.service.url_alias'
+            $urlGenerator: '@Ibexa\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator'
+            $siteAccessService: '@Ibexa\Core\MVC\Symfony\SiteAccess\SiteAccessService'
+
+    Ibexa\GraphQL\Resolver\SearchResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "SearchContent", method: "searchContent" }
+            - { name: overblog_graphql.query, alias: "SearchContentOfTypeAsConnection", method: "searchContentOfTypeAsConnection" }
+
+    Ibexa\GraphQL\Resolver\RichTextResolver:
+        arguments:
+            - '@ibexa.richtext.converter.output.xhtml5'
+            - '@Ibexa\FieldTypeRichText\RichText\Converter\Html5Edit'
+        tags:
+            - { name: overblog_graphql.query, alias: "RichTextXmlToHtml5", method: "xmlToHtml5" }
+            - { name: overblog_graphql.query, alias: "RichTextXmlToHtml5Edit", method: "xmlToHtml5Edit" }
+            - { name: overblog_graphql.query, alias: "RichTextXmlToPlainText", method: "xmlToplainText" }
+
+    Ibexa\GraphQL\Resolver\ImageFieldResolver:
+        arguments:
+            $imageFieldType: '@Ibexa\Core\FieldType\Image\Type'
+            $variationHandler: '@ibexa.field_type.ibexa_image.variation_service'
+            $contentService: '@ibexa.siteaccessaware.service.content'
+        tags:
+            - { name: overblog_graphql.query, alias: "ImageVariations", method: "resolveImageVariations" }
+            - { name: overblog_graphql.query, alias: "ImageVariation", method: "resolveImageVariation" }
+
+    Ibexa\GraphQL\Resolver\DateResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "DateTimeFormat", method: "resolveDateToFormat"}
+
+    Ibexa\GraphQL\Resolver\ImageAssetFieldResolver:
+        arguments:
+            $strategies: !tagged_iterator ibexa.field_type.image_asset.mapper.strategy
+        tags:
+            - { name: overblog_graphql.query, alias: "DomainImageAssetFieldValue", method: "resolveDomainImageAssetFieldValue"}
+
+    Ibexa\GraphQL\Resolver\SelectionFieldResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "SelectionFieldValue", method: "resolveSelectionFieldValue"}
+
+    Ibexa\GraphQL\Relay\NodeResolver:
+        tags:
+            - { name: overblog_graphql.query, alias: "node", method: "resolveNode" }
+            - { name: overblog_graphql.query, alias: "node_type", method: "resolveType" }
+
+    Ibexa\GraphQL\Relay\SearchResolver:
+        tags:
+            - {name: overblog_graphql.query, alias: "SearchContentConnection", method: "searchContent"}
+
+    #
+    # Object States
+    #
+
+    Ibexa\GraphQL\Resolver\ObjectStateGroupResolver:
+        arguments:
+            $objectStateService: '@ibexa.siteaccessaware.service.object_state'
+        tags:
+            - {name: overblog_graphql.query, alias: "ObjectStateGroupById", method: "resolveObjectStateGroupById"}
+            - {name: overblog_graphql.query, alias: "ObjectStateGroups", method: "resolveObjectStateGroups"}
+
+    Ibexa\GraphQL\Resolver\ObjectStateResolver:
+        arguments:
+            $objectStateService: '@ibexa.siteaccessaware.service.object_state'
+        tags:
+            - {name: overblog_graphql.query, alias: "ObjectStateById", method: "resolveObjectStateById"}
+            - {name: overblog_graphql.query, alias: "ObjectStateByContentInfo", method: "resolveObjectStateByContentInfo"}
+            - {name: overblog_graphql.query, alias: "ObjectStatesByGroup", method: "resolveObjectStatesByGroup"}
+            - {name: overblog_graphql.query, alias: "ObjectStatesByGroupId", method: "resolveObjectStatesByGroupId"}
+
+    #
+    # Content mutations
+    #
+    Ibexa\GraphQL\Resolver\DomainContentMutationResolver:
+        tags:
+            - { name: overblog_graphql.mutation, alias: "CreateDomainContent", method: "createDomainContent" }
+            - { name: overblog_graphql.mutation, alias: "DeleteDomainContent", method: "deleteDomainContent" }
+            - { name: overblog_graphql.mutation, alias: "UpdateDomainContent", method: "updateDomainContent" }
+
+    Ibexa\GraphQL\Resolver\Map\UploadMap:
+        tags:
+            -   name: overblog_graphql.query_map
+                schema: default

@@ -1,0 +1,5 @@
+{% block ngsurrogate_field %}{% apply spaceless %}
+    {% if ibexa.configResolver.getParameter('ng_site_api.render_missing_field_info') == true %}
+        <span title="Missing field '{{ contentTypeIdentifier }}/{{ field.fieldDefIdentifier }}', Content ID:{{ content.id }}" style="font-size:48px">🐞</span>
+    {% endif %}
+{% endapply %}{% endblock %}

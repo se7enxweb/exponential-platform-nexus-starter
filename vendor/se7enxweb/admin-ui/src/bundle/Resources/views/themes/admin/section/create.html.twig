@@ -1,0 +1,27 @@
+{% extends '@ibexadesign/section/base.html.twig' %}
+
+{% form_theme form_section_create '@ibexadesign/ui/form_fields.html.twig'  %}
+
+{% trans_default_domain 'ibexa_section' %}
+
+{% block header_admin %}
+    {% set section_create_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.section_create.sidebar_right') %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'section.creating'|trans|desc('Creating'),
+        title: 'section.new.title'|trans|desc('Creating a new Section'),
+        context_actions: knp_menu_render(section_create_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+    {{ form_start(form_section_create) }}
+        <div class="card ibexa-card ibexa-card--light">
+            <div class="card-body ibexa-card__body ibexa-form-block">
+                {{ form_row(form_section_create.name, { row_attr: { class: 'ibexa-form-field' }, attr: {'autofocus': 'autofocus'} }) }}
+                {{ form_row(form_section_create.identifier, { row_attr: { class: 'ibexa-form-field' } }) }}
+            </div>
+        </div>
+        {{ form_widget(form_section_create.create, {'attr': {'hidden': 'hidden'}}) }}
+    {{ form_end(form_section_create) }}
+{% endblock %}

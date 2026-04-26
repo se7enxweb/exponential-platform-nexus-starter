@@ -1,0 +1,19 @@
+parameters:
+    netgen_layouts.forms.import_type.max_upload_size: "50m"
+    netgen_layouts.forms.import_type.import_mode: "copy"
+
+services:
+    netgen_layouts.forms.copy_rule_type:
+        class: Netgen\Bundle\LayoutsAdminBundle\Form\Admin\Type\CopyRuleType
+        arguments:
+            - "@security.authorization_checker"
+        tags:
+            - { name: form.type }
+
+    netgen_layouts.forms.import_type:
+        class: Netgen\Bundle\LayoutsAdminBundle\Form\Admin\Type\ImportType
+        arguments:
+            - "%netgen_layouts.forms.import_type.max_upload_size%"
+            - "%netgen_layouts.forms.import_type.import_mode%"
+        tags:
+            - { name: form.type }

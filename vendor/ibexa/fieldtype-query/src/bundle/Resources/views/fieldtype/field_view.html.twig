@@ -1,0 +1,17 @@
+{% extends '@IbexaCore/content_fields.html.twig' %}
+
+{% block ibexa_content_query_field %}
+{{ render(controller(
+    "ibexa_content::viewAction",
+    {
+        "content": content,
+        "location": location ?? null,
+        "queryFieldDefinitionIdentifier": field.fieldDefIdentifier,
+        "viewType": ibexaContentQueryViews['field'],
+        "itemViewType": itemViewType|default(ibexaContentQueryViews['item']),
+        "enablePagination": parameters.enablePagination|default(false),
+        "disablePagination": parameters.disablePagination|default(false),
+        "itemsPerPage": parameters.itemsPerPage|default(false)
+    }
+)) }}
+{% endblock %}

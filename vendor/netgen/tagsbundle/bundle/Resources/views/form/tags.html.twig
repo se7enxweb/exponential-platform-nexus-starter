@@ -1,0 +1,48 @@
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% use '@NetgenTags/form/tag_tree.html.twig' %}
+
+{%- block form_row -%}
+    <div class="ng-tags-input {% if errors|length > 0 %} error-input{% endif %}">
+        {%- if 'checkbox' in block_prefixes or 'radio' in block_prefixes -%}
+            {{- form_widget(form) -}}
+            {{- form_label(form) -}}
+            {{- form_errors(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        {%- endif -%}
+    </div>
+{%- endblock form_row -%}
+
+{% block translation_list_widget %}
+    {% set add_translation_closed = false %}
+
+    <div {{ block('widget_container_attributes') }}>
+        {% if tag is not null %}
+            <p>{{ 'tag.translations.edit_translation'|trans }}</p>
+
+            <div class="edit_translation">
+        {% else %}
+            <p>{{ 'tag.translations.add_translation'|trans }}</p>
+
+            <div class="add_translation">
+        {% endif %}
+
+        {%- for child in form %}
+            {% if tag is not null and child.vars.value not in tag.languageCodes and add_translation_closed == false %}
+                </div>
+
+                <p>{{ 'tag.translations.add_translation'|trans }}</p>
+
+                <div class="add_translation">
+
+                {% set add_translation_closed = true %}
+            {% endif %}
+
+            {{- form_row(child) -}}
+        {% endfor -%}
+        </div>
+    </div>
+{% endblock %}

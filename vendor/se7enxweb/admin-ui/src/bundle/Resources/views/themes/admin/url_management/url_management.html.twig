@@ -1,0 +1,26 @@
+{% extends "@ibexadesign/ui/layout.html.twig" %}
+
+{% trans_default_domain 'ibexa_url_management' %}
+
+{% block body_class %}ibexa-url-management{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: [
+        { value: 'breadcrumb.admin'|trans(domain='messages')|desc('Admin') },
+        { value: 'url_management.breadcrumb.list'|trans|desc('URL management') },
+    ]} %}
+{% endblock %}
+
+{% block header %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: 'url_management.view.list.title'|trans|desc('URL management'),
+    } %}
+{% endblock %}
+
+{% block content %}
+    {{ ibexa_twig_component_group('admin-ui-link-manager-block') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-url-management-js', null, 'ibexa') }}
+{% endblock %}

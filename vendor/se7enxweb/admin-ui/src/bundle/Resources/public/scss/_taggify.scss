@@ -1,0 +1,94 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/mixins/inputs' as *;
+
+.ibexa-taggify {
+    position: relative;
+    max-width: 100%;
+
+    &__list {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        min-height: calculateRem(48px);
+        border: calculateRem(1px) solid $ibexa-color-light;
+    }
+
+    &__list-tag {
+        max-width: 100%;
+        padding-left: calculateRem(8px);
+        border: calculateRem(1px) solid $ibexa-color-light;
+        border-radius: $ibexa-border-radius;
+        margin-right: calculateRem(8px);
+        display: flex;
+        align-items: center;
+        color: $ibexa-color-dark;
+        background-color: $ibexa-color-white;
+
+        .ibexa-btn {
+            height: auto;
+            margin-left: calculateRem(8px);
+        }
+
+        & + .ibexa-taggify__input {
+            &::placeholder {
+                opacity: 0;
+            }
+        }
+
+        &--danger {
+            background: $ibexa-color-danger-100;
+            border-color: $ibexa-color-danger-100;
+            color: $ibexa-color-danger-600;
+
+            .ibexa-icon {
+                fill: $ibexa-color-danger-600;
+            }
+        }
+    }
+
+    &__list-tag-name {
+        overflow: hidden;
+    }
+
+    &__input {
+        border: none;
+        flex-grow: 1;
+        background-color: transparent;
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
+    &__suggestions {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        transform: translate(0, calc(100% + calculateRem(4px)));
+        border: calculateRem(1px) solid $ibexa-color-light;
+        border-radius: $ibexa-border-radius;
+        background-color: $ibexa-color-white;
+        padding: calculateRem(4px);
+        box-shadow: $ibexa-edit-content-box-shadow;
+        max-height: calculateRem(480px);
+        overflow-y: auto;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__suggestion-item {
+        padding: calculateRem(8px) calculateRem(12px);
+        cursor: pointer;
+    }
+
+    &.is-invalid {
+        .ibexa-taggify {
+            &__list {
+                @include input-invalid();
+            }
+        }
+    }
+}

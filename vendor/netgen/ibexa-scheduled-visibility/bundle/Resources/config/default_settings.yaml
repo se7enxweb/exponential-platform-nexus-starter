@@ -1,0 +1,10 @@
+parameters:
+    netgen_ibexa_scheduled_visibility.enabled: false
+    netgen_ibexa_scheduled_visibility.handler: 'content'
+    netgen_ibexa_scheduled_visibility.content_types.all: false
+    netgen_ibexa_scheduled_visibility.content_types.allowed: []
+    netgen_ibexa_scheduled_visibility.sections.hidden.section_id: 0
+    netgen_ibexa_scheduled_visibility.sections.visible.section_id: 0
+    netgen_ibexa_scheduled_visibility.object_states.object_state_group_id: 0
+    netgen_ibexa_scheduled_visibility.object_states.hidden.object_state_id: 0
+    netgen_ibexa_scheduled_visibility.object_states.visible.object_state_id: 0

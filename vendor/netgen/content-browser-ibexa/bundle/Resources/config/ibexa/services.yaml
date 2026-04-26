@@ -1,0 +1,118 @@
+parameters:
+    netgen_content_browser.default.backend.ibexa.location_content_types:
+        - folder
+        - ng_category
+        - ng_container
+        - ng_frontpage
+        - ng_landing_page
+        - ng_topic
+        - user_group
+
+    netgen_content_browser.default.backend.ibexa.default_sections: [2, 43, 5]
+
+services:
+    # Alias to Ibexa CMS search service, allowing for replacement
+    # of search service with other implementations system wide
+
+    netgen_content_browser.ibexa.search_service:
+        alias: ibexa.api.service.search
+
+    # Backends
+
+    netgen_content_browser.backend.ibexa_location:
+        class: Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend
+        arguments:
+            - "@netgen_content_browser.ibexa.search_service"
+            - "@ibexa.api.service.location"
+            - "@netgen_content_browser.config.ibexa_location"
+        tags:
+            -  { name: netgen_content_browser.backend, item_type: ibexa_location }
+
+    netgen_content_browser.backend.ibexa_content:
+        class: Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend
+        arguments:
+            - "@netgen_content_browser.ibexa.search_service"
+            - "@ibexa.api.service.location"
+            - "@netgen_content_browser.config.ibexa_content"
+        tags:
+            -  { name: netgen_content_browser.backend, item_type: ibexa_content }
+
+    # Config load events
+
+    netgen_content_browser.event_listener.ibexa.set_sections:
+        class: Netgen\Bundle\ContentBrowserIbexaBundle\EventListener\Ibexa\SetSectionsListener
+        arguments:
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.ibexa.set_location_content_types:
+        class: Netgen\Bundle\ContentBrowserIbexaBundle\EventListener\Ibexa\SetLocationContentTypesListener
+        arguments:
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Column value providers
+
+    netgen_content_browser.column_value_provider.ibexa.location_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\LocationId
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\location_id }
+
+    netgen_content_browser.column_value_provider.ibexa.content_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentId
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\content_id }
+
+    netgen_content_browser.column_value_provider.ibexa.content_type:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentType
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\content_type }
+
+    netgen_content_browser.column_value_provider.ibexa.modified:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\modified }
+
+    netgen_content_browser.column_value_provider.ibexa.published:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Published
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\published }
+
+    netgen_content_browser.column_value_provider.ibexa.owner:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\owner }
+
+    netgen_content_browser.column_value_provider.ibexa.priority:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Priority
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\priority }
+
+    netgen_content_browser.column_value_provider.ibexa.section:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\section }
+
+    netgen_content_browser.column_value_provider.ibexa.object_state:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState
+        arguments:
+            - "@ibexa.api.repository"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\object_state }
+
+    netgen_content_browser.column_value_provider.ibexa.visible:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Visible
+        arguments:
+            - "@translator"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\visible }

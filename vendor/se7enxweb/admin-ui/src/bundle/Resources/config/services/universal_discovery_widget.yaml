@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\Bundle\AdminUi\Templating\Twig\UniversalDiscoveryExtension:
+        tags:
+            - { name: twig.extension }
+
+    Ibexa\AdminUi\UniversalDiscovery\Event\Subscriber\:
+        resource: "../../../../lib/UniversalDiscovery/Event/Subscriber/*"
+        public: true
+        tags: ['kernel.event_subscriber']
+
+    Ibexa\AdminUi\UniversalDiscovery\ConfigResolver: ~
+
+    Ibexa\AdminUi\UniversalDiscovery\Event\Subscriber\UserSelectionAllowedContentTypes:
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\AdminUi\UniversalDiscovery\UniversalDiscoveryProvider: ~
+
+    Ibexa\Contracts\AdminUi\UniversalDiscovery\Provider: '@Ibexa\AdminUi\UniversalDiscovery\UniversalDiscoveryProvider'

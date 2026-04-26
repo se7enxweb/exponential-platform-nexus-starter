@@ -1,0 +1,7 @@
+services:
+    netgen_layouts.layout.form.create:
+        class: Netgen\Layouts\Layout\Form\CreateType
+        arguments:
+            - "@netgen_layouts.layout.registry.layout_type"
+        tags:
+            - { name: form.type }

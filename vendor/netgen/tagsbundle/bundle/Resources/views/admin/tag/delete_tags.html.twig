@@ -1,0 +1,40 @@
+{% extends netgen_tags_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% block content %}
+    <h2 class="tag-title">{{ 'tag.delete_tags.title'|trans }}</h2>
+
+    <p>{{ 'tag.delete_tags.message'|trans }}</p>
+
+    <form method="post" action="{{ path('netgen_tags_admin_tag_delete_tags', {'parentId': parentTag is not null ? parentTag.id : 0}) }}">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'tag.title'|trans }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for tag in tags %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="Tags[]" value="{{ tag.id }}"/>
+                            {% if parentTag is not null %}{{ parentTag.keyword }} / {% endif %}{{ tag.keyword }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="tags-actions">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('netgen_tags_admin') }}" />
+            <button type="submit" class="tags-btn tags-btn-primary" name="DeleteTagsButton">{{ 'tag.button.yes'|trans }}</button>
+
+            <a href="{{ path('netgen_tags_admin_tag_show', {'tagId': parentTag ? parentTag.id : 0}) }}" class="tags-btn">
+                {{ 'tag.button.no'|trans }}
+            </a>
+        </div>
+    </form>
+
+{% endblock %}

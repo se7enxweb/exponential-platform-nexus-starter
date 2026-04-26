@@ -1,0 +1,100 @@
+{% trans_default_domain 'netgen_information_collection_profiler' %}
+
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{# collector \Netgen\Bundle\InformationCollectionBundle\DataCollector\InformationCollectionCollector #}
+
+{% block toolbar %}
+    {% if collector.collectionCount > 0 %}
+        {% set icon %}
+            <span class="icon">
+                {{ include('@NetgenInformationCollection/data_collector/ic-icon-color.svg.twig') }}
+            </span>
+
+            <span class="sf-toolbar-value">{{ collector.collectionCount }}</span>
+            <span class="sf-toolbar-label">{{ 'netgen_information_collection_profiler_items'|trans }}</span>
+        {% endset %}
+
+        {% set text %}
+            {% for collection in collector.collections %}
+                <div class="sf-toolbar-info-piece">
+                    <b>{{ collection.name }}</b>
+                    <span class="sf-toolbar-status">{{ collection.value }}</span>
+                </div>
+            {% endfor %}
+        {% endset %}
+
+        {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url }) }}
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+            {{ include('@NetgenInformationCollection/data_collector/ic-icon-color.svg.twig') }}
+        </span>
+
+        <strong>Information collection</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Collected information</h2>
+
+    {% if collector.collectionCount > 0 %}
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ collector.collectionCount }}</span>
+            <span class="label">Fields collected</span>
+        </div>
+
+        <div class="metric">
+            <span class="value">
+                <a href="{{ path('ibexa.content.view', {
+                    'contentId': collector.contentId,
+                    'siteaccess': collector.adminSiteaccess
+                }) }}">
+                    {{ collector.content }}
+                </a>
+            </span>
+            <span class="label">Content</span>
+        </div>
+
+        <div class="metric">
+            <span class="value">
+                <a href="{{ path('ibexa.content_type.view', {
+                    'contentTypeGroupId': collector.contentTypeGroupId ,
+                    'contentTypeId': collector.contentTypeId,
+                    'siteaccess': collector.adminSiteaccess
+                }) }}">
+                    {{ collector.contentType }}
+                </a>
+            </span>
+            <span class="label">Content type</span>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Field name</th>
+            <th scope="col">Field identifier</th>
+            <th scope="col">Field type</th>
+            <th scope="col">Collected value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for collection in collector.collections %}
+            <tr>
+                <th>{{ collection.name }}</th>
+                <td class="font-normal">{{ collection.identifier }}</td>
+                <td>{{ collection.type }}</td>
+                <td>{{ collection.value }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        There is no collected information for this request.
+    {% endif %}
+{% endblock %}

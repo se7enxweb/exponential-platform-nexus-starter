@@ -1,0 +1,12 @@
+services:
+    Ibexa\Bundle\Solr\ApiLoader\SolrEngineFactory:
+        arguments:
+            $repositoryConfigurationProvider: '@Ibexa\Bundle\Core\ApiLoader\RepositoryConfigurationProvider'
+            $defaultConnection: "%ibexa.solr.default_connection%"
+            $searchEngineClass: Netgen\IbexaSearchExtra\Core\Search\Solr\Handler
+            $gatewayRegistry: '@Ibexa\Solr\Gateway\GatewayRegistry'
+            $coreFilterRegistry: '@Ibexa\Solr\CoreFilter\CoreFilterRegistry'
+            $contentHandler: '@Ibexa\Contracts\Core\Persistence\Content\Handler'
+            $documentMapper: '@ibexa.solr.document_mapper'
+            $contentResultExtractor: '@ibexa.solr.result_extractor.content'
+            $locationResultExtractor: '@ibexa.solr.result_extractor.location'

@@ -1,0 +1,26 @@
+{# content \Netgen\IbexaSiteApi\API\Values\Content #}
+{# location \Netgen\IbexaSiteApi\API\Values\Location #}
+
+<!doctype html>
+<html lang="{{ app.request.locale|replace({'_': '-'}) }}">
+<head>
+    <meta charset="utf-8">
+    <title>{{ content.name|default( 'Home' ) }}</title>
+    <meta name="generator" content="Netgen Site API"/>
+    {% if location is defined %}
+        <link rel="canonical" href="{{ location.path }}" />
+    {% endif %}
+</head>
+<body>
+<p>
+    <ins>This page is rendered using the default Netgen Site API pagelayout template.</ins>
+</p>
+{% block content %}{% endblock %}
+<footer>
+    <hr>
+    <p>
+        <a href="https://docs.netgen.io/projects/site-api">Netgen Site API documentation</a>
+    </p>
+</footer>
+</body>
+</html>

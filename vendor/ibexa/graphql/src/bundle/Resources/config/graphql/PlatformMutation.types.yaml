@@ -1,0 +1,64 @@
+PlatformMutation:
+    type: object
+    config:
+        fields:
+            deleteContent:
+                type: DeleteContentPayload
+                resolve: '@=mutation("DeleteDomainContent", args)'
+                args:
+                    id:
+                        type: ID
+                        description: "Global ID of the content item to delete"
+                    contentId:
+                        type: Int
+                        description: "ID of the content item to delete"
+            uploadFiles:
+                type: UploadedFilesPayload
+                resolve: '@=mutation("UploadFiles", args)'
+                args:
+                    locationId:
+                        type: Int!
+                        description: "The location ID of a container to upload the files to"
+                    files:
+                        type: "[FileUpload]!"
+                    language:
+                        type: RepositoryLanguage!
+                        description: "The language the content items must be created in"
+            createToken:
+                type: CreatedTokenPayload
+                resolve: '@=mutation("CreateToken", args)'
+                args:
+                    username:
+                        type: String!
+                    password:
+                        type: String!
+
+UploadedFilesPayload:
+    type: object
+    config:
+        fields:
+            files:
+                type: "[DomainContent]"
+            warnings:
+                type: "[String]"
+
+DeleteContentPayload:
+    type: object
+    config:
+        fields:
+            contentId:
+                type: Int
+                description: "Numerical content id"
+            id:
+                type: ID
+                description: "Global ID"
+
+CreatedTokenPayload:
+    type: object
+    config:
+        fields:
+            token:
+                type: String
+            message:
+                type: String
+                description: "The reason why authentication has failed, if it has"

@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Ibexa\ContentForms\Behat\Context\ContentTypeContext: ~
+
+    Ibexa\ContentForms\Behat\Context\PagelayoutContext: ~
+
+    Ibexa\ContentForms\Behat\Context\UserRegistrationContext: ~

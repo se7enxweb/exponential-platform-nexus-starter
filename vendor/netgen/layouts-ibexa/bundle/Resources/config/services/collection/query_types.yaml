@@ -1,0 +1,12 @@
+services:
+    netgen_layouts.ibexa.collection.query_type_handler.content_search:
+        class: Netgen\Layouts\Ibexa\Collection\QueryType\Handler\ContentSearchHandler
+        arguments:
+            - "@ibexa.api.service.location"
+            - "@Ibexa\\Contracts\\Core\\Persistence\\Content\\Section\\Handler"
+            - "@Ibexa\\Contracts\\Core\\Persistence\\Content\\ObjectState\\Handler"
+            - "@netgen_layouts.ibexa.content_provider"
+            - "@netgen_layouts.ibexa.search_service"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: netgen_layouts.query_type_handler, type: ibexa_content_search }

@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\ContentForms\Form\Type\SwitcherType: ~
+
+    Ibexa\ContentForms\Form\Type\FieldType\BinaryBaseFieldType: ~
+
+    Ibexa\ContentForms\Form\Type\LocationType: ~
+
+    Ibexa\ContentForms\Form\Type\RelationType: ~
+
+    Ibexa\ContentForms\Form\Type\Content\FieldCollectionType: ~

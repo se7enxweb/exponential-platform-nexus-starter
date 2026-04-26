@@ -1,0 +1,81 @@
+parameters:
+    # Security
+    ibexa.site_access.config.default.security.token_interval_spec: PT1H
+    ibexa.site_access.config.default.user_change_password.templates.form: "@@IbexaUser/change_password/index.html.twig"
+    ibexa.site_access.config.default.user_change_password.templates.success: "@@IbexaUser/change_password/success.html.twig"
+    ibexa.site_access.config.default.user_forgot_password.templates.form: "@@IbexaUser/forgot_password/index.html.twig"
+    ibexa.site_access.config.default.user_forgot_password_success.templates.form: "@@IbexaUser/forgot_password/success.html.twig"
+    ibexa.site_access.config.default.user_forgot_password_login.templates.form: "@@IbexaUser/forgot_password/with_login.html.twig"
+    ibexa.site_access.config.default.user_forgot_password.templates.mail: "@@IbexaUser/forgot_password/mail/forgot_user_password.html.twig"
+    ibexa.site_access.config.default.user_reset_password.templates.form: "@@IbexaUser/reset_password/index.html.twig"
+    ibexa.site_access.config.default.user_reset_password.templates.invalid_link: "@@IbexaUser/reset_password/invalid_link.html.twig"
+    ibexa.site_access.config.default.user_reset_password.templates.success: "@@IbexaUser/reset_password/success.html.twig"
+
+    # Registration
+    ibexa.site_access.config.default.user_registration.group_remote_id: '5f7f0bdb3381d6a461d8c29ff53d908f'
+    ibexa.site_access.config.default.user_registration.user_type_identifier: 'user'
+    ibexa.site_access.config.default.user_registration.templates.form: "@@IbexaContentForms/Content/content_edit.html.twig"
+    ibexa.site_access.config.default.user_registration.templates.confirmation: "@@IbexaUser/register/register_confirmation.html.twig"
+    ibexa.site_access.config.default.user_registration.form.allowed_field_definitions_identifiers:
+        - first_name
+        - last_name
+        - user_account
+
+    # Invitation
+    ibexa.site_access.config.default.user_invitation.templates.form: "@@IbexaUser/invitation/form.html.twig"
+    ibexa.site_access.config.default.user_invitation.templates.mail: "@@IbexaUser/invitation/mail/user_invitation.html.twig"
+    ibexa.site_access.config.default.user_invitation.hash_expiration_time: 'P7D'
+
+    # User Settings
+    ibexa.site_access.config.default.user_settings_update_view: {}
+    ibexa.site_access.config.default.user_settings_update_view_defaults:
+        full:
+            default:
+                template: "%ibexa.site_access.config.default.user_settings.templates.update%"
+                match: []
+
+    ibexa.site_access.config.default.user_settings.templates.list: "@@IbexaUser/user_settings/list.html.twig"
+    ibexa.site_access.config.default.user_settings.templates.update: "@@IbexaUser/user_settings/update.html.twig"
+
+    # User Preferences
+    ibexa.site_access.config.default.user_preferences.short_datetime_format:
+        date_format: 'dd/MM/yyyy'
+        time_format: 'HH:mm'
+    ibexa.site_access.config.default.user_preferences.full_datetime_format:
+        date_format: 'LLLL dd, yyyy'
+        time_format: 'HH:mm'
+    ibexa.site_access.config.default.user_preferences.allowed_short_date_formats:
+        'mm/dd/yyyy': 'MM/dd/yyyy'
+        'mm/dd/yy': 'MM/dd/yy'
+        'dd/mm/yyyy': 'dd/MM/yyyy'
+        'dd/mm/yy': 'dd/MM/yy'
+        'yy/mm/dd': 'yy/MM/dd'
+        'mm-dd-yyyy': 'MM-dd-yyyy'
+        'mm-dd-yy': 'MM-dd-yy'
+        'dd-mm-yyyy': 'dd-MM-yyyy'
+        'dd-mm-yy': 'dd-MM-yy'
+    ibexa.site_access.config.default.user_preferences.allowed_short_time_formats:
+        'hh:mm AM/PM': 'hh:mm a'
+        'hh:mm': 'HH:mm'
+    ibexa.site_access.config.default.user_preferences.allowed_full_date_formats:
+        'M dd, yyyy': 'LLLL dd, yyyy'
+        'dd M yyyy': 'dd LLLL yyyy'
+    ibexa.site_access.config.default.user_preferences.allowed_full_time_formats:
+        'hh:mm AM/PM': 'hh:mm a'
+        'hh:mm': 'HH:mm'
+
+    # Additional translations e.g. ['en_US', 'nb_NO']
+    ibexa.site_access.config.default.user_preferences.additional_translations: []
+
+    # Pagination limits
+    ibexa.site_access.config.default.pagination_user.user_settings_limit: 10
+
+    ibexa.site_access.config.default.user.default_profile_image.colors:
+        - { background: '#FFF7EC', text: '#FCAE42' }
+        - { background: '#FDF3F0', text: '#F18A6B' }
+        - { background: '#FFECE7', text: '#FF4713' }
+        - { background: '#F6E7EF', text: '#AE1164' }
+        - { background: '#E5EDEE', text: '#004D5D' }
+        - { background: '#ECF8FB', text: '#47BEDB' }
+        - { background: '#E5F5E9', text: '#00A42B' }
+        - { background: '#ECF4FF', text: '#4191FF' }

@@ -1,0 +1,33 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-error-page {
+    text-align: center;
+
+    &__messages-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__icon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: calculateRem(46px);
+    }
+
+    &__title {
+        margin-bottom: calculateRem(32px);
+        line-height: calculateRem(36px);
+    }
+
+    &__subtitle {
+        font-weight: normal;
+        margin: 0;
+        line-height: calculateRem(27px);
+    }
+
+    &__message {
+        padding-top: calculateRem(33px);
+        line-height: calculateRem(24px);
+    }
+}

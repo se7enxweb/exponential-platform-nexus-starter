@@ -1,0 +1,92 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Collection\QueryType\Handler\Traits;
+
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query;
+use Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause;
+use Netgen\Layouts\Parameters\ParameterBuilderInterface;
+use Netgen\Layouts\Parameters\ParameterCollectionInterface;
+use Netgen\Layouts\Parameters\ParameterType;
+
+use function array_intersect;
+use function count;
+
+trait SortTrait
+{
+    /**
+     * @var array<string, class-string<\Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause>>
+     */
+    private static array $sortClauses = [
+        'default' => SortClause\DatePublished::class,
+        'date_published' => SortClause\DatePublished::class,
+        'date_modified' => SortClause\DateModified::class,
+        'content_name' => SortClause\ContentName::class,
+        'location_priority' => SortClause\Location\Priority::class,
+    ];
+
+    /**
+     * Builds the parameters for sorting Ibexa content.
+     *
+     * @param string[] $groups
+     * @param string[] $allowedSortTypes
+     */
+    private function buildSortParameters(ParameterBuilderInterface $builder, array $groups = [], array $allowedSortTypes = []): void
+    {
+        $sortTypes = [
+            'Published' => 'date_published',
+            'Modified' => 'date_modified',
+            'Alphabetical' => 'content_name',
+            'Priority' => 'location_priority',
+            'Defined by parent' => 'defined_by_parent',
+        ];
+
+        if (count($allowedSortTypes) > 0) {
+            $sortTypes = array_intersect($sortTypes, $allowedSortTypes);
+        }
+
+        $builder->add(
+            'sort_type',
+            ParameterType\ChoiceType::class,
+            [
+                'required' => true,
+                'options' => $sortTypes,
+                'groups' => $groups,
+            ],
+        );
+
+        $builder->add(
+            'sort_direction',
+            ParameterType\ChoiceType::class,
+            [
+                'required' => true,
+                'options' => [
+                    'Descending' => Query::SORT_DESC,
+                    'Ascending' => Query::SORT_ASC,
+                ],
+                'groups' => $groups,
+            ],
+        );
+    }
+
+    /**
+     * Returns the clauses for sorting Ibexa content.
+     *
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause[]
+     */
+    private function getSortClauses(ParameterCollectionInterface $parameterCollection, ?Location $parentLocation = null): array
+    {
+        $sortType = $parameterCollection->getParameter('sort_type')->value ?? 'default';
+        $sortDirection = $parameterCollection->getParameter('sort_direction')->value ?? Query::SORT_DESC;
+
+        if ($sortType === 'defined_by_parent' && $parentLocation !== null) {
+            return $parentLocation->getSortClauses();
+        }
+
+        $sortClause = new self::$sortClauses[$sortType]($sortDirection);
+
+        return [$sortClause];
+    }
+}

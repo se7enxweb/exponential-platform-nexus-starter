@@ -1,0 +1,127 @@
+{% trans_default_domain 'ngcb' %}
+
+{%- block ngcb_widget -%}
+    <div
+        class="js-input-browse {% if value is empty %}item-empty{% endif %}"
+        data-disabled="{% if form.vars.disabled %}true{% else %}false{% endif %}"
+        {% if start_location is not null %} data-start_location="{{ start_location }}" {% endif %}
+        {% for param_name, param_value in custom_params %}
+            data-custom-{{ param_name }}="{{ param_value is iterable ? param_value|join(',') : param_value }}"
+        {% endfor %}
+        data-min_selected="1"
+        data-max_selected="1"
+        data-input
+    >
+        {{ pre_input_browse|default }}
+
+        <div class="input-browse">
+            {% if not required %}
+                <span class="js-clear"><i class="material-icons">close</i></span>
+            {% endif %}
+
+            <a class="js-trigger" href="#">
+                <span class="js-name" data-empty-note="{{ 'form.messages.no_item_selected'|trans }}">
+                    {% if value is not empty %}
+                        {{ item ? item.name : 'form.messages.invalid_item'|trans }}
+                    {% else %}
+                        {{ 'form.messages.no_item_selected'|trans }}
+                    {% endif %}
+                </span>
+                <span class="icon">
+                    <i class="material-icons">folder_open</i>
+                </span>
+            </a>
+        </div>
+
+        {{ post_input_browse|default }}
+
+        <input type="hidden" class="js-item-type" value="{{ item_type }}" />
+        <input type="hidden" class="js-value" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %} />
+    </div>
+{%- endblock -%}
+
+{%- block ngcb_dynamic_widget -%}
+    <div
+        class="js-input-browse {% if form.item_value.vars.value is empty %}item-empty{% endif %}"
+        data-disabled="{% if form.vars.disabled %}true{% else %}false{% endif %}"
+        {% if start_location is not null %} data-start_location="{{ start_location }}" {% endif %}
+        {% for param_name, param_value in custom_params %}
+            data-custom-{{ param_name }}="{{ param_value is iterable ? param_value|join(',') : param_value }}"
+        {% endfor %}
+        data-min_selected="1"
+        data-max_selected="1"
+        data-input
+    >
+        {{ form_row(form.item_type, { label: false, attr: { class: 'js-item-type' } }) }}
+        {{ form_row(form.item_value, { attr: { class: 'js-value' } }) }}
+
+        {{ pre_input_browse|default }}
+
+        <div class="input-browse">
+            {% if not required %}
+                <span class="js-clear"><i class="material-icons">close</i></span>
+            {% endif %}
+
+            <a class="js-trigger" href="#">
+                <span class="js-name" data-empty-note="{{ 'form.messages.no_item_selected'|trans }}">
+                    {% if form.item_value.vars.value is not empty %}
+                        {{ item ? item.name : 'form.messages.invalid_item'|trans }}
+                    {% else %}
+                        {{ 'form.messages.no_item_selected'|trans }}
+                    {% endif %}
+                </span>
+                <span class="icon">
+                    <i class="material-icons">folder_open</i>
+                </span>
+            </a>
+        </div>
+
+        {{ post_input_browse|default }}
+    </div>
+{%- endblock -%}
+
+{%- block ngcb_multiple_widget -%}
+    {% macro prototype(form, items) %}
+        <div class="item">
+            <a href="#" class="js-remove"><i class="material-icons">close</i></a>
+            <span class="name">
+                {% if form.vars.data is not empty %}
+                    {% if items[form.vars.data] is defined %}
+                        {{ items[form.vars.data].name }}
+                    {% else %}
+                        {{ 'form.messages.invalid_item'|trans }}
+                    {% endif %}
+                {% endif %}
+            </span>
+
+            {{ form_widget(form, { type: 'hidden' }) }}
+        </div>
+    {% endmacro %}
+
+    <div
+        class="js-multiple-browse {% if form is empty %}items-empty{% endif %}"
+        data-disabled="{% if form.vars.disabled %}true{% else %}false{% endif %}"
+        {% if start_location is not null %} data-start_location="{{ start_location }}" {% endif %}
+        {% for param_name, param_value in custom_params %}
+            data-custom-{{ param_name }}="{{ param_value is iterable ? param_value|join(',') : param_value }}"
+        {% endfor %}
+        {% if min is not null %} data-min_selected="{{ min }}" {% endif %}
+        {% if max is not null %} data-max_selected="{{ max }}" {% endif %}
+        data-browser-prototype="{{ _self.prototype(form.vars.prototype, items)|e }}"
+        data-input
+    >
+        <div class="items">
+            {% for child in form %}
+                {{ _self.prototype(child, items) }}
+            {% endfor %}
+
+            <div class="no-items">
+                {{ 'form.messages.no_items_selected'|trans }}
+            </div>
+        </div>
+
+        <input type="hidden" class="js-item-type" value="{{ item_type }}" />
+
+        <a href="#" class="js-trigger">{{ 'form.add_items'|trans }}</a>
+    </div>
+{%- endblock -%}

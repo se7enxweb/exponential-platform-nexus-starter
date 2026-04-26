@@ -1,0 +1,120 @@
+{
+    "__version": 2,
+    "layouts": [
+        {
+            "__type": "layout",
+            "id": "3afce72a-97c9-4a0c-8f59-53aa87232adf",
+            "type_identifier": "test_layout_1",
+            "name": "My layout",
+            "description": "My layout description",
+            "status": "published",
+            "main_locale": "en",
+            "available_locales": [
+                "en",
+                "hr"
+            ],
+            "creation_date": 1528371500,
+            "modification_date": 1528372000,
+            "is_shared": false,
+            "zones": {
+                "bottom": {
+                    "identifier": "bottom",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "left": {
+                    "identifier": "left",
+                    "linked_zone": null,
+                    "blocks": []
+                },
+                "right": {
+                    "identifier": "right",
+                    "linked_zone": null,
+                    "blocks": [
+                        {
+                            "id": "d61679b3-7cd8-4890-b77e-4aeb618ff3e4",
+                            "definition_identifier": "list",
+                            "is_translatable": true,
+                            "is_always_available": true,
+                            "main_locale": "en",
+                            "available_locales": [
+                                "en",
+                                "hr"
+                            ],
+                            "view_type": "grid",
+                            "item_view_type": "standard_with_intro",
+                            "name": "My published block",
+                            "placeholders": [],
+                            "parameters": {
+                                "en": {
+                                    "number_of_columns": 3,
+                                    "paged_collections:enabled": null,
+                                    "paged_collections:type": null,
+                                    "paged_collections:max_pages": null,
+                                    "paged_collections:ajax_first": null,
+                                    "css_class": null,
+                                    "css_id": null,
+                                    "set_container": null
+                                },
+                                "hr": {
+                                    "number_of_columns": 3,
+                                    "paged_collections:enabled": null,
+                                    "paged_collections:type": null,
+                                    "paged_collections:max_pages": null,
+                                    "paged_collections:ajax_first": null,
+                                    "css_class": null,
+                                    "css_id": null,
+                                    "set_container": null
+                                }
+                            },
+                            "configuration": {
+                                "key": {
+                                    "param1": false,
+                                    "param2": null
+                                }
+                            },
+                            "collections": {
+                                "default": {
+                                    "id": "489806ff-3fea-4d74-86c3-3c7b2db9f2e7",
+                                    "offset": 0,
+                                    "limit": null,
+                                    "is_translatable": true,
+                                    "is_always_available": true,
+                                    "main_locale": "en",
+                                    "available_locales": [
+                                        "en",
+                                        "hr"
+                                    ],
+                                    "items": [],
+                                    "slots": [],
+                                    "query": {
+                                        "id": "474ad7af-4426-42da-bede-779b204378cf",
+                                        "is_translatable": false,
+                                        "is_always_available": true,
+                                        "main_locale": "en",
+                                        "available_locales": [
+                                            "en",
+                                            "hr"
+                                        ],
+                                        "parameters": {
+                                            "hr": {
+                                                "param": "abc3",
+                                                "param2": "def3"
+                                            }
+                                        },
+                                        "query_type": "test_query_type"
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "top": {
+                    "identifier": "top",
+                    "linked_zone": null,
+                    "blocks": []
+                }
+            }
+        }
+    ]
+}

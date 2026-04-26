@@ -1,0 +1,275 @@
+.nl-btn {
+    background:0 0;
+    border:none;
+    border-radius:2px;
+    color:$textColor;
+    position:relative;
+    height:$btnHeight;
+    margin:0;
+    min-width:64px;
+    padding:0 12px;
+    display:inline-block;
+    font-family:$baseFont;
+    font-size:13px;
+    overflow:hidden;
+    will-change:box-shadow;
+    transition:box-shadow .2s cubic-bezier(.4,0,1,1), background-color .2s cubic-bezier(.4,0,.2,1), color .2s cubic-bezier(.4,0,.2,1);
+    outline:none;
+    cursor:pointer;
+    text-decoration:none;
+    text-align:center;
+    line-height:$btnHeight;
+    vertical-align:middle;
+    &:hover {
+        background:hsla(0, 0, 62, 0.2);
+        text-decoration:none;
+    }
+    &:focus:not(:active) {
+        background:hsla(0, 0, 62, 0.3);
+    }
+    &:active {
+        background:hsla(0, 0, 62, 0.4);
+    }
+
+    &.nl-btn-link {
+        color:$linkColor;
+    }
+
+    &.nl-btn-icon {
+        border-radius:50%;
+        width:$btnHeight;
+        min-width:$btnHeight;
+        padding:0;
+        font-size:24px;
+        i {
+            font-size:inherit;
+            display:block;
+        }
+    }
+
+    &.nl-btn-primary {
+        background:$linkColor;
+        color:#fff;
+        font-weight: bold;
+        &:hover {
+            background:darken($linkColor, 4%);
+        }
+        &:focus:not(:active) {
+            background:darken($linkColor, 5%);
+        }
+        &:active {
+            background:darken($linkColor, 6%);
+        }
+    }
+
+    &.nl-btn-with-icon {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &.nl-btn-white {
+        background:#fff;
+        &:hover {
+            background:hsla(0, 0, 62, 0.2);
+        }
+        &:focus:not(:active) {
+            background:hsla(0, 0, 62, 0.3);
+        }
+        &:active {
+            background:hsla(0, 0, 62, 0.4);
+        }
+    }
+
+    &.nl-btn-gray {
+      background: #f2f2f2;
+      padding: 0 20px;
+      font-weight: bold;
+      &:hover {
+        background:hsla(0, 0, 62, 0.2);
+      }
+      &:focus:not(:active) {
+          background:hsla(0, 0, 62, 0.3);
+      }
+      &:active {
+          background:hsla(0, 0, 62, 0.4);
+      }
+    }
+
+    i {
+        vertical-align:middle;
+        font-size:15px;
+    }
+
+    &:disabled {
+        opacity:0.5;
+    }
+    .nl-dropdown-active > & {
+        border-radius: 2px 2px 0 0;
+    }
+}
+
+.nl-select {
+    border:none;
+    color:$textColor;
+    font-family:$baseFont;
+    border-radius:2px;
+    height:$btnHeight;
+    padding:4px 32px 4px 10px;
+    font-size:$panelFontSize;
+    appearance:none;
+    cursor:pointer;
+    background-color:hsl(0, 0, 96);
+    transition:background-color .2s cubic-bezier(.4,0,.2,1), color .2s cubic-bezier(.4,0,.2,1);
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+        calc(100% - 16px) 50%,
+        calc(100% - 11px) 50%;
+    background-size:
+        4px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    vertical-align: middle;
+    &:hover {
+        background-color:hsl(0, 0, 94);
+    }
+    &:focus:not(:active) {
+        outline:none;
+        background-color:hsl(0, 0, 92);
+    }
+}
+
+.layout-icon {
+    display:block;
+    width:50px;
+    height:75px;
+    background-repeat:no-repeat;
+    background-position:50% 50%;
+    background-size:contain;
+    .ngcb .preview-panel & {
+        width:90%;
+        height:0;
+        padding-bottom:130%;
+        margin:1em auto 0;
+        border:2px solid hsl(0, 0, 63);
+        background-size:95%;
+        border-radius:3px;
+    }
+}
+
+.loading-ng-icon {
+  display:inline-block;
+  position:relative;
+  font-size:1em;
+  width:1.375em;
+  height:2.375em;
+  margin:0em 1.5em -0.3em;
+  transform:rotate(-48deg);
+  animation:loadRotate 1.5s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  &::before,
+  &::after {
+    content:"";
+    display:block;
+    background:currentColor;
+    border-radius:50%;
+    position:absolute;
+    left:50%;
+  }
+  &::before {
+    width:1em;
+    height:1em;
+    margin-left:-0.5em;
+    bottom:1.375em;
+    animation:loadBounceTopSquash 0.75s alternate infinite ease, loadBounceTopFlow 0.75s alternate infinite ease;
+  }
+  &::after {
+    width:1.375em;
+    height:1.375em;
+    margin-left:-0.6875em;
+    bottom:0;
+    animation:loadBounceBottomSquash 0.75s alternate infinite ease, loadBounceBottomFlow 0.75s alternate infinite ease;
+  }
+}
+@keyframes loadBounceTopSquash {
+  0% {
+    height:0.375em;
+    border-radius:3.75em 3.75em 1.25em 1.25em;
+    transform:scaleX(2);
+  }
+  15% {
+    height:1em;
+    border-radius:50%;
+    transform:scaleX(1);
+  }
+  100% {
+    height:1em;
+    border-radius:50%;
+    transform:scaleX(1);
+  }
+}
+@keyframes loadBounceBottomSquash {
+  0% {
+    height:1em;
+    border-radius:1.25em 1.25em 3.75em 3.75em;
+    transform:scaleX(1.5);
+  }
+  15% {
+    height:1.375em;
+    border-radius:50%;
+    transform:scaleX(1);
+  }
+  100% {
+    height:1.375em;
+    border-radius:50%;
+    transform:scaleX(1);
+  }
+}
+@keyframes loadBounceTopFlow {
+  0% {
+    bottom:1.125em;
+  }
+  50% {
+    bottom:2.25em;
+    animation-timing-function:cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  }
+  90% {
+    bottom:1.75em;
+  }
+  100% {
+    bottom:1.75em;
+  }
+}
+@keyframes loadBounceBottomFlow {
+  0% {
+    bottom:0.1875em;
+  }
+  50% {
+    bottom:-0.9375em;
+    animation-timing-function:cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  }
+  90% {
+    bottom:0em;
+  }
+  100% {
+    bottom:0em;
+  }
+}
+@keyframes loadRotate {
+  0% {
+    transform:rotate(-228deg);
+  }
+  49% {
+    transform:rotate(-48deg);
+  }
+  51% {
+    transform:rotate(-48deg);
+  }
+  92% {
+    transform:rotate(132deg);
+  }
+  100% {
+    transform:rotate(132deg);
+  }
+}

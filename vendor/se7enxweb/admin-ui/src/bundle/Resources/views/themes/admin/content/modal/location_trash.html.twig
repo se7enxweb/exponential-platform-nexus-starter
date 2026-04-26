@@ -1,0 +1,59 @@
+{% form_theme form '@ibexadesign/ui/form_fields.html.twig' %}
+
+{% embed '@ibexadesign/ui/component/modal/modal.html.twig' with {
+    class: 'ibexa-modal--send-to-trash ibexa-modal--trash-location',
+    attr: {
+        'data-content-name': content_name|default(''),
+    },
+    no_header: true,
+    id: 'trash-location-modal',
+} %}
+    {% form_theme form '@ibexadesign/ui/form_fields.html.twig' %}
+
+    {% block content_before %}
+        {{ form_start(form, {'action': path('ibexa.location.trash')}) }}
+    {% endblock %}
+    {% block body_content %}
+        {{ 'trash.modal.send_to_trash.message'|trans|desc('Are you sure you want to send this Content item to Trash?') }}
+
+        {% for option in form.trash_options %}
+            <div class="ibexa-modal__trash-option">
+                <p class="ibexa-modal__option-label">
+                    {{ form_label(option) }}
+                </p>
+                {% if option.vars.help_multiline ?? false %}
+                    {% for help in option.vars.help_multiline %}
+                        <p class="ibexa-modal__option-description">
+                            {{ help }}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+                {% for input in option %}
+                    {{ form_widget(input) }}
+                {% endfor %}
+            {# Do not render label if no options input #}
+                {% do option.setRendered() %}
+            </div>
+        {% endfor %}
+        {% if form.confirm is defined %}
+            <p>
+                {{ form_widget(form.confirm) }}
+            </p>
+        {% endif %}
+    {% endblock %}
+    {% block footer_content %}
+        {{ form_widget(form.trash,
+            {'attr': {'class': 'btn ibexa-btn ibexa-btn--primary disabled ibexa-btn--confirm-send-to-trash', 'disabled': true}})
+        }}
+        <button type="button" class="btn ibexa-btn ibexa-btn--secondary" data-bs-dismiss="modal">
+            {{ 'trash.form.cancel'|trans|desc('Cancel') }}
+        </button>
+    {% endblock %}
+    {% block content_after %}
+        {{ form_end(form) }}
+    {% endblock %}
+{% endembed %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-modal-location-trash-js', null, 'ibexa') }}
+{% endblock %}

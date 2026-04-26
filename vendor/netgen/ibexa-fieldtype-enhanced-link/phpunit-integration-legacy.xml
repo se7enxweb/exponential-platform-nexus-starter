@@ -1,0 +1,26 @@
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         processIsolation="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+         colors="true"
+         failOnWarning="true">
+    <php>
+        <env name="setupFactory" value="Netgen\IbexaFieldTypeEnhancedLink\Tests\Integration\Core\Repository\SetupFactory\LegacySetupFactory" />
+        <env name="backendVersion" value="5" />
+        <env name="fixtureDir" value="Legacy" />
+        <ini name="error_reporting" value="-1" />
+    </php>
+    <testsuites>
+        <testsuite name="ngenhancedlink_fieldtype_db_integration">
+            <file>tests/integration/Core/Repository/FieldType/EnhancedLinkIntegrationTest.php</file>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">lib</directory>
+        </include>
+    </coverage>
+</phpunit>

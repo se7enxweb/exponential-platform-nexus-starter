@@ -1,0 +1,22 @@
+assets:
+    packages:
+        nglayouts_css:
+            base_path: '/bundles/netgenlayouts/css'
+            version: '%netgen_layouts.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_js:
+            base_path: '/bundles/netgenlayouts/js'
+            version: '%netgen_layouts.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_dev_css:
+            base_path: '/bundles/netgenlayouts/dev/css'
+            version: '%netgen_layouts.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts_dev_js:
+            base_path: '/bundles/netgenlayouts/dev/js'
+            version: '%netgen_layouts.asset_version%'
+            version_format: '%%s?%%s'
+        nglayouts:
+            base_path: '/bundles/netgenlayouts'
+            version: '%netgen_layouts.asset_version%'
+            version_format: '%%s?%%s'

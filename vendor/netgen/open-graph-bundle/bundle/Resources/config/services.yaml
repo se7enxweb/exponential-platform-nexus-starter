@@ -1,0 +1,13 @@
+services:
+    netgen_open_graph.handler_registry:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\Registry
+
+    netgen_open_graph.meta_tag_collector:
+        class: Netgen\Bundle\OpenGraphBundle\MetaTag\Collector
+        arguments:
+            - "@netgen_open_graph.handler_registry"
+            - "@ibexa.api.service.content_type"
+            - "@ibexa.config.resolver"
+
+    netgen_open_graph.meta_tag_renderer:
+        class: Netgen\Bundle\OpenGraphBundle\MetaTag\Renderer

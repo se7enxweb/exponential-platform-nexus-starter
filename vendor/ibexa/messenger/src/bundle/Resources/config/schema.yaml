@@ -1,0 +1,51 @@
+tables:
+    ibexa_messenger_messages:
+        id:
+            id:
+                type: bigint
+                nullable: false
+                options:
+                    autoincrement: true
+        fields:
+            body:
+                type: text
+                nullable: false
+            headers:
+                type: text
+                nullable: false
+            queue_name:
+                type: string
+                length: 190
+                nullable: false
+            created_at:
+                type: datetime_immutable
+                nullable: false
+                index:
+                    name: ibexa_messenger_created_at_idx
+            available_at:
+                type: datetime_immutable
+                nullable: false
+                index:
+                    name: ibexa_messenger_available_at_idx
+            delivered_at:
+                type: datetime_immutable
+                nullable: true
+                index:
+                    name: ibexa_messenger_delivered_at_idx
+
+    ibexa_messenger_lock_keys:
+        id:
+            key_id:
+                type: string
+                length: 64
+                nullable: false
+        fields:
+            key_token:
+                type: string
+                length: 44
+                nullable: false
+            key_expiration:
+                type: integer
+                nullable: false
+                options:
+                    unsigned: true

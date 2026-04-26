@@ -1,0 +1,4 @@
+ibexa_messenger:
+    deduplication_lock_storage:
+        type: custom
+        dsn: '%env(resolve:TEST_IBEXA_MESSENGER_LOCK_DSN)%'

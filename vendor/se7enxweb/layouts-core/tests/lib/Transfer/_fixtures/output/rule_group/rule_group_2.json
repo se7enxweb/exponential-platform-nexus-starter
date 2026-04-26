@@ -1,0 +1,21 @@
+{
+    "__type": "rule_group",
+    "id": "b4f85f38-de3f-4af7-9a5f-21df63a49da9",
+    "status": "published",
+    "parent_id": "00000000-0000-0000-0000-000000000000",
+    "name": "First group",
+    "description": "My description",
+    "is_enabled": true,
+    "priority": 1,
+    "groups": [
+        {"visited_key": "visited_value"}
+    ],
+    "rules": [
+        {"visited_key": "visited_value"},
+        {"visited_key": "visited_value"}
+    ],
+    "conditions": [
+        {"visited_key": "visited_value"},
+        {"visited_key": "visited_value"}
+    ]
+}

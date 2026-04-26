@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Tests\Persistence\Doctrine\Helper;
+
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
+use Netgen\Layouts\Persistence\Doctrine\Helper\ConnectionHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+#[CoversClass(ConnectionHelper::class)]
+final class ConnectionHelperTest extends TestCase
+{
+    public function testNextId(): void
+    {
+        $platform = new MySQLPlatform();
+        $connectionStub = self::createStub(Connection::class);
+        $helper = new ConnectionHelper($connectionStub);
+
+        $connectionStub
+            ->method('getDatabasePlatform')
+            ->willReturn($platform);
+
+        self::assertSame('null', $helper->nextId('table'));
+    }
+
+    public function testLastId(): void
+    {
+        $platform = new MySQLPlatform();
+        $connectionStub = self::createStub(Connection::class);
+        $helper = new ConnectionHelper($connectionStub);
+
+        $connectionStub
+            ->method('getDatabasePlatform')
+            ->willReturn($platform);
+
+        $connectionStub
+            ->method('lastInsertId')
+            ->willReturn(42);
+
+        self::assertSame(42, $helper->lastId('table'));
+    }
+}

@@ -1,0 +1,28 @@
+{% set user_name = ibexa_content_name(user) %}
+{% set is_link = is_link is defined ? is_link : true %}
+
+{% if user_name_extra_data is defined %}
+    {% set user_name = user_name ~ ' ' ~ user_name_extra_data %}
+{% endif %}
+
+<div class="ibexa-user-name">
+    <span class="ibexa-user-name__thumbnail">
+        {% include '@ibexadesign/ui/component/user_thumbnail/user_thumbnail.html.twig' with {
+            user: user,
+            attr_svg: {
+                width: 20,
+                height: 20,
+            }
+        } only %}
+    </span>
+
+    {% if user_path is not defined and ibexa_is_user_profile_available(user) %}
+        {% set user_path = path('ibexa.user.profile.view', { userId: user.id }) %}
+    {% endif %}
+
+    {% if user_path is defined and is_link %}
+        <a href="{{ user_path }}" class="ibexa-user-name__text">{{ user_name }}</a>
+    {% else %}
+        <span class="ibexa-user-name__text">{{ user_name }}</span>
+    {% endif %}
+</div>

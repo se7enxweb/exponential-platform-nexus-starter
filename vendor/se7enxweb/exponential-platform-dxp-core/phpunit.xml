@@ -1,0 +1,38 @@
+<phpunit
+  backupGlobals="false"
+  backupStaticAttributes="false"
+  bootstrap="bootstrap.php"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  beStrictAboutTestsThatDoNotTestAnything="false"
+  colors="true"
+  >
+  <php>
+    <ini name="error_reporting" value="-1" />
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=82&amp;max[direct]=855&amp;max[indirect]=14&amp;verbose=0"/>
+  </php>
+  <testsuites>
+    <testsuite name="unit_core">
+      <directory>tests/lib</directory>
+    </testsuite>
+    <testsuite name="bundle_core">
+      <directory>tests/bundle/Core</directory>
+    </testsuite>
+    <testsuite name="bundle_debug">
+      <directory>tests/bundle/Debug</directory>
+    </testsuite>
+    <testsuite name="bundle_installer">
+      <directory>tests/bundle/RepositoryInstaller</directory>
+    </testsuite>
+    <testsuite name="bundle_io">
+      <directory>tests/bundle/IO</directory>
+    </testsuite>
+    <testsuite name="bundle_lse">
+      <directory>tests/bundle/LegacySearchEngine</directory>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+  </listeners>
+</phpunit>

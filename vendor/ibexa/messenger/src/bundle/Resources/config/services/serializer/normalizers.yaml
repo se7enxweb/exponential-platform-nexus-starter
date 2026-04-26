@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: false
+        public: false
+
+    Ibexa\Bundle\Messenger\Serializer\Normalizer\DeduplicateStampNormalizer:
+        tags:
+            - { name: ibexa.messenger.serializer.normalizer, priority: -60 }
+
+    Ibexa\Bundle\Messenger\Serializer\Normalizer\LockKeyNormalizer:
+        tags:
+            - { name: ibexa.messenger.serializer.normalizer, priority: -60 }
+
+    ibexa.messenger.serializer.normalizer.array_denormalizer:
+        class: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer
+        tags:
+            - { name: ibexa.messenger.serializer.normalizer, priority: -80 }
+
+    ibexa.messenger.serializer.normalizer.date_time_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
+        tags:
+            - { name: ibexa.messenger.serializer.normalizer, priority: -80 }
+
+    ibexa.messenger.serializer.normalizer.object_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
+        tags:
+            - { name: ibexa.messenger.serializer.normalizer, priority: -100 }

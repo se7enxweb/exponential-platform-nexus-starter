@@ -1,0 +1,19 @@
+services:
+    netgen_layouts.relation_list_query.handler:
+        class: Netgen\Layouts\Ibexa\RelationListQuery\Handler\RelationListQueryHandler
+        arguments:
+            - "@ibexa.api.service.location"
+            - "@netgen_layouts.ibexa.content_provider"
+            - "@netgen_layouts.ibexa.search_service"
+        tags:
+            - { name: netgen_layouts.query_type_handler, type: ibexa_content_relation_list }
+
+    netgen_layouts.reverse_relation_list_query.handler:
+        class: Netgen\Layouts\Ibexa\RelationListQuery\Handler\ReverseRelationListQueryHandler
+        arguments:
+            - "@ibexa.api.service.location"
+            - "@netgen_layouts.ibexa.content_provider"
+            - "@ibexa.api.service.content"
+            - "@netgen_layouts.ibexa.search_service"
+        tags:
+            - { name: netgen_layouts.query_type_handler, type: ibexa_content_reverse_relation_list }

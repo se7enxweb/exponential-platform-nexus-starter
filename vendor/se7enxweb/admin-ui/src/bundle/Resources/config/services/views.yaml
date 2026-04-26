@@ -1,0 +1,61 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    #
+    # ContentTranslateView
+    #
+    Ibexa\AdminUi\View\Builder\ContentTranslateViewBuilder:
+        arguments:
+            $repository: '@ibexa.api.repository'
+            $viewConfigurator: '@Ibexa\Core\MVC\Symfony\View\Configurator\ViewProvider'
+            $viewParametersInjector: '@Ibexa\Core\MVC\Symfony\View\ParametersInjector\EventDispatcherInjector'
+            $contentActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\ContentDispatcher'
+        tags:
+            - { name: ibexa.view.builder }
+
+    Ibexa\AdminUi\View\Provider\ContentTranslateView\Configured:
+        arguments:
+            $matcherFactory: '@ibexa.adminui.view.content_translate.matcher_factory'
+        tags:
+            - { name: ibexa.view.provider, type: Ibexa\AdminUi\View\ContentTranslateView, priority: 10 }
+
+    ibexa.adminui.view.content_translate.matcher_factory:
+        class: Ibexa\Bundle\Core\Matcher\ServiceAwareMatcherFactory
+        arguments:
+            - '@Ibexa\Bundle\Core\Matcher\ViewMatcherRegistry'
+            - '@ibexa.api.repository'
+            - 'Ibexa\Core\MVC\Symfony\Matcher\ContentBased'
+
+    ibexa.content_translate.matcher_factory.dynamically_configured:
+        class: Ibexa\Core\MVC\Symfony\Matcher\DynamicallyConfiguredMatcherFactoryDecorator
+        decorates: ibexa.adminui.view.content_translate.matcher_factory
+        arguments:
+            $innerConfigurableMatcherFactory: '@ibexa.content_view.matcher_factory.dynamically_configured.inner'
+            $configResolver: '@ibexa.config.resolver'
+            $parameterName: content_translate_view
+
+    Ibexa\AdminUi\View\Filter\ContentTranslateViewFilter:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\AdminUi\Limitation\Templating\LimitationBlockRenderer:
+        arguments:
+            $valueMapperRegistry: '@Ibexa\AdminUi\Limitation\LimitationValueMapperRegistry'
+            $twig: '@twig'
+            $configResolver: '@ibexa.config.resolver'
+
+    Ibexa\AdminUi\View\Filter\AdminSearchViewFilter:
+        decorates: Ibexa\Search\View\SearchViewFilter
+        arguments:
+            $configResolver: '@ibexa.config.resolver'
+            $formFactory: '@Symfony\Component\Form\FormFactoryInterface'
+            $sectionService: '@ibexa.api.service.section'
+            $contentTypeService: '@ibexa.api.service.content_type'
+            $siteAccessGroups: '%ibexa.site_access.groups%'
+            $innerFilter: '@Ibexa\AdminUi\View\Filter\AdminSearchViewFilter.inner'
+            $urlGenerator: '@router'
+        tags:
+            - { name: kernel.event_subscriber }

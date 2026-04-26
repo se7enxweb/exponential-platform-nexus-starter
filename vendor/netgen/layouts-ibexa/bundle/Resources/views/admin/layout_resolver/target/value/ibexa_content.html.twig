@@ -1,0 +1,7 @@
+{% if target.valueObject is not null %}
+    {% set path = nglayouts_ibexa_content_path(target.valueObject) %}
+
+    {{ path != null ? path|join(' / ') : '(INVALID CONTENT)' }}
+{% else %}
+    {{ '(INVALID CONTENT)' }}
+{% endif %}

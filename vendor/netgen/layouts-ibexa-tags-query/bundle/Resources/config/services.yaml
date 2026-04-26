@@ -1,0 +1,11 @@
+services:
+    netgen_layouts.tags_query.handler:
+        class: Netgen\Layouts\Ibexa\TagsQuery\Handler\TagsQueryHandler
+        arguments:
+            - "@ibexa.api.service.location"
+            - "@Ibexa\\Contracts\\Core\\Persistence\\Content\\ObjectState\\Handler"
+            - "@netgen_layouts.ibexa.content_provider"
+            - "@netgen_layouts.ibexa.search_service"
+            - "@request_stack"
+        tags:
+            - { name: netgen_layouts.query_type_handler, type: ibexa_content_tags }

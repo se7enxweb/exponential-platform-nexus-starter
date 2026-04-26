@@ -1,0 +1,10 @@
+services:
+    # Note: services tagged with 'netgen.ibexa_search_extra.solr.subdocument_mapper.content'
+    # are registered to this one using container compiler pass
+    netgen.ibexa_search_extra.solr.subdocument_mapper.content.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\SubdocumentMapper\ContentSubdocumentMapper\Aggregate
+
+    # Note: services tagged with 'netgen.ibexa_search_extra.solr.subdocument_mapper.content_translation'
+    # are registered to this one using container compiler pass
+    netgen.ibexa_search_extra.solr.subdocument_mapper.content_translation.aggregate:
+        class: Netgen\IbexaSearchExtra\Core\Search\Solr\SubdocumentMapper\ContentTranslationSubdocumentMapper\Aggregate

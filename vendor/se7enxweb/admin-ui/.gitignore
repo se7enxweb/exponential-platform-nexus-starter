@@ -1,0 +1,13 @@
+src/bundle/Resources/public/scss/.sass-cache
+node_modules/
+yarn.lock
+yarn-error.log
+/vendor
+/.php_cs.cache
+/.php-cs-fixer.cache
+package-lock.json
+.DS_Store
+.phpunit.result.cache
+composer.lock
+/var
+tsconfig.json

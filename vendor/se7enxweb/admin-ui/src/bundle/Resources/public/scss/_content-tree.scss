@@ -1,0 +1,34 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-content-view,
+.ibexa-bookmark-list-view,
+.ibexa-search-view,
+.ibexa-trash-list-view,
+.ibexa-drafts-list-view {
+    .ibexa-content-container {
+        min-width: 0;
+    }
+
+    .ibexa-content-tree-container {
+        position: relative;
+        top: 0;
+        flex: 0 0 auto;
+        background: $ibexa-color-white;
+        color: inherit;
+        box-shadow: calculateRem(4px) calculateRem(22px) calculateRem(47px) 0 rgba($ibexa-color-info, 0.05);
+
+        &__root {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            height: 100%;
+            overflow: auto;
+        }
+    }
+
+    .ibexa-view-container {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+}

@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ibexa.messenger.serializer:
+        class: Symfony\Component\Messenger\Transport\Serialization\Serializer
+        factory: [ '@Ibexa\Bundle\Messenger\Serializer\SerializerFactory', 'create' ]
+
+    Ibexa\Bundle\Messenger\Serializer\SerializerFactory:
+        arguments:
+            $normalizers: !tagged_iterator ibexa.messenger.serializer.normalizer

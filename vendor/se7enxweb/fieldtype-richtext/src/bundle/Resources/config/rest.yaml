@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Ibexa\FieldTypeRichText\REST\FieldTypeProcessor\RichTextProcessor:
+        arguments:
+            - '@Ibexa\FieldTypeRichText\RichText\Converter\Html5Edit'
+        tags:
+            - { name: ibexa.rest.field_type.processor, alias: ibexa_richtext }

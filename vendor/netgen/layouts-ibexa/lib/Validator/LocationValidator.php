@@ -1,0 +1,64 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Ibexa\Validator;
+
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location as IbexaLocation;
+use Netgen\Layouts\Ibexa\Validator\Constraint\Location;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+use function count;
+use function in_array;
+use function is_int;
+
+/**
+ * Validates if the provided value is an ID of a valid location in Ibexa CMS.
+ */
+final class LocationValidator extends ConstraintValidator
+{
+    public function __construct(
+        private Repository $repository,
+    ) {}
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        if ($value === null) {
+            return;
+        }
+
+        if (!$constraint instanceof Location) {
+            throw new UnexpectedTypeException($constraint, Location::class);
+        }
+
+        if (!is_int($value)) {
+            throw new UnexpectedTypeException($value, 'int');
+        }
+
+        try {
+            $location = $this->repository->sudo(
+                static fn (Repository $repository): IbexaLocation => $repository->getLocationService()->loadLocation($value),
+            );
+
+            if (count($constraint->allowedTypes) > 0) {
+                $contentType = $location->getContent()->getContentType();
+
+                if (!in_array($contentType->identifier, $constraint->allowedTypes, true)) {
+                    $this->context->buildViolation($constraint->typeNotAllowedMessage)
+                        ->setParameter('%contentType%', $contentType->identifier)
+                        ->addViolation();
+                }
+            }
+        } catch (NotFoundException) {
+            if (!$constraint->allowInvalid) {
+                $this->context->buildViolation($constraint->message)
+                    ->setParameter('%locationId%', (string) $value)
+                    ->addViolation();
+            }
+        }
+    }
+}

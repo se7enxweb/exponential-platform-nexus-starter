@@ -1,0 +1,59 @@
+services:
+    netgen_open_graph.handler.abstract:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\Handler
+
+    netgen_open_graph.handler.field_type.abstract:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\FieldType\Handler
+        parent: netgen_open_graph.handler.abstract
+        arguments:
+            - "@Ibexa\\Core\\Helper\\FieldHelper"
+
+    netgen_open_graph.handler.literal.text:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\Literal\Text
+        parent: netgen_open_graph.handler.abstract
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: literal/text }
+
+    netgen_open_graph.handler.literal.url:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\Literal\Url
+        parent: netgen_open_graph.handler.abstract
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: literal/url }
+
+    netgen_open_graph.handler.literal.canonical_url:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\Literal\CanonicalUrl
+        arguments:
+            - "@request_stack"
+            - "@router"
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: literal/canonical_url }
+
+    netgen_open_graph.handler.field_type.text_line:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\FieldType\TextLine
+        parent: netgen_open_graph.handler.field_type.abstract
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: field_type/ibexa_string }
+
+    netgen_open_graph.handler.field_type.text_block:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\FieldType\TextBlock
+        parent: netgen_open_graph.handler.field_type.abstract
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: field_type/ibexa_text }
+
+    netgen_open_graph.handler.field_type.rich_text:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\FieldType\RichText
+        parent: netgen_open_graph.handler.field_type.abstract
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: field_type/ibexa_richtext }
+
+    netgen_open_graph.handler.field_type.image:
+        class: Netgen\Bundle\OpenGraphBundle\Handler\FieldType\Image
+        parent: netgen_open_graph.handler.field_type.abstract
+        arguments:
+            - "@Ibexa\\Contracts\\Core\\Variation\\VariationHandler"
+            - "@request_stack"
+            - "@?logger"
+        tags:
+            - { name: netgen_open_graph.meta_tag_handler, alias: field_type/ibexa_image }

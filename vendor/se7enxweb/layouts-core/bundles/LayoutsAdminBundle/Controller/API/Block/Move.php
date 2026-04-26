@@ -1,0 +1,83 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsAdminBundle\Controller\API\Block;
+
+use Netgen\Bundle\LayoutsBundle\Controller\AbstractController;
+use Netgen\Layouts\API\Service\BlockService;
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\Validator\ValidatorTrait;
+use Symfony\Component\HttpFoundation\InputBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints;
+
+final class Move extends AbstractController
+{
+    use ValidatorTrait;
+
+    public function __construct(
+        private BlockService $blockService,
+    ) {}
+
+    /**
+     * Moves the block draft to specified block.
+     */
+    public function __invoke(Block $block, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('nglayouts:block:reorder', ['layout' => $block->layoutId->toString()]);
+
+        $requestData = $request->attributes->get('data');
+        $this->validateRequestData($requestData);
+
+        $targetBlock = $this->blockService->loadBlockDraft(
+            Uuid::fromString($requestData->getString('parent_block_id')),
+        );
+
+        $this->blockService->moveBlock(
+            $block,
+            $targetBlock,
+            $requestData->getString('parent_placeholder'),
+            $requestData->getInt('parent_position'),
+        );
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Validates the provided input bag.
+     *
+     * @param \Symfony\Component\HttpFoundation\InputBag<int|string> $data
+     */
+    private function validateRequestData(InputBag $data): void
+    {
+        $this->validate(
+            $data->get('parent_block_id'),
+            [
+                new Constraints\NotBlank(),
+                new Constraints\Uuid(),
+            ],
+            'parent_block_id',
+        );
+
+        $this->validate(
+            $data->get('parent_placeholder'),
+            [
+                new Constraints\NotBlank(),
+                new Constraints\Type(type: 'string'),
+            ],
+            'parent_placeholder',
+        );
+
+        $this->validate(
+            $data->get('parent_position'),
+            [
+                new Constraints\NotBlank(),
+                new Constraints\Type(type: 'int'),
+            ],
+            'parent_position',
+        );
+    }
+}

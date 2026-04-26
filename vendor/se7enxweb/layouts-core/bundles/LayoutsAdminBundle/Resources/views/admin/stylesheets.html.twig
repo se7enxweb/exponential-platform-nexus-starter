@@ -1,0 +1,7 @@
+<link rel="stylesheet" href="{{ asset('style.css', 'nglayouts_admin_' ~ (nglayouts.debug ? 'dev_' : '') ~ 'css') }}">
+
+{% for stylesheet in nglayouts.config.parameter('admin').stylesheets %}
+    <link rel="stylesheet" href="{{ stylesheet }}">
+{% endfor %}
+
+{{ nglayouts_template_plugin('admin.stylesheets') }}

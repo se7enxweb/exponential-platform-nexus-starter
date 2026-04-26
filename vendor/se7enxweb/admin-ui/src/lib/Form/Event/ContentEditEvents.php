@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\Event;
+
+final readonly class ContentEditEvents
+{
+    /**
+     * Triggered when requesting a content preview.
+     */
+    public const string CONTENT_PREVIEW = 'content.edit.preview';
+}

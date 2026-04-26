@@ -1,0 +1,8 @@
+services:
+    netgen_layouts.design.twig.filesystem_loader:
+        class: Netgen\Bundle\LayoutsBundle\Design\Twig\FilesystemLoader
+        arguments:
+            - "@twig.loader.native_filesystem"
+            - "@netgen_layouts.configuration"
+        tags:
+            - { name: twig.loader }

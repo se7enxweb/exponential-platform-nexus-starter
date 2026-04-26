@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        bootstrap="./tests/bootstrap.php" colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+    <coverage>
+        <include>
+            <directory>./bundle</directory>
+            <directory>./lib</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="setupFactory" value="Netgen\IbexaSearchExtra\Tests\Integration\SetupFactory\Legacy"/>
+        <ini name="error_reporting" value="-1"/>
+        <env name="SEARCH_ENGINE" value="legacy"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+    </php>
+    <testsuites>
+        <testsuite name="Legacy Search Engine tests">
+            <directory suffix="Test.php">./tests/lib/Integration/</directory>
+            <!-- Exclude tests not supported with Legacy search engine -->
+            <exclude>tests/lib/Integration/API/FulltextSpellcheckCriterionTest.php</exclude>
+            <exclude>tests/lib/Integration/API/SubdocumentFieldSortClauseTest.php</exclude>
+            <exclude>tests/lib/Integration/API/SubdocumentQueryCriterionTest.php</exclude>
+            <exclude>tests/lib/Integration/API/FulltextSpellcheckCriterionTest.php</exclude>
+            <exclude>tests/lib/Integration/API/ExtraFieldsTest.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

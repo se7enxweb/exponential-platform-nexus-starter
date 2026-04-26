@@ -1,0 +1,281 @@
+services:
+    netgen_layouts.persistence.doctrine.transaction_handler:
+        class: Netgen\Layouts\Persistence\Doctrine\TransactionHandler
+        arguments:
+            - "@database_connection"
+
+    netgen_layouts.persistence.uuid_factory:
+        class: Symfony\Component\Uid\Factory\UuidFactory
+        arguments:
+            - "Symfony\\Component\\Uid\\UuidV7"
+
+    # Persistence helpers
+
+    netgen_layouts.persistence.doctrine.helper.connection:
+        class: Netgen\Layouts\Persistence\Doctrine\Helper\ConnectionHelper
+        arguments:
+            - "@database_connection"
+
+    netgen_layouts.persistence.doctrine.helper.position:
+        class: Netgen\Layouts\Persistence\Doctrine\Helper\PositionHelper
+        arguments:
+            - "@database_connection"
+
+    # Layout related persistence APIs
+
+    netgen_layouts.persistence.doctrine.layout.query_handler:
+        class: Netgen\Layouts\Persistence\Doctrine\QueryHandler\LayoutQueryHandler
+        arguments:
+            - "@database_connection"
+            - "@netgen_layouts.persistence.doctrine.helper.connection"
+
+    netgen_layouts.persistence.doctrine.layout.mapper:
+        class: Netgen\Layouts\Persistence\Doctrine\Mapper\LayoutMapper
+
+    netgen_layouts.persistence.doctrine.layout.handler:
+        class: Netgen\Layouts\Persistence\Doctrine\Handler\LayoutHandler
+        arguments:
+            - "@netgen_layouts.persistence.doctrine.layout.query_handler"
+            - "@netgen_layouts.persistence.doctrine.block.handler"
+            - "@netgen_layouts.persistence.doctrine.layout.mapper"
+            - "@netgen_layouts.persistence.uuid_factory"
+
+    # Block related persistence APIs
+
+    netgen_layouts.persistence.doctrine.block.query_handler:
+        class: Netgen\Layouts\Persistence\Doctrine\QueryHandler\BlockQueryHandler
+        arguments:
+            - "@database_connection"
+            - "@netgen_layouts.persistence.doctrine.helper.connection"
+
+    netgen_layouts.persistence.doctrine.block.mapper:
+        class: Netgen\Layouts\Persistence\Doctrine\Mapper\BlockMapper
+
+    netgen_layouts.persistence.doctrine.block.handler:
+        class: Netgen\Layouts\Persistence\Doctrine\Handler\BlockHandler
+        arguments:
+            - "@netgen_layouts.persistence.doctrine.block.query_handler"
+            - "@netgen_layouts.persistence.doctrine.collection.handler"
+            - "@netgen_layouts.persistence.doctrine.block.mapper"
+            - "@netgen_layouts.persistence.doctrine.helper.position"
+            - "@netgen_layouts.persistence.uuid_factory"
+
+    # Collection related persistence APIs
+
+    netgen_layouts.persistence.doctrine.collection.query_handler:
+        class: Netgen\Layouts\Persistence\Doctrine\QueryHandler\CollectionQueryHandler
+        arguments:
+            - "@database_connection"
+            - "@netgen_layouts.persistence.doctrine.helper.connection"
+
+    netgen_layouts.persistence.doctrine.collection.mapper:
+        class: Netgen\Layouts\Persistence\Doctrine\Mapper\CollectionMapper
+
+    netgen_layouts.persistence.doctrine.collection.handler:
+        class: Netgen\Layouts\Persistence\Doctrine\Handler\CollectionHandler
+        arguments:
+            - "@netgen_layouts.persistence.doctrine.collection.query_handler"
+            - "@netgen_layouts.persistence.doctrine.collection.mapper"
+            - "@netgen_layouts.persistence.doctrine.helper.position"
+            - "@netgen_layouts.persistence.uuid_factory"
+
+    # Layout resolver related persistence APIs
+
+    netgen_layouts.persistence.doctrine.layout_resolver.query_handler:
+        class: Netgen\Layouts\Persistence\Doctrine\QueryHandler\LayoutResolverQueryHandler
+        arguments:
+            - "@database_connection"
+            - "@netgen_layouts.persistence.doctrine.helper.connection"
+            - !tagged_locator { tag: netgen_layouts.target_type.doctrine_handler, index_by: target_type }
+
+    netgen_layouts.persistence.doctrine.layout_resolver.mapper:
+        class: Netgen\Layouts\Persistence\Doctrine\Mapper\LayoutResolverMapper
+
+    netgen_layouts.persistence.doctrine.layout_resolver.handler:
+        class: Netgen\Layouts\Persistence\Doctrine\Handler\LayoutResolverHandler
+        arguments:
+            - "@netgen_layouts.persistence.doctrine.layout.handler"
+            - "@netgen_layouts.persistence.doctrine.layout_resolver.query_handler"
+            - "@netgen_layouts.persistence.doctrine.layout_resolver.mapper"
+            - "@netgen_layouts.persistence.uuid_factory"
+
+    # Public API
+
+    netgen_layouts.core.service.transaction:
+        class: Netgen\Layouts\Core\Service\TransactionService
+        arguments:
+            - "@netgen_layouts.persistence.transaction_handler"
+
+    # Layout related APIs
+
+    netgen_layouts.core.validator.layout:
+        class: Netgen\Layouts\Core\Validator\LayoutValidator
+        calls:
+            - setValidator: ["@validator"]
+
+    netgen_layouts.core.mapper.layout:
+        class: Netgen\Layouts\Core\Mapper\LayoutMapper
+        arguments:
+            - "@netgen_layouts.persistence.layout.handler"
+            - "@netgen_layouts.layout.registry.layout_type"
+
+    netgen_layouts.core.struct_builder.layout:
+        class: Netgen\Layouts\Core\StructBuilder\LayoutStructBuilder
+
+    netgen_layouts.core.service.layout:
+        class: Netgen\Layouts\Core\Service\LayoutService
+        arguments:
+            - "@netgen_layouts.persistence.transaction_handler"
+            - "@netgen_layouts.core.validator.layout"
+            - "@netgen_layouts.core.mapper.layout"
+            - "@netgen_layouts.core.struct_builder.layout"
+            - "@netgen_layouts.persistence.layout.handler"
+
+    # Block related APIs
+
+    netgen_layouts.core.validator.block:
+        class: Netgen\Layouts\Core\Validator\BlockValidator
+        arguments:
+            - "@netgen_layouts.core.validator.collection"
+        calls:
+            - setValidator: ["@validator"]
+
+    netgen_layouts.core.mapper.block:
+        class: Netgen\Layouts\Core\Mapper\BlockMapper
+        arguments:
+            - "@netgen_layouts.persistence.block.handler"
+            - "@netgen_layouts.persistence.collection.handler"
+            - "@netgen_layouts.core.mapper.collection"
+            - "@netgen_layouts.core.mapper.parameter"
+            - "@netgen_layouts.core.mapper.config"
+            - "@netgen_layouts.block.registry.block_definition"
+
+    netgen_layouts.core.struct_builder.block:
+        class: Netgen\Layouts\Core\StructBuilder\BlockStructBuilder
+        arguments:
+            - "@netgen_layouts.core.struct_builder.config"
+
+    netgen_layouts.core.service.block:
+        class: Netgen\Layouts\Core\Service\BlockService
+        arguments:
+            - "@netgen_layouts.persistence.transaction_handler"
+            - "@netgen_layouts.core.validator.block"
+            - "@netgen_layouts.core.mapper.block"
+            - "@netgen_layouts.core.struct_builder.block"
+            - "@netgen_layouts.core.mapper.parameter"
+            - "@netgen_layouts.core.mapper.config"
+            - "@netgen_layouts.layout.registry.layout_type"
+            - "@netgen_layouts.persistence.block.handler"
+            - "@netgen_layouts.persistence.layout.handler"
+            - "@netgen_layouts.persistence.collection.handler"
+
+    # Collection related APIs
+
+    netgen_layouts.core.validator.collection:
+        class: Netgen\Layouts\Core\Validator\CollectionValidator
+        calls:
+            - setValidator: ["@validator"]
+
+    netgen_layouts.core.mapper.collection:
+        class: Netgen\Layouts\Core\Mapper\CollectionMapper
+        arguments:
+            - "@netgen_layouts.persistence.collection.handler"
+            - "@netgen_layouts.core.mapper.parameter"
+            - "@netgen_layouts.core.mapper.config"
+            - "@netgen_layouts.collection.registry.item_definition"
+            - "@netgen_layouts.collection.registry.query_type"
+            - "@netgen_layouts.item.item_loader"
+
+    netgen_layouts.core.struct_builder.collection:
+        class: Netgen\Layouts\Core\StructBuilder\CollectionStructBuilder
+        arguments:
+            - "@netgen_layouts.core.struct_builder.config"
+
+    netgen_layouts.core.service.collection:
+        class: Netgen\Layouts\Core\Service\CollectionService
+        arguments:
+            - "@netgen_layouts.persistence.transaction_handler"
+            - "@netgen_layouts.core.validator.collection"
+            - "@netgen_layouts.core.mapper.collection"
+            - "@netgen_layouts.core.struct_builder.collection"
+            - "@netgen_layouts.core.mapper.parameter"
+            - "@netgen_layouts.core.mapper.config"
+            - "@netgen_layouts.persistence.collection.handler"
+
+    # Layout resolver related APIs
+
+    netgen_layouts.core.validator.layout_resolver:
+        class: Netgen\Layouts\Core\Validator\LayoutResolverValidator
+        arguments:
+            - "@netgen_layouts.layout.resolver.registry.target_type"
+            - "@netgen_layouts.layout.resolver.registry.condition_type"
+        calls:
+            - setValidator: ["@validator"]
+
+    netgen_layouts.core.mapper.layout_resolver:
+        class: Netgen\Layouts\Core\Mapper\LayoutResolverMapper
+        arguments:
+            - "@netgen_layouts.persistence.layout_resolver.handler"
+            - "@netgen_layouts.layout.resolver.registry.target_type"
+            - "@netgen_layouts.layout.resolver.registry.condition_type"
+            - "@netgen_layouts.core.service.layout"
+
+    netgen_layouts.core.struct_builder.layout_resolver:
+        class: Netgen\Layouts\Core\StructBuilder\LayoutResolverStructBuilder
+
+    netgen_layouts.core.service.layout_resolver:
+        class: Netgen\Layouts\Core\Service\LayoutResolverService
+        arguments:
+            - "@netgen_layouts.persistence.transaction_handler"
+            - "@netgen_layouts.core.validator.layout_resolver"
+            - "@netgen_layouts.core.mapper.layout_resolver"
+            - "@netgen_layouts.core.struct_builder.layout_resolver"
+            - "@netgen_layouts.persistence.layout_resolver.handler"
+            - "@netgen_layouts.persistence.layout.handler"
+
+    # Config API services
+
+    netgen_layouts.core.struct_builder.config:
+        class: Netgen\Layouts\Core\StructBuilder\ConfigStructBuilder
+
+    netgen_layouts.core.mapper.config:
+        class: Netgen\Layouts\Core\Mapper\ConfigMapper
+        arguments:
+            - "@netgen_layouts.core.mapper.parameter"
+
+    # Parameter API services
+
+    netgen_layouts.core.mapper.parameter:
+        class: Netgen\Layouts\Core\Mapper\ParameterMapper
+
+    # Service aliases
+
+    netgen_layouts.api.service.transaction:
+        alias: netgen_layouts.core.service.transaction
+
+    netgen_layouts.api.service.layout:
+        alias: netgen_layouts.core.service.layout
+
+    netgen_layouts.api.service.block:
+        alias: netgen_layouts.core.service.block
+
+    netgen_layouts.api.service.collection:
+        alias: netgen_layouts.core.service.collection
+
+    netgen_layouts.api.service.layout_resolver:
+        alias: netgen_layouts.core.service.layout_resolver
+
+    netgen_layouts.persistence.transaction_handler:
+        alias: netgen_layouts.persistence.doctrine.transaction_handler
+
+    netgen_layouts.persistence.layout.handler:
+        alias: netgen_layouts.persistence.doctrine.layout.handler
+
+    netgen_layouts.persistence.block.handler:
+        alias: netgen_layouts.persistence.doctrine.block.handler
+
+    netgen_layouts.persistence.collection.handler:
+        alias: netgen_layouts.persistence.doctrine.collection.handler
+
+    netgen_layouts.persistence.layout_resolver.handler:
+        alias: netgen_layouts.persistence.doctrine.layout_resolver.handler

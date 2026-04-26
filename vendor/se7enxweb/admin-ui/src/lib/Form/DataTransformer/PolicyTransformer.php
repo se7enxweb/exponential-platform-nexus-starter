@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\AdminUi\Form\DataTransformer;
+
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+
+/**
+ * Transforms between a Policy's ID and a domain specific object.
+ */
+final readonly class PolicyTransformer implements DataTransformerInterface
+{
+    /**
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException
+     */
+    public function transform(mixed $value): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if (!is_array($value) || array_diff(['id', 'module', 'function'], array_keys($value))) {
+            throw new TransformationFailedException('Expected a valid array of data.');
+        }
+
+        return implode(':', [$value['id'], $value['module'], $value['function']]);
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     *
+     * @throws \Symfony\Component\Form\Exception\TransformationFailedException
+     */
+    public function reverseTransform(mixed $value): ?array
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if (!is_string($value)) {
+            throw new TransformationFailedException('Expected a string.');
+        }
+
+        $parts = explode(':', $value);
+
+        if (count($parts) < 3) {
+            throw new TransformationFailedException('Policy string must contain at least 3 parts.');
+        }
+
+        return [
+            'id' => $parts[0],
+            'module' => $parts[1],
+            'function' => $parts[2],
+        ];
+    }
+}

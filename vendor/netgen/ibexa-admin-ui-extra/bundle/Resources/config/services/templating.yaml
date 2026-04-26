@@ -1,0 +1,12 @@
+services:
+    netgen.ibexa_admin_ui_extra.twig.runtime.ibexa_admin_ui_extra:
+        class: Netgen\Bundle\IbexaAdminUIExtraBundle\Templating\Twig\IbexaAdminUIExtraRuntime
+        arguments:
+            - "@ibexa.api.service.content"
+        tags:
+            - { name: twig.runtime }
+
+    netgen.ibexa_admin_ui_extra.twig.extension.ibexa_admin_ui_extra:
+        class: Netgen\Bundle\IbexaAdminUIExtraBundle\Templating\Twig\IbexaAdminUIExtraExtension
+        tags:
+            - { name: twig.extension }

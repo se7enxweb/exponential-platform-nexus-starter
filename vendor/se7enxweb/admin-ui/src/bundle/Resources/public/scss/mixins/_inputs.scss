@@ -1,0 +1,50 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+@mixin input-active {
+    border-color: var(--ibexa-input-focus-border-color, $ibexa-color-primary);
+    box-shadow: 0 0 0 calculateRem(4px) var(--ibexa-input-focus-shadow-color, #{rgba($ibexa-color-primary, 0.25)});
+}
+
+@mixin input-invalid {
+    color: $ibexa-color-danger;
+    background-image: none;
+    border-color: $ibexa-color-danger;
+    background-color: $ibexa-color-danger-100;
+    box-shadow: none;
+}
+
+@mixin area-invalid {
+    color: $ibexa-color-danger;
+    border-color: $ibexa-color-danger;
+    background-color: $ibexa-color-danger-100;
+
+    .ibexa-btn {
+        background-color: $ibexa-color-danger-100;
+    }
+}
+
+@mixin error-input {
+    display: flex;
+    font-size: calculateRem(12px);
+    font-style: normal;
+    color: $ibexa-color-danger;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+@mixin error-under-input {
+    @include error-input();
+
+    & {
+        margin: calculateRem(-7px) 0 0 calculateRem(2px);
+    }
+}
+
+@mixin error-under-label {
+    @include error-input();
+
+    & {
+        flex-basis: 100%;
+    }
+}

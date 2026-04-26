@@ -1,0 +1,31 @@
+import { Plugin } from 'ckeditor5';
+
+import IbexaEmbedContentEditing from './content/embed-editing';
+import IbexaEmbedContentInlineEditing from './content-inline/embed-inline-editing';
+import IbexaEmbedImageEditing from './image/embed-image-editing';
+import IbexaEmbedContentUI from './content/embed-ui';
+import IbexaEmbedContentInlineUI from './content-inline/embed-inline-ui';
+import IbexaEmbedImageUI from './image/embed-image-ui';
+import IbexaEmbedImageToolbar from './image/embed-image-toolbar';
+import IbexaEmbedImageVariationsUI from './image/embed-image-variations-ui';
+import IbexaEmbedImageGoToUI from './image/embed-image-go-to-ui';
+import IbexaEmbedImageGoToEditUI from './image/embed-image-go-to-edit-ui';
+
+class IbexaEmbed extends Plugin {
+    static get requires() {
+        return [
+            IbexaEmbedContentEditing,
+            IbexaEmbedContentInlineEditing,
+            IbexaEmbedImageEditing,
+            IbexaEmbedContentUI,
+            IbexaEmbedContentInlineUI,
+            IbexaEmbedImageUI,
+            IbexaEmbedImageToolbar,
+            IbexaEmbedImageVariationsUI,
+            IbexaEmbedImageGoToUI,
+            IbexaEmbedImageGoToEditUI,
+        ];
+    }
+}
+
+export default IbexaEmbed;

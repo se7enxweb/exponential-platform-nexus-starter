@@ -1,0 +1,193 @@
+{% trans_default_domain 'ibexa_locationview' %}
+{% import _self as tab %}
+{% form_theme form_content_location_add '@IbexaAdminUi/themes/admin/ui/form/flat_widgets.html.twig' %}
+{% form_theme form_content_location_remove with ['@IbexaAdminUi/themes/admin/ui/form/flat_widgets.html.twig', '@IbexaAdminUi/themes/admin/ui/form_fields.html.twig'] %}
+
+<section class="ibexa-content-locations">
+    {{ form(form_content_location_add, {'action': path('ibexa.location.add')}) }}
+    {% set body_rows = [] %}
+    {% if locations is not empty %}
+        {% for location in locations %}
+            {% set body_row_cols = [] %}
+
+            {% set col_raw %}
+                {{ form_widget(form_content_location_remove.locations[location.id], {'attr': {'disabled': not location.canDelete}}) }}
+            {% endset %}
+            {% set body_row_cols = body_row_cols|merge([{
+                has_checkbox: true,
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set col_raw %}
+                {% include '@IbexaAdminUi/themes/admin/ui/location_path.html.twig' with {'locations': location.pathLocations, 'link_last_element': true} %}
+            {% endset %}
+            {% set body_row_cols = body_row_cols|merge([{
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set body_row_cols = body_row_cols|merge([
+                { content: '' },
+            ]) %}
+
+            {% set col_raw %}
+                <input
+                        class="ibexa-input ibexa-input--radio"
+                        type="radio"
+                        {{ location.main ? 'checked' }}
+                        {{ not location.canEdit ? 'disabled' }}
+                        name="updateMainLocation"
+                        value="{{ location.id }}"
+                >
+            {% endset %}
+            {% set body_row_cols = body_row_cols|merge([{
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set col_raw %}
+                <div class="ibexa-content-locations__visibility-toggler">
+                    <div class="ibexa-toggle ibexa-toggle--checkbox {{ not can_hide[location.id] ? 'ibexa-toggle--is-disabled' }} {{ not location.explicitlyHidden ? 'ibexa-toggle--is-checked' }}">
+                        <label class="ibexa-toggle__switcher">
+                            <span class="ibexa-toggle__indicator"></span>
+                            <input
+                                    type="checkbox"
+                                    class="ibexa-toggle__input ibexa-content-locations__visibility-checkbox"
+                                    {{ not location.explicitlyHidden ? 'checked' }}
+                                    name="updateVisibility"
+                                    {{ not can_hide[location.id] ? 'disabled' }}
+                                    value="{{ location.id }}"
+                            />
+                        </label>
+                        <span class="ibexa-toggle__label ibexa-toggle__label--on">
+                            {{ 'toggle_widget.label.on'|trans|desc('On') }}
+                        </span>
+                        <span class="ibexa-toggle__label ibexa-toggle__label--off mr-2">
+                            {{ 'toggle_widget.label.off'|trans|desc('Off') }}
+                        </span>
+                    </div>
+
+                    {# This label is necessary because the Ibexa's JS script modifies it #}
+                    {# That's why this label is hidden and never shown #}
+                    {# vendor/ibexa/admin-ui/src/bundle/Resources/public/js/scripts/admin.location.visibility.js #}
+                    <label class="ibexa-content-locations__visibility-toggler-label" style="display: none"></label>
+
+                    {% if location.parentLocation is defined and location.parentLocation.invisible %}
+                        <label class="ibexa-content-locations__visibility-toggler-label">
+                            <svg class="ibexa-icon ibexa-icon--small-medium">
+                                <use xlink:href="{{ ibexa_icon_path('system-information') }}"></use>
+                            </svg>
+                            {{ 'content.tab.locations.visibility_toggle'|trans({}, 'locationview')|desc('One of the ancestors is hidden') }}
+                        </label>
+                    {% endif %}
+                </div>
+            {% endset %}
+
+            {% set body_row_cols = body_row_cols|merge([{
+                content: col_raw,
+                raw: true,
+            }]) %}
+
+            {% set body_row_cols = body_row_cols|merge([
+                { content: location.childCount },
+            ]) %}
+
+            {% set body_rows = body_rows|merge([{ cols: body_row_cols }]) %}
+        {% endfor %}
+    {% endif %}
+
+    {% embed '@IbexaAdminUi/themes/admin/ui/component/table/table.html.twig' with {
+        headline: 'tab.locations.content_locations'|trans|desc('Content locations'),
+        head_cols: [
+            { has_checkbox: true },
+            { content: 'tab.locations.path'|trans|desc('Path'),
+                attr: { colspan: 2 }
+            },
+            { content: 'tab.locations.main'|trans|desc('Main') },
+            { content: 'tab.locations.visibility'|trans|desc('Visibility'),
+                class: 'ibexa-table__header-cell--visibility-toggler'
+            },
+            { content: 'tab.locations.subitems'|trans|desc('Sub-items') },
+        ],
+        body_rows,
+        actions: tab.table_header_tools(form_content_location_add, form_content_location_remove, can_add),
+    } %}
+        {% block between_header_and_table %}
+            {{ form_start(form_content_location_remove, {
+                'action': path('ibexa.location.remove'),
+                'attr': { 'class': 'ibexa-toggle-btn-state', 'data-toggle-button-id': '#delete-locations' }
+            }) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form_content_location_remove) }}
+
+    {% if pager is defined and pager.haveToPaginate %}
+        <div class="row justify-content-center align-items-center mb-2 ibexa-pagination__spacing">
+            <span class="ibexa-pagination__text">
+                {{ 'pagination.viewing'|trans({
+                    '%viewing%': pager.currentPageResults|length,
+                    '%total%': pager.nbResults}, 'ibexa_pagination')|desc('Viewing %viewing% out of %total% items')|raw }}
+            </span>
+        </div>
+        <div class="row justify-content-center align-items-center ibexa-pagination__btn mb-5">
+            {{ pagerfanta(pager, 'ibexa', pager_options|merge({
+                'routeParams': {
+                    '_fragment': 'ibexa-tab-location-view-locations'
+                }
+            })) }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form_content_location_update_visibility, {'action': path('ibexa.location.update_visibility')}) }}
+    {{ form_row(form_content_location_update_visibility.location) }}
+    {{ form_row(form_content_location_update_visibility.hidden, {
+        label_attr: { hidden: true }
+    }) }}
+    {{ form_row(form_content_location_update_visibility.set) }}
+    {{ form_end(form_content_location_update_visibility) }}
+
+    {{ form(form_content_location_main_update, {'action': path('ibexa.content.update_main_location')}) }}
+</section>
+
+{% include '@IbexaAdminUi/themes/admin/content/tab/locations/panel_swap.html.twig' with {
+    'form': form_content_location_swap,
+    'can_swap': can_swap
+} %}
+
+{% macro table_header_tools(form_add, form_remove, can_add) %}
+    <button
+            data-udw-config="{{ ibexa_udw_config('add_location', {}) }}"
+            class="btn ibexa-btn ibexa-btn--tertiary ibexa-btn--small ibexa-btn--udw-add"
+            {{ not can_add ? 'disabled' }}
+    >
+        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--create">
+            <use xlink:href="{{ ibexa_icon_path('create') }}"></use>
+        </svg>
+        <span class="ibexa-btn__label">
+            {{ 'tab.locations.action.add'|trans|desc('Add') }}
+        </span>
+    </button>
+
+    {% set modal_data_target = 'delete-content-types-modal' %}
+    <button
+            id="delete-locations"
+            type="button"
+            class="btn ibexa-btn ibexa-btn--ghost ibexa-btn--small"
+            disabled
+            data-bs-toggle="modal"
+            data-bs-target="#{{ modal_data_target }}"
+    >
+        <svg class="ibexa-icon ibexa-icon--small-medium ibexa-icon--trash">
+            <use xlink:href="{{ ibexa_icon_path('trash') }}"></use>
+        </svg>
+        <span class="ibexa-btn__label">
+            {{ 'tab.locations.action.delete'|trans|desc('Delete') }}
+        </span>
+    </button>
+    {% include '@IbexaAdminUi/themes/admin/ui/modal/bulk_delete_confirmation.html.twig' with {
+        'id': modal_data_target,
+        'message': 'tab.locations.modal.message'|trans|desc('Do you want to delete the Location? All its sub-items will be sent to Trash.'),
+        'data_click': '#' ~ form_remove.remove.vars.id,
+    } %}
+{% endmacro %}

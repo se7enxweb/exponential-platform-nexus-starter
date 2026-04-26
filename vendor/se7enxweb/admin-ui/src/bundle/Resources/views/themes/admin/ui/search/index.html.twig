@@ -1,0 +1,34 @@
+{% extends "@ibexadesign/ui/layout.html.twig" %}
+
+{% trans_default_domain 'ibexa_search' %}
+
+{% block body_class %}ibexa-search-view{% endblock %}
+
+{% block title %}{{ 'search'|trans|desc('Search') }}{% endblock %}
+
+{% block content_column %}
+    <div class="ibexa-main-container__content-column">
+        <div class="ibexa-search">
+            <div class="ibexa-search__form">
+                {% include '@ibexadesign/ui/search/form.html.twig' with { form: form } %}
+            </div>
+            <div class="ibexa-search__edit-form">
+                {% form_theme form_edit '@ibexadesign/ui/form/flat_widgets.html.twig' %}
+                {{ form_start(form_edit, {
+                    'action': path('ibexa.content.edit'),
+                    'attr': { 'class': 'ibexa-edit-content-form'}
+                }) }}
+                {{ form_widget(form_edit.language, {'attr': {'hidden': 'hidden', 'class': 'language-input'}}) }}
+                {{ form_end(form_edit) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block react_modules %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-content-tree-js', null, 'ibexa') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('ibexa-admin-ui-search-js', null, 'ibexa') }}
+{% endblock %}

@@ -1,0 +1,24 @@
+services:
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Tab\LocationView\TranslationsTab:
+        decorates: Ibexa\AdminUi\Tab\LocationView\TranslationsTab
+        decoration_inner_name: TranslationsTab.inner
+        arguments:
+            - '@TranslationsTab.inner'
+            - '@Ibexa\Core\Repository\Permission\PermissionResolver'
+            - '@Netgen\Bundle\IbexaAdminUIExtraBundle\Form\FormFactory'
+            - '@twig'
+            - '@translator'
+            - '@event_dispatcher'
+
+    Netgen\Bundle\IbexaAdminUIExtraBundle\Tab\LocationView\UrlsTab:
+        decorates: Ibexa\AdminUi\Tab\LocationView\UrlsTab
+        decoration_inner_name: UrlsTab.inner
+        arguments:
+            - '@UrlsTab.inner'
+            - '@router'
+            - '@ibexa.config.resolver'
+            - '%ibexa.site_access.list%'
+            - '%netgen_ibexa_admin_ui_extra.show_siteaccess_urls_outside_configured_content_tree_root%'
+            - '@twig'
+            - '@translator'
+            - '@event_dispatcher'

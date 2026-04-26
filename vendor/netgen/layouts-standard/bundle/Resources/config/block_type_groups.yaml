@@ -1,0 +1,44 @@
+block_type_groups:
+    basic:
+        name: 'Basic'
+        priority: 1000
+        block_types:
+            - { identifier: title, priority: 800 }
+            - { identifier: text, priority: 700 }
+            - { identifier: button, priority: 600 }
+            - { identifier: rich_text, priority: 500 }
+            - { identifier: external_video, priority: 400 }
+            - { identifier: map, priority: 300 }
+            - { identifier: markdown, priority: 200 }
+            - { identifier: html_snippet, priority: 100 }
+    components:
+        name: 'Components'
+        priority: 900
+    listing:
+        name: 'Listing'
+        priority: 800
+        block_types:
+            - { identifier: list, priority: 200 }
+            - { identifier: grid, priority: 100 }
+    gallery:
+        name: 'Gallery'
+        priority: 700
+        block_types:
+            - { identifier: slider, priority: 400 }
+            - { identifier: thumb_gallery, priority: 300 }
+            - { identifier: grid_gallery, priority: 200 }
+            - { identifier: sushi_bar, priority: 100 }
+    containers:
+        name: 'Containers'
+        priority: 600
+        block_types:
+            - { identifier: column, priority: 400 }
+            - { identifier: two_columns, priority: 300 }
+            - { identifier: three_columns, priority: 200 }
+            - { identifier: four_columns, priority: 100 }
+    placeholders:
+        name: 'Placeholders'
+        priority: 500
+        block_types:
+            - { identifier: twig_block, priority: 200 }
+            - { identifier: full_view, priority: 100 }

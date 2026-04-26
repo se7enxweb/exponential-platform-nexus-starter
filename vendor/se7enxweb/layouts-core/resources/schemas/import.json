@@ -1,0 +1,762 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "description": "Netgen Layouts import specification",
+    "required": ["__version"],
+    "additionalProperties": false,
+    "properties": {
+        "__version": {
+            "description": "Version of the import specification",
+            "const": 2
+        },
+        "layouts": {
+            "type": "array",
+            "description": "The list of layouts to import",
+            "minItems": 1,
+            "items": { "$ref": "#/definitions/complex/layout" }
+        },
+        "rule_groups": {
+            "type": "array",
+            "description": "The list of rule groups to import",
+            "minItems": 1,
+            "items": { "$ref": "#/definitions/complex/rule_group" }
+        },
+        "rules": {
+            "type": "array",
+            "description": "The list of rules to import",
+            "minItems": 1,
+            "items": { "$ref": "#/definitions/complex/rule" }
+        },
+        "roles": {
+            "type": "array",
+            "description": "The list of roles to import",
+            "minItems": 1,
+            "items": { "$ref": "#/definitions/complex/role" }
+        }
+    },
+    "definitions": {
+        "simple": {
+            "uuid": {
+                "type": "string",
+                "format": "uuid",
+                "description": "A definition representing a unique entity ID (UUID)",
+                "pattern": "^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$"
+            },
+            "identifier": {
+                "type": "string",
+                "description": "A definition representing an identifier",
+                "pattern": "^[A-Za-z0-9_]*[A-Za-z][A-Za-z0-9_]*$"
+            },
+            "timestamp": {
+                "type": "integer",
+                "description": "A definition representing a timestamp",
+                "minimum": 0
+            },
+            "locale": {
+                "type": "string",
+                "description": "A definition representing a locale",
+                "minLength": 2,
+                "pattern": "^[a-z][a-z](_[A-Za-z_]+)?$",
+                "examples": [
+                    "en",
+                    "en_GB",
+                    "hr_HR"
+                ]
+            }
+        },
+        "list": {
+            "locales": {
+                "type": "array",
+                "description": "A definition representing a list of locales",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                    "$ref": "#/definitions/simple/locale"
+                }
+            },
+            "parameters": {
+                "type": "object",
+                "description": "The list of parameters in the query",
+                "patternProperties": {
+                    "^[a-z][a-z](_[A-Za-z_]+)?$": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                }
+            },
+            "configuration": {
+                "type": "object",
+                "description": "The list of parameters in the query",
+                "patternProperties": {
+                    "^[A-Za-z0-9_]*[A-Za-z][A-Za-z0-9_]*$": {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                }
+            }
+        },
+        "complex": {
+            "layout": {
+                "type": "object",
+                "description": "A layout",
+                "required": ["__type", "id", "status", "type_identifier", "name", "description", "creation_date", "modification_date", "is_shared", "main_locale", "available_locales", "zones"],
+                "additionalProperties": false,
+                "properties": {
+                    "__type": {
+                        "type": "string",
+                        "description": "The type of the entity to import",
+                        "const": "layout"
+                    },
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the layout"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the layout",
+                        "enum": ["draft", "published", "archived"]
+                    },
+                    "type_identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The type of the layout"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the layout",
+                        "minLength": 1
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the layout"
+                    },
+                    "creation_date": {
+                        "$ref": "#/definitions/simple/timestamp",
+                        "description": "The timestamp when the layout was created"
+                    },
+                    "modification_date": {
+                        "$ref": "#/definitions/simple/timestamp",
+                        "description": "The timestamp when the layout was last updated"
+                    },
+                    "is_shared": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the layout is shared"
+                    },
+                    "main_locale": {
+                        "$ref": "#/definitions/simple/locale",
+                        "description": "The main locale of the layout"
+                    },
+                    "available_locales": {
+                        "$ref": "#/definitions/list/locales",
+                        "description": "The list of locales available in the layout"
+                    },
+                    "zones": {
+                        "type": "object",
+                        "description": "The list of zones in the layout",
+                        "minProperties": 1,
+                        "patternProperties": {
+                            "^[A-Za-z0-9_]*[A-Za-z][A-Za-z0-9_]*$": {
+                                "$ref": "#/definitions/complex/zone"
+                            }
+                        }
+                    }
+                }
+            },
+            "zone": {
+                "type": "object",
+                "description": "A zone",
+                "required": ["identifier", "linked_zone", "blocks"],
+                "additionalProperties": false,
+                "properties": {
+                    "identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The identifier of the zone"
+                    },
+                    "linked_zone": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/complex/linked_zone" },
+                            { "type": "null" }
+                        ]
+                    },
+                    "blocks": {
+                        "type": "array",
+                        "description": "The list of blocks in the zone",
+                        "items": {
+                            "$ref": "#/definitions/complex/block"
+                        }
+                    }
+                }
+            },
+            "linked_zone": {
+                "type": "object",
+                "description": "The reference to the linked zone",
+                "required": ["identifier", "layout_id"],
+                "additionalProperties": false,
+                "properties": {
+                    "identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The identifier of the linked zone"
+                    },
+                    "layout_id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The layout UUID of the linked zone"
+                    }
+                }
+            },
+            "block": {
+                "type": "object",
+                "description": "A block",
+                "required": ["id", "definition_identifier", "name", "view_type", "item_view_type", "is_translatable", "is_always_available", "main_locale", "available_locales", "parameters", "configuration", "placeholders", "collections"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the block"
+                    },
+                    "definition_identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The identifier of the block definition"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the block"
+                    },
+                    "view_type": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The view type of the block"
+                    },
+                    "item_view_type": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The view type of the block items"
+                    },
+                    "is_translatable": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the block is translatable"
+                    },
+                    "is_always_available": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the block is always available"
+                    },
+                    "main_locale": {
+                        "$ref": "#/definitions/simple/locale",
+                        "description": "The main locale of the block"
+                    },
+                    "available_locales": {
+                        "$ref": "#/definitions/list/locales",
+                        "description": "The list of locales available in the block"
+                    },
+                    "parameters": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/list/parameters" },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    },
+                    "configuration": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/list/configuration" },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    },
+                    "placeholders": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "description": "The list of placeholders in the block",
+                                "minProperties": 1,
+                                "patternProperties": {
+                                    "^[A-Za-z0-9_]*[A-Za-z][A-Za-z0-9_]*$": {
+                                        "$ref": "#/definitions/complex/placeholder"
+                                    }
+                                }
+                            },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    },
+                    "collections": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "description": "The list of collections in the block",
+                                "minProperties": 1,
+                                "patternProperties": {
+                                    "^[A-Za-z0-9_]*[A-Za-z][A-Za-z0-9_]*$": {
+                                        "$ref": "#/definitions/complex/collection"
+                                    }
+                                }
+                            },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    }
+                }
+            },
+            "placeholder": {
+                "type": "object",
+                "description": "A block placeholder",
+                "required": ["identifier", "blocks"],
+                "additionalProperties": false,
+                "properties": {
+                    "identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The identifier of the placeholder"
+                    },
+                    "blocks": {
+                        "type": "array",
+                        "description": "The list of blocks in the zone",
+                        "items": {
+                            "$ref": "#/definitions/complex/block"
+                        }
+                    }
+                }
+            },
+            "collection": {
+                "type": "object",
+                "description": "A collection",
+                "required": ["id", "offset", "limit", "is_translatable", "is_always_available", "main_locale", "available_locales", "items", "slots", "query"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the collection"
+                    },
+                    "offset": {
+                        "type": "integer",
+                        "description": "The collection offset",
+                        "minimum": 0
+                    },
+                    "limit": {
+                        "type": ["integer", "null"],
+                        "description": "The collection limit",
+                        "minimum": 1
+                    },
+                    "is_translatable": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the collection is translatable"
+                    },
+                    "is_always_available": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the collection is always available"
+                    },
+                    "main_locale": {
+                        "$ref": "#/definitions/simple/locale",
+                        "description": "The main locale of the collection"
+                    },
+                    "available_locales": {
+                        "$ref": "#/definitions/list/locales",
+                        "description": "The list of locales available in the collection"
+                    },
+                    "items": {
+                        "type": "array",
+                        "description": "The list of items in the collection",
+                        "items": {
+                            "$ref": "#/definitions/complex/item"
+                        }
+                    },
+                    "slots": {
+                        "type": "array",
+                        "description": "The list of slots in the collection",
+                        "items": {
+                            "$ref": "#/definitions/complex/slot"
+                        }
+                    },
+                    "query": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/complex/query" },
+                            { "type": "null" }
+                        ]
+                    }
+                }
+            },
+            "item": {
+                "type": "object",
+                "description": "A collection item",
+                "required": ["id", "position", "value", "value_type", "view_type", "configuration"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the collection item"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "description": "The position of the collection item",
+                        "minimum": 0
+                    },
+                    "value": {
+                        "description": "The value of the collection item",
+                        "examples": [
+                            null,
+                            42,
+                            "2a7b26be9b0499dc087f3c6b7d2ec343",
+                            [24, "abc"],
+                            true,
+                            { "foo": "bar" }
+                        ]
+                    },
+                    "value_type": {
+                        "type": "string",
+                        "description": "The value type of the collection item",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "view_type": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/simple/identifier" },
+                            { "type": "null" }
+                        ],
+                        "description": "The view type of the item"
+                    },
+                    "configuration": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/list/configuration" },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    }
+                }
+            },
+            "query": {
+                "type": "object",
+                "description": "A collection query",
+                "required": ["id", "query_type", "is_translatable", "is_always_available", "main_locale", "available_locales", "parameters"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the collection query"
+                    },
+                    "query_type": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The type of the query"
+                    },
+                    "is_translatable": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the query is translatable"
+                    },
+                    "is_always_available": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the query is always available"
+                    },
+                    "main_locale": {
+                        "$ref": "#/definitions/simple/locale",
+                        "description": "The main locale of the query"
+                    },
+                    "available_locales": {
+                        "$ref": "#/definitions/list/locales",
+                        "description": "The list of locales available in the query"
+                    },
+                    "parameters": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/list/parameters" },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    }
+                }
+            },
+            "slot": {
+                "type": "object",
+                "description": "A collection slot",
+                "required": ["id", "position", "view_type"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the collection slot"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "description": "The position of the collection slot",
+                        "minimum": 0
+                    },
+                    "view_type": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/simple/identifier" },
+                            { "type": "null" }
+                        ],
+                        "description": "The view type of the slot"
+                    }
+                }
+            },
+            "rule": {
+                "type": "object",
+                "description": "A rule",
+                "required": ["__type", "id", "status", "rule_group_id", "layout_id", "is_enabled", "priority", "description", "targets", "conditions"],
+                "additionalProperties": false,
+                "properties": {
+                    "__type": {
+                        "type": "string",
+                        "description": "The type of the entity to import",
+                        "const": "rule"
+                    },
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the rule"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the rule",
+                        "enum": ["draft", "published", "archived"]
+                    },
+                    "rule_group_id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The ID of the group rule is located in"
+                    },
+                    "layout_id": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/simple/uuid" },
+                            { "type": "null" }
+                        ],
+                        "description": "The ID of the mapped layout"
+                    },
+                    "is_enabled": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the rule is active"
+                    },
+                    "priority": {
+                        "type": "integer",
+                        "description": "The rule priority"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the rule"
+                    },
+                    "targets": {
+                        "type": "array",
+                        "description": "The list of targets in the rule",
+                        "items": {
+                            "$ref": "#/definitions/complex/target"
+                        }
+                    },
+                    "conditions": {
+                        "type": "array",
+                        "description": "The list of conditions in the rule",
+                        "items": {
+                            "$ref": "#/definitions/complex/condition"
+                        }
+                    }
+                }
+            },
+            "rule_group": {
+                "type": "object",
+                "description": "A rule group",
+                "required": ["__type", "id", "status", "parent_id", "name", "description", "is_enabled", "priority", "groups", "rules", "conditions"],
+                "additionalProperties": false,
+                "properties": {
+                    "__type": {
+                        "type": "string",
+                        "description": "The type of the entity to import",
+                        "const": "rule_group"
+                    },
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the rule group"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the rule group",
+                        "enum": ["draft", "published", "archived"]
+                    },
+                    "parent_id": {
+                        "oneOf": [
+                            { "$ref": "#/definitions/simple/uuid" },
+                            { "type": "null" }
+                        ],
+                        "description": "The ID of the parent group"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the rule group",
+                        "minLength": 1
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the rule group"
+                    },
+                    "is_enabled": {
+                        "type": "boolean",
+                        "description": "The flag indicating if the rule group is active"
+                    },
+                    "priority": {
+                        "type": "integer",
+                        "description": "The rule group priority"
+                    },
+                    "groups": {
+                        "type": "array",
+                        "description": "The list of sub groups in the rule group",
+                        "items": {
+                            "$ref": "#/definitions/complex/rule_group"
+                        }
+                    },
+                    "rules": {
+                        "type": "array",
+                        "description": "The list of rules in the rule group",
+                        "items": {
+                            "$ref": "#/definitions/complex/rule"
+                        }
+                    },
+                    "conditions": {
+                        "type": "array",
+                        "description": "The list of conditions in the rule group",
+                        "items": {
+                            "$ref": "#/definitions/complex/condition"
+                        }
+                    }
+                }
+            },
+            "target": {
+                "type": "object",
+                "description": "A rule target",
+                "required": ["id", "type", "value"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the rule target"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the rule target",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "value": {
+                        "description": "The value of the rule target",
+                        "examples": [
+                            null,
+                            42,
+                            "2a7b26be9b0499dc087f3c6b7d2ec343",
+                            [24, "abc"],
+                            true,
+                            { "foo": "bar" }
+                        ]
+                    }
+                }
+            },
+            "condition": {
+                "type": "object",
+                "description": "A rule/group condition",
+                "required": ["id", "type", "value"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the rule/group condition"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of the rule/group condition",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "value": {
+                        "description": "The value of the rule/group condition",
+                        "examples": [
+                            null,
+                            42,
+                            "2a7b26be9b0499dc087f3c6b7d2ec343",
+                            [24, "abc"],
+                            true,
+                            { "foo": "bar" }
+                        ]
+                    }
+                }
+            },
+            "role": {
+                "type": "object",
+                "description": "A role",
+                "required": ["__type", "id", "status", "identifier", "name", "description", "policies"],
+                "additionalProperties": false,
+                "properties": {
+                    "__type": {
+                        "type": "string",
+                        "description": "The type of the entity to import",
+                        "const": "role"
+                    },
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the role"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the role",
+                        "enum": ["draft", "published", "archived"]
+                    },
+                    "identifier": {
+                        "$ref": "#/definitions/simple/identifier",
+                        "description": "The identifier of the role"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the role",
+                        "minLength": 1
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the role"
+                    },
+                    "policies": {
+                        "type": "array",
+                        "description": "The list of policies in the role",
+                        "items": {
+                            "$ref": "#/definitions/complex/policy"
+                        }
+                    }
+                }
+            },
+            "policy": {
+                "type": "object",
+                "description": "A role policy",
+                "required": ["id", "component", "permission", "limitations"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {
+                        "$ref": "#/definitions/simple/uuid",
+                        "description": "The UUID of the role policy"
+                    },
+                    "component": {
+                        "type": ["string", "null"],
+                        "description": "The policy component",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "permission": {
+                        "type": ["string", "null"],
+                        "description": "The policy permission",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "limitations": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "description": "The list of limitations in the policy",
+                                "minProperties": 1,
+                                "patternProperties": {
+                                    "^[A-Za-z]([A-Za-z0-9_])*$": {
+                                        "$ref": "#/definitions/complex/limitation"
+                                    }
+                                }
+                            },
+                            { "type": "array", "enum": [[]] }
+                        ]
+                    }
+                }
+            },
+            "limitation": {
+                "type": "object",
+                "description": "A policy limitation",
+                "required": ["type", "values"],
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "The limitation type",
+                        "pattern": "^[A-Za-z]([A-Za-z0-9_])*$"
+                    },
+                    "values": {
+                        "description": "The list of limitation values",
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "minProperties": 1
+                            },
+                            { "type": "array", "minItems": 1 }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

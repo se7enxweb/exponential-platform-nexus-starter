@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Bundle\LayoutsBundle\Tests\Templating\Twig\TokenParser;
+
+use Netgen\Bundle\LayoutsBundle\Templating\Twig\Node\RenderZone as RenderZoneNode;
+use Netgen\Bundle\LayoutsBundle\Templating\Twig\TokenParser\RenderZone;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Error\SyntaxError;
+use Twig\Loader\LoaderInterface;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\Expression\Variable\ContextVariable;
+use Twig\Parser;
+use Twig\Source;
+
+#[CoversClass(RenderZone::class)]
+final class RenderZoneTest extends TestCase
+{
+    private Environment $environment;
+
+    private Parser $parser;
+
+    protected function setUp(): void
+    {
+        $this->environment = new Environment(
+            self::createStub(LoaderInterface::class),
+            [
+                'cache' => false,
+                'autoescape' => false,
+                'optimizations' => 0,
+            ],
+        );
+
+        $this->environment->addTokenParser(new RenderZone());
+        $this->parser = new Parser($this->environment);
+    }
+
+    #[DataProvider('compileDataProvider')]
+    public function testCompile(string $source, RenderZoneNode $node, string $tag): void
+    {
+        $stream = $this->environment->tokenize(new Source($source, ''));
+
+        $node->setNodeTag($tag);
+
+        self::assertSame((string) $node, (string) $this->parser->parse($stream)->getNode('body')->getNode('0'));
+    }
+
+    public function testCompileThrowsTwigErrorSyntaxException(): void
+    {
+        $this->expectException(SyntaxError::class);
+        $this->expectExceptionMessage('Unexpected token "name" of value "foo" at line 1.');
+
+        $stream = $this->environment->tokenize(
+            new Source('{% nglayouts_render_zone zone foo=\'bar\' %}', ''),
+        );
+
+        $this->parser->parse($stream);
+    }
+
+    /**
+     * @return iterable<mixed>
+     */
+    public static function compileDataProvider(): iterable
+    {
+        return [
+            [
+                '{% nglayouts_render_zone zone %}',
+                new RenderZoneNode(
+                    new ContextVariable('zone', 1),
+                    null,
+                    1,
+                ),
+                'nglayouts_render_zone',
+            ],
+            [
+                '{% nglayouts_render_zone zone context="json" %}',
+                new RenderZoneNode(
+                    new ContextVariable('zone', 1),
+                    new ConstantExpression('json', 1),
+                    1,
+                ),
+                'nglayouts_render_zone',
+            ],
+        ];
+    }
+}

@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\Bundle\User\Security\Authentication;
+
+use Ibexa\Contracts\Core\Repository\Exceptions\PasswordInUnsupportedFormatException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler as HttpDefaultAuthenticationFailureHandler;
+
+final class DefaultAuthenticationFailureHandler extends HttpDefaultAuthenticationFailureHandler
+{
+    #[\Override]
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
+    {
+        if ($exception instanceof PasswordInUnsupportedFormatException) {
+            $resetPasswordUrl = $this->httpUtils->generateUri($request, 'ibexa.user.forgot_password.migration');
+            $this->setOptions([
+                'failure_path' => $resetPasswordUrl,
+            ]);
+        }
+
+        if ($exception instanceof BadCredentialsException) {
+            $previous = $exception->getPrevious();
+            $code = $previous ? $previous->getCode() : 0;
+
+            $exception = new BadCredentialsException(
+                'Bad credentials.',
+                $code,
+                $previous
+            );
+        }
+
+        return parent::onAuthenticationFailure($request, $exception);
+    }
+}

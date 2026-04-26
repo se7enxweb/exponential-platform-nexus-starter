@@ -1,0 +1,5 @@
+{% block eztags_field %}
+    {% for tag in field.value.tags %}
+        <a href="{{ path('netgen_tags.tag.url', {'tagId': tag.id}) }}">{{ tag.keyword }}</a>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+{% endblock %}

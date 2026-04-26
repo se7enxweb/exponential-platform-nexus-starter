@@ -1,0 +1,42 @@
+imports:
+    - { resource: controllers.yml }
+
+services:
+    netgen_information_collection.command.anonymize:
+        class: Netgen\Bundle\InformationCollectionBundle\Command\DataAnonymizerCommand
+        arguments:
+            - '@netgen_information_collection.anonymizer_facade.service'
+        tags:
+            - { name: console.command }
+
+    netgen_information_collection.command.delete:
+        class: Netgen\Bundle\InformationCollectionBundle\Command\DeleteOldCollectedInfoCommand
+        arguments:
+            - '@netgen_information_collection.api.service'
+        tags:
+            - { name: console.command }
+
+    netgen_information_collection.value_resolver.collection:
+        class: Netgen\Bundle\InformationCollectionBundle\ValueResolver\CollectionValueResolver
+        arguments:
+            - '@netgen_information_collection.api.service'
+        tags:
+            - { name: controller.argument_value_resolver }
+
+    netgen_information_collection.collector:
+        class: Netgen\Bundle\InformationCollectionBundle\DataCollector\InformationCollectionCollector
+        public: false
+        arguments:
+            - '@ibexa.api.repository'
+            - '@Ibexa\Core\Helper\TranslationHelper'
+        tags:
+            - { name: data_collector, template: '@NetgenInformationCollection/data_collector/template.html.twig', id: netgen_information_collection_collector }
+
+
+    netgen_information_collection.listener.captcha_validation:
+        class: Netgen\Bundle\InformationCollectionBundle\Listener\CaptchaValidationListener
+        arguments:
+            - '@translator'
+
+    # Alias Netgen handler class to its service ID so type-based subscription resolves
+    Netgen\InformationCollection\Handler: '@netgen_information_collection.handler'

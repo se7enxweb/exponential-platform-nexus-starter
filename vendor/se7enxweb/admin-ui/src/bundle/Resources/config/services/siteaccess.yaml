@@ -1,0 +1,27 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Ibexa\AdminUi\Siteaccess\SiteaccessResolverInterface: '@Ibexa\AdminUi\Siteaccess\SiteaccessResolver'
+
+    Ibexa\AdminUi\Siteaccess\SiteAccessKeyGenerator: ~
+
+    Ibexa\AdminUi\Siteaccess\SiteAccessNameGenerator: ~
+
+    Ibexa\AdminUi\Siteaccess\SiteaccessResolver:
+        arguments:
+            $siteAccessPreviewVoters: !tagged_iterator ibexa.admin_ui.site_access.preview.voter
+            $siteAccessService: '@Ibexa\Core\MVC\Symfony\SiteAccess\SiteAccessService'
+
+    Ibexa\AdminUi\Siteaccess\NonAdminSiteaccessResolver:
+        arguments:
+            $siteAccessGroups: '%ibexa.site_access.groups%'
+        tags:
+            - { name: 'ibexa.site_access.resolver', type: 'non_admin' }
+
+    Ibexa\AdminUi\Siteaccess\AdminSiteaccessPreviewVoter:
+        arguments:
+            $repositoryConfigurationProvider: '@Ibexa\Bundle\Core\ApiLoader\RepositoryConfigurationProvider'
+        tags: [ ibexa.admin_ui.site_access.preview.voter ]

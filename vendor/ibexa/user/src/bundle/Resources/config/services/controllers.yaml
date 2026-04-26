@@ -1,0 +1,39 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
+
+    Ibexa\Bundle\User\Controller\:
+        resource: "../../Controller/*"
+        exclude: "../../Controller/{Controller}"
+        parent: Ibexa\Bundle\User\Controller\Controller
+        tags:
+            - controller.service_arguments
+            - container.service_subscriber
+
+    Ibexa\Bundle\User\Controller\Controller:
+        calls:
+            - [setContainer , ['@Psr\Container\ContainerInterface']]
+
+    Ibexa\Bundle\User\Controller\PasswordResetController:
+        calls:
+            - [setContainer , ['@Psr\Container\ContainerInterface']]
+
+    Ibexa\Bundle\User\Controller\PasswordChangeController:
+        arguments:
+            $siteAccessGroups: '%ibexa.site_access.groups%'
+
+    Ibexa\Bundle\User\Controller\UserRegisterController:
+        arguments:
+            $userActionDispatcher: '@Ibexa\ContentForms\Form\ActionDispatcher\UserDispatcher'
+
+    Ibexa\Bundle\User\Controller\UserSettingsController: ~
+
+    Ibexa\Bundle\User\Controller\DefaultProfileImageController:
+        calls:
+            - [setContainer , ['@Psr\Container\ContainerInterface']]
+
+    Ibexa\Bundle\User\Controller\UserInvitationController: ~

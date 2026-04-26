@@ -1,0 +1,7 @@
+{% extends '@nglayouts/block/block.html.twig' %}
+
+{% block content %}
+    {% if twig_content|trim is not empty %}
+        {{ twig_content|raw }}
+    {% endif %}
+{% endblock %}

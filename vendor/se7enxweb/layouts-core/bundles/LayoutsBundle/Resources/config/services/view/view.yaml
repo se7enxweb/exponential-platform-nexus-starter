@@ -1,0 +1,26 @@
+services:
+    netgen_layouts.view.view_renderer:
+        class: Netgen\Layouts\View\ViewRenderer
+        arguments:
+            - "@event_dispatcher"
+            - "@twig"
+
+    netgen_layouts.view.view_builder:
+        class: Netgen\Layouts\View\ViewBuilder
+        arguments:
+            - "@netgen_layouts.view.template_resolver"
+            - "@event_dispatcher"
+            - !tagged_iterator netgen_layouts.view_provider
+
+    netgen_layouts.view.renderer:
+        class: Netgen\Layouts\View\Renderer
+        arguments:
+            - "@netgen_layouts.view.view_builder"
+            - "@netgen_layouts.view.view_renderer"
+
+    netgen_layouts.view.template_resolver:
+        class: Netgen\Layouts\View\TemplateResolver
+        lazy: true
+        arguments:
+            - "@=service('netgen_layouts.configuration').getParameter('view')"
+            - !tagged_locator { tag: netgen_layouts.view_matcher, index_by: identifier }

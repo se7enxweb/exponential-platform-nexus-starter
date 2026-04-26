@@ -1,0 +1,9 @@
+netgen_tags.tag.internal:
+    path: /tags/id/{tagId}/{viewType}/{layout}
+    controller: netgen_tags.controller.tag_view::viewAction
+    defaults:
+        viewType: full
+        layout: true
+    methods: [GET]
+    requirements:
+        tagId: \d+

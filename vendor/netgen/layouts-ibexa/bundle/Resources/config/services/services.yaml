@@ -1,0 +1,36 @@
+services:
+    # Alias to Ibexa CMS search service, allowing for replacement
+    # of search service with other implementations system wide
+
+    netgen_layouts.ibexa.search_service:
+        alias: ibexa.api.service.search
+
+    netgen_layouts.ibexa.content_provider:
+        class: Netgen\Layouts\Ibexa\ContentProvider\ContentProvider
+        arguments:
+            - "@ibexa.api.service.location"
+            - "@netgen_layouts.context"
+
+    netgen_layouts.ibexa.content_extractor:
+        alias: netgen_layouts.ibexa.content_extractor.request
+
+    netgen_layouts.ibexa.content_extractor.request:
+        class: Netgen\Layouts\Ibexa\ContentProvider\RequestContentExtractor
+
+    netgen_layouts.ibexa.security.role_hierarchy:
+        class: Netgen\Layouts\Ibexa\Security\Role\RoleHierarchy
+        arguments:
+            - "%security.role_hierarchy.roles%"
+
+    netgen_layouts.ibexa.security.repository_access_voter:
+        class: Netgen\Layouts\Ibexa\Security\Authorization\Voter\RepositoryAccessVoter
+        arguments:
+            - "@netgen_layouts.ibexa.security.role_hierarchy"
+            - "@security.access.decision_manager"
+        tags:
+            - { name: security.voter, priority: 0 }
+
+    netgen_layouts.ibexa.utils.remote_id_converter:
+        class: Netgen\Layouts\Ibexa\Utils\RemoteIdConverter
+        arguments:
+            - "@ibexa.api.repository"

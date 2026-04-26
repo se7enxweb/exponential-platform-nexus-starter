@@ -1,0 +1,91 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$mergedConfig \(array\{transport_dsn\: string, deduplication_lock_storage\: array\{enabled\: bool, type\: string, dsn\: string\|null, service\: string\|null\}\}\) of method Ibexa\\Bundle\\Messenger\\DependencyInjection\\IbexaMessengerExtension\:\:loadInternal\(\) should be contravariant with parameter \$mergedConfig \(array\) of method Symfony\\Component\\HttpKernel\\DependencyInjection\\ConfigurableExtension\:\:loadInternal\(\)$#'
+			identifier: method.childParameterType
+			count: 1
+			path: src/bundle/DependencyInjection/IbexaMessengerExtension.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\Messenger\\Lock\\Store\\DoctrineDbalStore\:\:__construct\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Parameter \#2 \$ttl of method Symfony\\Component\\Lock\\Store\\DoctrineDbalStore\:\:putOffExpiration\(\) expects float, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Part \$expirationCol \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Part \$idCol \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 2
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Part \$table \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Part \$tokenCol \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: src/bundle/Lock/Store/DoctrineDbalStore.php
+
+		-
+			message: '#^Parameter \#1 \$data \(array\{key\: mixed, ttl\?\: float\|null, only_deduplicate_in_queue\?\: bool\|null\}\) of method Ibexa\\Bundle\\Messenger\\Serializer\\Normalizer\\DeduplicateStampNormalizer\:\:denormalize\(\) should be contravariant with parameter \$data \(mixed\) of method Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface\:\:denormalize\(\)$#'
+			identifier: method.childParameterType
+			count: 1
+			path: src/bundle/Serializer/Normalizer/DeduplicateStampNormalizer.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/bundle/Serializer/Normalizer/LockKeyNormalizer.php
+
+		-
+			message: '#^Variable property access on Symfony\\Component\\Lock\\Key\.$#'
+			identifier: property.dynamicName
+			count: 1
+			path: src/bundle/Serializer/Normalizer/LockKeyNormalizer.php
+
+		-
+			message: '#^Method Ibexa\\Bundle\\Messenger\\Transport\\Sender\\SendersLocator\:\:listTypes\(\) should return array\<class\-string\> but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: src/bundle/Transport/Sender/SendersLocator.php
+
+		-
+			message: '#^Cannot call method import\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/integration/bootstrap.php
+
+		-
+			message: '#^Cannot call method importSchema\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: tests/integration/bootstrap.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: tests/integration/bootstrap.php

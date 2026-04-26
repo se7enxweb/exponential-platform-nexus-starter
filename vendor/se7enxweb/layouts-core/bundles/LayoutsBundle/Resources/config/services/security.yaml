@@ -1,0 +1,7 @@
+services:
+    netgen_layouts.security.voter.policy_to_role_map:
+        class: Netgen\Layouts\Security\Authorization\Voter\PolicyToRoleMapVoter
+        arguments:
+            - "@security.access.decision_manager"
+        tags:
+            - { name: security.voter, priority: 0 }

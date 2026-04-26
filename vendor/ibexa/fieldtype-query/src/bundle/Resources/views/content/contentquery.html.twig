@@ -1,0 +1,16 @@
+{% for item in items %}
+    {# Should we pass the full item instead ? #}
+    {{ render(controller("ibexa_content::viewAction", {
+        "contentId": item.id,
+        "content": item,
+        "viewType": itemViewType
+    })) }}
+{% endfor %}
+
+{% if isPaginationEnabled %}
+    {{ pagerfanta( items, 'ibexa', {
+        'pageParameter': pageParameter,
+        'routeName': 'ibexa.content.view',
+        'routeParams' : {'contentId': content.id, 'locationId': location.id }
+    } ) }}
+{% endif %}

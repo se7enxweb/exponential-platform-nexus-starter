@@ -1,0 +1,238 @@
+view:
+    block_view:
+        default:
+            title:
+                template: "@nglayouts/block/title.html.twig"
+                match:
+                    block\definition: title
+                    block\view_type: title
+            text:
+                template: "@nglayouts/block/text.html.twig"
+                match:
+                    block\definition: text
+                    block\view_type: text
+            button:
+                template: "@nglayouts/block/button.html.twig"
+                match:
+                    block\definition: button
+                    block\view_type: button
+            markdown:
+                template: "@nglayouts/block/markdown.html.twig"
+                match:
+                    block\definition: markdown
+                    block\view_type: markdown
+            rich_text:
+                template: "@nglayouts/block/rich_text.html.twig"
+                match:
+                    block\definition: rich_text
+                    block\view_type: rich_text
+            html_snippet:
+                template: "@nglayouts/block/html_snippet.html.twig"
+                match:
+                    block\definition: html_snippet
+                    block\view_type: html_snippet
+            external_video:
+                template: "@nglayouts/block/external_video.html.twig"
+                match:
+                    block\definition: external_video
+                    block\view_type: external_video
+            map:
+                template: "@nglayouts/block/map.html.twig"
+                match:
+                    block\definition: map
+                    block\view_type: map
+            list\list:
+                template: "@nglayouts/block/list/list.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: list
+            list\grid:
+                template: "@nglayouts/block/list/grid.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: grid
+            gallery\slider:
+                template: "@nglayouts/block/gallery/slider.html.twig"
+                match:
+                    block\definition: gallery
+                    block\view_type: slider
+            gallery\thumb_gallery:
+                template: "@nglayouts/block/gallery/thumb_gallery.html.twig"
+                match:
+                    block\definition: gallery
+                    block\view_type: thumb_gallery
+            gallery\grid_gallery:
+                template: "@nglayouts/block/gallery/grid_gallery.html.twig"
+                match:
+                    block\definition: gallery
+                    block\view_type: grid_gallery
+            gallery\sushi_bar:
+                template: "@nglayouts/block/gallery/sushi_bar.html.twig"
+                match:
+                    block\definition: gallery
+                    block\view_type: sushi_bar
+            twig_block:
+                template: "@nglayouts/block/twig_block.html.twig"
+                match:
+                    block\definition: twig_block
+                    block\view_type: twig_block
+            full_view:
+                template: "@nglayouts/block/full_view.html.twig"
+                match:
+                    block\definition: full_view
+                    block\view_type: full_view
+            column:
+                template: "@nglayouts/block/column.html.twig"
+                match:
+                    block\definition: column
+                    block\view_type: column
+            two_columns_50_50:
+                template: "@nglayouts/block/two_columns/two_columns_50_50.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_50_50
+            two_columns_33_66:
+                template: "@nglayouts/block/two_columns/two_columns_33_66.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_33_66
+            two_columns_66_33:
+                template: "@nglayouts/block/two_columns/two_columns_66_33.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_66_33
+            three_columns_33_33_33:
+                template: "@nglayouts/block/three_columns/three_columns_33_33_33.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_33_33_33
+            three_columns_50_25_25:
+                template: "@nglayouts/block/three_columns/three_columns_50_25_25.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_50_25_25
+            three_columns_25_50_25:
+                template: "@nglayouts/block/three_columns/three_columns_25_50_25.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_25_50_25
+            three_columns_25_25_50:
+                template: "@nglayouts/block/three_columns/three_columns_25_25_50.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_25_25_50
+            four_columns:
+                template: "@nglayouts/block/four_columns.html.twig"
+                match:
+                    block\definition: four_columns
+                    block\view_type: four_columns
+        ajax:
+            list\list:
+                template: "@nglayouts/block/list/list_ajax.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: list
+            list\grid:
+                template: "@nglayouts/block/list/grid_ajax.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: grid
+        app:
+            title:
+                template: "@NetgenLayoutsStandard/app/block/title.html.twig"
+                match:
+                    block\definition: title
+            text:
+                template: "@NetgenLayoutsStandard/app/block/text.html.twig"
+                match:
+                    block\definition: text
+            button:
+                template: "@NetgenLayoutsStandard/app/block/button.html.twig"
+                match:
+                    block\definition: button
+            markdown:
+                template: "@NetgenLayoutsStandard/app/block/markdown.html.twig"
+                match:
+                    block\definition: markdown
+            rich_text:
+                template: "@NetgenLayoutsStandard/app/block/rich_text.html.twig"
+                match:
+                    block\definition: rich_text
+            html_snippet:
+                template: "@NetgenLayoutsStandard/app/block/html_snippet.html.twig"
+                match:
+                    block\definition: html_snippet
+            external_video:
+                template: "@NetgenLayoutsStandard/app/block/external_video.html.twig"
+                match:
+                    block\definition: external_video
+            map:
+                template: "@NetgenLayoutsStandard/app/block/map.html.twig"
+                match:
+                    block\definition: map
+            list\list:
+                template: "@NetgenLayoutsStandard/app/block/list/list.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: list
+            list\grid:
+                template: "@NetgenLayoutsStandard/app/block/list/grid.html.twig"
+                match:
+                    block\definition: list
+                    block\view_type: grid
+            gallery:
+                template: "@NetgenLayoutsStandard/app/block/gallery.html.twig"
+                match:
+                    block\definition: gallery
+            twig_block:
+                template: "@NetgenLayoutsStandard/app/block/twig_block.html.twig"
+                match:
+                    block\definition: twig_block
+            full_view:
+                template: "@NetgenLayoutsStandard/app/block/full_view.html.twig"
+                match:
+                    block\definition: full_view
+            column:
+                template: "@NetgenLayoutsStandard/app/block/column.html.twig"
+                match:
+                    block\definition: column
+            two_columns_50_50:
+                template: "@NetgenLayoutsStandard/app/block/two_columns/two_columns_50_50.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_50_50
+            two_columns_33_66:
+                template: "@NetgenLayoutsStandard/app/block/two_columns/two_columns_33_66.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_33_66
+            two_columns_66_33:
+                template: "@NetgenLayoutsStandard/app/block/two_columns/two_columns_66_33.html.twig"
+                match:
+                    block\definition: two_columns
+                    block\view_type: two_columns_66_33
+            three_columns_33_33_33:
+                template: "@NetgenLayoutsStandard/app/block/three_columns/three_columns_33_33_33.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_33_33_33
+            three_columns_50_25_25:
+                template: "@NetgenLayoutsStandard/app/block/three_columns/three_columns_50_25_25.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_50_25_25
+            three_columns_25_50_25:
+                template: "@NetgenLayoutsStandard/app/block/three_columns/three_columns_25_50_25.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_25_50_25
+            three_columns_25_25_50:
+                template: "@NetgenLayoutsStandard/app/block/three_columns/three_columns_25_25_50.html.twig"
+                match:
+                    block\definition: three_columns
+                    block\view_type: three_columns_25_25_50
+            four_columns:
+                template: "@NetgenLayoutsStandard/app/block/four_columns.html.twig"
+                match:
+                    block\definition: four_columns
+                    block\view_type: four_columns

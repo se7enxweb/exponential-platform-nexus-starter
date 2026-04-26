@@ -1,0 +1,20 @@
+{% extends netgen_tags_admin.pageLayoutTemplate %}
+
+{% trans_default_domain 'netgen_tags_admin' %}
+
+{% form_theme form '@NetgenTags/form/tags.html.twig' %}
+
+{% block content %}
+    <h2 class="tag-title">{{ 'tag.merge.title'|trans }}: {{ tag.keyword }} [{{ tag.id }}]</h2>
+
+    <p>{{ 'tag.merge.message'|trans }}</p>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <div class="tags-actions">
+            <button type="submit" class="tags-btn tags-btn-primary">{{ 'tag.button.save'|trans }}</button>
+            <a href="{{ path('netgen_tags_admin_tag_show', {'tagId': tag.id}) }}" class="tags-btn">{{ 'tag.button.discard'|trans }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

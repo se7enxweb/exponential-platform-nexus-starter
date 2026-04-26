@@ -1,0 +1,11 @@
+services:
+    Ibexa\Bundle\Core\EventListener\SessionSetDynamicNameListener:
+        class: Ibexa\Bundle\Core\EventListener\SessionSetDynamicNameListener
+        arguments: ['@ibexa.config.resolver', "@session.storage.factory"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Ibexa\Bundle\Core\EventListener\SessionInitByPostListener:
+        class: Ibexa\Bundle\Core\EventListener\SessionInitByPostListener
+        tags:
+            - { name: kernel.event_subscriber }

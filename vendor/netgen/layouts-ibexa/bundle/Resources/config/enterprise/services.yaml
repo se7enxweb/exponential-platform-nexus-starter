@@ -1,0 +1,7 @@
+services:
+    netgen_layouts.ibexa.limitation_type.layouts_role:
+        class: Ibexa\Core\Limitation\BlockingLimitationType
+        arguments:
+            - NetgenLayoutsRole
+        tags:
+            - { name: ibexa.permissions.limitation_type, alias: NetgenLayoutsRole }

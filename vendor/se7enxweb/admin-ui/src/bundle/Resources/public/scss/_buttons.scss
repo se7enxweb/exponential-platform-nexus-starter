@@ -1,0 +1,605 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+@use 'extra-actions';
+
+.ibexa-btn {
+    display: inline-flex;
+    white-space: nowrap;
+    padding: calculateRem(14px) calculateRem(15px);
+    outline: none;
+    border: calculateRem(1px) solid transparent;
+    border-radius: $ibexa-border-radius;
+    text-decoration: none;
+    font-size: calculateRem(14px);
+    line-height: calculateRem(18px);
+    transition: all $ibexa-admin-transition-duration $ibexa-admin-transition;
+
+    &:focus {
+        box-shadow: $ibexa-btn-focus-box-shadow;
+        border-color: transparent;
+    }
+
+    &:hover {
+        border-color: transparent;
+
+        .ibexa-icon {
+            fill: var(--ibexa-primary-color, #{$ibexa-color-primary});
+        }
+    }
+
+    &--primary.ibexa-btn {
+        color: $ibexa-color-white;
+        fill: $ibexa-color-white;
+        background-image: $ibexa-gradient-danger-primary;
+        border-width: 0;
+        padding: calculateRem(15px) calculateRem(16px);
+
+        &:hover {
+            color: $ibexa-color-white;
+            box-shadow:
+                0 0 0 transparent,
+                $ibexa-btn-hover-box-shadow;
+
+            .ibexa-icon {
+                fill: $ibexa-color-white;
+            }
+        }
+
+        &:hover:focus {
+            box-shadow: $ibexa-btn-focus-box-shadow, $ibexa-btn-hover-box-shadow;
+        }
+
+        &:focus {
+            color: $ibexa-color-white;
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            background-image: none;
+            background-color: $ibexa-color-light;
+            box-shadow: none;
+        }
+    }
+
+    &--secondary.ibexa-btn {
+        color: $ibexa-color-primary;
+        fill: $ibexa-color-primary;
+        background-color: transparent;
+        border-color: $ibexa-color-primary;
+
+        &:focus {
+            color: $ibexa-color-primary;
+            border-color: $ibexa-color-primary;
+        }
+
+        &:hover {
+            color: $ibexa-color-dark;
+            border-color: $ibexa-color-dark;
+
+            .ibexa-icon {
+                fill: $ibexa-color-dark;
+            }
+
+            &:active {
+                color: $ibexa-color-primary;
+                border-color: $ibexa-color-primary;
+
+                .ibexa-icon {
+                    fill: $ibexa-color-primary;
+                }
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            border-color: $ibexa-color-dark-200;
+            background-color: rgba($ibexa-color-light, 0.4);
+        }
+    }
+
+    &--tertiary.ibexa-btn {
+        color: $ibexa-color-dark;
+        fill: $ibexa-color-dark;
+        background-color: transparent;
+        border-color: $ibexa-color-light;
+
+        &:hover {
+            border-color: $ibexa-color-dark;
+
+            .ibexa-icon {
+                fill: $ibexa-color-dark;
+            }
+        }
+
+        &:focus {
+            border-color: $ibexa-color-light;
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: $ibexa-color-light;
+            background-color: $ibexa-color-light-300;
+        }
+    }
+
+    &--ghost.ibexa-btn {
+        --ibexa-btn-primary-color: var(--ibexa-primary-color, #{$ibexa-color-primary});
+
+        color: $ibexa-color-dark;
+        fill: $ibexa-color-dark;
+
+        &:hover {
+            color: var(--ibexa-btn-primary-color);
+
+            .ibexa-icon {
+                fill: var(--ibexa-btn-primary-color);
+            }
+        }
+
+        &:focus {
+            color: var(--ibexa-btn-primary-color);
+            border-color: var(--ibexa-btn-primary-color);
+            box-shadow: 0 0 0 calculateRem(3px) var(--ibexa-btn-shadow-box-primary-color);
+
+            .ibexa-icon {
+                fill: var(--ibexa-btn-primary-color);
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: transparent;
+        }
+    }
+
+    &--ghost-info.ibexa-btn {
+        color: $ibexa-color-dark;
+        fill: $ibexa-color-dark;
+
+        &:hover {
+            color: $ibexa-color-info;
+
+            .ibexa-icon {
+                fill: $ibexa-color-info;
+            }
+        }
+
+        &:focus {
+            color: $ibexa-color-info;
+            border-color: $ibexa-color-info;
+
+            .ibexa-icon {
+                fill: $ibexa-color-info;
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: transparent;
+        }
+    }
+
+    &--dark.ibexa-btn {
+        color: $ibexa-color-white;
+        fill: $ibexa-color-white;
+        background-color: $ibexa-color-dark;
+        border-color: $ibexa-color-dark;
+
+        &:hover {
+            color: $ibexa-color-white;
+            fill: $ibexa-color-white;
+            background-color: $ibexa-color-dark;
+            box-shadow:
+                0 0 0 transparent,
+                $ibexa-btn-hover-box-shadow-dark;
+
+            .ibexa-icon {
+                fill: $ibexa-color-white;
+            }
+
+            &:focus {
+                box-shadow: $ibexa-btn-focus-box-shadow, $ibexa-btn-hover-box-shadow-dark;
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            background-color: $ibexa-color-light;
+            border-color: $ibexa-color-light;
+            box-shadow: none;
+        }
+    }
+
+    &--filled-info.ibexa-btn {
+        color: $ibexa-color-white;
+        fill: $ibexa-color-white;
+        border-color: $ibexa-color-info;
+        background-color: $ibexa-color-info;
+
+        &:focus {
+            box-shadow: $ibexa-btn-focus-box-shadow-info;
+        }
+
+        &:hover {
+            color: $ibexa-color-white;
+            box-shadow:
+                0 0 0 transparent,
+                $ibexa-btn-hover-box-shadow-info;
+            background-color: $ibexa-color-info;
+
+            .ibexa-icon {
+                fill: $ibexa-color-white;
+            }
+
+            &:focus {
+                color: $ibexa-color-white;
+                box-shadow: $ibexa-btn-focus-box-shadow-info, $ibexa-btn-hover-box-shadow-info;
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            background-color: $ibexa-color-light;
+            border-color: $ibexa-color-light;
+            box-shadow: none;
+        }
+    }
+
+    &--info.ibexa-btn {
+        color: $ibexa-color-info;
+        fill: $ibexa-color-info;
+        border-color: $ibexa-color-info;
+
+        &:focus {
+            box-shadow: $ibexa-btn-focus-box-shadow-info;
+        }
+
+        &:hover {
+            color: $ibexa-color-dark;
+            fill: $ibexa-color-dark;
+            border-color: $ibexa-color-dark;
+
+            .ibexa-icon {
+                fill: $ibexa-color-dark;
+            }
+        }
+
+        &.ibexa-btn--inverted-hover {
+            &:hover {
+                color: $ibexa-color-white;
+                fill: $ibexa-color-white;
+                border-color: $ibexa-color-white;
+
+                .ibexa-icon {
+                    fill: $ibexa-color-white;
+                }
+            }
+        }
+
+        &:focus {
+            box-shadow: $ibexa-btn-focus-box-shadow-info;
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            border-color: $ibexa-color-dark-200;
+            background-color: $ibexa-color-light-300;
+        }
+    }
+
+    &--neon-info.ibexa-btn {
+        border-radius: $ibexa-border-radius;
+
+        .ibexa-icon {
+            fill: $ibexa-color-info;
+        }
+
+        &:hover {
+            border-color: $ibexa-color-info;
+            box-shadow:
+                0 0 0 transparent,
+                $ibexa-btn-hover-box-shadow-info;
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    &--selector.ibexa-btn {
+        color: $ibexa-color-dark;
+        fill: $ibexa-color-dark;
+        padding: calculateRem(11px) calculateRem(12px);
+        pointer-events: auto;
+
+        &.ibexa-btn--selected {
+            background-color: $ibexa-color-info-200;
+            fill: $ibexa-color-info;
+        }
+
+        &.ibexa-btn--error {
+            background-color: $ibexa-color-danger-100;
+            border-color: $ibexa-color-danger;
+            fill: $ibexa-color-danger;
+        }
+
+        &:hover {
+            .ibexa-icon {
+                fill: $ibexa-color-info;
+            }
+        }
+
+        &:not(.ibexa-btn--selected) {
+            &:focus {
+                border-color: $ibexa-color-info;
+                box-shadow: 0 0 0 calculateRem(4px) rgba($ibexa-color-info, 0.2);
+            }
+        }
+
+        &:focus {
+            box-shadow: $ibexa-btn-focus-box-shadow-info;
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: transparent;
+            box-shadow: none;
+
+            &:hover {
+                .ibexa-icon {
+                    fill: $ibexa-color-dark-300;
+                }
+            }
+        }
+    }
+
+    &--dark-selector.ibexa-btn {
+        color: $ibexa-color-white;
+        fill: $ibexa-color-white;
+        padding: calculateRem(11px) calculateRem(12px);
+        pointer-events: auto;
+
+        &.ibexa-btn--selected {
+            background-color: $ibexa-color-dark-500;
+            border-color: transparent;
+        }
+
+        &.ibexa-btn--error {
+            background-color: $ibexa-color-danger-100;
+            border-color: $ibexa-color-danger;
+            fill: $ibexa-color-danger;
+        }
+
+        &:hover {
+            .ibexa-icon {
+                fill: $ibexa-color-light-600;
+            }
+        }
+
+        &:not(.ibexa-btn--selected) {
+            &:focus {
+                box-shadow: 0 0 0 calculateRem(4px) rgba($ibexa-color-white, 0.2);
+            }
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 calculateRem(4px) $ibexa-color-dark-500;
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: transparent;
+            box-shadow: none;
+
+            &:hover {
+                .ibexa-icon {
+                    fill: $ibexa-color-dark-300;
+                }
+            }
+        }
+    }
+
+    &--secondary-light.ibexa-btn {
+        color: $ibexa-color-white;
+        fill: $ibexa-color-white;
+        background-color: transparent;
+        border-color: $ibexa-color-white;
+
+        &:focus {
+            color: $ibexa-color-white;
+            border-color: $ibexa-color-white;
+            box-shadow: 0 0 0 calculateRem(3px) rgba($ibexa-color-white, 0.2);
+
+            .ibexa-icon {
+                fill: $ibexa-color-white;
+            }
+        }
+
+        &:hover {
+            color: $ibexa-color-white;
+            fill: $ibexa-color-white;
+            background-color: transparent;
+            border-color: $ibexa-color-white;
+            box-shadow:
+                0 0 0 transparent,
+                0 calculateRem(22px) calculateRem(24px) 0 rgba($ibexa-color-white, 0.2);
+
+            .ibexa-icon {
+                fill: $ibexa-color-white;
+            }
+
+            &:focus {
+                color: $ibexa-color-white;
+                border-color: $ibexa-color-white;
+
+                .ibexa-icon {
+                    fill: $ibexa-color-white;
+                }
+            }
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-400;
+            fill: $ibexa-color-dark-400;
+            border-color: $ibexa-color-dark-400;
+            box-shadow: none;
+        }
+    }
+
+    &--secondary-dark.ibexa-btn {
+        color: $ibexa-color-dark;
+        fill: $ibexa-color-dark;
+        background-color: $ibexa-color-white;
+        border-color: $ibexa-color-light;
+
+        &:hover {
+            box-shadow: 0 calculateRem(11px) calculateRem(12px) 0 rgba($ibexa-color-dark, 0.1);
+
+            .ibexa-icon {
+                fill: $ibexa-color-dark;
+            }
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:active {
+            border: calculateRem(1px) solid $ibexa-color-primary-600;
+        }
+
+        &:focus-visible {
+            border: calculateRem(1px) solid $ibexa-color-primary;
+            box-shadow: 0 0 0 calculateRem(4px) rgba($ibexa-color-primary, 0.25);
+        }
+
+        &.disabled,
+        &[disabled],
+        &:disabled {
+            color: $ibexa-color-dark-300;
+            fill: $ibexa-color-dark-300;
+            border-color: $ibexa-color-dark-100;
+            background-color: $ibexa-color-white;
+        }
+    }
+
+    &--small {
+        padding-top: calculateRem(6px);
+        padding-bottom: calculateRem(6px);
+        height: calculateRem(32px);
+
+        &.ibexa-btn--primary {
+            padding-top: calculateRem(7px);
+            padding-bottom: calculateRem(7px);
+        }
+    }
+
+    &--no-text {
+        &.ibexa-btn--small {
+            padding-left: calculateRem(7px);
+            padding-right: calculateRem(7px);
+
+            &.ibexa-btn--primary {
+                padding-left: calculateRem(8px);
+                padding-right: calculateRem(8px);
+            }
+        }
+    }
+
+    &--add-translation {
+        .ibexa-icon {
+            margin-right: 0;
+        }
+    }
+
+    &__label {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .ibexa-icon {
+        margin-right: calculateRem(12px);
+    }
+
+    &--icon-right {
+        .ibexa-icon {
+            margin-right: 0;
+            margin-left: calculateRem(12px);
+        }
+    }
+
+    &--no-text {
+        .ibexa-icon {
+            margin-right: 0;
+        }
+    }
+}
+
+.btn.disabled,
+.btn[disabled] {
+    opacity: 1;
+}
+
+.ibexa-content-view,
+.ibexa-trash-list-view {
+    .ibexa-modal--send-to-trash {
+        .modal-footer {
+            .form-check-inline {
+                margin-right: 0;
+
+                .btn-danger {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+.ibexa-btn--content-edit {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.ibexa-btn--content-tree-expanded {
+    background: $ibexa-color-white;
+    border-color: $ibexa-color-white;
+    color: $ibexa-color-black;
+}
+
+button:focus {
+    outline: 0;
+}

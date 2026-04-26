@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # Repository Forms
+    Ibexa\AdminUi\Form\Type\Role\LimitationType: '@ezplatform.content_forms.policy.limitation.form'
+
+    # Symfony
+    Symfony\Contracts\Translation\TranslatorInterface: '@translator'

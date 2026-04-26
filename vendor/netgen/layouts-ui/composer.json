@@ -1,0 +1,41 @@
+{
+    "name": "netgen/layouts-ui",
+    "description": "Netgen Layouts user interface",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Netgen",
+            "homepage": "https://netgen.io"
+        },
+        {
+            "name": "Effectiva",
+            "homepage": "https://effectiva.hr"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "netgen/content-browser-ui": "^2.0"
+    },
+    "require-dev": {
+        "netgen/layouts-coding-standard": "^3.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "*": false
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Netgen\\Bundle\\LayoutsUIBundle\\": "bundle/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "name": "willdurand/js-translation-bundle",
+    "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+    "keywords": [ "translation", "javascript", "symfony" ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+        "name": "William Durand",
+        "email": "will+git@drnd.me"
+    }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "symfony/framework-bundle": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/finder": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/console": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/intl": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/translation":  "~4.4|~5.0|~6.0|~7.0",
+        "symfony/twig-bundle": "~4.4|~5.0|~6.0|~7.0"
+    },
+    "require-dev": {
+        "symfony/asset": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/filesystem": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/yaml": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/browser-kit": "~4.4|~5.0|~6.0|~7.0",
+        "symfony/phpunit-bridge": "^5.0|^6.0|~7.0",
+        "phpunit/phpunit": "^4.8|~5.7|~6.5|~8"
+    },
+    "replace": {
+        "willdurand/expose-translation-bundle": "2.5.*"
+    },
+    "autoload": {
+        "psr-4": { "Bazinga\\Bundle\\JsTranslationBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "6.x-dev"
+        }
+    }
+}

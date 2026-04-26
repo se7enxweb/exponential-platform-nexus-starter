@@ -1,0 +1,6 @@
+ibexa_forms.form.map.address.label: "Address"
+ibexa_forms.form.map.find_address.label: "Find address"
+ibexa_forms.form.map.restore_coordinates.label: "Restore"
+ibexa_forms.form.map.latitude.label: "Latitude"
+ibexa_forms.form.map.longitude.label: "Longitude"
+ibexa_forms.form.map.current_location.label: 'My current location'

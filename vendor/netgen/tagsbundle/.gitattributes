@@ -1,0 +1,2 @@
+bundle/Resources/public/admin/css/style.css binary -merge
+bundle/Resources/public/admin/css/*.css.map binary -merge

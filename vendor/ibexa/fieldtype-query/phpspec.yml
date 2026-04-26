@@ -1,0 +1,6 @@
+formatter.name: pretty
+
+suites:
+  default:
+    psr4_prefix: Ibexa\FieldTypeQuery
+    namespace: Ibexa\FieldTypeQuery

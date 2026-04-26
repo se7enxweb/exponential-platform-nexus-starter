@@ -1,0 +1,34 @@
+imports:
+    - {resource: common.yml}
+
+parameters:
+    languages:
+        - eng-US
+        - eng-GB
+    ignored_storage_files:
+        -
+            var/ibexa_demo_site/storage/images/design/plain-site/172-2-eng-US/Ibexa-Demo-Design-without-demo-content1.png
+    ezpublish.solr.endpoint.class: Ibexa\Solr\Gateway\Endpoint
+
+    ibexa.search.solr.entry_endpoints:
+          - endpoint0
+    ibexa.search.solr.cluster_endpoints: []
+    ibexa.search.solr.default_endpoint: endpoint0
+    ibexa.search.solr.main_translations_endpoint: null
+    ibexa.search.solr.field_mapper.indexing_depth_provider.default: 2
+
+services:
+    Ibexa\Contracts\Core\Search\VersatileHandler:
+        alias: Ibexa\Solr\Handler
+
+    ezpublish.search.solr.endpoint.endpoint0:
+        class: "%ezpublish.solr.endpoint.class%"
+        arguments:
+            -
+                scheme: http
+                host: '%test.ibexa.solr.host%'
+                port: 8983
+                path: /solr
+                core: collection1
+        tags:
+            - {name: ibexa.search.solr.endpoint, alias: endpoint0}

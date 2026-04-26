@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\View\Matcher\Form\Block;
+
+use Netgen\Layouts\API\Values\Block\Block;
+use Netgen\Layouts\View\Matcher\Block\DefinitionTrait;
+use Netgen\Layouts\View\Matcher\MatcherInterface;
+use Netgen\Layouts\View\View\FormViewInterface;
+use Netgen\Layouts\View\ViewInterface;
+
+/**
+ * This matcher matches if the form in the provided view
+ * is used to edit the block with the block definition equal to
+ * value provided in the configuration.
+ */
+final class Definition implements MatcherInterface
+{
+    use DefinitionTrait;
+
+    public function match(ViewInterface $view, array $config): bool
+    {
+        if (!$view instanceof FormViewInterface) {
+            return false;
+        }
+
+        if (!$view->form->getConfig()->hasOption('block')) {
+            return false;
+        }
+
+        $block = $view->form->getConfig()->getOption('block');
+        if (!$block instanceof Block) {
+            return false;
+        }
+
+        return $this->doMatch($block, $config);
+    }
+}

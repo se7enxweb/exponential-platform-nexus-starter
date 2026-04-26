@@ -1,0 +1,48 @@
+imports:
+    - {resource: core.yaml}
+    - {resource: query_types/base.yaml}
+    - {resource: plugins/field_type/relation_resolvers.yaml}
+
+parameters:
+
+services:
+    netgen.ibexa_site_api.settings:
+        alias: 'netgen.ibexa_site_api.settings.core'
+
+    netgen.ibexa_site_api.filter_service:
+        alias: 'netgen.ibexa_site_api.core.filter_service'
+
+    netgen.ibexa_site_api.find_service:
+        alias: 'netgen.ibexa_site_api.core.find_service'
+
+    netgen.ibexa_site_api.load_service:
+        alias: 'netgen.ibexa_site_api.core.load_service'
+
+    netgen.ibexa_site_api.relation_service:
+        alias: 'netgen.ibexa_site_api.core.relation_service'
+
+    netgen.ibexa_site_api.site:
+        alias: 'netgen.ibexa_site_api.core.site'
+        public: true
+
+    netgen.ibexa_site_api.url_generator:
+        alias: 'netgen.ibexa_site_api.core.url_generator'
+
+    netgen.ibexa_site_api.language_resolver:
+        alias: netgen.ibexa_site_api.language_resolver.core
+
+    # Search adapters for filter and find services to
+    # Ibexa\Contracts\Core\Repository\SearchService interface
+    # from Ibexa
+
+    netgen.ibexa_site_api.filter_service.search_adapter:
+        class: Netgen\IbexaSiteApi\API\Adapter\FilterServiceAdapter
+        arguments:
+            - '@netgen.ibexa_site_api.filter_service'
+            - '@Ibexa\Core\Search\Legacy\Content\Handler'
+
+    netgen.ibexa_site_api.find_service.search_adapter:
+        class: Netgen\IbexaSiteApi\API\Adapter\FindServiceAdapter
+        arguments:
+            - '@netgen.ibexa_site_api.find_service'
+            - '@ibexa.spi.search'

@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Netgen\Layouts\Collection\QueryType;
+
+use Netgen\Layouts\API\Values\Collection\Query;
+use Netgen\Layouts\Parameters\ParameterDefinitionCollectionTrait;
+
+final class NullQueryType implements QueryTypeInterface
+{
+    use ParameterDefinitionCollectionTrait;
+
+    public true $isEnabled {
+        get => true;
+    }
+
+    public string $name {
+        get => 'Invalid query type';
+    }
+
+    public QueryTypeHandlerInterface $handler {
+        get => new NullQueryTypeHandler();
+    }
+
+    public function __construct(
+        public private(set) string $type,
+    ) {}
+
+    public function getValues(Query $query, int $offset = 0, ?int $limit = null): iterable
+    {
+        return [];
+    }
+
+    public function getCount(Query $query): int
+    {
+        return 0;
+    }
+
+    public function isContextual(Query $query): false
+    {
+        return false;
+    }
+}

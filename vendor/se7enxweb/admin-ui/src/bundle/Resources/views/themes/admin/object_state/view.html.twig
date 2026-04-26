@@ -1,0 +1,67 @@
+{% extends "@ibexadesign/ui/layout.html.twig" %}
+
+{% trans_default_domain 'ibexa_object_state' %}
+
+{% block body_class %}ibexa-object-state-view{% endblock %}
+
+{% block breadcrumbs %}
+    {% include '@ibexadesign/ui/breadcrumbs.html.twig' with { items: [
+        { value: 'breadcrumb.admin'|trans(domain='messages')|desc('Admin') },
+        { url: path('ibexa.object_state.groups.list'), value: 'object_state_group.breadcrumb.list'|trans|desc('Object states') },
+        { url: path('ibexa.object_state.group.view', { 'objectStateGroupId': object_state_group.id }), value: 'object_state_group.breadcrumb.view'|trans({ '%name%': object_state_group.name })|desc('Object state group: %name%') },
+        { value: 'object_state.breadcrumb.view'|trans({ '%name%': object_state.name })|desc('Object state: %name%') }
+    ]} %}
+{% endblock %}
+
+{% block title %}{{ 'object_state.view.title'|trans({ '%name%': object_state_group.name })|desc('Object state: %name%') }}{% endblock %}
+
+{% block header %}
+    {% include '@ibexadesign/ui/page_title.html.twig' with {
+        title: 'object_state.view.title'|trans({ '%name%': object_state.name })|desc('Object state: %name%'),
+    } %}
+{% endblock %}
+
+{% block context_menu %}
+    {% set menu_items %}
+        {% if can_administrate %}
+            <li class="ibexa-context-menu__item ibexa-adaptive-items__item">
+                <a
+                    href="{{ path('ibexa.object_state.state.update', { objectStateId: object_state.id }) }}"
+                    class="btn ibexa-btn ibexa-btn--primary"
+                >
+                    <span class="ibexa-btn__label">
+                        {{ 'object_state_group.name.action.edit'|trans|desc('Edit') }}
+                    </span>
+                </a>
+            </li>
+        {% endif %}
+    {% endset %}
+
+    {{ include('@ibexadesign/ui/component/context_menu/context_menu.html.twig', {
+        menu_items,
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <section class="container ibexa-container">
+        {% set details_items = [
+            {
+                label: 'object_state.name'|trans|desc('Object state name'),
+                content: object_state.name,
+            },
+            {
+                label: 'object_state.identifier'|trans|desc('Identifier'),
+                content: object_state.identifier,
+            },
+            {
+                label: 'object_state.id'|trans|desc('ID'),
+                content: object_state.id,
+            },
+        ] %}
+
+        {% include '@ibexadesign/ui/component/details/details.html.twig' with {
+            headline: 'object_state.view.information.title'|trans|desc('Object state information'),
+            items: details_items,
+        } only %}
+    </section>
+{% endblock %}

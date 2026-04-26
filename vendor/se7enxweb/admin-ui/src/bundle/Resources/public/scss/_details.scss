@@ -1,0 +1,122 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+.ibexa-details {
+    &:not(:first-child) {
+        margin-top: calculateRem(40px);
+    }
+
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+
+        &--vertical {
+            display: block;
+        }
+    }
+
+    &__item {
+        flex-basis: 25%;
+        padding: calculateRem(8px) calculateRem(8px) calculateRem(8px) 0;
+
+        .ibexa-label {
+            margin-top: calculateRem(8px);
+            margin-bottom: 0;
+        }
+
+        &--break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        &--inline {
+            display: flex;
+
+            .ibexa-details {
+                &__item-label {
+                    min-width: calculateRem(350px);
+                    margin-right: calculateRem(16px);
+                }
+            }
+        }
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__item-content {
+        word-wrap: break-word;
+
+        .ibexa-dropdown {
+            margin-left: 0;
+        }
+
+        &--ellipsized {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            text-overflow: ellipsis;
+        }
+
+        &--multi-line-ellipsized {
+            display: -webkit-box;
+            -webkit-line-clamp: var(--ibexa-details__ellipsized-lines-no, 1);
+            -webkit-box-orient: vertical;
+        }
+    }
+
+    &__item-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    &__show-more-btn {
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+        padding-right: 0;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__show-more-label,
+    &__show-less-label {
+        &--hidden {
+            display: none;
+        }
+    }
+
+    &__show-more-btn-icon {
+        &--opened {
+            transform: rotate(-180deg);
+        }
+
+        &.ibexa-icon {
+            margin-left: calculateRem(8px);
+            margin-right: 0;
+            transition: all $ibexa-admin-transition-duration $ibexa-admin-transition;
+        }
+    }
+
+    &__header {
+        &--inline-headline {
+            .ibexa-table-header {
+                justify-content: flex-start;
+            }
+        }
+
+        &--small {
+            .ibexa-table-header {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    &__alert-container {
+        margin-top: calculateRem(16px);
+    }
+}

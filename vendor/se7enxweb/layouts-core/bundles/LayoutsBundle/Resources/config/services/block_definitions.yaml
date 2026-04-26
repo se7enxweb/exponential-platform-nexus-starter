@@ -1,0 +1,58 @@
+parameters:
+    netgen_layouts.block.block_definition.handler.plugin.common.groups: ['design', 'common']
+
+    netgen_layouts.block.block_definition.handler.plugin.paged_collections.groups: ['design']
+    netgen_layouts.block.block_definition.handler.plugin.paged_collections.pager_types:
+        pager: 'Pager'
+        load_more: 'Load more'
+
+services:
+    netgen_layouts.block.block_definition_factory:
+        class: Netgen\Layouts\Block\BlockDefinitionFactory
+        arguments:
+            - "@netgen_layouts.parameters.parameter_builder_factory"
+            - "@netgen_layouts.block.registry.handler_plugin"
+            - "@netgen_layouts.config.config_definition_factory"
+
+    netgen_layouts.block.registry.block_definition:
+        class: Netgen\Layouts\Block\Registry\BlockDefinitionRegistry
+        arguments:
+            - !abstract "Set in BlockDefinitionPass"
+
+    netgen_layouts.block.registry.handler_plugin:
+        class: Netgen\Layouts\Block\Registry\HandlerPluginRegistry
+        arguments:
+            - !tagged_iterator netgen_layouts.block_definition_handler.plugin
+
+    netgen_layouts.block.block_type_factory:
+        class: Netgen\Layouts\Block\BlockType\BlockTypeFactory
+
+    netgen_layouts.block.registry.block_type:
+        class: Netgen\Layouts\Block\Registry\BlockTypeRegistry
+        arguments:
+            - !abstract "Set in BlockTypePass"
+
+    netgen_layouts.block.block_type_group_factory:
+        class: Netgen\Layouts\Block\BlockType\BlockTypeGroupFactory
+
+    netgen_layouts.block.registry.block_type_group:
+        class: Netgen\Layouts\Block\Registry\BlockTypeGroupRegistry
+        arguments:
+            - !abstract "Set in BlockTypeGroupPass"
+
+    # Various block plugins
+
+    netgen_layouts.block.block_definition.handler.plugin.common:
+        class: Netgen\Layouts\Block\BlockDefinition\Handler\CommonParametersPlugin
+        arguments:
+            - "%netgen_layouts.block.block_definition.handler.plugin.common.groups%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler.plugin, priority: 0 }
+
+    netgen_layouts.block.block_definition.handler.plugin.paged_collections:
+        class: Netgen\Layouts\Block\BlockDefinition\Handler\PagedCollectionsPlugin
+        arguments:
+            - "%netgen_layouts.block.block_definition.handler.plugin.paged_collections.pager_types%"
+            - "%netgen_layouts.block.block_definition.handler.plugin.paged_collections.groups%"
+        tags:
+            - { name: netgen_layouts.block_definition_handler.plugin, priority: 10 }

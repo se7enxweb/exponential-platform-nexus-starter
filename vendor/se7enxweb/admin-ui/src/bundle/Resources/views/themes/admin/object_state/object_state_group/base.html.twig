@@ -1,0 +1,13 @@
+{% extends '@ibexadesign/ui/edit_base.html.twig' %}
+
+{% trans_default_domain 'ibexa_object_state' %}
+
+{% block header %}
+    {% block header_admin %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="ibexa-edit-content__container">
+        {% block form %}{% endblock %}
+    </div>
+{% endblock %}

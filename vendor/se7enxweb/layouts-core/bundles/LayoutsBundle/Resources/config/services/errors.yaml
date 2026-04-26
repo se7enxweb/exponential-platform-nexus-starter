@@ -1,0 +1,11 @@
+services:
+    netgen_layouts.error.handler:
+        alias: netgen_layouts.error.handler.debug
+
+    netgen_layouts.error.handler.debug:
+        class: Netgen\Layouts\Error\DebugErrorHandler
+        arguments:
+            - "@?logger"
+            - "%kernel.debug%"
+        tags:
+            - { name: monolog.logger, channel: nglayouts }

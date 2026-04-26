@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    requireCoverageMetadata="true"
+    beStrictAboutOutputDuringTests="true"
+    displayDetailsOnPhpunitDeprecations="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    colors="true"
+>
+    <testsuites>
+        <testsuite name="Netgen\ContentBrowser\Ibexa">
+            <directory>tests/lib</directory>
+        </testsuite>
+        <testsuite name="Netgen\Bundle\ContentBrowserIbexaBundle">
+            <directory>tests/bundle</directory>
+        </testsuite>
+    </testsuites>
+
+    <source ignoreSuppressionOfDeprecations="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory>lib</directory>
+            <directory>bundle</directory>
+        </include>
+        <exclude>
+            <directory>bundle/Resources</directory>
+            <file>bundle/NetgenContentBrowserIbexaBundle.php</file>
+            <file>bundle/DependencyInjection/NetgenContentBrowserIbexaExtension.php</file>
+        </exclude>
+    </source>
+</phpunit>

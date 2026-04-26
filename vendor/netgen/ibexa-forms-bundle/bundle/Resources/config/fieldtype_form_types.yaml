@@ -1,0 +1,10 @@
+services:
+    netgen.ibexa_forms.form.type.fieldtype.ibexa_user_create:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\FieldType\UserCreateType
+        tags:
+            - { name: form.type, alias: ibexa_forms_ibexa_user_create }
+
+    netgen.ibexa_forms.form.type.fieldtype.ibexa_user_update:
+        class: Netgen\Bundle\IbexaFormsBundle\Form\Type\FieldType\UserUpdateType
+        tags:
+            - { name: form.type, alias: ibexa_forms_ibexa_user_update }

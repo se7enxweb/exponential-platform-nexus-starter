@@ -1,0 +1,120 @@
+{% extends "@ibexadesign/content_type/edit_base.html.twig" %}
+
+{% trans_default_domain 'ibexa_content_type' %}
+
+{% set language_code = language_code|default(content_type.mainLanguageCode) %}
+
+{% block header %}
+    {% set content_type_edit_sidebar_right = knp_menu_get('ezplatform_admin_ui.menu.content_type_edit.sidebar_right', [], {
+        'form_view': form,
+        'content_type': content_type
+    }) %}
+
+    {% include '@ibexadesign/ui/edit_header.html.twig' with {
+        action_name: 'editing_content_type'|trans|desc('Editing content type'),
+        icon_name: 'file',
+        title: content_type.name,
+        show_autosave_status: false,
+        context_actions: knp_menu_render(content_type_edit_sidebar_right, {'template': '@ibexadesign/ui/menu/context_menu.html.twig'})
+    } %}
+{% endblock %}
+
+{% block form %}
+        {{ form_start(form, {
+            attr: {
+                class: 'ibexa-content-type-edit-form ibexa-form',
+                novalidate: 'novalidate',
+            }
+        }) }}
+            {% set is_translation = form.vars.data.languageCode != content_type.mainLanguageCode %}
+            {% set is_draggable = is_translation == false %}
+
+            {% if is_translation %}
+                {% include '@ibexadesign/content_type/part/nontranslatable_fields_disabled.html.twig' %}
+            {% endif %}
+
+            <div
+                class="ibexa-content-type-edit__sections ibexa-anchor-navigation-sections ibexa-anchor-navigation__sections"
+                data-language-code="{{ language_code }}"
+                data-content-type-group-id="{{ content_type_group.id }}"
+                data-content-type-id="{{ content_type.id }}"
+            >
+                <div
+                    class="ibexa-anchor-navigation__section-group ibexa-anchor-navigation__section-group--active"
+                    data-id="#ibexa-edit-content-type-sections-main"
+                >
+                    {% block form_sections %}
+                        <div class="ibexa-edit-content__container">
+                            {% embed "@ibexadesign/content_type/edit_section.html.twig" with {
+                                section_id: '#Global-properties',
+                                is_active: true,
+                                one_column_layout: true,
+                            } %}
+                                {% block title %}
+                                    {{ 'content_type.view.edit.global_properties'|trans|desc('Global properties') }}
+                                {% endblock %}
+
+                                {% block left_column %}
+                                    {% set form_field_options = { row_attr: { class: 'ibexa-form-field' } } %}
+
+                                    {{ form_row(form.name, form_field_options|merge({
+                                        attr: { 'data-autogenerate-identifier-target-selector': '#ibexa-edit-content-type-identifier' } }
+                                    )) }}
+                                    {{ form_row(form.identifier, form_field_options|merge({
+                                         id: 'ibexa-edit-content-type-identifier' } ) ) }}
+                                    {{ form_row(form.description, form_field_options) }}
+                                    {{ form_row(form.nameSchema, form_field_options) }}
+                                    {{ form_row(form.urlAliasSchema, form_field_options) }}
+                                    {{ form_row(form.isContainer, form_field_options) }}
+                                    {{ form_row(form.defaultSortField, form_field_options) }}
+                                    {{ form_row(form.defaultSortOrder, form_field_options) }}
+                                    {{ form_row(form.defaultAlwaysAvailable, form_field_options) }}
+                                {% endblock %}
+                            {% endembed %}
+                        </div>
+
+                        <div class="ibexa-edit-content__container ibexa-edit-content__container--wide">
+                            {% embed "@ibexadesign/content_type/edit_section.html.twig" with {
+                                section_id: '#Field-definitions',
+                                left_column_class: 'ibexa-content-type-edit__section-column--field-definitions',
+                                right_column_class: 'ibexa-content-type-edit__section-column--available-fields'
+                            } %}
+                                {% block title %}
+                                    {{ 'content_type.view.edit.content_field_definitions'|trans|desc('Field definitions') }}
+                                {% endblock %}
+
+                                {% block left_column %}
+                                    {{ include('@ibexadesign/content_type/field_definitions.html.twig', {
+                                        grouped_field_defintions: form.fieldDefinitionsData,
+                                        is_draggable
+                                    }) }}
+                                {% endblock %}
+
+                                {% block right_column %}
+                                    {{ include('@ibexadesign/content_type/available_field_types.html.twig', { is_draggable }) }}
+                                {% endblock %}
+                            {% endembed %}
+                        </div>
+
+                        {{form_row(form.metaFieldDefinitionsData)}}
+                    {% endblock %}
+                </div>
+            </div>
+
+            {{ form_widget(form.publishContentType, { attr: { hidden: 'hidden' }}) }}
+            {{ form_widget(form.publishAndEditContentType, { attr: { hidden: 'hidden' }}) }}
+            {{ form_widget(form.removeDraft, { attr: {
+                hidden: 'hidden',
+                formnovalidate: true,
+            }}) }}
+
+            {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false }) }}
+{% endblock %}
+
+{% block content_type_sections %}
+    {{ ibexa_twig_component_group('admin-ui-content-type-edit-sections', {
+        'form': form,
+        'content_type': content_type,
+    }) }}
+{% endblock %}

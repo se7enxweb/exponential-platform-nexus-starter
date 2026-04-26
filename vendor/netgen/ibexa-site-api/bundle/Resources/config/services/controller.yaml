@@ -1,0 +1,14 @@
+services:
+    netgen.ibexa_site_api.controller.base:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Controller\Controller
+        abstract: true
+        public: true
+
+    netgen.ibexa_site_api.controller.content.view:
+        class: Netgen\Bundle\IbexaSiteApiBundle\Controller\Content\ViewController
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
+        public: true
+
+    ng_content:
+        alias: netgen.ibexa_site_api.controller.content.view
+        public: true

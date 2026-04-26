@@ -1,0 +1,11 @@
+tags:
+    read: ~
+    view: ~
+    add: [Tag]
+    addsynonym: ~
+    edit: ~
+    editsynonym: ~
+    delete: ~
+    deletesynonym: ~
+    makesynonym: ~
+    merge: ~

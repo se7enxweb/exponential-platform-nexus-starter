@@ -1,0 +1,2 @@
+services:
+    Netgen\Layouts\Ibexa\ContentProvider\ContentProviderInterface: "@netgen_layouts.ibexa.content_provider"

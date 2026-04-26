@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Ibexa\Bundle\AdminUi\DependencyInjection\Compiler;
+
+use Ibexa\AdminUi\Exception\InvalidArgumentException;
+use Ibexa\AdminUi\Tab\TabRegistry;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+final readonly class TabPass implements CompilerPassInterface
+{
+    use PriorityTaggedServiceTrait;
+
+    public const string TAG_TAB = 'ibexa.admin_ui.tab';
+
+    /**
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException When a service is abstract
+     * @throws \Ibexa\AdminUi\Exception\InvalidArgumentException When a tag is missing 'group' attribute
+     */
+    public function process(ContainerBuilder $container): void
+    {
+        if (!$container->hasDefinition(TabRegistry::class)) {
+            return;
+        }
+
+        $tabRegistryDefinition = $container->getDefinition(TabRegistry::class);
+        $services = $this->findAndSortTaggedServices(static::TAG_TAB, $container);
+
+        foreach ($services as $serviceReference) {
+            $id = (string)$serviceReference;
+            $definition = $container->getDefinition($id);
+            $tags = $definition->getTag(static::TAG_TAB);
+
+            foreach ($tags as $tag) {
+                if (!isset($tag['group'])) {
+                    throw new InvalidArgumentException($id, 'Tag ' . self::TAG_TAB . ' must contain a "group" argument.');
+                }
+                $tabRegistryDefinition->addMethodCall('addTab', [$serviceReference, $tag['group']]);
+            }
+        }
+    }
+}

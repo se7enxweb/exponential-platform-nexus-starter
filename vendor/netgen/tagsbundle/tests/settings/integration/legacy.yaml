@@ -1,0 +1,30 @@
+services:
+    event_dispatcher:
+        class: Netgen\TagsBundle\Tests\Stubs\EventDispatcherStub
+
+    ibexa.config.resolver:
+        class: Netgen\TagsBundle\Tests\Stubs\ConfigResolverStub
+        arguments:
+            -
+                netgen_tags: { edit_views: { default: { identifier: Default } } }
+                ibexa.site_access.config: { user_content_type_identifier: ['user'] }
+
+    netgen_tags.field_type.eztags:
+        class: Netgen\TagsBundle\Core\FieldType\Tags\Type
+        parent: Ibexa\Core\FieldType\FieldType
+        arguments:
+            - "@netgen_tags.api.service.tags"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: ibexa.field_type, alias: eztags }
+
+    netgen_tags.api.persistence_handler.tags.storage:
+        alias: netgen_tags.api.storage_engine.legacy.handler.tags
+
+    netgen_tags.ibexa.spi.persistence.legacy.language.handler:
+        alias: ibexa.spi.persistence.legacy.language.handler
+        public: true
+
+    netgen_tags.ibexa.persistence.legacy.language.mask_generator:
+        alias: Ibexa\Core\Persistence\Legacy\Content\Language\MaskGenerator
+        public: true

@@ -1,0 +1,11 @@
+default_view_templates:
+    block_view:
+        default: '@NetgenLayouts/block/invalid_block.html.twig'
+    item_view:
+        default: '@NetgenLayouts/item/invalid_item.html.twig'
+    parameter_view:
+        default: '@NetgenLayouts/parameter/parameter.html.twig'
+    placeholder_view:
+        default: '@nglayouts/placeholder/placeholder.html.twig'
+    zone_view:
+        default: '@nglayouts/zone/zone.html.twig'

@@ -1,0 +1,66 @@
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/custom.scss' as *;
+@use '@ibexa-admin-ui/src/bundle/Resources/public/scss/functions/calculate.rem' as *;
+
+@mixin modal-main() {
+    background: $ibexa-color-white;
+    box-shadow: 0 0 calculateRem(30px) 0 rgba($ibexa-color-black, 0.35);
+    position: relative;
+    border-radius: $ibexa-border-radius;
+}
+
+@mixin modal-content() {
+    padding: 0 calculateRem(32px);
+}
+
+@mixin modal-header() {
+    position: relative;
+    font-size: calculateRem(16px);
+}
+
+@mixin modal-title {
+    margin-right: calculateRem(30px);
+    font-size: $modal-title-font-size;
+    font-weight: 600;
+}
+
+@mixin modal-subtitle {
+    display: inline-block;
+    color: $ibexa-color-dark-300;
+    font-size: calculateRem(14px);
+    font-weight: 400;
+    position: relative;
+    top: calculateRem(-4px);
+    left: calculateRem(1px);
+}
+
+@mixin close-button() {
+    position: absolute;
+    display: block;
+    align-items: center;
+    top: calculateRem(34px);
+    right: 0;
+    cursor: pointer;
+    opacity: 1;
+    border: none;
+    background: transparent;
+
+    .ibexa-icon {
+        margin: 0;
+        opacity: 1;
+    }
+}
+
+@mixin modal-body() {
+    padding: calculateRem(24px) 0;
+    background: $ibexa-color-white;
+    white-space: normal;
+}
+
+@mixin modal-footer() {
+    justify-content: flex-start;
+    padding: $modal-footer-padding;
+
+    .btn {
+        margin: 0 calculateRem(16px) 0 0;
+    }
+}
